@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.2
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -21,10 +21,11 @@ Patch5: %name-0.14.2-alt-gcc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
-Requires: %libintl = %version-%release
 
 %def_disable static
+%def_without included_gettext
 
+%{?_with_included_gettext:Requires: %libintl = %version-%release}
 BuildPreReq: emacs-nox gcc-c++ gcc-g77 gcc-java jdkgcj tetex-dvips
 
 %package -n %libintl
@@ -56,6 +57,7 @@ Requires: %name = %version-%release
 Requires(post): %install_info
 Requires(preun): %uninstall_info
 Requires: mktemp >= 1:1.3.1
+%{!?_with_included_gettext:Provides: preloadable_libintl.so}
 
 %package tools-java
 Summary: Tools for java developers and translators
@@ -133,7 +135,8 @@ This manual documents GNU gettext.
 %patch5 -p1
 
 %build
-%configure --with-included-gettext --enable-shared %{subst_enable static}
+%configure --enable-shared %{subst_enable static} \
+	%{?_with_included_gettext:--with-included-gettext}
 %make_build
 
 %install
@@ -151,13 +154,15 @@ This manual documents GNU gettext.
 %__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_bindir/msghack
 %__install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/emacs/site-start.d/%name.el
 
+%if_with included_gettext
 %__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d
 echo libintl >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl
 %if_enabled static
 echo libintl-devel >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
-%endif
+%endif #enabled static
 %__chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
+%endif #with included_gettext
 %__mkdir_p $RPM_BUILD_ROOT%_docdir
 %define docdir %_docdir/%name-%version
 %__mv $RPM_BUILD_ROOT%_docdir/%name $RPM_BUILD_ROOT%docdir
@@ -174,6 +179,7 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %preun tools
 %uninstall_info %name.info
 
+%if_with included_gettext
 %files -n %libintl
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl
 %_libdir/libintl*.so.*
@@ -186,7 +192,8 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %files -n %libintl-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
 %_libdir/libintl*.a
-%endif
+%endif #enabled static
+%endif #with included_gettext
 
 %files -f %name-runtime.lang
 %_bindir/%name
@@ -201,6 +208,7 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_libdir/%name
 %exclude %_libdir/%name/gnu.gettext.*
 %_libdir/lib%{name}*.so*
+%{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
 %exclude %_bindir/%name
 %exclude %_bindir/n%name
@@ -237,6 +245,9 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Wed Mar 02 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.2-alt2
+- Do not build with included gettext by default.
+
 * Tue Mar 01 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.2-alt1
 - Updated to 0.14.2.
 - Updated patches.
