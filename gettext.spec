@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.1
-Release: alt4
+Release: alt5
 
 %define libintl libintl3
 
@@ -30,6 +30,7 @@ Requires: %libintl = %version-%release
 %def_disable static
 
 BuildPreReq: emacs-nox gcc-c++ gcc-g77 gcc-java jdkgcj tetex-dvips
+%set_automake_version 1.8
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -239,6 +240,9 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Mon Jan 17 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt5
+- Explicitly use automake_1.8 for build.
+
 * Tue Jan 04 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt4
 - Moved gettext manual to separate subpackage.
 - Fixed autopoint temporary file handling.
