@@ -1,3 +1,99 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4 (gt_INTL_MACOSX): New macro, extracted from
+	AM_INTL_SUBDIR. Set INTL_MACOSX_LIBS instead of INTL_MACOSX_LDFLAGS.
+	(AM_GNU_GETTEXT): Invoke it. Add the INTL_MACOSX_LIBS contents to
+	LIBINTL and LTLIBINTL.
+	(AM_INTL_SUBDIR): Require gt_INTL_MACOSX.
+
+2005-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* ansi-c++.m4, codeset.m4, gettext.m4, glibc21.m4, glibc2.m4, iconv.m4:
+	* intdiv0.m4, intmax.m4, inttypes_h.m4, inttypes.m4, inttypes-pri.m4:
+	* isc-posix.m4, lcmessage.m4, longdouble.m4, longlong.m4, nls.m4:
+	* po.m4, printf-posix.m4, progtest.m4, signed.m4, size_max.m4:
+	* stdint_h.m4, uintmax_t.m4, ulonglong.m4, wchar_t.m4, wint_t.m4:
+	* xsize.m4:
+	Use an all-permissive copyright notice, recommended by RMS.
+
+2005-01-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4 (AM_GNU_GETTEXT): Declare _nl_expand_alias with an
+	argument.
+	Reported by Mark A. Wicks <mwicks@kettering.edu> and
+	Vaclav Haisman <V.Haisman@sh.cvut.cz>.
+
+2005-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* progtest.m4: Require autoconf >= 2.50.
+	(AM_PATH_PROG_WITH_TEST): Emit some traces to the log file.
+	* po.m4: Require autoconf >= 2.50.
+	(AM_PO_SUBDIRS): Emit the tested program's output to the log file.
+	Suggested by Yann Dirson <ydirson@altern.org>.
+
+2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* longlong.m4, ulonglong.m4: Fix copyright date and/or serial number.
+
+2004-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4 (AM_INTL_SUBDIR): Test for CFPreferencesCopyAppValue.
+
+2004-09-03  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4 (AM_INTL_SUBDIR): Add a test for CFLocaleCopyCurrent.
+
+2004-05-16  Bruno Haible  <bruno@clisp.org>
+
+	* lcmessage.m4 (gt_LC_MESSAGES): Renamed from AM_LC_MESSAGES.
+	* gettext.m4 (AM_INTL_SUBDIR): Update.
+	Suggested by Alexandre Duret-Lutz.
+
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Change jm_ to gl_ in AC_DEFINE'd names. Update all uses.
+
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* inttypes_h.m4: Change jm_ to gl_ in cache variables as well.
+	* stdint_h.m4: Likewise.
+	* uintmax_t.m4: Likewise.
+
+2004-04-18  Jim Meyering  <jim@meyering.net>
+
+	* glibc21.m4: Change jm_ to gl_ in AC_DEFINE'd names. Update all uses.
+	* intmax.m4: Likewise.
+	* inttypes_h.m4: Likewise.
+	* longlong.m4: Likewise.
+	* stdint_h.m4: Likewise.
+	* uintmax_t.m4: Likewise.
+	* ulonglong.m4: Likewise.
+
+2004-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* po.m4 (AM_POSTPROCESS_PO_MAKEFILE): For RESOURCESDLLFILES and
+	CSHARPCATALOGS, extend the lang -> frobbedlang mapping so as to support
+	Serbian and Uzbek locales.
+
+2004-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* xsize.m4 (gl_XSIZE): Require AC_C_INLINE.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* glibc2.m4: New file.
+	* gettext.m4 (AM_INTL_SUBDIR): Require gt_GLIBC2.
+	* Makefile.am (EXTRA_DIST): Add glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

@@ -32,6 +32,10 @@ msgl-ascii.h
 msgl-ascii.c
                 Message list test for ASCII character set.
 
+po-error.h
+po-error.c
+                Error handling during writing and reading of PO files.
+
 write-po.h
 write-po.c
                 Output of a list-of-messages to a PO file.
@@ -57,8 +61,6 @@ write-stringtable.c
 |               Lexical analysis of PO files.
 |
 | read-po-abstract.h
-| po-hash.h
-| po-hash-gen.y
 | po-gram.h
 | po-gram-gen.y
 | read-properties.h
@@ -70,10 +72,6 @@ write-stringtable.c
 |              .strings files.
 |         read-po-abstract.h
 |                       General parser structure.
-|         po-hash.h
-|         po-hash-gen.y
-|                       Lexical analysis and parsing of pseudo-comments in
-|                       PO files, introduced by "#:" and "#".
 |         po-gram.h
 |         po-gram-gen.y
 |                       Parsing of PO files, based on po-lex.{h,c}.
@@ -195,6 +193,7 @@ format-python.c        Format string handling for Python.
 format-lisp.c          Format string handling for Common Lisp.
 format-elisp.c         Format string handling for Emacs Lisp.
 format-librep.c        Format string handling for librep.
+format-scheme.c        Format string handling for Scheme.
 format-java.c          Format string handling for Java.
 format-csharp.c        Format string handling for C#.
 format-awk.c           Format string handling for awk.
@@ -266,6 +265,9 @@ format.c        Table of the language dependent format string handlers.
 | x-librep.h
 | x-librep.c
 |               String extractor for librep.
+| x-scheme.h
+| x-scheme.c
+|               String extractor for Scheme.
 | x-smalltalk.h
 | x-smalltalk.c
 |               String extractor for Smalltalk.

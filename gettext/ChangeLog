@@ -1,3 +1,174 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.2.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* config/mdate-sh: Upgrade to automake-1.9.5.
+	* config/missing: Upgrade to automake-1.9.5.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.14.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+
+2005-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.guess, config/config.sub: Update to GNU version
+	2005-02-10.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.libpath: Use LC_ALL=C to protect range expression
+	against Estonian locale.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.12.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.12.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* config/compile: Upgrade to automake-1.9.4.
+	* config/elisp-comp: Upgrade to automake-1.9.4.
+	* config/install-sh: Upgrade to automake-1.9.4.
+	* config/mdate-sh: Upgrade to automake-1.9.4.
+	* config/missing: Upgrade to automake-1.9.4.
+	2002-03-07  Bruno Haible  <bruno@clisp.org>
+		* config/missing (makeinfo): Don't call touch without arguments
+		if the source texinfo file doesn't contain a @setfilename
+		command.
+		Reported by Miroslaw Dobrzanski-Neumann <mne@mosaic-ag.com>.
+	* config/mkinstalldirs: Upgrade to automake-1.9.4.
+	* config/ylwrap: Upgrade to automake-1.9.4.
+	Reported by Albert Chin-A-Young <china@thewrittenword.com>.
+
+2005-01-20  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add some notes about Java and C#.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	Fix the "configure --help" output.
+	* config/ac-help.sed: New file.
+	* configure.ac: Use it.
+	* Makefile.am (EXTRA_DIST): Add config/ac-help.sed.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.2-pre1.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.10.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.10.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add autogen.sh.
+
+2004-08-25  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.6.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.6.
+	2004-02-22  Bruno Haible  <bruno@clisp.org>
+		* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+		Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* config/m4/libtool.m4: Add support for Comeau C++ on Linux.
+	Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add FAQ.html.
+
+2004-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* config/config.libpath: Upgrade to libtool-1.5.2.
+
+2004-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* config/ltmain.sh: Upgrade to libtool-1.5.2.
+	2003-11-27  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: In the trampoline code, include string.h,
+		ctype.h, and return 127. Fixes warnings on cygwin.
+	2003-02-18  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh (install): Use "ln -s -f" instead of
+		"rm -f && ln -s" to make a symlink for a shared library. Take
+		care of Solaris /bin/ln.
+		Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+	2001-11-03  Bruno Haible  <bruno@clisp.org>
+		* config/ltmain.sh: chmod 777 the .libs directory, so that
+		"make install" succeeds.
+	* config/m4/libtool.m4: Upgrade to libtool-1.5.2.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* PACKAGING: Add glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.1.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

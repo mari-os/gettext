@@ -1,5 +1,5 @@
 dnl Configuration for the gettext-tools directory of GNU gettext
-dnl Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+dnl Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -107,10 +107,10 @@ AM_STDBOOL_H
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
 bh_C_SIGNED
-jm_AC_TYPE_UNSIGNED_LONG_LONG
+gl_AC_TYPE_UNSIGNED_LONG_LONG
 AC_TYPE_SIZE_T
 AC_CHECK_TYPES(ptrdiff_t)
-jm_AC_TYPE_UINTMAX_T
+gl_AC_TYPE_UINTMAX_T
 gt_TYPE_SSIZE_T
 AC_TYPE_PID_T
 AC_TYPE_MODE_T
@@ -122,13 +122,18 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([chown getcwd posix_spawn raise select strerror strtoul uname \
 utime utimes waitid])
 AC_REPLACE_FUNCS([atexit memmove memset stpcpy strcspn \
-strcasecmp strncasecmp strpbrk strstr vasprintf])
+strpbrk strstr vasprintf])
 AM_FUNC_GETLINE
 if test $am_cv_func_working_getline != yes; then
   AC_CHECK_FUNCS(getdelim)
 fi
+gl_EXITFAIL
 gl_FUNC_FNMATCH_POSIX
+gl_GETOPT
 gl_FUNC_EACCESS
+gl_FUNC_STPNCPY
+gl_STRCASE
+gl_FUNC_STRTOUL
 gl_MBSWIDTH
 gt_PREREQ_BACKUPFILE
 AC_FUNC_VFORK
@@ -139,14 +144,17 @@ gt_SIGNALBLOCKING
 gt_SIGINFO
 gt_FUNC_SETENV
 gl_FUNC_STRERROR
-jm_FUNC_GLIBC_UNLOCKED_IO
-gt_FUNC_ERROR_AT_LINE
+gl_FUNC_GLIBC_UNLOCKED_IO
+gl_ERROR
+gl_QUOTEARG
+gl_QUOTE
 gl_PATHMAX
 gl_FUNC_READLINK
 gl_XREADLINK
 gl_CANONICALIZE
 gt_SETLOCALE
 gl_XSIZE
+gt_LIBGREP
 
 gt_PREREQ_HOSTNAME
 
@@ -232,6 +240,7 @@ AC_SUBST(CROSS_COMPILING)
 dnl Checks for optional programs for the tests/lang-* tests.
 gt_PROG_ANSI_CXX
 gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
 
 dnl Check whether to execute tests that rely on libasprintf.
 dnl This test must be consistent with gettext-runtime/configure.ac.
@@ -277,6 +286,9 @@ AC_CONFIG_FILES([lib/Makefile],
                 [FIX_MAKEFILE_COMPILE])
 AC_CONFIG_FILES([lib/javacomp.sh lib/javaexec.sh])
 AC_CONFIG_FILES([lib/csharpcomp.sh lib/csharpexec.sh])
+
+AC_CONFIG_FILES([libgrep/Makefile],
+                [FIX_MAKEFILE_COMPILE])
 
 AC_CONFIG_FILES([libuniname/Makefile],
                 [FIX_MAKEFILE_COMPILE])

@@ -7,7 +7,6 @@ program_name
 simple_backup_suffix
 __xargmatch_internal
 _obstack_begin
-_obstack_free
 _obstack_newchunk
 addext
 argmatch
@@ -29,6 +28,8 @@ c_ispunct
 c_isspace
 c_isupper
 c_isxdigit
+c_strcasecmp
+c_strncasecmp
 c_tolower
 c_toupper
 close_stdout
@@ -73,6 +74,7 @@ multiline_error
 multiline_warning
 new_classpath
 next_prime
+obstack_free
 optarg
 optind
 path_search

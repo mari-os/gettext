@@ -1,3 +1,186 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-13  Bruno Haible  <bruno@clisp.org>
+
+	* locale-fr.m4 (gt_LOCALE_FR): If no locale was found or if the OS is
+	Darwin7, use 'none' instead of 'fr_FR'.
+	(gt_LOCALE_FR_UTF8): New macro.
+
+2005-02-13  Bruno Haible  <bruno@clisp.org>
+
+	* strtoul.m4: New file, from gnulib.
+	* strtol.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add strtol.m4, strtoul.m4.
+
+2005-01-28  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4 (gl_FUNC_STPNCPY): Undo the replacement here. Because of
+	AIX, the replacement has to be done only after <string.h> is included,
+	therefore not in config.h. stpncpy.h does the replacement, and
+	stpncpy.c uses it.
+
+2005-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* alloca.m4, allocsa.m4, backupfile.m4, canonicalize.m4, csharpcomp.m4:
+	* csharpexec.m4, csharp.m4, eaccess.m4, eealloc.m4, error.m4:
+	* exitfail.m4, extensions.m4, fnmatch.m4, gcj.m4, getline.m4:
+	* getndelim2.m4, getopt.m4, hard-locale.m4, hostname.m4, javacomp.m4:
+	* javaexec.m4, libgrep.m4, locale-fr.m4, mbrtowc.m4, mbstate_t.m4:
+	* mbswidth.m4, memchr.m4, mkdtemp.m4, onceonly.m4, pathmax.m4:
+	* quotearg.m4, quote.m4, readlink.m4, relocatable.m4, restrict.m4:
+	* setenv.m4, setlocale.m4, sig_atomic_t.m4, siginfo.m4:
+	* signalblocking.m4, ssize_t.m4, stdbool.m4, stpncpy.m4, strcase.m4:
+	* strdup.m4, strerror.m4, strerror_r.m4, tmpdir.m4, unionwait.m4:
+	* unlocked-io.m4, xreadlink.m4:
+	Use an all-permissive copyright notice, recommended by RMS.
+
+2005-01-14  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4 (gl_FUNC_STPNCPY): Rename the replacement function to
+	gnu_stpncpy. Needed for AIX.
+
+2005-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* libgrep.m4: New file.
+	* hard-locale.m4: New file, from gnulib.
+	* memchr.m4: New file, from gnulib.
+	* regex.m4: New file, from gnulib.
+	* restrict.m4: New file, from gnulib.
+	* strdup.m4: New file, from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* strcase.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* stpncpy.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add it.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* error.m4: Upgrade from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* quote.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add quote.m4.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* exitfail.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add exitfail.m4.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add getopt.m4.
+	* getopt.m4: New file, from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* fnmatch.m4: Upgrade from gnulib.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* stdbool.m4: Upgrade to gnulib version.
+
+2004-11-02  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.m4 (gt_FUNC_SETENV): Define VOID_UNSETENV if unsetenv()
+	returns void.
+
+2004-10-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* unlocked-io.m4: Add copyright notice.
+	(gl_FUNC_GLIBC_UNLOCKED_IO): Define USE_UNLOCKED_IO.
+
+2004-06-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* quotearg.m4: Fix copyright date and/or serial number.
+
+2003-11-24  Bruno Haible  <bruno@clisp.org>
+
+	* allocsa.m4 (gl_ALLOCSA): Require also gl_AC_TYPE_LONG_LONG and
+	gt_TYPE_LONGDOUBLE.
+
+2003-09-17  Paul Eggert  <eggert@twinsun.com>
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Call AC_BEFORE first,
+	to avoid spurious warnings like "AC_RUN_IFELSE was called before
+	gl_USE_SYSTEM_EXTENSIONS" from autoreconf.
+
+2003-09-12  Paul Eggert  <eggert@twinsun.com>
+
+	* extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Require AC_AIX
+	and AC_MINIX, too, so that their extensions are available.
+
+2003-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* xreadlink.m4 (gl_XREADLINK): Remove <stdlib.h> check.
+
+2003-09-10  Bruno Haible  <bruno@clisp.org>
+
+	* setenv.m4 (gl_PREREQ_SETENV, gl_PREREQ_UNSETENV): Remove
+	<stdlib.h> and <string.h> checks.
+
+2004-04-26  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.m4 (gt_CSHARPCOMP): Avoid using !.
+	Reported by Alexandre Duret-Lutz.
+
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* error.m4: Change jm_ to gl_ in AC_DEFINE'd names. Update all uses.
+
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* mbrtowc.m4: Change jm_ to gl_ in cache variables as well.
+
+2004-04-18  Jim Meyering  <jim@meyering.net>
+
+	* mbswidth.m4: Change jm_ to gl_ in AC_DEFINE'd names. Update all uses.
+	* mkdtemp.m4: Likewise.
+	* unlocked-io.m4: Likewise.
+	* quotearg.m4: Likewise.
+
+2004-03-18  Paul Eggert  <eggert@twinsun.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* mbswidth.m4 (gl_MBSWIDTH): Also test whether <wchar.h> declares
+	mbswidth.
+
+2004-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.m4 (gt_CSHARPCOMP): Test whether csc is not the chicken
+	scheme's 'csc' compiler.
+	Reported by Colin Marquardt <colin@marquardt-home.de>.
+
+2004-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* csharp.m4 (gt_CSHARP_CHOICE): Drop extra quoting of the # sign.
+
+2004-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* mbstate_t.m4: Update from gnulib.
+	* mbswidth.m4: Invoke AC_TYPE_MBSTATE_T instead of AC_MBSTATE_T.
+	* quotearg.m4: New file, from gnulib.
+	* Makefile.am (EXTRA_DIST): Add quotearg.m4.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (aclocal_DATA): Add glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* csharpcomp.m4 (gt_CSHARPCOMP): Fix typo.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

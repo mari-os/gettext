@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/src subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2003 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -34,17 +34,24 @@ lib_LTLIBRARIES = libgettextsrc.la libgettextpo.la
 
 include_HEADERS = gettext-po.h
 
-noinst_HEADERS = pos.h message.h po-gram.h po-hash.h po-charset.h po-lex.h \
-open-po.h read-po-abstract.h read-po.h read-properties.h read-stringtable.h \
-str-list.h write-po.h write-properties.h write-stringtable.h dir-list.h \
-file-list.h po-gram-gen.h po-gram-gen2.h po-hash-gen.h msgl-charset.h \
-msgl-equal.h msgl-iconv.h msgl-ascii.h msgl-cat.h msgl-english.h msgfmt.h \
-msgunfmt.h plural-count.h read-mo.h write-mo.h read-java.h write-java.h \
-read-csharp.h write-csharp.h read-resources.h write-resources.h read-tcl.h \
-write-tcl.h write-qt.h po-time.h plural-table.h format.h \
+noinst_HEADERS = pos.h message.h po-error.h po-gram.h po-charset.h \
+po-lex.h open-po.h \
+read-po-abstract.h read-po.h read-properties.h read-stringtable.h \
+str-list.h \
+write-po.h write-properties.h write-stringtable.h \
+dir-list.h file-list.h po-gram-gen.h po-gram-gen2.h \
+msgl-charset.h msgl-equal.h msgl-iconv.h msgl-ascii.h msgl-cat.h \
+msgl-english.h msgfmt.h msgunfmt.h plural-count.h \
+read-mo.h write-mo.h \
+read-java.h write-java.h \
+read-csharp.h write-csharp.h \
+read-resources.h write-resources.h \
+read-tcl.h write-tcl.h \
+write-qt.h \
+po-time.h plural-table.h format.h \
 xgettext.h x-c.h x-po.h x-sh.h x-python.h x-lisp.h x-elisp.h x-librep.h \
-x-smalltalk.h x-java.h x-properties.h x-csharp.h x-awk.h x-ycp.h x-tcl.h \
-x-perl.h x-php.h x-stringtable.h x-rst.h x-glade.h
+x-scheme.h x-smalltalk.h x-java.h x-properties.h x-csharp.h x-awk.h x-ycp.h \
+x-tcl.h x-perl.h x-php.h x-stringtable.h x-rst.h x-glade.h
 
 EXTRA_DIST += FILES project-id ChangeLog.0
 
@@ -58,6 +65,7 @@ pkglibdir = $(libdir)/gettext
 AM_CPPFLAGS = \
   -I. -I$(srcdir) \
   -I.. \
+  -I$(top_srcdir)/libgrep \
   -I$(top_srcdir)/libuniname \
   -I../lib -I$(top_srcdir)/lib \
   -I../intl -I$(top_srcdir)/../gettext-runtime/intl
@@ -86,20 +94,20 @@ CSHARPCOMPFLAGS = -O -g
 # All programs must read PO files. (msgunfmt also, for read-java.c,
 # read-csharp.c and read-resources.c.)
 # message.c -> str-list.c.
-# (read-po-abstract.c <--> po-hash-gen.y <--> po-gram-gen.y <--> po-lex.c) -> str-list.c.
-# (read-po-abstract.c <--> po-hash-gen.y <--> po-gram-gen.y <--> po-lex.c) -> open-po.c -> dir-list.c -> str-list.c.
-# (read-po-abstract.c <--> po-hash-gen.y <--> po-gram-gen.y <--> po-lex.c) -> po-charset.c.
-# (read-po-abstract.c <--> po-hash-gen.y <--> po-gram-gen.y <--> po-lex.c) -> message.c -> str-list.c.
-COMMON_SOURCE = message.c \
-read-po-abstract.c po-lex.c po-gram-gen.y po-hash-gen.y po-charset.c \
+# (read-po-abstract.c <--> po-gram-gen.y <--> po-lex.c) -> str-list.c.
+# (read-po-abstract.c <--> po-gram-gen.y <--> po-lex.c) -> open-po.c -> dir-list.c -> str-list.c.
+# (read-po-abstract.c <--> po-gram-gen.y <--> po-lex.c) -> po-charset.c.
+# (read-po-abstract.c <--> po-gram-gen.y <--> po-lex.c) -> message.c -> str-list.c.
+COMMON_SOURCE = message.c po-error.c \
+read-po-abstract.c po-lex.c po-gram-gen.y po-charset.c \
 read-properties.c read-stringtable.c open-po.c dir-list.c str-list.c
 
 # xgettext and msgfmt deal with format strings.
 FORMAT_SOURCE = format.c format-invalid.h \
 format-c.c format-sh.c format-python.c format-lisp.c format-elisp.c \
-format-librep.c format-java.c format-csharp.c format-awk.c format-pascal.c \
-format-ycp.c format-tcl.c format-perl.c format-perl-brace.c format-php.c \
-format-gcc-internal.c format-qt.c
+format-librep.c format-scheme.c format-java.c format-csharp.c format-awk.c \
+format-pascal.c format-ycp.c format-tcl.c format-perl.c format-perl-brace.c \
+format-php.c format-gcc-internal.c format-qt.c
 
 # libgettextsrc contains all code that is needed by at least two programs.
 libgettextsrc_la_SOURCES = \
@@ -115,6 +123,9 @@ LTV_CURRENT=1
 LTV_REVISION=0
 LTV_AGE=1
 
+# msggrep needs pattern matching.
+LIBGREP = ../libgrep/libgrep.a
+
 # x-python needs table of Unicode character names.
 LIBUNINAME = ../libuniname/libuniname.a
 
@@ -127,9 +138,9 @@ msgmerge_SOURCES = msgmerge.c plural-count.c
 msgunfmt_SOURCES = msgunfmt.c \
   read-mo.c read-java.c read-csharp.c read-resources.c read-tcl.c
 xgettext_SOURCES = xgettext.c \
-  x-c.c x-po.c x-sh.c x-python.c x-lisp.c x-elisp.c x-librep.c x-smalltalk.c \
-  x-java.c x-csharp.c x-awk.c x-ycp.c x-tcl.c x-perl.c x-php.c x-rst.c \
-  x-glade.c
+  x-c.c x-po.c x-sh.c x-python.c x-lisp.c x-elisp.c x-librep.c x-scheme.c \
+  x-smalltalk.c x-java.c x-csharp.c x-awk.c x-ycp.c x-tcl.c x-perl.c x-php.c \
+  x-rst.c x-glade.c
 msgattrib_SOURCES = msgattrib.c
 msgcat_SOURCES = msgcat.c
 msgcomm_SOURCES = msgcomm.c
@@ -138,7 +149,7 @@ msgen_SOURCES = msgen.c
 msgexec_SOURCES = msgexec.c
 msgfilter_SOURCES = msgfilter.c
 msggrep_SOURCES = msggrep.c
-msginit_SOURCES = msginit.c ../../gettext-runtime/intl/localealias.c
+msginit_SOURCES = msginit.c plural-count.c ../../gettext-runtime/intl/localealias.c
 msguniq_SOURCES = msguniq.c
 hostname_SOURCES = hostname.c
 urlget_SOURCES = urlget.c
@@ -152,10 +163,13 @@ libgettextsrc_la_LDFLAGS = \
   -release @VERSION@ \
   ../lib/libgettextlib.la @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
-# No need to install libgettextsrc.a.
+# No need to install libgettextsrc.a, except on AIX.
 install-exec-local: install-libLTLIBRARIES install-exec-clean
 install-exec-clean:
-	$(RM) $(DESTDIR)$(libdir)/libgettextsrc.a
+	case "@host_os@" in \
+	  aix*) ;; \
+	  *) $(RM) $(DESTDIR)$(libdir)/libgettextsrc.a ;; \
+	esac
 
 # How to build libgettextpo.la.
 # Need libgettextsrc.la.
@@ -163,27 +177,30 @@ install-exec-clean:
 libgettextpo_la_LDFLAGS = \
   -version-info $(LTV_CURRENT):$(LTV_REVISION):$(LTV_AGE) \
   -rpath $(libdir) \
-  libgettextsrc.la ../lib/libgettextlib.la -lc -no-undefined
+  libgettextsrc.la ../lib/libgettextlib.la @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 # Build order. Only needed for "make -j[N]".
 libgettextpo_la_DEPENDENCIES = libgettextsrc.la
 
 # Link dependencies.
-msgcmp_LDADD = libgettextsrc.la
-msgfmt_LDADD = libgettextsrc.la
-msgmerge_LDADD = libgettextsrc.la
-msgunfmt_LDADD = libgettextsrc.la
-xgettext_LDADD = $(LIBUNINAME) libgettextsrc.la @LTLIBEXPAT@
-msgattrib_LDADD = libgettextsrc.la
-msgcat_LDADD = libgettextsrc.la
-msgcomm_LDADD = libgettextsrc.la
-msgconv_LDADD = libgettextsrc.la
-msgen_LDADD = libgettextsrc.la
-msgexec_LDADD = libgettextsrc.la
-msgfilter_LDADD = libgettextsrc.la
-msggrep_LDADD = libgettextsrc.la
+# INTL_MACOSX_LIBS is needed because the programs depend on libintl.la
+# but libtool doesn't put -Wl,-framework options into .la files.
+# For msginit, it is also needed because of localename.c.
+msgcmp_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgfmt_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgmerge_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgunfmt_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+xgettext_LDADD = $(LIBUNINAME) libgettextsrc.la @INTL_MACOSX_LIBS@ @LTLIBEXPAT@
+msgattrib_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgcat_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgcomm_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgconv_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgen_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgexec_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msgfilter_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
+msggrep_LDADD = $(LIBGREP) libgettextsrc.la @INTL_MACOSX_LIBS@
 msginit_LDADD = ../intl/localename.@INTL_LIBTOOL_SUFFIX_PREFIX@o \
-                libgettextsrc.la
-msguniq_LDADD = libgettextsrc.la
+                libgettextsrc.la @INTL_MACOSX_LIBS@
+msguniq_LDADD = libgettextsrc.la @INTL_MACOSX_LIBS@
 
 # Specify installation directory, for --enable-relocatable.
 msgcmp_CFLAGS = -DINSTALLDIR=\"$(bindir)\"
@@ -226,8 +243,7 @@ endif
 # Special rules for bison and flex generated files.
 
 BUILT_SOURCES = \
-  po-gram-gen.c po-gram-gen.h po-gram-gen2.h \
-  po-hash-gen.c po-hash-gen.h
+  po-gram-gen.c po-gram-gen.h po-gram-gen2.h
 
 po-lex.o po-lex.lo: po-gram-gen2.h
 po-gram-gen2.h: po-gram-gen.h

@@ -1,3 +1,136 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* lang-java: On newer Darwin systems, set the System.out encoding to
+	UTF-8, not ISO-8859-1.
+
+2005-02-13  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (TESTS_ENVIRONMENT): Define also the environment variable
+	LOCALE_FR_UTF8.
+	* lang-bash: Don't test using the traditional french locale if it does
+	exist. Try not only the traditional french locale, but also the UTF-8
+	locale, if it exists.
+	* lang-c: Likewise.
+	* lang-c++: Likewise.
+	* lang-clisp: Likewise.
+	* lang-csharp: Likewise.
+	* lang-gawk: Likewise.
+	* lang-guile: Likewise.
+	* lang-java: Likewise.
+	* lang-librep: Likewise.
+	* lang-objc: Likewise.
+	* lang-perl-1: Likewise.
+	* lang-perl-2: Likewise.
+	* lang-php: Likewise.
+	* lang-sh: Likewise.
+	* lang-smalltalk: Likewise.
+	* lang-tcl: Likewise.
+	* lang-pascal: Likewise, but disable the test of the UTF-8 locale.
+	* lang-python-1: Likewise.
+	* lang-python-2: Likewise.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* lang-clisp: Use only the first line of "clisp --version"'s output.
+	Needed to avoid /bin/sh limitations on HP-UX 10.
+
+2005-02-08  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (LDADD_yes): Remove INTL_MACOSX_LIBS.
+	(LDADD): Add INTL_MACOSX_LIBS here.
+	Needed for MacOS X build with --disable-shared --disable-nls.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* msgcat-11: New file.
+	* Makefile.am (TESTS): Add it.
+
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (LDADD_yes): Add INTL_MACOSX_LIBS.
+
+2005-01-20  Bruno Haible  <bruno@clisp.org>
+
+	* lang-guile: Make it work.
+
+2005-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Support for Scheme.
+	* format-scheme-1: New file.
+	* format-scheme-2: New file.
+	* xgettext-scheme-1: New file.
+	* lang-guile: New file.
+	* Makefile.am (TESTS): Add them.
+
+2005-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* msggrep-4: Remove unportability notes.
+
+2005-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* xgettext-8: New file.
+	* Makefile.am (TESTS): Add it.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* tstgettext.c (main): Update year in --version output.
+	* tstngettext.c (main): Likewise.
+
+2004-10-01  Guido Flohr  <guido@imperia.net>
+
+	* xgettext-perl-4: Add test case with '-s' function.
+	Reported by Ryan Anderson <ryan@autoweb.net>.
+
+2004-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* msginit-1: New file.
+	* msgmerge-17: New file.
+	* Makefile.am (TESTS): Add msginit-1, msgmerge-17.
+	(TESTS_ENVIRONMENT): Also define MSGINIT.
+	Reported by Jens A. Tkotz <jens@peino.de>.
+
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+
+	Make lang-java work again on platforms with Java version < 1.4.
+	* lang-java: Undo last patch for all platforms except Darwin.
+	* Makefile.am (TESTS_ENVIRONMENT): Also define host_os.
+
+2004-08-13  Bruno Haible  <bruno@clisp.org>
+
+	Fix test failures on MacOS X.
+	* lang-clisp: Skip the test if clisp was not built with gettext
+	support.
+	* lang-java: Enforce encoding ISO-8859-1 for System.out.
+
+2004-07-10  Bruno Haible  <bruno@clisp.org>
+
+	* tstgettext.c (expand_escape): Don't go into an endless loop when the
+	first backslash is not followed by one of the expected characters.
+	Reported by Arkadiusz Miśkiewicz <arekm@pld-linux.org>.
+
+2004-07-10  Bruno Haible  <bruno@clisp.org>
+
+	* tstgettext.c (expand_escape): Support also \a and \v.
+
+2004-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* format-lisp-2: Add one more test for ~[...~].
+
+2004-01-30  Bruno Haible  <bruno@clisp.org>
+
+	* format-c-5-prg.c (main): Return with exit code 77 when the requested
+	locale doesn't exist.
+	* format-c-5: Skip the test when the fa_IR locale doesn't exist.
+	Reported by Paul Jarc <prj@po.cwru.edu>.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

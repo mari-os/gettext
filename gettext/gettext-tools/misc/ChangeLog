@@ -1,3 +1,72 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in: Update for 0.14.2.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in: Use LC_ALL=C to protect range expression against
+	Estonian locale.
+	* gettextize.in: Likewise.
+
+2005-02-05  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in: Check the version number, instead of relying on cvs
+	for doing so.
+	Reported by Paul Eggert.
+
+2005-01-10  Bruno Haible  <bruno@clisp.org>
+
+	Security fixes.
+	* autopoint.in: Exit if the creation of one of the temporary
+	directories fails. Also restrict the access to the temporary cvs_dir.
+	Reported by Javier Fernández-Sanguino Peña <jfs@computer.org>.
+
+2005-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in (func_tmpdir): New function.
+	(func_find_curr_installdir): Use it.
+	(mismatchfile): Create inside a temporary directory. Remove afterwards.
+	* gettextize.in (func_tmpdir): New function.
+	(func_find_curr_installdir): Use it.
+	Reported by Joey Hess <joeyh@debian.org>.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in: Update year in --version output.
+	* gettextize.in: Likewise.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Unset CDPATH in a more robust way.
+
+2004-12-14  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Unset CDPATH.
+
+2004-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Modify only the first occurrence of AC_CONFIG_FILES,
+	not all of them.
+	Reported by Dalibor Topic <robilad@kaffe.org>.
+
+2004-02-04  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Add po to SUBDIRS if it was created in this run.
+	Tell the user to create po/POTFILES.in if it is not yet there.
+	Reported by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in (m4filelist): Add glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

@@ -1,3 +1,52 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-13  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libasprintf.la): New rule. Needed for BeOS.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (install): Update for 2004-01-18 change.
+	* Makefile.vms (install): Likewise.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (EOVERFLOW): Define to a fallback if needed.
+
+2004-12-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* alloca_.h: Conditionalize on _GNULIB_ALLOCA_H, not _ALLOCA_H.
+
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (VASNPRINTF): Signal EOVERFLOW if the resulting length
+	is > INT_MAX.
+	* vasprintf.c (vasprintf): Don't test for length > INT_MAX any more.
+
+2004-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (VASNPRINTF): Correctly handle the case of a precision
+	that consists of a '.' followed by an empty digit string.
+	Patch by Tor Lillqvist <tml@iki.fi>.
+
+2004-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.m4: Change jm_ to gl_ in all uses of AC_DEFINE'd names.
+
+2004-03-11  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (config.h.msvc): Fix the value of SIZE_MAX.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (RM): New variable.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

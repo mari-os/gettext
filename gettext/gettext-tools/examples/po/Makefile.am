@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/examples/po subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2003 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ POTFILES = \
   examples/hello-python/hello.py.in \
   examples/hello-clisp/hello.lisp.in \
   examples/hello-librep/hello.jl.in \
+  examples/hello-guile/hello.scm \
   examples/hello-smalltalk/hello.st.in \
   examples/hello-java/Hello.java \
   examples/hello-java-awt/Hello.java \
@@ -70,6 +71,7 @@ SMALLPOTS = \
   hello-python.pot \
   hello-clisp.pot \
   hello-librep.pot \
+  hello-guile.pot \
   hello-smalltalk.pot \
   hello-java.pot \
   hello-java-awt.pot \
@@ -167,10 +169,15 @@ stamp-po: $(srcdir)/$(DOMAIN).pot
 # This target rebuilds $(DOMAIN).pot; it is an expensive operation.
 # Note that $(DOMAIN).pot is not touched if it doesn't need to be changed.
 $(DOMAIN).pot-update: $(POTFILES_DEPS) $(SMALLPOTS) remove-potcdate.sed
+	if test -n '$(MSGID_BUGS_ADDRESS)'; then \
+	  msgid_bugs_address='$(MSGID_BUGS_ADDRESS)'; \
+	else \
+	  msgid_bugs_address='$(PACKAGE_BUGREPORT)'; \
+	fi; \
 	$(XGETTEXT) --default-domain=$(DOMAIN) \
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
-	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
+	  --msgid-bugs-address="$$msgid_bugs_address" \
 	  $(SMALLPOTS)
 	test ! -f $(DOMAIN).po || { \
 	  if test -f $(srcdir)/$(DOMAIN).pot; then \
@@ -189,82 +196,85 @@ $(DOMAIN).pot-update: $(POTFILES_DEPS) $(SMALLPOTS) remove-potcdate.sed
 
 
 hello-c.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c
 
 hello-c-gnome.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c-gnome
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c-gnome
 
 hello-c++.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c++
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++
 
 hello-c++-qt.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c++-qt
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++-qt
 
 hello-c++-kde.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c++-kde
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++-kde
 
 hello-c++-gnome.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-c++-gnome
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++-gnome
 
 hello-objc.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-objc
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-objc
 
 hello-objc-gnustep.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-objc-gnustep
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-objc-gnustep
 
 hello-objc-gnome.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-objc-gnome
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-objc-gnome
 
 hello-sh.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-sh
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-sh
 
 hello-python.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-python
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-python
 
 hello-clisp.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-clisp
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-clisp
 
 hello-librep.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-librep
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-librep
+
+hello-guile.pot : $(POTFILES_DEPS)
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-guile
 
 hello-smalltalk.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-smalltalk
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-smalltalk
 
 hello-java.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-java
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-java
 
 hello-java-awt.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-java-awt
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-java-awt
 
 hello-java-swing.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-java-swing
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-java-swing
 
 hello-csharp.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-csharp
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-csharp
 
 hello-csharp-forms.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-csharp-forms
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-csharp-forms
 
 hello-gawk.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-gawk
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-gawk
 
 hello-pascal.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-pascal
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-pascal
 
 hello-ycp.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-ycp
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-ycp
 
 hello-tcl.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-tcl
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-tcl
 
 hello-tcl-tk.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-tcl-tk
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-tcl-tk
 
 hello-perl.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-perl
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-perl
 
 hello-php.pot : $(POTFILES_DEPS)
-	$(SHELL) xsmallpot.sh hello-php
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-php
 
 
 # This rule has no dependencies: we don't need to update $(DOMAIN).pot at
@@ -352,6 +362,7 @@ SMALLPOFILES_FOR_lang = \
   ../hello-python/po/$$lang.po \
   ../hello-clisp/po/$$lang.po \
   ../hello-librep/po/$$lang.po \
+  ../hello-guile/po/$$lang.po \
   ../hello-smalltalk/po/$$lang.po \
   ../hello-java/po/$$lang.po \
   ../hello-java-awt/po/$$lang.po \
@@ -404,6 +415,9 @@ SMALLPOFILES_FOR_lang = \
 
 ../hello-librep/po/$(LL).po: hello-librep.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-librep $(LL)
+
+../hello-guile/po/$(LL).po: hello-guile.pot $(LL).po
+	$(SHELL) mmsmallpo.sh hello-guile $(LL)
 
 ../hello-smalltalk/po/$(LL).po: hello-smalltalk.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-smalltalk $(LL)

@@ -1,3 +1,375 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (gettextpo.lib): Link with intl.lib as well.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.msvc (msginit_OBJECTS): Add plural-count.obj.
+	* Makefile.vms (msginit_OBJECTS): Add plural-count.obj.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-po.h (po_header_set_field): New declaration.
+	* gettext-po.c (po_header_set_field): New function.
+	Suggested by Ross Golder <ross@golder.org>.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-po.h (LIBGETTEXTPO_VERSION): New macro.
+	(libgettextpo_version): New declaration.
+	* gettext-po.c (libgettextpo_version): New variable.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-po.h (po_message_remove_filepos, po_message_add_filepos): New
+	declarations.
+	* gettext-po.c (po_message_remove_filepos, po_message_add_filepos): New
+	functions.
+	Suggested by Asgeir Frimannsson <asgeirf@redhat.com>.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-po.h (po_message_set_extracted_comments): New declaration.
+	* gettext-po.c (po_message_set_extracted_comments): New function.
+	Suggested by Asgeir Frimannsson <asgeirf@redhat.com>.
+
+2005-02-08  Bruno Haible  <bruno@clisp.org>
+
+	* msginit.c (get_user_email): Cast _() to 'char *', to avoid compiler
+	warning.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	Make the tools work in the tr_TR locale.
+	* po-charset.c: Include c-strcase.h instead of strcase.h.
+	(po_charset_canonicalize): Use c_strcasecmp.
+	* msgcmp.c: Include c-strcase.h instead of strcase.h.
+	(compare): Use c_strncasecmp.
+	* msginit.c: Include c-strcase.h instead of strcase.h.
+	(content_type): Use c_strcasecmp.
+	* msgmerge.c: Include c-strcase.h instead of strcase.h.
+	(message_merge, merge): Use c_strncasecmp.
+	* xgettext.c: Include c-strcase.h instead of strcase.h.
+	(language_to_extractor): Use c_strcasecmp.
+	Reported by Recai Oktaş <roktas@omu.edu.tr>.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* project-id: Use LC_ALL=C to protect range expression against
+	Estonian locale.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	Leave #: lines with unknown syntax alone instead of turning them into
+	plain comments.
+	* po-hash.h: Remove file.
+	* po-hash-gen.y: Remove file.
+	* read-po-abstract.c: Don't include po-hash.h.
+	(po_parse_comment_filepos, po_parse_comment_solaris_filepos): New
+	functions.
+	(po_callback_comment_dispatcher): Call them instead of the old
+	po_parse_comment_filepos.
+	* read-stringtable.c: Don't include po-hash.h.
+	* Makefile.am (noinst_HEADERS): Remove po-hash.h, po-hash-gen.h.
+	(COMMON_SOURCE): Remove po-hash-gen.y.
+	(BUILT_SOURCES): Remove po-hash-gen.c, po-hash-gen.h.
+	* Makefile.msvc (OBJECTS): Remove po-hash-gen.obj.
+	(po-hash-gen.obj): Remove rule.
+	* Makefile.vms (OBJECTS): Remove po-hash-gen.obj.
+	(po-hash-gen.obj): Remove rule.
+	* FILES: Update.
+	Reported by David Fraser <davidf@sjsoft.com>.
+
+2005-02-04  Bruno Haible  <bruno@clisp.org>
+
+	* plural-table.c (plural_table): Add an entry about Vietnamese.
+	Explanations by Clytie Siddall <clytie@riverland.net.au>.
+
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (msgcmp_LDADD, msgfmt_LDADD, msgmerge_LDADD,
+	msgunfmt_LDADD, xgettext_LDADD, msgattrib_LDADD, msgcat_LDADD,
+	msgcomm_LDADD, msgconv_LDADD, msgen_LDADD, msgexec_LDADD,
+	msgfilter_LDADD, msggrep_LDADD, msguniq_LDADD): Add INTL_MACOSX_LIBS.
+
+2005-01-27  Bruno Haible  <bruno@clisp.org>
+
+	* msgfmt.c (formatstring_error_logger): Cast the fprrintf argument,
+	to make it work on big-endian 64-bit machines.
+
+2005-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Support for Scheme.
+	* message.h (format_type): New enum value 'format_scheme'.
+	(NFORMATS): Increment.
+	* message.c (format_language): Add format_scheme entry.
+	(format_language_pretty): Likewise.
+	* format.h (formatstring_scheme): New declaration.
+	* format-scheme.c: New file, based on format-lisp.c.
+	* format.c (formatstring_parsers): Add formatstring_scheme.
+	* x-scheme.h: New file.
+	* x-scheme.c: New file.
+	* xgettext.c: Include x-scheme.h.
+	(flag_table_scheme): New variable.
+	(main): Invoke init_flag_table_scheme, x_scheme_extract_all,
+	x_scheme_keyword.
+	(usage): Mention Scheme source language.
+	(xgettext_record_flag): Handle format_scheme.
+	(language_to_extractor): Add Scheme rule.
+	(extension_to_language): Add Scheme rule.
+	* Makefile.am (noinst_HEADERS): Add x-scheme.h.
+	(FORMAT_SOURCE): Add format-scheme.c.
+	(xgettext_SOURCES): Add x-scheme.c.
+	* Makefile.msvc (OBJECTS): Add format-scheme.obj.
+	(xgettext_OBJECTS): Add x-scheme.obj.
+	(format-scheme.obj, x-scheme.obj): New rules.
+	* Makefile.vms (OBJECTS): Add format-scheme.obj.
+	(xgettext_OBJECTS): Add x-scheme.obj.
+	(format-scheme.obj, x-scheme.obj): New rules.
+	* FILES: Update.
+
+2005-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* msggrep.c (grep_args, grep_path, grep_argv): Remove variables.
+	(struct grep_task): New type.
+	(grep_task): New variable.
+	(main): Initialize grep_task instead of grep_args. Change processing
+	of options 'E', 'F' to set a matcher, of 'e', 'f' to append to the
+	pattern string, and of 'i' to set a boolean. Compile the patterns.
+	(is_string_selected): Execute a compiled pattern instead of calling
+	the grep program.
+	(is_message_selected): Update.
+	* Makefile.am (AM_CPPFLAGS): Add -I option for libgrep.
+	(LIBGREP): New variable.
+	(msggrep_LDADD): Add $(LIBGREP).
+	* Makefile.msvc (INCLUDES): Add libgrep directory.
+	(msggrep.exe): Link with libgrep.
+	* Makefile.vms (INCLUDES): Add libgrep directory.
+	(msggrep.exe): Link with libgrep.
+
+2005-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* msgl-ascii.h (is_ascii_msgdomain_list): New declaration.
+	* msgl-ascii.c (is_ascii_msgdomain_list): New function.
+	* x-po.c (header_charset): New variable.
+	(extract_add_message): When seeing the header entry, store the charset
+	in header_charset.
+	(extract): Store the value of header_charset in the new constructed
+	header entry.
+	* xgettext.c (main): Convert the existing PO file to UTF-8 if it was
+	not entirely ASCII.
+	Reported by Jörg Schilling <schilling@fokus.fraunhofer.de>.
+
+2005-01-08  Bruno Haible  <bruno@clisp.org>
+
+	* msggrep.c (usage): Explain COMMENT-PATTERN syntax as well.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* x-tcl.c (read_word): Ignore non-space whitespace at the beginning.
+	Reported by William J Poser <wjposer@ldc.upenn.edu>.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* write-csharp.c (msgdomain_write_csharp): Don't call fclose after
+	fwriteerror.
+	* write-java.c (msgdomain_write_java): Likewise.
+	* write-mo.c (msgdomain_write_mo): Likewise.
+	* write-po.c (msgdomain_list_print): Likewise.
+	* write-qt.c (msgdomain_write_qt): Likewise.
+	* write-resources.c (execute_writing_input): Likewise.
+	* write-tcl.c (msgdomain_write_tcl): Likewise.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* msgattrib.c (main): Update year in --version output.
+	* msgcat.c (main): Likewise.
+	* msgcmp.c (main): Likewise.
+	* msgcomm.c (main): Likewise.
+	* msgconv.c (main): Likewise.
+	* msgen.c (main): Likewise.
+	* msgexec.c (main): Likewise.
+	* msgfilter.c (main): Likewise.
+	* msgfmt.c (main): Likewise.
+	* msggrep.c (main): Likewise.
+	* msginit.c (main): Likewise.
+	* msgmerge.c (main): Likewise.
+	* msgunfmt.c (main): Likewise.
+	* msguniq.c (main): Likewise.
+	* xgettext.c (main): Likewise.
+
+2005-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-po.c (po_file_read): Interpret "-" and "/dev/stdin" as
+	denoting stdin.
+	Suggested by Asgeir Frimannsson <asgeirf@redhat.com>.
+
+2004-11-29  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libgettextpo_la_LDFLAGS): Add @LTLIBINTL@ @LTLIBICONV@.
+	Reported by Sam Steingold <sds@gnu.org>.
+
+2004-10-01  Guido Flohr  <guido@imperia.net>
+
+	* x-perl.c (x_perl_prelex): Recognize function names starting with '-'.
+	Reported by Ryan Anderson <ryan@autoweb.net>.
+
+2004-09-16  Bruno Haible  <bruno@clisp.org>
+
+	* format.h (formatstring_error_logger_t): Modify decl for GCC <= 3.0.
+	Reported by Jens A. Tkotz <jens@peino.de>.
+
+2004-09-11  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (msginit_SOURCES): Add plural-count.c.
+	* msginit.c (update_msgstr_plurals): New function.
+	(main): Call it.
+	* msgmerge.c (match_domain): Provide the appropriate number of plural
+	forms for messages that don't occur in the Def.po file.
+	Reported by Jens A. Tkotz <jens@peino.de>.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* format.h (formatstring_error_logger_t): New type.
+	(struct formatstring_parser): Change calling convention of 'check'
+	method.
+	(check_msgid_msgstr_format): New declaration.
+	* format-awk.c (format_check): Use error_logger argument instead of
+	noisy and error_at_line.
+	* format-c.c (format_check): Likewise.
+	* format-csharp.c (format_check): Likewise.
+	* format-elisp.c (format_check): Likewise.
+	* format-gcc-internal.c (format_check): Likewise.
+	* format-java.c (format_check): Likewise.
+	* format-librep.c (format_check): Likewise.
+	* format-lisp.c (format_check): Likewise.
+	* format-pascal.c (format_check): Likewise.
+	* format-perl.c (format_check): Likewise.
+	* format-perl-brace.c (format_check): Likewise.
+	* format-php.c (format_check): Likewise.
+	* format-python.c (format_check): Likewise.
+	* format-qt.c (format_check): Likewise.
+	* format-sh.c (format_check): Likewise.
+	* format-tcl.c (format_check): Likewise.
+	* format-ycp.c (format_check): Likewise.
+	* format.c (check_msgid_msgstr_format): New function, extracted from
+	msgfmt.c.
+	* msgfmt.c (curr_msgid_pos): New variable.
+	(formatstring_error_logger): New function.
+	(check_pair): Use check_msgid_msgstr_format, formatstring_error_logger.
+	* msgmerge.c (msgfmt_check_pair_fails): Update.
+	* gettext-po.h (po_message_check_format): New declaration.
+	* gettext-po.c (po_error_logger, po_message_check_format): New
+	functions.
+
+2004-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* po-error.h: New file.
+	* po-error.c: New file.
+	* po-charset.c: Include po-error.h.
+	(po_lex_charset_set): Use po_multiline_warning instead of
+	multiline_warning.
+	* po-lex.h: Include po-error.h.
+	(po_gram_error): Use po_error instead of error.
+	(po_gram_error_at_line): Use po_error_at_line instead of error_at_line.
+	* po-lex.c (po_gram_error): Use po_error instead of error.
+	(po_gram_error_at_line): Use po_error_at_line instead of error_at_line.
+	(mbfile_getc, lex_getc): Use po_error instead of error.
+	* read-po-abstract.c (po_scan): Likewise.
+	* write-po.c: Include po-error.h instead of error.h.
+	(wrap): Use po_error instead of error.
+	(message_print, message_print_obsolete): Use po_multiline_warning
+	instead of multiline_warning.
+	(msgdomain_list_print): Use po_error instead of error, po_error_at_line
+	instead of error_at_line.
+	* str-list.h (string_list_join): New declaration.
+	* str-list.c (string_list_join): New function.
+	* message.h (message_list_insert_at): New declaration.
+	* message.c (message_list_insert_at): New function.
+	* gettext-po.h (po_filepos_t): New type.
+	(struct po_error_handler, po_error_handler_t): New types.
+	(po_file_create): New declaration.
+	(po_file_read): Add handler argument.
+	(po_file_write, po_message_insert, po_message_create,
+	po_message_set_msgid, po_message_set_msgid_plural,
+	po_message_set_msgstr, po_message_set_msgstr_plural,
+	po_message_comments, po_message_set_comments,
+	po_message_extracted_comments, po_message_filepos,
+	po_message_set_obsolete, po_message_set_fuzzy, po_message_set_format,
+	po_filepos_file, po_filepos_start_line): New declarations.
+	* gettext-po.c (po_file_create): New function.
+	(po_file_read): Add handler argument. Keep an old version for backward
+	compatibility.
+	(po_file_write): New function.
+	(po_message_iterator): Store more information, to make
+	po_message_insert possible.
+	(po_message_iterator_free): Update.
+	(po_next_message): Don't crash if iterator->mlp is NULL.
+	(po_message_insert): New function.
+	(po_message_create): New function.
+	(po_message_set_msgid, po_message_set_msgid_plural,
+	po_message_set_msgstr, po_message_set_msgstr_plural,
+	po_message_comments, po_message_set_comments,
+	po_message_extracted_comments, po_message_filepos,
+	po_message_set_obsolete, po_message_set_fuzzy, po_message_set_format,
+	po_filepos_file, po_filepos_start_line): New functions.
+	* Makefile.am (noinst_HEADERS): Add po-error.h.
+	(COMMON_SOURCE): Add po-error.c.
+	* Makefile.msvc (OBJECTS): Add po-error.obj.
+	(po-error.obj): New rule.
+	* Makefile.vms (OBJECTS): Add po-error.obj.
+	(po-error.obj): New rule.
+	* FILES: Update.
+
+2004-09-03  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (msginit_LDADD): Use the INTL_MACOSX_LDFLAGS.
+
+2004-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* plural-table.c (plural_table): Czech is now like Slovak.
+	Reported by Stepan Kasal <kasal@ucw.cz>.
+
+2004-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* x-c.c (phase1_getc): Fix phase0_getc invocation.
+	Reported by Matt Dreezer <matthew.dreezer@edl.uk.eds.com>.
+
+2004-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* format-java.c (message_format_parse): Fix argument of freesa() calls.
+
+2004-03-19  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (install-exec-clean): Don't remove libgettextsrc.a on
+	AIX.
+	Reported by Kouichi Hashikawa <z01a7ksy@cs.ecip.tohoku.ac.jp>.
+
+2004-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* format-lisp.c (parse_upto): Add integer restriction for the dispatch
+	argument in ~[...~].
+
+2004-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* read-csharp.c (msgdomain_read_csharp): Extend the lang -> frobbedlang
+	mapping so as to support Serbian and Uzbek locales.
+	* write-csharp.c (msgdomain_write_csharp): Likewise.
+	Reported by Jorn Baayen <jbaayen@dds.nl>.
+
+2004-02-27  Bruno Haible  <bruno@clisp.org>
+
+	* plural-table.c (plural_table): Add an entry about Serbian.
+	Reported by Danilo Segan <danilo@gnome.org>.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

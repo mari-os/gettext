@@ -1,5 +1,5 @@
 ## Makefile for the gettext-runtime/libasprintf subdirectory of GNU gettext
-## Copyright (C) 2002-2004 Free Software Foundation, Inc.
+## Copyright (C) 2002-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify it
 ## under the terms of the GNU Library General Public License as published
@@ -22,6 +22,8 @@ AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
 ACLOCAL_AMFLAGS = -I ../../config/m4 -I ../m4
 EXTRA_DIST =
 MOSTLYCLEANFILES =
+
+RM = rm -f
 
 
 # Library include file.
@@ -55,6 +57,14 @@ lib_asprintf_EXTRASOURCES = \
   vasprintf.h vasprintf.c asprintf.c
 lib-asprintf.lo: $(lib_asprintf_EXTRASOURCES)
 EXTRA_DIST += $(lib_asprintf_EXTRASOURCES)
+
+
+# How to build libasprintf.
+# With libtool 1.5.14, on some platforms, like BeOS, "libtool --tag=CXX" fails
+# to create a shared library, however "libtool --tag=CC" succeeds.
+libasprintf.la: $(libasprintf_la_OBJECTS) $(libasprintf_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libasprintf_la_LDFLAGS) $(libasprintf_la_OBJECTS) $(libasprintf_la_LIBADD) $(LIBS) || \
+	$(LINK) -rpath $(libdir) $(libasprintf_la_LDFLAGS) $(libasprintf_la_OBJECTS) $(libasprintf_la_LIBADD) $(LIBS)
 
 
 # >>> gnulib module alloca.
@@ -217,7 +227,7 @@ config.h.msvc: config.h.in
 	    -e 's/#undef HAVE_WCHAR_T$$/#define HAVE_WCHAR_T 1/' \
 	    -e 's/#undef HAVE_WCSLEN$$/#define HAVE_WCSLEN 1/' \
 	    -e 's/#undef HAVE_WINT_T$$/#define HAVE_WINT_T 1/' \
-	    -e 's/#undef SIZE_MAX$$/#define SIZE_MAX 2147483647U/' \
+	    -e 's/#undef SIZE_MAX$$/#define SIZE_MAX 4294967295U/' \
 	    -e 's/#undef inline$$/#define inline __inline/' \
 	  < $(srcdir)/config.h.in > $@
 

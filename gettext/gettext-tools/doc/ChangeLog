@@ -1,3 +1,109 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi: Put the table of contents at the end in TeX mode,
+	otherwise texi2dvi fails.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* tutorial.html: New file, from Gora Mohanty with modifications:
+	Remove the navigation panel. Don't use the -s option.
+	* Makefile.am (doc_DATA): Add tutorial.html.
+	* Makefile.msvc (install, uninstall): Also tutorial.html.
+	* Makefile.vms (install, uninstall): Also tutorial.html.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Files under CVS): Explain the role of the
+	AM_GNU_GETTEXT_VERSION argument.
+
+2005-02-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Release Management): New section.
+	Suggested by Karl Berry.
+
+2005-02-04  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Plural forms): Add info about Vietnamese.
+	Explanations by Clytie Siddall <clytie@riverland.net.au>.
+
+2005-01-20  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Scheme): Correct information about setlocale.
+
+2005-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Support for Scheme.
+	* gettext.texi (PO Files): Mention scheme-format.
+	(scheme-format): New subsection.
+	(Scheme): New subsection.
+	* xgettext.texi: Document Scheme source language. Document that it is
+	applicable to --flag.
+
+2005-01-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi: Put the table of contents at the beginning, after the
+	titlepage, not at the end.
+
+2004-11-13  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Preparing Shell Scripts): Document extra backslashing.
+
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (EXTRA_DIST): Add FAQ.html.
+
+2004-09-02  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Aspects): Tweak language: ISO-8859-1 is not a font.
+	Reported by Vera Mickael <vera.mickael@free.fr>.
+
+2004-08-30  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Plural forms): Czech is now like Slovak.
+	Reported by Stepan Kasal <kasal@ucw.cz>.
+
+2004-08-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Aspects): Fix typo in ISO standard number.
+	Patch by <bethor@gmx.li>.
+
+2004-07-13  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Python): Remove mention of a bug that was fixed in
+	Python 2.3.x.
+	Reported by Karl Chen <quarl@hkn.eecs.berkeley.edu>.
+
+2004-02-27  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (Plural forms): Add info about Serbian.
+	Reported by Danilo Segan <danilo@gnome.org>.
+
+2004-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* FAQ.html (How do I make use of gettext() in my package?): New
+	question. Suggested by Paul Eggert <eggert@cs.ucla.edu>.
+
+2004-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* FAQ.html: New file.
+	* Makefile.am (doc_DATA): New variable.
+	* Makefile.msvc (install): Also install FAQ.html.
+	(uninstall): Also uninstall FAQ.html.
+	* Makefile.vms (install): Also install FAQ.html.
+	(uninstall): Also uninstall FAQ.html.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.texi (aclocal): Mention glibc2.m4.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

@@ -1,3 +1,60 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* ca.po: Update from Ivan Vilata i Balaguer <ivan@selidor.net>.
+	* de.po: Update from Karl Eichwalder <ke@suse.de>.
+	* fr.po: Update from Michel Robitaille <robitail@iro.umontreal.ca>.
+	* ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+	* ko.po: Update from Changwoo Ryu <cwryu@debian.org>.
+	* pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>.
+	* ru.po: Update from Oleg S. Tihonov <tihonov@ffke-campus.mipt.ru>.
+	* sk.po: Update from Marcel Telka <marcel@telka.sk>.
+	* tr.po: Update from Nilgün Belma Bugüner <nilgun@superonline.com>.
+	* zh_CN.po: Update from Funda Wang <fundawang@linux.net.cn>.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.in.in (PACKAGE_BUGREPORT): New variable.
+	($(DOMAIN).pot-update): If MSGID_BUGS_ADDRESS is empty and
+	PACKAGE_BUGREPORT is available, use the latter.
+	Reported by Simon Josefsson <jas@extundo.com>.
+
+2005-01-26  Bruno Haible  <bruno@clisp.org>
+
+	* ru.po: Update from Oleg S. Tihonov <tihonov@ffke-campus.mipt.ru>.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* uk.po: New file, from Maxim V. Dziumanenko <mvd@mylinux.com.ua>.
+	* de.po: Downgrade to old orthography from Karl Eichwalder <ke@suse.de>.
+	* LINGUAS: Add uk.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* POTFILES.in: Update.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* Makevars (XGETTEXT_OPTIONS): Recognize error_logger calls.
+
+2004-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* Makevars (XGETTEXT_OPTIONS): Recognize po_error and po_error_at_line.
+
+2004-03-21  Bruno Haible  <bruno@clisp.org>
+
+	* ca.po: Update from Ivan Vilata i Balaguer <ivan@selidor.net>.
+	* es.po: Update from Max de Mendizábal <max@upn.mx>.
+	* sr.po: Update from Danilo Segan <dsegan@gmx.net>.
+	* zh_CN.po: Update from Funda Wang <fundawang@linux.net.cn>.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

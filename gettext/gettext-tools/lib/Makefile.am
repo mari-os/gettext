@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/lib subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2003 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
 EXTRA_DIST =
+BUILT_SOURCES =
 MOSTLYCLEANFILES =
 CLEANFILES =
 DISTCLEANFILES =
@@ -37,22 +38,22 @@ libgettextlib_la_SOURCES = \
   basename.h basename.c \
   binary-io.h \
   c-ctype.h c-ctype.c \
+  c-strcase.h c-strcasecmp.c c-strncasecmp.c \
   classpath.h classpath.c \
   closeout.h closeout.c \
   copy-file.h copy-file.c \
   csharpcomp.h csharpcomp.c \
   csharpexec.h csharpexec.c \
-  error.h error.c \
   error-progname.h error-progname.c \
   execute.h execute.c w32spawn.h \
   exit.h \
+  exitfail.h exitfail.c \
   fatal-signal.h fatal-signal.c \
   findprog.h findprog.c \
   fstrcmp.h fstrcmp.c \
   full-write.h full-write.c \
   fwriteerror.h fwriteerror.c \
   gcd.h gcd.c \
-  getopt.h getopt.c getopt1.c \
   hash.h hash.c \
   javacomp.h javacomp.c \
   javaexec.h javaexec.c \
@@ -62,13 +63,13 @@ libgettextlib_la_SOURCES = \
   obstack.h obstack.c \
   pathmax.h \
   pathname.h concatpath.c \
-  pipe.h pipe-bidi.c pipe-in.c pipe-out.c w32spawn.h \
+  pipe.h pipe.c w32spawn.h \
   progname.h progname.c progreloc.c \
+  quote.h quote.c \
+  quotearg.h quotearg.c \
   safe-read.h safe-read.c \
   safe-write.h safe-write.c \
   sh-quote.h sh-quote.c \
-  stpncpy.h stpncpy.c \
-  strtoul.c \
   tmpdir.h tmpdir.c \
   ucs4-utf8.h ucs4-utf16.h \
   unlocked-io.h \
@@ -85,9 +86,11 @@ libgettextlib_la_SOURCES = \
 LIBADD_SOURCE = \
   atexit.c \
   canonicalize.h canonicalize.c \
+  error.h error.c \
   fnmatch.c \
   getline.h getline.c \
   getndelim2.h getndelim2.c \
+  getopt.c getopt1.c getopt_int.h \
   memmove.c \
   memset.c \
   mkdtemp.h mkdtemp.c \
@@ -95,12 +98,14 @@ LIBADD_SOURCE = \
   relocatable.h relocatable.c \
   setenv.h setenv.c unsetenv.c \
   stpcpy.h stpcpy.c \
+  stpncpy.h stpncpy.c \
   strcase.h strcasecmp.c strncasecmp.c \
   strcspn.c \
   strerror.c \
   strpbrk.h strpbrk.c \
   strstr.h strstr.c \
   strtol.c \
+  strtoul.c \
   vasprintf.h vasprintf.c
 
 # Unused sources.
@@ -118,10 +123,13 @@ libgettextlib_la_LDFLAGS = \
   -release @VERSION@ \
   @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
-# No need to install libgettextlib.a.
+# No need to install libgettextlib.a, except on AIX.
 install-exec-local: install-libLTLIBRARIES install-exec-clean
 install-exec-clean:
-	$(RM) $(DESTDIR)$(libdir)/libgettextlib.a
+	case "@host_os@" in \
+	  aix*) ;; \
+	  *) $(RM) $(DESTDIR)$(libdir)/libgettextlib.a ;; \
+	esac
 
 # Extra files to be installed.
 
@@ -141,16 +149,13 @@ examplesconfig_DATA = \
 noinst_HEADERS = gettext.h
 
 EXTRA_DIST += \
-  $(LIBADD_SOURCE) $(UNUSED_SOURCE) relocwrapper.c \
+  $(LIBADD_SOURCE) $(UNUSED_SOURCE) relocwrapper.c allocsa.valgrind \
   gen-lbrkprop.c 3level.h Combining.txt \
   ChangeLog.0
 
 AM_CPPFLAGS = -I. -I$(srcdir) -I.. -I../intl -I$(top_srcdir)/intl
 
 DEFS = -DEXEEXT=\"$(EXEEXT)\" -DDEPENDS_ON_LIBINTL=1 -DDEPENDS_ON_LIBICONV=1 @DEFS@
-
-
-DISTCLEANFILES += fnmatch.h
 
 
 # >>> gnulib module stdbool.
@@ -178,7 +183,8 @@ MOSTLYCLEANFILES += alloca.h
 
 
 # >>> gnulib module fnmatch.
-EXTRA_DIST += fnmatch_.h
+BUILT_SOURCES += $(FNMATCH_H)
+EXTRA_DIST += fnmatch_.h fnmatch_loop.c
 
 # The following is needed in order to create an <fnmatch.h> when the system
 # doesn't have one that works.
@@ -187,6 +193,19 @@ fnmatch.h: fnmatch_.h
 	cp $(srcdir)/fnmatch_.h fnmatch.h
 MOSTLYCLEANFILES += fnmatch.h
 # <<< gnulib module fnmatch.
+
+
+# >>> gnulib module getopt.
+BUILT_SOURCES += $(GETOPT_H)
+EXTRA_DIST += getopt_.h getopt_int.h
+
+# The following is needed in order to create a <getopt.h> when the system
+# doesn't have one that works.
+all-local $(libgettextlib_la_OBJECTS): @GETOPT_H@
+getopt.h: getopt_.h
+	cp $(srcdir)/getopt_.h getopt.h
+MOSTLYCLEANFILES += getopt.h
+# <<< gnulib module getopt.
 
 
 # >>> gnulib module localcharset.

@@ -1,3 +1,126 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-12  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (EOVERFLOW): Define to a fallback if needed.
+
+2005-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.in (LTV_CURRENT, LTV_REVISION, LTV_AGE): Bump to 7:1:4.
+
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (libintl.la, libgnuintl.la): Use INTL_MACOSX_LIBS
+	instead of INTL_MACOSX_LDFLAGS.
+
+2004-09-08  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (VASNPRINTF): Signal EOVERFLOW if the resulting length
+	is > INT_MAX.
+
+2005-01-01  Bruno Haible  <bruno@clisp.org>
+
+	* dcigettext.c (guess_category_value): Let the environment variables
+	LC_ALL, LC_xxx, LANG take precedence over the system-dependent language
+	preference list.
+	* gettextP.h (_nl_language_preferences): Remove declaration.
+	(_nl_language_preferences_default): New declaration.
+	(_nl_locale_name_posix, _nl_locale_name_default): New declarations.
+	* langprefs.c (_nl_language_preferences_default): Renamed from
+	_nl_language_preferences. Remove handling of getenv("LANGUAGE").
+	* localename.c (_nl_locale_name_posix, _nl_locale_name_default): New
+	functions, extracted from _nl_locale_name.
+	(_nl_locale_name): Use them.
+
+2004-09-06  Bruno Haible  <bruno@clisp.org>
+
+	* localename.c (_nl_locale_name): Add code for MacOS X versions that
+	don't have the CFLocaleCopyCurrent() function.
+	* langprefs.c (_nl_language_preferences): Make code more robust.
+
+2004-09-05  Bruno Haible  <bruno@clisp.org>
+
+	* langprefs.c: New file.
+	* gettextP.h (_nl_language_preferences): New declaration.
+	* dcigettext.c (guess_category_value) [!_LIBC]: Use
+	_nl_language_preferences.
+	* Makefile.in (SOURCES): Add langprefs.c.
+	(OBJECTS): Add langprefs.$lo.
+	(langprefs.lo): New rule.
+	* Makefile.msvc (OBJECTS): Add langprefs.obj.
+	(langprefs.obj): New rule.
+	* Makefile.vms (OBJECTS): Add langprefs.obj.
+	(langprefs.obj): New rule.
+
+2004-09-03  Bruno Haible  <bruno@clisp.org>
+
+	* localename.c (_nl_locale_name): Use a more intelligent fallback on
+	MacOS X versions that have the CFLocaleCopyCurrent() function.
+	* Makefile.in (libintl.la, libgnuintl.la): Use the INTL_MACOSX_LDFLAGS.
+
+2004-09-01  Bruno Haible  <bruno@clisp.org>
+
+	* config.charset: Add support for Darwin 7.
+
+2004-08-13  Bruno Haible  <bruno@clisp.org>
+
+	* libgnuintl.h.in (__GNU_GETTEXT_SUPPORTED_REVISION): Treat major
+	revision 1 like major revision 0. Needed for 2004-01-09 change.
+
+2004-08-08  Bruno Haible  <bruno@clisp.org>
+
+	* relocatable.c (FILE_SYSTEM_PREFIX_LEN): Renamed from
+	FILESYSTEM_PREFIX_LEN.
+	(compute_curr_prefix): Update.
+
+2004-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* vasnprintf.c (VASNPRINTF): Correctly handle the case of a precision
+	that consists of a '.' followed by an empty digit string.
+	Patch by Tor Lillqvist <tml@iki.fi>.
+
+2004-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* dcigettext.c (ISSLASH, IS_ABSOLUTE_PATH, IS_PATH_WITH_DIR): Treat
+	Cygwin like Windows, since it now accepts Windows pathnames.
+	* l10nflist.c (ISSLASH, IS_ABSOLUTE_PATH): Treat Cygwin like Windows,
+	since it now accepts Windows pathnames.
+	* localcharset.c (ISSLASH): Treat Cygwin like Windows, since it now
+	accepts Windows pathnames.
+	* relocatable.c (ISSLASH, IS_PATH_WITH_DIR, FILESYSTEM_PREFIX_LEN):
+	Treat Cygwin like Windows, since it now accepts Windows pathnames.
+	(compute_curr_prefix): Likewise.
+	Reported by Derek Robert Price <derek@ximbiot.com>.
+
+2004-04-23  Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases): Allow the CHARSETALIASDIR
+	environment variable to override LIBDIR.
+	Suggested by Matthias Clasen <mclasen@redhat.com>.
+
+2004-04-20  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* localcharset.c (get_charset_aliases) [!VMS && !WIN32]: Don't leak
+	memory when realloc fails.
+
+2004-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* localename.c (_nl_locale_name): Add info about default territory for
+	Basque, Mongolian, Russian, Tamil. Map Norwegian to nb, not no.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.in (install-exec, installdirs, uninstall): Install
+	preloaded_libintl.so only on glibc systems, not on OpenBSD.
+	Reported by Han Boetes <han@mijncomputer.nl>.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

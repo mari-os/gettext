@@ -1,5 +1,5 @@
 /* Table of known plural form expressions.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2005 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
    This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,7 @@ struct plural_table_entry plural_table[] =
     { "hu", "Hungarian",         "nplurals=1; plural=0;" },
     { "ja", "Japanese",          "nplurals=1; plural=0;" },
     { "ko", "Korean",            "nplurals=1; plural=0;" },
+    { "vi", "Vietnamese",        "nplurals=1; plural=0;" },
     { "tr", "Turkish",           "nplurals=1; plural=0;" },
     { "da", "Danish",            "nplurals=2; plural=(n != 1);" },
     { "nl", "Dutch",             "nplurals=2; plural=(n != 1);" },
@@ -53,10 +54,11 @@ struct plural_table_entry plural_table[] =
     { "ga", "Irish",             "nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;" },
     { "lt", "Lithuanian",        "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);" },
     { "hr", "Croatian",          "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
-    { "cs", "Czech",             "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
+    { "sr", "Serbian",           "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
     { "ru", "Russian",           "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
     { "uk", "Ukrainian",         "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
     { "sk", "Slovak",            "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;" },
+    { "cs", "Czech",             "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;" },
     { "pl", "Polish",            "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
     { "sl", "Slovenian",         "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);" }
   };

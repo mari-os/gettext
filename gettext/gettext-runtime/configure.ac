@@ -1,5 +1,5 @@
 dnl Configuration for the gettext-runtime directory of GNU gettext
-dnl Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+dnl Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -84,12 +84,14 @@ AC_TYPE_SIZE_T
 dnl Checks for library functions.
 gl_ALLOCSA
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([setlocale strerror strtoul])
+AC_CHECK_FUNCS([setlocale strerror])
 AC_REPLACE_FUNCS([atexit memmove])
+gl_GETOPT
 gt_FUNC_SETENV
 gl_FUNC_STRERROR
-jm_FUNC_GLIBC_UNLOCKED_IO
-gt_FUNC_ERROR_AT_LINE
+gl_FUNC_STRTOUL
+gl_FUNC_GLIBC_UNLOCKED_IO
+gl_ERROR
 gl_PATHMAX
 gl_FUNC_READLINK
 gl_XREADLINK
@@ -158,6 +160,7 @@ AC_CONFIG_FILES([lib/csharpcomp.sh:../gettext-tools/lib/csharpcomp.sh.in])
 
 AC_CONFIG_FILES([src/Makefile],
                 [FIX_MAKEFILE_COMPILE])
+AC_CONFIG_FILES([src/gettext.sh], [chmod a+x src/gettext.sh])
 
 AC_CONFIG_FILES([po/Makefile.in])
 

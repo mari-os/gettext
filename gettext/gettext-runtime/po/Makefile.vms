@@ -60,6 +60,9 @@ install : all
 	create /directory $(localedir).fr]
 	create /directory $(localedir).fr.LC_MESSAGES]
 	$(INSTALL_DATA) fr.gmo $(localedir).fr.LC_MESSAGES]gettext-runtime.mo
+	create /directory $(localedir).ga]
+	create /directory $(localedir).ga.LC_MESSAGES]
+	$(INSTALL_DATA) ga.gmo $(localedir).ga.LC_MESSAGES]gettext-runtime.mo
 	create /directory $(localedir).gl]
 	create /directory $(localedir).gl.LC_MESSAGES]
 	$(INSTALL_DATA) gl.gmo $(localedir).gl.LC_MESSAGES]gettext-runtime.mo
@@ -117,6 +120,9 @@ install : all
 	create /directory $(localedir).uk]
 	create /directory $(localedir).uk.LC_MESSAGES]
 	$(INSTALL_DATA) uk.gmo $(localedir).uk.LC_MESSAGES]gettext-runtime.mo
+	create /directory $(localedir).vi]
+	create /directory $(localedir).vi.LC_MESSAGES]
+	$(INSTALL_DATA) vi.gmo $(localedir).vi.LC_MESSAGES]gettext-runtime.mo
 	create /directory $(localedir).zh_CN]
 	create /directory $(localedir).zh_CN.LC_MESSAGES]
 	$(INSTALL_DATA) zh_CN.gmo $(localedir).zh_CN.LC_MESSAGES]gettext-runtime.mo
@@ -152,6 +158,8 @@ installdirs :
 	create /directory $(localedir).fi.LC_MESSAGES]
 	create /directory $(localedir).fr]
 	create /directory $(localedir).fr.LC_MESSAGES]
+	create /directory $(localedir).ga]
+	create /directory $(localedir).ga.LC_MESSAGES]
 	create /directory $(localedir).gl]
 	create /directory $(localedir).gl.LC_MESSAGES]
 	create /directory $(localedir).id]
@@ -190,6 +198,8 @@ installdirs :
 	create /directory $(localedir).tr.LC_MESSAGES]
 	create /directory $(localedir).uk]
 	create /directory $(localedir).uk.LC_MESSAGES]
+	create /directory $(localedir).vi]
+	create /directory $(localedir).vi.LC_MESSAGES]
 	create /directory $(localedir).zh_CN]
 	create /directory $(localedir).zh_CN.LC_MESSAGES]
 	create /directory $(localedir).zh_TW]
@@ -208,6 +218,7 @@ uninstall :
 	$(RM) $(localedir).et.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).fi.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).fr.LC_MESSAGES]gettext-runtime.mo;
+	$(RM) $(localedir).ga.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).gl.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).id.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).it.LC_MESSAGES]gettext-runtime.mo;
@@ -227,6 +238,7 @@ uninstall :
 	$(RM) $(localedir).sv.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).tr.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).uk.LC_MESSAGES]gettext-runtime.mo;
+	$(RM) $(localedir).vi.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).zh_CN.LC_MESSAGES]gettext-runtime.mo;
 	$(RM) $(localedir).zh_TW.LC_MESSAGES]gettext-runtime.mo;
 

@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
    This program is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@
 #include "read-po.h"
 #include "msgl-iconv.h"
 #include "strstr.h"
-#include "strcase.h"
+#include "c-strcase.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -141,7 +141,7 @@ main (int argc, char *argv[])
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\
 "),
-	      "1995-1998, 2000-2004");
+	      "1995-1998, 2000-2005");
       printf (_("Written by %s.\n"), "Peter Miller");
       exit (EXIT_SUCCESS);
     }
@@ -336,7 +336,7 @@ compare (const char *fn1, const char *fn2)
 		      charsetstr += strlen ("charset=");
 		      len = strcspn (charsetstr, " \t\n");
 		      if (len == strlen ("UTF-8")
-			  && strncasecmp (charsetstr, "UTF-8", len) == 0)
+			  && c_strncasecmp (charsetstr, "UTF-8", len) == 0)
 			was_utf8 = true;
 		    }
 		}

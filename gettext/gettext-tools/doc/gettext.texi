@@ -61,7 +61,7 @@
 This file provides documentation for GNU @code{gettext} utilities.
 It also serves as a reference for the free Translation Project.
 
-Copyright (C) 1995-1998, 2001-2004 Free Software Foundation, Inc.
+Copyright (C) 1995-1998, 2001-2005 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -112,6 +112,11 @@ into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation approved
 by the Foundation.
 @end titlepage
+
+@ifnottex
+@c Table of Contents
+@contents
+@end ifnottex
 
 @ifinfo
 @node Top, Introduction, (dir), (dir)
@@ -289,6 +294,7 @@ The Maintainer's View
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in @file{configure.in}
 * CVS Issues::                  Integrating with CVS
+* Release Management::          Creating a Distribution Tarball
 
 Files You Must Create or Alter
 
@@ -336,6 +342,7 @@ The Translator's View
 * lisp-format::                 Lisp Format Strings
 * elisp-format::                Emacs Lisp Format Strings
 * librep-format::               librep Format Strings
+* scheme-format::               Scheme Format Strings
 * smalltalk-format::            Smalltalk Format Strings
 * java-format::                 Java Format Strings
 * csharp-format::               C# Format Strings
@@ -358,6 +365,7 @@ Individual Programming Languages
 * clisp C::                     GNU clisp C sources
 * Emacs Lisp::                  Emacs Lisp
 * librep::                      librep
+* Scheme::                      GNU guile - Scheme
 * Smalltalk::                   GNU Smalltalk
 * Java::                        Java
 * C#::                          C#
@@ -685,8 +693,8 @@ speaking parts of the world is the ASCII codeset.  However, there are
 many characters needed by various locales that are not found within
 this codeset.  The 8-bit @w{ISO 8859-1} code set has most of the special
 characters needed to handle the major European languages.  However, in
-many cases, the @w{ISO 8859-1} font is not adequate: it doesn't even
-handle the major European currency.  Hence each locale
+many cases, choosing @w{ISO 8859-1} is nevertheless not adequate: it
+doesn't even handle the major European currency.  Hence each locale
 will need to specify which codeset they need to use and will need
 to have the appropriate character handling routines to cope with
 the codeset.
@@ -705,7 +713,7 @@ display currency figures in the native mode for each locale.
 
 The format of date varies between locales.  For example, Christmas day
 in 1994 is written as 12/25/94 in the USA and as 25/12/94 in Australia.
-Other countries might use @w{ISO 8061} dates, etc.
+Other countries might use @w{ISO 8601} dates, etc.
 
 Time of the day may be noted as @var{hh}:@var{mm}, @var{hh}.@var{mm},
 or otherwise.  Some locales require time to be specified in 24-hour
@@ -1208,6 +1216,12 @@ Likewise for Emacs Lisp, see @ref{elisp-format}.
 @itemx no-librep-format
 @kwindex no-librep-format@r{ flag}
 Likewise for librep, see @ref{librep-format}.
+
+@item scheme-format
+@kwindex scheme-format@r{ flag}
+@itemx no-scheme-format
+@kwindex no-scheme-format@r{ flag}
+Likewise for Scheme, see @ref{scheme-format}.
 
 @item smalltalk-format
 @kwindex smalltalk-format@r{ flag}
@@ -5021,7 +5035,7 @@ Languages with this property include:
 @item Finno-Ugric family
 Hungarian
 @item Asian family
-Japanese, Korean
+Japanese, Korean, Vietnamese
 @item Turkic/Altaic family
 Turkish
 @end table
@@ -5131,7 +5145,7 @@ Languages with this property include:
 
 @table @asis
 @item Slavic family
-Croatian, Czech, Russian, Ukrainian
+Croatian, Serbian, Russian, Ukrainian
 @end table
 
 @item Three forms, special cases for 1 and 2, 3, 4
@@ -5147,7 +5161,7 @@ Languages with this property include:
 
 @table @asis
 @item Slavic family
-Slovak
+Slovak, Czech
 @end table
 
 @item Three forms, special case for one and some numbers ending in 2, 3, or 4
@@ -6241,6 +6255,7 @@ for changes.
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in @file{configure.in}
 * CVS Issues::                  Integrating with CVS
+* Release Management::          Creating a Distribution Tarball
 @end menu
 
 @node Flat and Non-Flat, Prerequisites, Maintainers, Maintainers
@@ -6631,8 +6646,8 @@ AC_CONFIG_AUX_DIR([@var{subdir}])
 
 If you do not have an @file{aclocal.m4} file in your distribution,
 the simplest is to concatenate the files @file{codeset.m4},
-@file{gettext.m4}, @file{glibc21.m4}, @file{iconv.m4}, @file{intdiv0.m4},
-@file{intmax.m4}, @file{inttypes.m4}, @file{inttypes_h.m4},
+@file{gettext.m4}, @file{glibc2.m4}, @file{glibc21.m4}, @file{iconv.m4},
+@file{intdiv0.m4}, @file{intmax.m4}, @file{inttypes.m4}, @file{inttypes_h.m4},
 @file{inttypes-pri.m4}, @file{isc-posix.m4}, @file{lcmessage.m4},
 @file{lib-ld.m4}, @file{lib-link.m4}, @file{lib-prefix.m4},
 @file{longdouble.m4}, @file{longlong.m4}, @file{printf-posix.m4},
@@ -7127,7 +7142,7 @@ library support, like SCO.
 @file{iconv.m4} is distributed with the GNU gettext package because
 @file{gettext.m4} relies on it.
 
-@node CVS Issues,  , autoconf macros, Maintainers
+@node CVS Issues, Release Management, autoconf macros, Maintainers
 @section Integrating with CVS
 
 Many projects use CVS for distributed development, version control and
@@ -7246,10 +7261,40 @@ and adds to the package's pre-build script an invocation of
 @code{autopoint} invocation will copy into the right place the
 @code{gettext} infrastructure files that have been omitted from the CVS.
 
+The version number used as argument to @code{AM_GNU_GETTEXT_VERSION} is
+the version of the @code{gettext} infrastructure that the package wants
+to use.  It is also the minimum version number of the @samp{autopoint}
+program.  So, if you write @code{AM_GNU_GETTEXT_VERSION(0.11.5)} then the
+developers can have any version >= 0.11.5 installed; the package will work
+with the 0.11.5 infrastructure in all developers' builds.  When the
+maintainer then runs gettextize from, say, version 0.12.1 on the package,
+the occurrence of @code{AM_GNU_GETTEXT_VERSION(0.11.5)} will be changed
+into @code{AM_GNU_GETTEXT_VERSION(0.12.1)}, and all other developers that
+use the CVS will henceforth need to have GNU @code{gettext} 0.12.1 or newer
+installed.
+
 @node autopoint Invocation,  , Files under CVS, CVS Issues
 @subsection Invoking the @code{autopoint} Program
 
 @include autopoint.texi
+
+@node Release Management,  , CVS Issues, Maintainers
+@section Creating a Distribution Tarball
+
+@cindex release
+@cindex distribution tarball
+In projects that use GNU @code{automake}, the usual commands for creating
+a distribution tarball, @samp{make dist} or @samp{make distcheck},
+automatically update the PO files as needed.
+
+If GNU @code{automake} is not used, the maintainer needs to perform this
+update before making a release:
+
+@example
+$ ./configure
+$ (cd po; make update-po)
+$ make distclean
+@end example
 
 @node Programming Languages, Conclusion, Maintainers, Top
 @chapter Other Programming Languages
@@ -7400,6 +7445,7 @@ strings.
 * lisp-format::                 Lisp Format Strings
 * elisp-format::                Emacs Lisp Format Strings
 * librep-format::               librep Format Strings
+* scheme-format::               Scheme Format Strings
 * smalltalk-format::            Smalltalk Format Strings
 * java-format::                 Java Format Strings
 * csharp-format::               C# Format Strings
@@ -7511,7 +7557,7 @@ section @w{Formatting Strings},
 Note that as of version 21, XEmacs supports numbered argument specifications
 in format strings while FSF Emacs doesn't.
 
-@node librep-format, smalltalk-format, elisp-format, Translators for other Languages
+@node librep-format, scheme-format, elisp-format, Translators for other Languages
 @subsection librep Format Strings
 
 librep format strings are documented in the librep manual, section
@@ -7519,7 +7565,13 @@ librep format strings are documented in the librep manual, section
 @url{http://librep.sourceforge.net/librep-manual.html#Formatted%20Output},
 @url{http://www.gwinnup.org/research/docs/librep.html#SEC122}.
 
-@node smalltalk-format, java-format, librep-format, Translators for other Languages
+@node scheme-format, smalltalk-format, librep-format, Translators for other Languages
+@subsection Scheme Format Strings
+
+Scheme format strings are documented in the SLIB manual, section
+@w{Format Specification}.
+
+@node smalltalk-format, java-format, scheme-format, Translators for other Languages
 @subsection Smalltalk Format Strings
 
 Smalltalk format strings are described in the GNU Smalltalk documentation,
@@ -7711,6 +7763,7 @@ that language, and to combine the resulting files using @code{msgcat}.
 * clisp C::                     GNU clisp C sources
 * Emacs Lisp::                  Emacs Lisp
 * librep::                      librep
+* Scheme::                      GNU guile - Scheme
 * Smalltalk::                   GNU Smalltalk
 * Java::                        Java
 * C#::                          C#
@@ -7928,6 +7981,43 @@ followed by a no-argument @samp{echo} command (to account for the terminating
 newline). Similarly, for cases with plural handling, replace a conditional
 @samp{echo} command with an invocation of @samp{ngettext} or
 @samp{eval_ngettext}, followed by a no-argument @samp{echo} command.
+
+When doing this, you also need to add an extra backslash before the dollar
+sign in references to shell variables, so that the @samp{eval_gettext}
+function receives the translatable string before the variable values are
+substituted into it. For example,
+
+@smallexample
+echo "Remaining files: $filecount"
+@end smallexample
+
+becomes
+
+@smallexample
+eval_gettext "Remaining files: \$filecount"; echo
+@end smallexample
+
+If the output command is not @samp{echo}, you can make it use @samp{echo}
+nevertheless, through the use of backquotes. However, note that inside
+backquotes, backslashes must be doubled to be effective (because the
+backquoting eats one level of backslashes). For example, assuming that
+@samp{error} is a shell function that signals an error,
+
+@smallexample
+error "file not found: $filename"
+@end smallexample
+
+is first transformed into
+
+@smallexample
+error "`echo \"file not found: \$filename\"`"
+@end smallexample
+
+which then becomes
+
+@smallexample
+error "`eval_gettext \"file not found: \\\$filename\"`"
+@end smallexample
 @end enumerate
 
 @node gettext.sh, gettext Invocation, Preparing Shell Scripts, sh
@@ -8069,7 +8159,7 @@ not used by the gettext emulation
 @code{import gettext}
 
 @item Use or emulate GNU gettext
-emulate.  Bug: uses only the first found .mo file, not all of them
+emulate
 
 @item Extractor
 @code{xgettext}
@@ -8236,7 +8326,7 @@ Only XEmacs.  Without @code{I18N3} defined at build time, no translation.
 ---
 @end table
 
-@node librep, Smalltalk, Emacs Lisp, List of Programming Languages
+@node librep, Scheme, Emacs Lisp, List of Programming Languages
 @subsection librep
 @cindex @code{librep} Lisp
 
@@ -8286,7 +8376,60 @@ On platforms without gettext, no translation.
 
 An example is available in the @file{examples} directory: @code{hello-librep}.
 
-@node Smalltalk, Java, librep, List of Programming Languages
+@node Scheme, Smalltalk, librep, List of Programming Languages
+@subsection GNU guile - Scheme
+@cindex Scheme
+@cindex guile
+
+@table @asis
+@item RPMs
+guile
+
+@item File extension
+@code{scm}
+
+@item String syntax
+@code{"abc"}
+
+@item gettext shorthand
+@code{(_ "abc")}
+
+@item gettext/ngettext functions
+@code{gettext}, @code{ngettext}
+
+@item textdomain
+@code{textdomain}
+
+@item bindtextdomain
+@code{bindtextdomain}
+
+@item setlocale
+@code{(catch #t (lambda () (setlocale LC_ALL "")) (lambda args #f))}
+
+@item Prerequisite
+@code{(use-modules (ice-9 format))}
+
+@item Use or emulate GNU gettext
+use
+
+@item Extractor
+@code{xgettext -k_}
+
+@item Formatting with positions
+@c @code{format "~1@@*~D ~0@@*~D~2@@*"}, requires @code{(use-modules (ice-9 format))}
+@c not yet supported
+---
+
+@item Portability
+On platforms without gettext, no translation.
+
+@item po-mode marking
+---
+@end table
+
+An example is available in the @file{examples} directory: @code{hello-guile}.
+
+@node Smalltalk, Java, Scheme, List of Programming Languages
 @subsection GNU Smalltalk
 @cindex Smalltalk
 
@@ -10258,7 +10401,11 @@ Project should come from this standard.
 
 @printindex cp
 
+@iftex
+@c Table of Contents
 @contents
+@end iftex
+
 @bye
 
 @c Local variables:

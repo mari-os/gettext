@@ -1,5 +1,5 @@
 /* gettext - retrieve text string from message catalog and print it.
-   Copyright (C) 1995-1997, 2000-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995-1997, 2000-2005 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, May 1995.
 
    This program is free software; you can redistribute it and/or modify
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\
 "),
-	      "1995-1997, 2000-2004");
+	      "1995-1997, 2000-2005");
       printf (_("Written by %s.\n"), "Ulrich Drepper");
       exit (EXIT_SUCCESS);
     }
@@ -312,16 +312,19 @@ expand_escape (const char *str)
   char *retval, *rp;
   const char *cp = str;
 
-  do
+  for (;;)
     {
       while (cp[0] != '\0' && cp[0] != '\\')
 	++cp;
+      if (cp[0] == '\0')
+	return str;
+      /* Found a backslash.  */
+      if (cp[1] == '\0')
+	return str;
+      if (strchr ("abcfnrtv\\01234567", cp[1]) != NULL)
+	break;
+      ++cp;
     }
-  while (cp[0] != '\0' && cp[1] != '\0'
-	 && strchr ("bcfnrt\\01234567", cp[1]) == NULL);
-
-  if (cp[0] == '\0')
-    return str;
 
   retval = (char *) xmalloc (strlen (str));
 
@@ -330,8 +333,13 @@ expand_escape (const char *str)
 
   do
     {
+      /* Here cp[0] == '\\'.  */
       switch (*++cp)
 	{
+	case 'a':		/* alert */
+	  *rp++ = '\a';
+	  ++cp;
+	  break;
 	case 'b':		/* backspace */
 	  *rp++ = '\b';
 	  ++cp;
@@ -354,6 +362,10 @@ expand_escape (const char *str)
 	  break;
 	case 't':		/* horizontal tab */
 	  *rp++ = '\t';
+	  ++cp;
+	  break;
+	case 'v':		/* vertical tab */
+	  *rp++ = '\v';
 	  ++cp;
 	  break;
 	case '\\':

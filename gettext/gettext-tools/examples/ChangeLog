@@ -1,3 +1,100 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* hello-*/autogen.sh: Define and use GETTEXT_TOPSRCDIR, to make it
+	work in VPATH builds.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* xsmallpot.sh: Make the temporary directory writable.
+
+2005-02-23  Bruno Haible  <bruno@clisp.org>
+
+	* xsmallpot.sh: Add srcdir argument. Make it work when
+	builddir != srcdir.
+	* Makefile.am (hello-*.pot): Update xsmallpot.sh invocations.
+
+2005-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* po/vi.po: New file, from Clytie Siddall <clytie@riverland.net.au>.
+	* po/LINGUAS: Add vi.
+	* hello-*/po/LINGUAS: Update.
+	* Makefile.am (EXAMPLESFILES): Add the new message catalogs.
+
+2005-02-11  Bruno Haible  <bruno@clisp.org>
+
+	* po/ga.po: New file, from Kevin Patrick Scannell <scannell@slu.edu>.
+	* po/LINGUAS: Add ga.
+	* hello-*/po/LINGUAS: Update.
+	* Makefile.am (EXAMPLESFILES): Add the new message catalogs.
+
+2005-02-06  Bruno Haible  <bruno@clisp.org>
+
+	* hello-*/po/Makefile.am ($(DOMAIN).pot-update): If MSGID_BUGS_ADDRESS
+	is empty and PACKAGE_BUGREPORT is available, use the latter.
+	* po/Makefile.am ($(DOMAIN).pot-update): Likewise.
+
+2005-01-20  Bruno Haible  <bruno@clisp.org>
+
+	* hello-guile/hello.scm: Invoke setlocale. Fix bindtextdomain call.
+
+2005-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Support for Scheme.
+	* hello-guile: New subdirectory.
+	* README: Mention it.
+	* Makefile.am (EXAMPLESFILES): Add the files in hello-guile.
+	* po/Makefile.am (POTFILES): Add hello-guile source.
+	(SMALLPOTS): Add hello-guile.pot.
+	(hello-guile.pot): New rule.
+	(SMALLPOFILES_FOR_lang): Add hello-guile elements.
+	(../hello-guile/po/$(LL).po): New rule.
+
+2005-01-06  Bruno Haible  <bruno@clisp.org>
+
+	* po/el.po: New file, from Simos Xenitellis <simos74@gmx.net>.
+	* po/ru.po: New file, from Pavel Maryanov <acid_jack@ukr.net>.
+	* po/uk.po: New file, from Maxim V. Dziumanenko <mvd@mylinux.com.ua>.
+	* po/LINGUAS: Add el, ru, uk.
+	* hello-*/po/LINGUAS: Update.
+	* Makefile.am (EXAMPLESFILES): Add the new message catalogs.
+
+2004-09-07  Bruno Haible  <bruno@clisp.org>
+
+	* po/xsmallpot.sh: Keep AC_PROG_* and OBJC lines in configure.in.
+	* hello-objc/configure.ac: Assign OBJC through AC_SUBST.
+	* hello-objc-gnome/configure.ac: Likewise.
+	Needed to avoid error with automake-1.9.
+
+2004-08-19  Bruno Haible  <bruno@clisp.org>
+
+	* hello-librep/hello.jl.in: Remove no-op comments.
+
+2004-03-21  Bruno Haible  <bruno@clisp.org>
+
+	* po/es.po: Update from Max de Mendizábal <max@upn.mx>.
+	* po/sr.po: Update from Aleksandar Jelenak <jelenak@netlinkplus.net>.
+
+2004-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* hello-csharp*/hello.cs (Hello.Main): Remove workaround for mono bug,
+	fixed in mono-0.30.1.
+
+2004-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* hello-csharp*/autogen.sh: Copy also the csharp.m4 file.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* hello-*/autoclean.sh, hello-*/m4/Makefile.am: Handle glibc2.m4 too.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

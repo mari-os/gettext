@@ -1,5 +1,5 @@
 /* Extracts strings from C source file to Uniforum style .po file.
-   Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software; you can redistribute it and/or modify
@@ -49,7 +49,7 @@
 #include "xerror.h"
 #include "exit.h"
 #include "pathname.h"
-#include "strcase.h"
+#include "c-strcase.h"
 #include "stpcpy.h"
 #include "open-po.h"
 #include "read-po-abstract.h"
@@ -77,6 +77,7 @@ extern "C" {
 #include "x-lisp.h"
 #include "x-elisp.h"
 #include "x-librep.h"
+#include "x-scheme.h"
 #include "x-smalltalk.h"
 #include "x-java.h"
 #include "x-properties.h"
@@ -144,6 +145,7 @@ static flag_context_list_table_ty flag_table_python;
 static flag_context_list_table_ty flag_table_lisp;
 static flag_context_list_table_ty flag_table_elisp;
 static flag_context_list_table_ty flag_table_librep;
+static flag_context_list_table_ty flag_table_scheme;
 static flag_context_list_table_ty flag_table_java;
 static flag_context_list_table_ty flag_table_csharp;
 static flag_context_list_table_ty flag_table_awk;
@@ -299,6 +301,7 @@ main (int argc, char *argv[])
   init_flag_table_lisp ();
   init_flag_table_elisp ();
   init_flag_table_librep ();
+  init_flag_table_scheme ();
   init_flag_table_java ();
   init_flag_table_csharp ();
   init_flag_table_awk ();
@@ -321,6 +324,7 @@ main (int argc, char *argv[])
 	x_lisp_extract_all ();
 	x_elisp_extract_all ();
 	x_librep_extract_all ();
+	x_scheme_extract_all ();
 	x_java_extract_all ();
 	x_csharp_extract_all ();
 	x_awk_extract_all ();
@@ -384,6 +388,7 @@ main (int argc, char *argv[])
 	    x_lisp_keyword (optarg);
 	    x_elisp_keyword (optarg);
 	    x_librep_keyword (optarg);
+	    x_scheme_keyword (optarg);
 	    x_java_keyword (optarg);
 	    x_csharp_keyword (optarg);
 	    x_awk_keyword (optarg);
@@ -499,7 +504,7 @@ main (int argc, char *argv[])
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\
 "),
-	      "1995-1998, 2000-2004");
+	      "1995-1998, 2000-2005");
       printf (_("Written by %s.\n"), "Ulrich Drepper");
       exit (EXIT_SUCCESS);
     }
@@ -621,6 +626,8 @@ This version was built without iconv()."),
       extractor_ty po_extractor = { extract_po, NULL, NULL, NULL };
 
       extract_from_file (file_name, po_extractor, mdlp);
+      if (!is_ascii_msgdomain_list (mdlp))
+	mdlp = iconv_msgdomain_list (mdlp, "UTF-8", file_name);
 
       dir_list_restore (saved_directory_list);
     }
@@ -752,7 +759,7 @@ Choice of input file language:\n"));
       printf (_("\
   -L, --language=NAME         recognise the specified language\n\
                                 (C, C++, ObjectiveC, PO, Shell, Python, Lisp,\n\
-                                EmacsLisp, librep, Smalltalk, Java,\n\
+                                EmacsLisp, librep, Scheme, Smalltalk, Java,\n\
                                 JavaProperties, C#, awk, YCP, Tcl, Perl, PHP,\n\
                                 GCC-source, NXStringTable, RST, Glade)\n"));
       printf (_("\
@@ -784,22 +791,22 @@ Language specific options:\n"));
   -a, --extract-all           extract all strings\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
-                                Python, Lisp, EmacsLisp, librep, Java, C#, awk,\n\
-                                Tcl, Perl, PHP, GCC-source, Glade)\n"));
+                                Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
+                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade)\n"));
       printf (_("\
   -k, --keyword[=WORD]        additional keyword to be looked for (without\n\
                               WORD means not to use default keywords)\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
-                                Python, Lisp, EmacsLisp, librep, Java, C#, awk,\n\
-                                Tcl, Perl, PHP, GCC-source, Glade)\n"));
+                                Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
+                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade)\n"));
       printf (_("\
       --flag=WORD:ARG:FLAG    additional flag for strings inside the argument\n\
                               number ARG of keyword WORD\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC, Shell,\n\
-                                Python, Lisp, EmacsLisp, librep, Java, C#, awk,\n\
-                                YCP, Tcl, Perl, PHP, GCC-source)\n"));
+                                Python, Lisp, EmacsLisp, librep, Scheme, Java,\n\
+                                C#, awk, YCP, Tcl, Perl, PHP, GCC-source)\n"));
       printf (_("\
   -T, --trigraphs             understand ANSI C trigraphs for input\n"));
       printf (_("\
@@ -1378,6 +1385,11 @@ xgettext_record_flag (const char *optionstring)
 		    break;
 		  case format_librep:
 		    flag_context_list_table_insert (&flag_table_librep, 0,
+						    name_start, name_end,
+						    argnum, value, pass);
+		    break;
+		  case format_scheme:
+		    flag_context_list_table_insert (&flag_table_scheme, 0,
 						    name_start, name_end,
 						    argnum, value, pass);
 		    break;
@@ -2209,6 +2221,7 @@ language_to_extractor (const char *name)
     SCANNERS_LISP
     SCANNERS_ELISP
     SCANNERS_LIBREP
+    SCANNERS_SCHEME
     SCANNERS_SMALLTALK
     SCANNERS_JAVA
     SCANNERS_PROPERTIES
@@ -2228,7 +2241,7 @@ language_to_extractor (const char *name)
   table_ty *tp;
 
   for (tp = table; tp < ENDOF(table); ++tp)
-    if (strcasecmp (name, tp->name) == 0)
+    if (c_strcasecmp (name, tp->name) == 0)
       {
 	extractor_ty result;
 
@@ -2274,6 +2287,7 @@ extension_to_language (const char *extension)
     EXTENSIONS_LISP
     EXTENSIONS_ELISP
     EXTENSIONS_LIBREP
+    EXTENSIONS_SCHEME
     EXTENSIONS_SMALLTALK
     EXTENSIONS_JAVA
     EXTENSIONS_PROPERTIES

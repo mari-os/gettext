@@ -1,3 +1,31 @@
+Version 0.14.2 - February 2005
+
+* Improved detection of the locale on MacOS X.
+
+* The gettext autoconf macros now require autoconf 2.50 or newer.
+
+* Programming languages support:
+
+  - Scheme:
+    xgettext now also supports Scheme. Best used with guile 1.7 or newer.
+
+* msggrep is much faster now.
+
+* libgettextpo library:
+  - New functions for constructing PO files in memory and writing them to
+    files.
+  - The error handling is now customizable.
+
+* Documentation:
+
+  - New tutorial document, written by Gora Mohanty.
+  - New FAQ document.
+  - New documentation sections: Scheme, Release Management.
+
+* Bug fixes for Turkish and Estonian locales.
+
+* Security fixes.
+
 Version 0.14 - January 2004
 
 * Programming languages support:

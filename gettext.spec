@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.14.1
-Release: alt5
+Version: 0.14.2
+Release: alt1
 
 %define libintl libintl3
 
@@ -8,7 +8,6 @@ Summary: GNU libraries and utilities for producing multi-lingual messages
 License: LGPL
 Group: System/Base
 Url: http://www.gnu.org/software/%name/
-Packager: Gettext Development Team <gettext@packages.altlinux.org>
 
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.bz2
 Source1: msghack.py
@@ -16,12 +15,9 @@ Source2: %name-po-mode-start.el
 
 Patch1: %name-0.14.1-alt-gettextize-quiet.patch
 Patch2: %name-0.14.1-alt-autopoint-cvs.patch
-Patch3: %name-0.14.1-alt-func_find_curr_installdir.patch
-Patch4: %name-0.14.1-alt-m4.patch
-Patch5: %name-0.14.1-alt-tmp-autopoint.patch
-Patch6: %name-0.14.1-deb-x_perl_prelex.patch
-Patch7: %name-0.14.1-deb-doc.patch
-Patch8: %name-0.14.1-rh-alt-gcc.patch
+Patch3: %name-0.14.1-alt-m4.patch
+Patch4: %name-0.14.2-alt-tmp-autopoint.patch
+Patch5: %name-0.14.2-alt-gcc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -30,7 +26,6 @@ Requires: %libintl = %version-%release
 %def_disable static
 
 BuildPreReq: emacs-nox gcc-c++ gcc-g77 gcc-java jdkgcj tetex-dvips
-%set_automake_version 1.8
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -136,10 +131,6 @@ This manual documents GNU gettext.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%__install -p -m644 gettext-{tools,runtime}/ABOUT-NLS
 
 %build
 %configure --with-included-gettext --enable-shared %{subst_enable static}
@@ -168,7 +159,8 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %endif
 %__chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
 %__mkdir_p $RPM_BUILD_ROOT%_docdir
-%__mv $RPM_BUILD_ROOT%_docdir/%name $RPM_BUILD_ROOT%_docdir/%name-%version
+%define docdir %_docdir/%name-%version
+%__mv $RPM_BUILD_ROOT%_docdir/%name $RPM_BUILD_ROOT%docdir
 
 %find_lang %name-runtime
 %find_lang %name-tools
@@ -226,9 +218,14 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
+%dir %docdir
+%docdir/FAQ.html
+%docdir/tutorial.html
 
 %files doc
-%_docdir/%name-%version
+%docdir
+%exclude %docdir/FAQ.html
+%exclude %docdir/tutorial.html
 
 %files tools-java
 %dir %_libdir/%name
@@ -240,6 +237,10 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Tue Mar 01 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.2-alt1
+- Updated to 0.14.2.
+- Updated patches.
+
 * Mon Jan 17 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt5
 - Explicitly use automake_1.8 for build.
 

@@ -1,5 +1,5 @@
 /* Return the name-within-directory of a file name.
-   Copyright (C) 1996-1999, 2000-2002 Free Software Foundation, Inc.
+   Copyright (C) 1996-1999, 2000-2002, 2004 Free Software Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
    Bugs can be reported to bug-glibc@gnu.org.
@@ -31,17 +31,17 @@
 #include <stdio.h>
 #include <assert.h>
 
-#if defined _WIN32 || defined __WIN32__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
+  /* Win32, Cygwin, OS/2, DOS */
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
      && (P)[1] == ':')
-# define FILESYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
+# define FILE_SYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 #endif
 
-#ifndef FILESYSTEM_PREFIX_LEN
-# define FILESYSTEM_PREFIX_LEN(Filename) 0
+#ifndef FILE_SYSTEM_PREFIX_LEN
+# define FILE_SYSTEM_PREFIX_LEN(Filename) 0
 #endif
 
 #ifndef ISSLASH
@@ -63,7 +63,7 @@
 char *
 basename (char const *name)
 {
-  char const *base = name += FILESYSTEM_PREFIX_LEN (name);
+  char const *base = name += FILE_SYSTEM_PREFIX_LEN (name);
   int all_slashes = 1;
   char const *p;
 

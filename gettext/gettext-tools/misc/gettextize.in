@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+# Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,6 +30,37 @@ version=@VERSION@
 prefix="@prefix@"
 gettext_dir="@datadir@/gettext"
 
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : ${TMPDIR=/tmp}
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gt$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    { (exit 1); exit 1; }
+  }
+}
+
 # Support for relocatability.
 func_find_curr_installdir ()
 {
@@ -39,14 +70,15 @@ func_find_curr_installdir ()
     */* | *\\*) ;;
     *) # Need to look in the PATH.
       if test "${PATH_SEPARATOR+set}" != set; then
-        { echo "#! /bin/sh"; echo "exit 0"; } > /tmp/conf$$.sh
-        chmod +x /tmp/conf$$.sh
-        if (PATH="/nonexistent;/tmp"; conf$$.sh) >/dev/null 2>&1; then
+        func_tmpdir
+        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
+        chmod +x "$tmp"/conf.sh
+        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
           PATH_SEPARATOR=';'
         else
           PATH_SEPARATOR=:
         fi
-        rm -f /tmp/conf$$.sh
+        rm -f "$tmp"
       fi
       save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
       for dir in $PATH; do
@@ -135,7 +167,7 @@ Report bugs to <bug-gnu-gettext@gnu.org>."
 func_version ()
 {
   echo "$progname (GNU $package) $version"
-  echo "Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+  echo "Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
   echo "Written by" "Ulrich Drepper"
@@ -149,6 +181,9 @@ func_fatal_error ()
   echo "gettextize: *** Stop." 1>&2
   exit 1
 }
+
+# Nuisances.
+(unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
@@ -517,6 +552,7 @@ test -d "$srcdir/po" || {
   else
     echo "Create po/ subdirectory"
   fi
+  added_directories="$added_directories po"
 }
 
 # Now copy all files.  Take care for the destination directories.
@@ -591,8 +627,8 @@ for file in *; do
     Makevars.template)
       func_linkorcopy Makevars.template "$gettext_dir/po/Makevars.template" po/Makevars.template
       if test -f "$srcdir/po/Makevars"; then
-        sed -n -e 's/[ 	]*\([A-Za-z0-9_]*\)[ 	]*=.*/\1/p' < "$srcdir/po/Makevars" | LC_ALL=C sort > "$srcdir/po/Makevars.tmp1"
-        sed -n -e 's/[ 	]*\([A-Za-z0-9_]*\)[ 	]*=.*/\1/p' < "$srcdir/po/Makevars.template" | LC_ALL=C sort > "$srcdir/po/Makevars.tmp2"
+        LC_ALL=C sed -n -e 's/[ 	]*\([A-Za-z0-9_]*\)[ 	]*=.*/\1/p' < "$srcdir/po/Makevars" | LC_ALL=C sort > "$srcdir/po/Makevars.tmp1"
+        LC_ALL=C sed -n -e 's/[ 	]*\([A-Za-z0-9_]*\)[ 	]*=.*/\1/p' < "$srcdir/po/Makevars.template" | LC_ALL=C sort > "$srcdir/po/Makevars.tmp2"
         missingvars=`LC_ALL=C comm -13 "$srcdir/po/Makevars.tmp1" "$srcdir/po/Makevars.tmp2"`
         rm -f "$srcdir/po/Makevars.tmp1" "$srcdir/po/Makevars.tmp2"
         if test -n "$missingvars"; then
@@ -637,16 +673,22 @@ if test -f "$srcdir/po/stamp-cat-id"; then
   $do_changelog && func_poChangeLog_add_entry "	* stamp-cat-id: Remove file."
 fi
 $do_changelog && func_poChangeLog_finish
+if test ! -f "$srcdir/po/POTFILES.in"; then
+  please="$please
+Please create po/POTFILES.in as described in the documentation.
+"
+fi
 
-m4filelist='  codeset.m4 gettext.m4 glibc21.m4 iconv.m4 intdiv0.m4 intmax.m4
-  inttypes.m4 inttypes_h.m4 inttypes-pri.m4 isc-posix.m4 lcmessage.m4 lib-ld.m4
-  lib-link.m4 lib-prefix.m4 longdouble.m4 longlong.m4 nls.m4 po.m4
+m4filelist='  codeset.m4 gettext.m4 glibc2.m4 glibc21.m4 iconv.m4 intdiv0.m4
+  intmax.m4 inttypes.m4 inttypes_h.m4 inttypes-pri.m4 isc-posix.m4 lcmessage.m4
+  lib-ld.m4 lib-link.m4 lib-prefix.m4 longdouble.m4 longlong.m4 nls.m4 po.m4
   printf-posix.m4 progtest.m4 signed.m4 size_max.m4 stdint_h.m4 uintmax_t.m4
   ulonglong.m4 wchar_t.m4 wint_t.m4 xsize.m4'
-# We cannot omit codeset.m4, glibc21.m4, intdiv0.m4, intmax.m4, inttypes.m4,
-# inttypes_h.m4, inttypes-pri.m4, isc-posix.m4, lcmessage.m4, longdouble.m4,
-# longlong.m4, nls.m4, po.m4, printf-posix.m4, signed.m4, size_max.m4,
-# stdint_h.m4, uintmax_t.m4, ulonglong.m4, wchar_t.m4, wint_t.m4, xsize.m4
+# We cannot omit codeset.m4, glibc2.m4, glibc21.m4, intdiv0.m4, intmax.m4,
+# inttypes.m4, inttypes_h.m4, inttypes-pri.m4, isc-posix.m4, lcmessage.m4,
+# longdouble.m4, longlong.m4, nls.m4, po.m4, printf-posix.m4, signed.m4,
+# size_max.m4, stdint_h.m4, uintmax_t.m4, ulonglong.m4, wchar_t.m4, wint_t.m4,
+# xsize.m4
 # if test -z "$intldir", otherwise "aclocal -I m4" might give an error.
 # (aclocal doesn't know which macros are really needed, it looks which macros
 # are potentially needed.)
@@ -920,7 +962,13 @@ func_modify_configure_in ()
 
 if test -n "$added_acoutput"; then
   if grep '^AC_CONFIG_FILES(' "$srcdir/$configure_in" > /dev/null; then
-    sed -e "s%^\\(AC_CONFIG_FILES([^])\\,]*\\)%\\1$added_acoutput %" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
+    sedprog='
+ta
+b
+:a
+n
+ba'
+    sed -e "s%^\\(AC_CONFIG_FILES([^])\\,]*\\)%\\1$added_acoutput %$sedprog" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
     func_modify_configure_in "(AC_CONFIG_FILES): Add "`echo $added_acoutput | sed -e 's/ /, /g'`'.'
   else
     if grep '^AC_OUTPUT(' "$srcdir/$configure_in" > /dev/null; then

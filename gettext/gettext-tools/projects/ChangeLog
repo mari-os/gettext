@@ -1,3 +1,22 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* KDE/trigger: Use LC_ALL=C to protect range expression against
+	Estonian locale.
+	* GNOME/trigger: Likewise.
+
+2004-05-22  Bruno Haible  <bruno@clisp.org>
+
+	* TP/teams.html: Update.
+	Reported by Gabriele Stilli <superenzima@libero.it>.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

@@ -1,5 +1,5 @@
 ## Makefile for the gettext-runtime/lib subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
 EXTRA_DIST =
+BUILT_SOURCES =
 MOSTLYCLEANFILES =
 
 noinst_LIBRARIES = libgrt.a
@@ -26,15 +27,13 @@ noinst_LIBRARIES = libgrt.a
 # Sources that are compiled on all platforms.
 
 libgrt_a_SOURCES = \
+  ../../gettext-tools/lib/allocsa.h ../../gettext-tools/lib/allocsa.c \
   ../../gettext-tools/lib/basename.h ../../gettext-tools/lib/basename.c \
   ../../gettext-tools/lib/closeout.h ../../gettext-tools/lib/closeout.c \
-  ../../gettext-tools/lib/error.h ../../gettext-tools/lib/error.c \
   ../../gettext-tools/lib/exit.h \
   ../../gettext-tools/lib/fwriteerror.h ../../gettext-tools/lib/fwriteerror.c \
-  ../../gettext-tools/lib/getopt.h ../../gettext-tools/lib/getopt.c ../../gettext-tools/lib/getopt1.c \
   ../../gettext-tools/lib/pathmax.h \
   ../../gettext-tools/lib/progname.h ../../gettext-tools/lib/progname.c ../../gettext-tools/lib/progreloc.c \
-  ../../gettext-tools/lib/strtoul.c \
   ../../gettext-tools/lib/unlocked-io.h \
   ../../gettext-tools/lib/xalloc.h ../../gettext-tools/lib/xmalloc.c ../../gettext-tools/lib/xstrdup.c \
   ../../gettext-tools/lib/xreadlink.h ../../gettext-tools/lib/xreadlink.c
@@ -44,11 +43,14 @@ libgrt_a_SOURCES = \
 LIBADD_SOURCE = \
   atexit.c \
   ../../gettext-tools/lib/canonicalize.h canonicalize.c \
+  error.h error.c \
+  getopt.c getopt1.c ../../gettext-tools/lib/getopt_int.h \
   memmove.c \
   readlink.c \
   ../../gettext-tools/lib/relocatable.h relocatable.c \
   ../../gettext-tools/lib/setenv.h setenv.c unsetenv.c \
-  strerror.c
+  strerror.c \
+  strtoul.c
 
 # How to build libgrt.a.
 
@@ -89,6 +91,19 @@ alloca.h: ../../gettext-tools/lib/alloca_.h
 	cp $(srcdir)/../../gettext-tools/lib/alloca_.h alloca.h
 MOSTLYCLEANFILES += alloca.h
 # <<< gnulib module alloca.
+
+
+# >>> gnulib module getopt.
+BUILT_SOURCES += $(GETOPT_H)
+EXTRA_DIST += ../../gettext-tools/lib/getopt_.h ../../gettext-tools/lib/getopt_int.h
+
+# The following is needed in order to create a <getopt.h> when the system
+# doesn't have one that works.
+all-local $(libgettextlib_la_OBJECTS): @GETOPT_H@
+getopt.h: ../../gettext-tools/lib/getopt_.h
+	cp $(srcdir)/../../gettext-tools/lib/getopt_.h getopt.h
+MOSTLYCLEANFILES += getopt.h
+# <<< gnulib module getopt.
 
 
 # VMS support.

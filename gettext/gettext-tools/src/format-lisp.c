@@ -30,8 +30,6 @@
 #include "xerror.h"
 #include "format-invalid.h"
 #include "minmax.h"
-#include "error.h"
-#include "error-progname.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -2944,6 +2942,7 @@ parse_upto (const char **formatp,
 	      }
 	    else
 	      {
+		int arg_position;
 		int union_position;
 		struct format_arg_list *union_list;
 		bool last_alternative;
@@ -2953,9 +2952,13 @@ parse_upto (const char **formatp,
 		  return false;
 
 		/* If there was no first parameter, an argument is consumed.  */
+		arg_position = -1;
 		if (!(paramcount >= 1 && params[0].type != PT_NIL))
 		  if (position >= 0)
-		    add_req_type_constraint (&list, position++, FAT_OBJECT);
+		    {
+		      arg_position = position;
+		      add_req_type_constraint (&list, position++, FAT_OBJECT);
+		    }
 
 		*formatp = format;
 		*escapep = escape;
@@ -2974,6 +2977,11 @@ parse_upto (const char **formatp,
 				     &sub_separator, spec, ']', !last_alternative,
 				     invalid_reason))
 		      return false;
+		    /* If this alternative is chosen, the argument arg_position
+		       is an integer, namely the index of this alternative.  */
+		    if (!last_alternative && arg_position >= 0)
+		      add_req_type_constraint (&sub_list, arg_position,
+					       FAT_INTEGER);
 		    if (sub_list != NULL)
 		      {
 			if (union_position == -2)
@@ -3318,8 +3326,9 @@ format_get_number_of_directives (void *descr)
 }
 
 static bool
-format_check (const lex_pos_ty *pos, void *msgid_descr, void *msgstr_descr,
-	      bool equality, bool noisy, const char *pretty_msgstr)
+format_check (void *msgid_descr, void *msgstr_descr, bool equality,
+	      formatstring_error_logger_t error_logger,
+	      const char *pretty_msgstr)
 {
   struct spec *spec1 = (struct spec *) msgid_descr;
   struct spec *spec2 = (struct spec *) msgstr_descr;
@@ -3329,14 +3338,9 @@ format_check (const lex_pos_ty *pos, void *msgid_descr, void *msgstr_descr,
     {
       if (!equal_list (spec1->list, spec2->list))
 	{
-	  if (noisy)
-	    {
-	      error_with_progname = false;
-	      error_at_line (0, 0, pos->file_name, pos->line_number,
-			     _("format specifications in 'msgid' and '%s' are not equivalent"),
-			     pretty_msgstr);
-	      error_with_progname = true;
-	    }
+	  if (error_logger)
+	    error_logger (_("format specifications in 'msgid' and '%s' are not equivalent"),
+			  pretty_msgstr);
 	  err = true;
 	}
     }
@@ -3350,14 +3354,9 @@ format_check (const lex_pos_ty *pos, void *msgid_descr, void *msgstr_descr,
 	    && (normalize_list (intersection),
 		equal_list (intersection, spec2->list))))
 	{
-	  if (noisy)
-	    {
-	      error_with_progname = false;
-	      error_at_line (0, 0, pos->file_name, pos->line_number,
-			     _("format specifications in '%s' are not a subset of those in 'msgid'"),
-			     pretty_msgstr);
-	      error_with_progname = true;
-	    }
+	  if (error_logger)
+	    error_logger (_("format specifications in '%s' are not a subset of those in 'msgid'"),
+			  pretty_msgstr);
 	  err = true;
 	}
     }

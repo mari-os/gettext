@@ -1,3 +1,46 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.sh.in: Renamed from gettext.sh. Show help or usage or an
+	error message when invoked as an executable.
+	* Makefile.am (bin_SCRIPTS, DISTCLEANFILES): New variables.
+	(EXTRA_DIST): Remove gettext.sh.
+	(all-local, install-data-local, uninstall-local): Remove rules.
+	* Makefile.msvc (install): Don't install gettext.sh.
+	(uninstall): Don't uninstall gettext.sh.
+	* Makefile.vms (install): Don't install gettext.sh.
+	(uninstall): Don't uninstall gettext.sh.
+	Suggested by Alfred M. Szmidt <ams@kemisten.nu>.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.c (main): Update year in --version output.
+	* ngettext.c (main): Likewise.
+	* envsubst.c (main): Likewise.
+
+2004-07-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.c (expand_escape): Don't go into an endless loop when the
+	first backslash is not followed by one of the expected characters.
+	* ngettext.c (expand_escape): Likewise.
+	Reported by Arkadiusz Miśkiewicz <arekm@pld-linux.org>.
+
+2004-07-10  Bruno Haible  <bruno@clisp.org>
+
+	* gettext.c (expand_escape): Support also \a and \v.
+	* ngettext.c (expand_escape): Likewise.
+
+2004-02-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile.am (RM): New variable.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

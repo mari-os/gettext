@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
    This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@
 #include "obstack.h"
 #include "strstr.h"
 #include "exit.h"
-#include "strcase.h"
+#include "c-strcase.h"
 #include "stpcpy.h"
 #include "stpncpy.h"
 #include "msgl-iconv.h"
@@ -298,7 +298,7 @@ main (int argc, char **argv)
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\
 "),
-	      "1995-1998, 2000-2004");
+	      "1995-1998, 2000-2005");
       printf (_("Written by %s.\n"), "Peter Miller");
       exit (EXIT_SUCCESS);
     }
@@ -591,8 +591,8 @@ msgfmt_check_pair_fails (const lex_pos_ty *pos,
 
 	  if (msgstr_descr != NULL)
 	    {
-	      failure = parser->check (pos, msgid_descr, msgstr_descr,
-				       msgid_plural == NULL, false, NULL);
+	      failure = parser->check (msgid_descr, msgstr_descr,
+				       msgid_plural == NULL, NULL, NULL);
 	      parser->free (msgstr_descr);
 	    }
 	  else
@@ -704,7 +704,7 @@ message_merge (message_ty *def, message_ty *ref)
 	  for (cnt = 0;
 	       cnt < sizeof (known_fields) / sizeof (known_fields[0]);
 	       ++cnt)
-	    if (strncasecmp (cp, known_fields[cnt].name, known_fields[cnt].len)
+	    if (c_strncasecmp (cp, known_fields[cnt].name, known_fields[cnt].len)
 		== 0)
 	      break;
 
@@ -909,7 +909,15 @@ match_domain (const char *fn1, const char *fn2,
 	      message_list_ty *resultmlp,
 	      struct statistics *stats, unsigned int *processed)
 {
+  message_ty *header_entry;
+  unsigned long int nplurals;
+  char *untranslated_plural_msgstr;
   size_t j;
+
+  header_entry = message_list_search (definitions->item[0], "");
+  nplurals = get_plural_count (header_entry ? header_entry->msgstr : NULL);
+  untranslated_plural_msgstr = (char *) xmalloc (nplurals);
+  memset (untranslated_plural_msgstr, '\0', nplurals);
 
   for (j = 0; j < refmlp->nitems; j++, (*processed)++)
     {
@@ -981,12 +989,35 @@ this message is used but not defined..."));
 	  else
 	    {
 	      message_ty *mp;
+	      bool is_untranslated;
+	      const char *p;
+	      const char *pend;
 
 	      if (verbosity_level > 1)
 		po_gram_error_at_line (&refmsg->pos, _("\
 this message is used but not defined in %s"), fn1);
 
 	      mp = message_copy (refmsg);
+
+	      if (mp->msgid_plural != NULL)
+		{
+		  /* Test if mp is untranslated.  (It most likely is.)  */
+		  is_untranslated = true;
+		  for (p = mp->msgstr, pend = p + mp->msgstr_len; p < pend; p++)
+		    if (*p != '\0')
+		      {
+			is_untranslated = false;
+			break;
+		      }
+		  if (is_untranslated)
+		    {
+		      /* Change mp->msgstr_len consecutive empty strings into
+			 nplurals consecutive empty strings.  */
+		      if (nplurals > mp->msgstr_len)
+			mp->msgstr = untranslated_plural_msgstr;
+		      mp->msgstr_len = nplurals;
+		    }
+		}
 
 	      message_list_append (resultmlp, mp);
 	      stats->missing++;
@@ -1134,7 +1165,7 @@ merge (const char *fn1, const char *fn2, msgdomain_list_ty **defp)
 		      charsetstr += strlen ("charset=");
 		      len = strcspn (charsetstr, " \t\n");
 		      if (len == strlen ("UTF-8")
-			  && strncasecmp (charsetstr, "UTF-8", len) == 0)
+			  && c_strncasecmp (charsetstr, "UTF-8", len) == 0)
 			was_utf8 = true;
 		    }
 		}

@@ -43,21 +43,22 @@ OBJECTS = \
   backupfile.obj, addext.obj, \
   basename.obj, \
   c-ctype.obj, \
+  c-strcasecmp.obj, \
+  c-strncasecmp.obj, \
   classpath.obj, \
   closeout.obj, \
   copy-file.obj, \
   csharpcomp.obj, \
   csharpexec.obj, \
-  error.obj, \
   error-progname.obj, \
   execute.obj, \
+  exitfail.obj, \
   fatal-signal.obj, \
   findprog.obj, \
   fstrcmp.obj, \
   full-write.obj, \
   fwriteerror.obj, \
   gcd.obj, \
-  getopt.obj, getopt1.obj, \
   hash.obj, \
   javacomp.obj, \
   javaexec.obj, \
@@ -65,13 +66,13 @@ OBJECTS = \
   mbswidth.obj, \
   obstack.obj, \
   concatpath.obj, \
-  pipe-bidi.obj, pipe-in.obj, pipe-out.obj, \
+  pipe.obj, \
   progname.obj, progreloc.obj, \
+  quote.obj, \
+  quotearg.obj, \
   safe-read.obj, \
   safe-write.obj, \
   sh-quote.obj, \
-  stpncpy.obj, \
-  strtoul.obj, \
   tmpdir.obj, \
   wait-process.obj, \
   xmalloc.obj, xstrdup.obj, \
@@ -79,12 +80,15 @@ OBJECTS = \
   xerror.obj, \
   xsetenv.obj, \
   \
+  error.obj, \
   fnmatch.obj, \
   getline.obj, \
   getndelim2.obj, \
+  getopt.obj, getopt1.obj, \
   mkdtemp.obj, \
   relocatable.obj, \
   stpcpy.obj, \
+  stpncpy.obj, \
   vasprintf.obj
 
 all : alloca.h,fnmatch.h,gettextlib.olb
@@ -114,6 +118,12 @@ basename.obj : basename.c
 c-ctype.obj : c-ctype.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) c-ctype.c
 
+c-strcasecmp.obj : c-strcasecmp.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) c-strcasecmp.c
+
+c-strncasecmp.obj : c-strncasecmp.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) c-strncasecmp.c
+
 classpath.obj : classpath.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) classpath.c
 
@@ -129,14 +139,14 @@ csharpcomp.obj : csharpcomp.c,alloca.h
 csharpexec.obj : csharpexec.c,alloca.h
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) csharpexec.c
 
-error.obj : error.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) error.c
-
 error-progname.obj : error-progname.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) error-progname.c
 
 execute.obj : execute.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) execute.c
+
+exitfail.obj : exitfail.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) exitfail.c
 
 fatal-signal.obj : fatal-signal.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) fatal-signal.c
@@ -155,12 +165,6 @@ fwriteerror.obj : fwriteerror.c
 
 gcd.obj : gcd.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) gcd.c
-
-getopt.obj : getopt.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS),"ELIDE_CODE=1") getopt.c
-
-getopt1.obj : getopt1.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) getopt1.c
 
 hash.obj : hash.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) hash.c
@@ -183,20 +187,20 @@ obstack.obj : obstack.c
 concatpath.obj : concatpath.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) concatpath.c
 
-pipe-bidi.obj : pipe-bidi.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) pipe-bidi.c
-
-pipe-in.obj : pipe-in.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) pipe-in.c
-
-pipe-out.obj : pipe-out.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) pipe-out.c
+pipe.obj : pipe.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) pipe.c
 
 progname.obj : progname.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) progname.c
 
 progreloc.obj : progreloc.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) progreloc.c
+
+quote.obj : quote.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) quote.c
+
+quotearg.obj : quotearg.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) quotearg.c
 
 safe-read.obj : safe-read.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) safe-read.c
@@ -206,12 +210,6 @@ safe-write.obj : safe-write.c
 
 sh-quote.obj : sh-quote.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) sh-quote.c
-
-stpncpy.obj : stpncpy.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) stpncpy.c
-
-strtoul.obj : strtoul.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) strtoul.c
 
 tmpdir.obj : tmpdir.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) tmpdir.c
@@ -234,7 +232,10 @@ xerror.obj : xerror.c
 xsetenv.obj : xsetenv.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) xsetenv.c
 
-fnmatch.obj : fnmatch.c fnmatch.h
+error.obj : error.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) error.c
+
+fnmatch.obj : fnmatch.c fnmatch.h fnmatch_loop.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) fnmatch.c
 
 getline.obj : getline.c
@@ -242,6 +243,12 @@ getline.obj : getline.c
 
 getndelim2.obj : getndelim2.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) getndelim2.c
+
+getopt.obj : getopt.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS),"ELIDE_CODE=1") getopt.c
+
+getopt1.obj : getopt1.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) getopt1.c
 
 mkdtemp.obj : mkdtemp.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) mkdtemp.c
@@ -251,6 +258,9 @@ relocatable.obj : relocatable.c
 
 stpcpy.obj : stpcpy.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) stpcpy.c
+
+stpncpy.obj : stpncpy.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) stpncpy.c
 
 vasprintf.obj : vasprintf.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) vasprintf.c

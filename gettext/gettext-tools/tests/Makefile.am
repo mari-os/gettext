@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/tests subdirectory of GNU gettext
-## Copyright (C) 1995-1997, 2001-2003 Free Software Foundation, Inc.
+## Copyright (C) 1995-1997, 2001-2005 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ TESTS = gettext-1 gettext-2 \
 	msgattrib-11 msgattrib-12 msgattrib-13 msgattrib-14 \
 	msgattrib-properties-1 \
 	msgcat-1 msgcat-2 msgcat-3 msgcat-4 msgcat-5 msgcat-6 msgcat-7 \
-	msgcat-8 msgcat-9 msgcat-10 \
+	msgcat-8 msgcat-9 msgcat-10 msgcat-11 \
 	msgcat-properties-1 msgcat-properties-2 \
 	msgcat-stringtable-1 \
 	msgcmp-1 msgcmp-2 msgcmp-3 \
@@ -43,9 +43,10 @@ TESTS = gettext-1 gettext-2 \
 	msgfmt-properties-1 \
 	msgfmt-qt-1 \
 	msggrep-1 msggrep-2 msggrep-3 msggrep-4 msggrep-5 msggrep-6 \
+	msginit-1 \
 	msgmerge-1 msgmerge-2 msgmerge-3 msgmerge-4 msgmerge-5 msgmerge-6 \
 	msgmerge-7 msgmerge-8 msgmerge-9 msgmerge-10 msgmerge-11 msgmerge-12 \
-	msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 \
+	msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 msgmerge-17 \
 	msgmerge-compendium-1 msgmerge-compendium-2 msgmerge-compendium-3 \
 	msgmerge-compendium-4 \
 	msgmerge-properties-1 msgmerge-properties-2 \
@@ -57,7 +58,7 @@ TESTS = gettext-1 gettext-2 \
 	msgunfmt-tcl-1 \
 	msguniq-1 msguniq-2 msguniq-3 msguniq-4 \
 	xgettext-1 xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
-	xgettext-7 \
+	xgettext-7 xgettext-8 \
 	xgettext-awk-1 \
 	xgettext-c-1 xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
 	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 \
@@ -76,6 +77,7 @@ TESTS = gettext-1 gettext-2 \
 	xgettext-po-1 \
 	xgettext-properties-1 \
 	xgettext-python-1 xgettext-python-2 \
+	xgettext-scheme-1 \
 	xgettext-sh-1 xgettext-sh-2 xgettext-sh-3 \
 	xgettext-smalltalk-1 \
 	xgettext-stringtable-1 \
@@ -96,14 +98,15 @@ TESTS = gettext-1 gettext-2 \
 	format-perl-brace-1 format-perl-brace-2 \
 	format-perl-mixed-1 format-perl-mixed-2 \
 	format-qt-1 format-qt-2 \
+	format-scheme-1 format-scheme-2 \
 	format-sh-1 format-sh-2 \
 	format-tcl-1 format-tcl-2 \
 	format-ycp-1 format-ycp-2 \
 	plural-1 plural-2 \
 	lang-c lang-c++ lang-objc lang-sh lang-bash lang-python-1 \
-	lang-python-2 lang-clisp lang-elisp lang-librep lang-smalltalk \
-	lang-java lang-csharp lang-gawk lang-pascal lang-ycp lang-tcl \
-	lang-perl-1 lang-perl-2 lang-php lang-po lang-rst
+	lang-python-2 lang-clisp lang-elisp lang-librep lang-guile \
+	lang-smalltalk lang-java lang-csharp lang-gawk lang-pascal \
+	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst
 
 EXTRA_DIST += $(TESTS) \
 	test.mo xg-c-1.ok.po mex-test2.ok msguniq-a.in msguniq-a.inp \
@@ -112,8 +115,10 @@ EXTRA_DIST += $(TESTS) \
 XGETTEXT = ../src/xgettext
 
 # For debugging memory leaks and memory allocation bugs.
+# You should build with --disable-shared when using valgrind.
 CHECKER =
-#CHECKER = valgrind --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes
+#CHECKER = valgrind --tool=memcheck --suppressions=$(srcdir)/../lib/allocsa.valgrind --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes
+#CHECKER = valgrind --tool=massif --format=html --depth=10 --alloc-fn=xmalloc --alloc-fn=xrealloc --stacks=no
 
 TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    PATH=.:../src:../../gettext-runtime/src:$(top_srcdir)/../gettext-runtime/src:$$PATH \
@@ -130,6 +135,7 @@ TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    MSGFILTER="$(CHECKER) msgfilter" \
 		    MSGFMT="$(CHECKER) msgfmt" \
 		    MSGGREP="$(CHECKER) msggrep" \
+		    MSGINIT="$(CHECKER) msginit" \
 		    MSGMERGE="$(CHECKER) msgmerge" \
 		    MSGUNFMT="$(CHECKER) msgunfmt" \
 		    MSGUNIQ="$(CHECKER) msguniq" \
@@ -143,6 +149,8 @@ TESTS_ENVIRONMENT = top_srcdir=$(top_srcdir) \
 		    TESTCSHARP='@TESTCSHARP@' \
 		    TESTLIBASPRINTF='@TESTLIBASPRINTF@' \
 		    LOCALE_FR='@LOCALE_FR@' \
+		    LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
+		    host_os='@host_os@' \
 		    CONFIG_SHELL='$(SHELL)' \
 		    $(SHELL)
 
@@ -158,7 +166,9 @@ AM_CPPFLAGS = \
   -I../lib -I$(top_srcdir)/lib \
   -I../intl
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-LDADD = $(LDADD_@USE_INCLUDED_LIBINTL@)
+# INTL_MACOSX_LIBS is needed because the programs depend on libintl.la
+# but libtool doesn't put -Wl,-framework options into .la files.
+LDADD = $(LDADD_@USE_INCLUDED_LIBINTL@) @INTL_MACOSX_LIBS@
 LDADD_yes = ../intl/libintl.la
 LDADD_no = ../intl/libgnuintl.la @LTLIBINTL@
 noinst_PROGRAMS = tstgettext tstngettext testlocale cake fc3 fc4 fc5

@@ -1,12 +1,12 @@
 # Serbian translation of hello-perl.
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the `hello-perl' package.
-# Aleksandar Jelenak <jelenak@netlinkplus.net>, 2003.
+# Aleksandar Jelenak <jelenak@netlinkplus.net>, 2004.
 msgid ""
 msgstr ""
-"Project-Id-Version: hello-perl 0.13\n"
+"Project-Id-Version: hello-perl 0.14\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"PO-Revision-Date: 2003-12-01 13:15-0500\n"
+"PO-Revision-Date: 2004-01-31 00:47-0500\n"
 "Last-Translator: Aleksandar Jelenak <jelenak@netlinkplus.net>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: hello-1.pl.in:18 hello-2.pl.in:13
 msgid "Hello, world!"
-msgstr "Hello, world!"
+msgstr "Здраво свима!"
 
 #: hello-1.pl.in:20
 #, perl-format
@@ -23,6 +23,6 @@ msgid "This program is running as process number %d."
 msgstr "Овај програм се извршава као процес број %d."
 
 #: hello-2.pl.in:15
-#, fuzzy, perl-brace-format
+#, perl-brace-format
 msgid "This program is running as process number {pid}."
-msgstr "Овај програм се извршава као процес број $pid."
+msgstr "Овај програм се извршава као процес број {pid}."

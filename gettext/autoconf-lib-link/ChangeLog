@@ -1,3 +1,56 @@
+2005-02-24  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.2 released.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Upgrade to libtool-1.5.12: support for Portland Group
+	compiler, support for DragonFly BSD, relaxed copyright permissions.
+
+2005-02-07  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Use 'sed' with ranges only in C locale. Needed because
+	in the et_EE locale, the letters T U V W C Y come after Z.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2005-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Adaptation to automake-1.9.
+	* Makefile.am (tests/rpath*/aclocal.m4): Turn the m4 directories
+	into absolute pathnames, so that aclocal-1.9 includes the files
+	literally into the created aclocal.m4 file, instead of putting
+	m4_include(...) statements that don't work after the directory has
+	been copied to a different location.
+
+2005-01-05  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Upgrade to libtool-1.5.10.
+
+2004-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Upgrade to libtool-1.5.8 and libtool-1.5.10.
+
+2004-11-11  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Upgrade to libtool-1.5.6.
+
+2004-10-30  James Youngman  <jay@gnu.org>
+
+	* config.rpath: Modify comment to be consistent with the code.
+
+2004-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Add support for Comeau C++ on Linux.
+	Patch by Prof. Roberto Bagnara <bagnara@cs.unipr.it>.
+
+2004-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* config.rpath: Upgrade to libtool-1.5.2.
+
+2004-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.1 released.
+
 2004-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14 released.

@@ -1,5 +1,5 @@
 /* Initializes a new PO file.
-   Copyright (C) 2001-2004 Free Software Foundation, Inc.
+   Copyright (C) 2001-2005 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@
 #include "basename.h"
 #include "strpbrk.h"
 #include "strstr.h"
-#include "strcase.h"
+#include "c-strcase.h"
 #include "message.h"
 #include "read-po.h"
 #include "write-po.h"
@@ -91,6 +91,7 @@
 #include "pathname.h"
 #include "xerror.h"
 #include "msgl-english.h"
+#include "plural-count.h"
 #include "pipe.h"
 #include "wait-process.h"
 #include "getline.h"
@@ -152,6 +153,7 @@ static const char *catalogname_for_locale (const char *locale);
 static const char *language_of_locale (const char *locale);
 static char *get_field (const char *header, const char *field);
 static msgdomain_list_ty *fill_header (msgdomain_list_ty *mdlp);
+static msgdomain_list_ty *update_msgstr_plurals (msgdomain_list_ty *mdlp);
 
 
 int
@@ -267,7 +269,7 @@ main (int argc, char **argv)
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\
 "),
-	      "2001-2004");
+	      "2001-2005");
       printf (_("Written by %s.\n"), "Bruno Haible");
       exit (EXIT_SUCCESS);
     }
@@ -337,6 +339,8 @@ the output .po file through the --output-file option.\n"),
   /* Initialize translations.  */
   if (strcmp (language, "en") == 0)
     result = msgdomain_list_english (result);
+  else
+    result = update_msgstr_plurals (result);
 
   /* Write the modified message list out.  */
   msgdomain_list_print (result, output_file, true, false);
@@ -1174,7 +1178,7 @@ get_user_email ()
   /* Ask the user for his email address.  */
   argv[0] = "/bin/sh";
   argv[1] = (char *) prog;
-  argv[2] = _("\
+  argv[2] = (char *) _("\
 The new message catalog should contain your email address, so that users can\n\
 give you feedback about the translations, and so that maintainers can contact\n\
 you in case of unexpected technical problems.\n");
@@ -1346,7 +1350,7 @@ content_type (const char *header)
       if (charsetstr != NULL)
 	{
 	  charsetstr += strlen ("charset=");
-	  was_utf8 = (strcasecmp (charsetstr, "UTF-8") == 0);
+	  was_utf8 = (c_strcasecmp (charsetstr, "UTF-8") == 0);
 	}
     }
   return xasprintf ("text/plain; charset=%s",
@@ -1749,5 +1753,56 @@ fill_header (msgdomain_list_ty *mdlp)
 	}
     }
 
+  return mdlp;
+}
+
+
+/* Update the msgstr plural entries according to the nplurals count.  */
+static msgdomain_list_ty *
+update_msgstr_plurals (msgdomain_list_ty *mdlp)
+{
+  size_t k;
+
+  for (k = 0; k < mdlp->nitems; k++)
+    {
+      message_list_ty *mlp = mdlp->item[k]->messages;
+      message_ty *header_entry;
+      unsigned long int nplurals;
+      char *untranslated_plural_msgstr;
+      size_t j;
+
+      header_entry = message_list_search (mlp, "");
+      nplurals = get_plural_count (header_entry ? header_entry->msgstr : NULL);
+      untranslated_plural_msgstr = (char *) xmalloc (nplurals);
+      memset (untranslated_plural_msgstr, '\0', nplurals);
+
+      for (j = 0; j < mlp->nitems; j++)
+	{
+	  message_ty *mp = mlp->item[j];
+	  bool is_untranslated;
+	  const char *p;
+	  const char *pend;
+
+	  if (mp->msgid_plural != NULL)
+	    {
+	      /* Test if mp is untranslated.  (It most likely is.)  */
+	      is_untranslated = true;
+	      for (p = mp->msgstr, pend = p + mp->msgstr_len; p < pend; p++)
+		if (*p != '\0')
+		  {
+		    is_untranslated = false;
+		    break;
+		  }
+	      if (is_untranslated)
+		{
+		  /* Change mp->msgstr_len consecutive empty strings into
+		     nplurals consecutive empty strings.  */
+		  if (nplurals > mp->msgstr_len)
+		    mp->msgstr = untranslated_plural_msgstr;
+		  mp->msgstr_len = nplurals;
+		}
+	    }
+	}
+    }
   return mdlp;
 }

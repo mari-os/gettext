@@ -96,6 +96,7 @@ following file list.
       $prefix/share/doc/gettext/gettextize.1.html
       $prefix/share/doc/gettext/autopoint.1.html
       $prefix/share/doc/gettext/gettext_*.html
+      $prefix/share/doc/gettext/FAQ.html
       $prefix/share/doc/gettext/examples/*
       $prefix/info/gettext.info*
       $prefix/include/gettext-po.h
@@ -111,11 +112,12 @@ following file list.
       $prefix/share/gettext/po/*
       $prefix/share/gettext/projects/*
       $prefix/share/gettext/gettext.h
-      $prefix/share/gettext/gettext.jar
+      $prefix/share/gettext/gettext.jar   (only installed if gcj is not present)
       $prefix/share/gettext/msgunfmt.tcl
       $prefix/share/gettext/archive.tar.gz
       $prefix/share/aclocal/codeset.m4
       $prefix/share/aclocal/gettext.m4
+      $prefix/share/aclocal/glibc2.m4
       $prefix/share/aclocal/glibc21.m4
       $prefix/share/aclocal/iconv.m4
       $prefix/share/aclocal/intdiv0.m4
@@ -146,3 +148,29 @@ following file list.
       $prefix/share/emacs/site-lisp/po-compat.elc
       $prefix/share/emacs/site-lisp/po-mode.el
       $prefix/share/emacs/site-lisp/po-mode.elc
+
+
+Java support:
+-------------
+
+If GNU gcj is available at build time, two programs will be built as native
+executables:
+      $prefix/lib/gettext/gnu.gettext.*
+and the gettext-tools package will therefore have a runtime dependency to
+libgcj.so.
+
+If GNU gcj is not available at build time but another Java implementation is
+available instead, the two programs will be compiled to Java bytecode only:
+      $prefix/share/gettext/gettext.jar
+and the gettext-tools package will therefore have a runtime dependency to
+the Java virtual machine (Sun Java2, IBM Java2, GNU libgcj.jar, or other).
+
+
+C# support:
+-----------
+
+For C# support, one of pnet or mono must be available at build time; it must
+also be available at run time. If you have both available, choose the desired
+one through the configure option. Note there is no interoperability currently
+between pnet and mono: Programs compiled with pnet don't run with mono, and
+vice versa.

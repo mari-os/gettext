@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2004 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -47,6 +47,7 @@ enum format_type
   format_lisp,
   format_elisp,
   format_librep,
+  format_scheme,
   format_smalltalk,
   format_java,
   format_csharp,
@@ -60,7 +61,7 @@ enum format_type
   format_gcc_internal,
   format_qt
 };
-#define NFORMATS 19	/* Number of format_type enum values.  */
+#define NFORMATS 20	/* Number of format_type enum values.  */
 extern DLL_VARIABLE const char *const format_language[NFORMATS];
 extern DLL_VARIABLE const char *const format_language_pretty[NFORMATS];
 
@@ -191,6 +192,8 @@ extern void
        message_list_append (message_list_ty *mlp, message_ty *mp);
 extern void
        message_list_prepend (message_list_ty *mlp, message_ty *mp);
+extern void
+       message_list_insert_at (message_list_ty *mlp, size_t n, message_ty *mp);
 extern void
        message_list_delete_nth (message_list_ty *mlp, size_t n);
 typedef bool message_predicate_ty (const message_ty *mp);

@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002-2004 Free Software Foundation, Inc.
+# Copyright (C) 2002-2005 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,6 +30,37 @@ version=@VERSION@
 prefix="@prefix@"
 gettext_dir="@datadir@/gettext"
 
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : ${TMPDIR=/tmp}
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gt$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    { (exit 1); exit 1; }
+  }
+}
+
 # Support for relocatability.
 func_find_curr_installdir ()
 {
@@ -39,14 +70,15 @@ func_find_curr_installdir ()
     */* | *\\*) ;;
     *) # Need to look in the PATH.
       if test "${PATH_SEPARATOR+set}" != set; then
-        { echo "#! /bin/sh"; echo "exit 0"; } > /tmp/conf$$.sh
-        chmod +x /tmp/conf$$.sh
-        if (PATH="/nonexistent;/tmp"; conf$$.sh) >/dev/null 2>&1; then
+        func_tmpdir
+        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
+        chmod +x "$tmp"/conf.sh
+        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
           PATH_SEPARATOR=';'
         else
           PATH_SEPARATOR=:
         fi
-        rm -f /tmp/conf$$.sh
+        rm -f "$tmp"
       fi
       save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
       for dir in $PATH; do
@@ -135,7 +167,7 @@ Report bugs to <bug-gnu-gettext@gnu.org>."
 func_version ()
 {
   echo "$progname (GNU $package) $version"
-  echo "Copyright (C) 2002-2004 Free Software Foundation, Inc.
+  echo "Copyright (C) 2002-2005 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
   echo "Written by" "Bruno Haible"
@@ -229,7 +261,7 @@ fi
 # At least one of the two must be given. If both are given, they must agree.
 xver=`cat "$configure_in" | grep '^AM_GNU_GETTEXT_VERSION(' | sed -e 's/^AM_GNU_GETTEXT_VERSION(\([^()]*\))/\1/p' | sed -e 's/^\[\(.*\)\]$/\1/' | sed -e 1q`
 if test -z "$xver" && test -f intl/VERSION; then
-  xver=`cat intl/VERSION | sed -n -e 's/^.*gettext-\([-+_.0-9A-Za-z]*\).*$/\1/p'`
+  xver=`cat intl/VERSION | LC_ALL=C sed -n -e 's/^.*gettext-\([-+_.0-9A-Za-z]*\).*$/\1/p'`
 fi
 if test -n "$xver"; then
   if test -n "$ver"; then
@@ -244,6 +276,21 @@ else
     func_fatal_error "Missing version: please specify in $configure_in through a line 'AM_GNU_GETTEXT_VERSION(x.yy.zz)' the gettext version the package is using"
   fi
 fi
+
+# Check whether the version number is supported.
+case "$ver" in
+  0.10.35 | 0.10.36 | 0.10.37 | 0.10.38 | 0.10.39 | 0.10.40 | \
+  0.11 | 0.11.1 | 0.11.2 | 0.11.3 | 0.11.4 | 0.11.5 | \
+  0.12 | 0.12.1 | \
+  0.13 | 0.13.1 | \
+  0.14 | 0.14.1 | 0.14.2 )
+    ;;
+  *)
+    func_fatal_error "The AM_GNU_GETTEXT_VERSION declaration in your $configure_in\
+               file requires the infrastructure from gettext-$ver but this version\
+               is older. Please upgrade to gettext-$ver or newer."
+    ;;
+esac
 
 # We distribute the many different versions of the files in a CVS repository.
 # This guarantees a good compression rate:
@@ -268,6 +315,7 @@ fi
 #      0.13.1                  1236
 #      0.14                    1296
 #      0.14.1                  1300
+#      0.14.2                  1420
 #
 # The requirement that the user must have the CVS program available is not
 # a severe restrictions, because most of the people who use autopoint are
@@ -317,8 +365,22 @@ omitintl=`if test 'external' = "$omitintl"; then echo yes; fi`
 # - work_dir        directory containing the temporary checkout
 cvs_dir=tmpcvs$$
 work_dir=tmpwrk$$
-mkdir "$cvs_dir"
-mkdir "$work_dir"
+# Use an umask of 077, to avoid attacks that work by overwriting files in the
+# "$CVSROOT"/CVSROOT directory.
+(umask 077 && mkdir "$cvs_dir") || {
+  if test -d "$cvs_dir"; then
+    func_fatal_error "directory $cvs_dir already exists"
+  else
+    func_fatal_error "cannot create directory $cvs_dir"
+  fi
+}
+mkdir "$work_dir" || {
+  if test -d "$work_dir"; then
+    func_fatal_error "directory $work_dir already exists"
+  else
+    func_fatal_error "cannot create directory $work_dir"
+  fi
+}
 CVSROOT="$srcdir/$cvs_dir"
 export CVSROOT
 unset CVS_CLIENT_LOG
@@ -384,8 +446,8 @@ func_destfile ()
 # original - too great risk of version mismatch.
 if test -z "$force"; then
   mismatch=
-  mismatchfile="${TMPDIR-/tmp}"/autopoint$$.diff
-  rm -f "$mismatchfile"
+  func_tmpdir
+  mismatchfile="$tmp"/autopoint.diff
   for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/archive/,," | LC_ALL=C sort`; do
     func_destfile "$file"
     if test -n "$destfile"; then
@@ -404,6 +466,7 @@ if test -z "$force"; then
     rm -rf "$cvs_dir" "$work_dir"
     func_fatal_error "Some files have been locally modified. Not overwriting them because --force has not been specified. For your convenience, you find the local modifications in the file '$mismatchfile'."
   fi
+  rm -rf "$tmp"
 fi
 
 # func_mkdir_for to

@@ -30,7 +30,7 @@ OPTIMFLAGS = /optimize
 CFLAGS = $(ABIFLAGS) $(WARN_CFLAGS) $(OPTIMFLAGS)
 DEFS = "VMS=1","HAVE_CONFIG_H=1","LOCALEDIR=""$(localedir)]""","GETTEXTJAR=""$(jardir)]gettext.jar""","LIBDIR=""$(libdir)]""","GETTEXTDATADIR=""$(pkgdatadir)]""","PROJECTSDIR=""$(projectsdir)"""
 
-INCLUDES = /include=([],[-],[-.libuniname],[-.lib],[-.intl],[-.-.gettext-runtime.intl])
+INCLUDES = /include=([],[-],[-.libgrep],[-.libuniname],[-.lib],[-.intl],[-.-.gettext-runtime.intl])
 
 LDADD = libiconv.opt/opt,[-.-.vms]link_options.opt
 LDADD_EXPAT = sys$library:expat/lib
@@ -52,10 +52,10 @@ PROGRAMS = msgcmp.exe, msgfmt.exe, msgmerge.exe, msgunfmt.exe, xgettext.exe, msg
 
 OBJECTS = \
   message.obj, \
+  po-error.obj, \
   read-po-abstract.obj, \
   po-lex.obj, \
   po-gram-gen.obj, \
-  po-hash-gen.obj, \
   po-charset.obj, \
   read-properties.obj, \
   read-stringtable.obj, \
@@ -83,6 +83,7 @@ OBJECTS = \
   format-lisp.obj, \
   format-elisp.obj, \
   format-librep.obj, \
+  format-scheme.obj, \
   format-java.obj, \
   format-csharp.obj, \
   format-awk.obj, \
@@ -99,7 +100,7 @@ msgcmp_OBJECTS = msgcmp.obj
 msgfmt_OBJECTS = msgfmt.obj, write-mo.obj, write-java.obj, write-csharp.obj, write-resources.obj, write-tcl.obj, write-qt.obj, plural-eval.obj
 msgmerge_OBJECTS = msgmerge.obj, plural-count.obj
 msgunfmt_OBJECTS = msgunfmt.obj, read-mo.obj, read-java.obj, read-csharp.obj, read-resources.obj, read-tcl.obj
-xgettext_OBJECTS = xgettext.obj, x-c.obj, x-po.obj, x-sh.obj, x-python.obj, x-lisp.obj, x-elisp.obj, x-librep.obj, x-smalltalk.obj, x-java.obj, x-csharp.obj, x-awk.obj, x-ycp.obj, x-tcl.obj, x-perl.obj, x-php.obj, x-rst.obj, x-glade.obj
+xgettext_OBJECTS = xgettext.obj, x-c.obj, x-po.obj, x-sh.obj, x-python.obj, x-lisp.obj, x-elisp.obj, x-librep.obj, x-scheme.obj, x-smalltalk.obj, x-java.obj, x-csharp.obj, x-awk.obj, x-ycp.obj, x-tcl.obj, x-perl.obj, x-php.obj, x-rst.obj, x-glade.obj
 msgattrib_OBJECTS = msgattrib.obj
 msgcat_OBJECTS = msgcat.obj
 msgcomm_OBJECTS = msgcomm.obj
@@ -108,7 +109,7 @@ msgen_OBJECTS = msgen.obj
 msgexec_OBJECTS = msgexec.obj
 msgfilter_OBJECTS = msgfilter.obj
 msggrep_OBJECTS = msggrep.obj
-msginit_OBJECTS = msginit.obj, localealias.obj
+msginit_OBJECTS = msginit.obj, plural-count.obj, localealias.obj
 msguniq_OBJECTS = msguniq.obj
 
 all : gettextsrc.olb,$(PROGRAMS),gettextpo.olb
@@ -119,6 +120,9 @@ all : gettextsrc.olb,$(PROGRAMS),gettextpo.olb
 message.obj : message.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) message.c
 
+po-error.obj : po-error.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) po-error.c
+
 read-po-abstract.obj : read-po-abstract.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) read-po-abstract.c
 
@@ -127,9 +131,6 @@ po-lex.obj : po-lex.c
 
 po-gram-gen.obj : po-gram-gen.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) po-gram-gen.c
-
-po-hash-gen.obj : po-hash-gen.c
-	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) po-hash-gen.c
 
 po-charset.obj : po-charset.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) po-charset.c
@@ -211,6 +212,9 @@ format-elisp.obj : format-elisp.c
 
 format-librep.obj : format-librep.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) format-librep.c
+
+format-scheme.obj : format-scheme.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) format-scheme.c
 
 format-java.obj : format-java.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) format-java.c
@@ -325,6 +329,9 @@ x-elisp.obj : x-elisp.c
 x-librep.obj : x-librep.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-librep.c
 
+x-scheme.obj : x-scheme.c
+	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-scheme.c
+
 x-smalltalk.obj : x-smalltalk.c
 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-smalltalk.c
 
@@ -429,7 +436,7 @@ msgfilter.exe : $(msgfilter_OBJECTS),libiconv.opt
 	link /executable=msgfilter.exe $(msgfilter_OBJECTS),gettextsrc.olb/lib,[-.lib]gettextlib.olb/lib,[-.intl]intl.olb/lib,$(LDADD)
 
 msggrep.exe : $(msggrep_OBJECTS),libiconv.opt
-	link /executable=msggrep.exe $(msggrep_OBJECTS),gettextsrc.olb/lib,[-.lib]gettextlib.olb/lib,[-.intl]intl.olb/lib,$(LDADD)
+	link /executable=msggrep.exe $(msggrep_OBJECTS),[-.libgrep]grep.olb/lib,gettextsrc.olb/lib,[-.lib]gettextlib.olb/lib,[-.intl]intl.olb/lib,$(LDADD)
 
 msginit.exe : $(msginit_OBJECTS),libiconv.opt
 	link /executable=msginit.exe $(msginit_OBJECTS),[-.intl]localename.obj,gettextsrc.olb/lib,[-.lib]gettextlib.olb/lib,[-.intl]intl.olb/lib,$(LDADD)
