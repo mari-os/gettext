@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.11.5
-Release: alt12
+Release: alt13
 
 %define libintl libintl2
 
@@ -30,7 +30,7 @@ Requires: %libintl = %version-%release
 BuildPreReq: automake >= 1.6.3, autoconf >= 2.53
 
 # Automatically added by buildreq on Tue Oct 15 2002
-BuildRequires: XFree86-libs XFree86-locales libXaw3d emacs-common flex gcc-c++ gcc-java libgcj-devel libstdc++-devel tetex-dvips zlib-devel
+BuildRequires: XFree86-locales flex gcc-c++ gcc-java libgcj-devel libstdc++-devel tetex-dvips zlib-devel
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -176,7 +176,6 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %files -n %libintl-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 %_libdir/libintl*.so
-%_libdir/libintl*.la
 
 %files -n %libintl-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
@@ -204,7 +203,7 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %exclude %_datadir/%name/libintl.jar
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
-%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
+#%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %_docdir/%name-%version/*
 
 %files tools-java
@@ -217,6 +216,10 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Tue Dec 09 2003 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt13
+- Do not package .la files.
+- Disabled packaging of emacs site-start.d files for a while.
+
 * Fri Dec 13 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt12
 - gettextize: fixed AM_GNU_GETTEXT_VERSION corruption (rh).
 - msghack: moved to -tools-python subpackage.
