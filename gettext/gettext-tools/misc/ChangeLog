@@ -1,3 +1,89 @@
+2005-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.3 released.
+
+2004-10-23  Bruno Haible  <bruno@clisp.org>
+
+	* start-po-el: New file.
+	* Makefile.am (lisp_LISP): Add it.
+
+2005-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in: Update for 0.14.3.
+
+2005-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Compute comma separated lists for ChangeLog entries
+	correctly. Also comma-separate the EXTRA_DIST ChangeLog entry.
+
+2005-03-07  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Create the auxdir if it doesn't exist.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-07  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in (func_m4ChangeLog_init, func_m4ChangeLog_add_entry,
+	func_m4ChangeLog_finish): Let the behaviour depend on
+	using_m4ChangeLog. Initialize using_m4ChangeLog depending on whether
+	an m4/ChangeLog already exists.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-06  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Update the instructions for fetching config.guess and
+	config.sub.
+	Reported by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-06  Bruno Haible  <bruno@clisp.org>
+
+	* autopoint.in (func_destfile): Also set a variable 'sharedowner'.
+	For files with shared ownership, treat local modification as a warning.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: When a po/POTFILES.in does not exist, create an
+	initial empty one.
+	Reported by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in (func_m4ChangeLog_init, func_m4ChangeLog_finish):
+	Keep track whether a $m4dir/ChangeLog file was created.
+	Don't create a $m4dir/Makefile.am if aclocal version 1.8 or newer is
+	present; instead add $m4dir/ChangeLog to EXTRA_DIST if needed.
+	Reported by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: When adding items to EXTRA_DIST, SUBDIRS,
+	DIST_SUBDIRS, ACLOCAL_AMFLAGS in Makefile.am, optionally remove one
+	space after the added items. When adding items to AC_CONFIG_FILES,
+	AC_OUTPUT in configure.ac, remove don't insert an extra space after
+	the added items.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Emit brackets around the argument of
+	AM_GNU_GETTEXT_VERSION.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* gettextize.in: Don't recommend to add AM_GNU_GETTEXT([external])
+	when it is already present.
+	Suggested by Alexandre Duret-Lutz <adl@src.lip6.fr>.
+
+2005-03-05  Bruno Haible  <bruno@clisp.org>
+
+	Remove old sh, tcl, perl interfaces.
+	* gettext-sh: Remove file.
+	* tcl_gettext.c, README-Tcl: Remove files.
+	* gettext.perl: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove them.
+
 2005-02-24  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14.2 released.

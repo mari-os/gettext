@@ -468,45 +468,59 @@ func_poChangeLog_finish ()
 # manage the $m4dir/ChangeLog file, relative to $srcdir.
 func_m4ChangeLog_init ()
 {
-  modified_m4ChangeLog=
+  if test -n "$using_m4ChangeLog"; then
+    modified_m4ChangeLog=
+    created_m4ChangeLog=
+  fi
 }
 func_m4ChangeLog_add_entry ()
 {
-  if $doit; then
-    if test -z "$modified_m4ChangeLog"; then
-      echo "$date  gettextize  <bug-gnu-gettext@gnu.org>" > "$srcdir/$m4dir/ChangeLog.tmp"
-      echo >> "$srcdir/$m4dir/ChangeLog.tmp"
+  if test -n "$using_m4ChangeLog"; then
+    if $doit; then
+      if test -z "$modified_m4ChangeLog"; then
+        echo "$date  gettextize  <bug-gnu-gettext@gnu.org>" > "$srcdir/$m4dir/ChangeLog.tmp"
+        echo >> "$srcdir/$m4dir/ChangeLog.tmp"
+        modified_m4ChangeLog=yes
+      fi
+      echo "$1" >> "$srcdir/$m4dir/ChangeLog.tmp"
+    else
       modified_m4ChangeLog=yes
     fi
-    echo "$1" >> "$srcdir/$m4dir/ChangeLog.tmp"
   else
-    modified_m4ChangeLog=yes
+    line="$1"
+    line=`echo "$line" | sed -e "s%^	\\* %	* $m4dir/%"`
+    func_ChangeLog_add_entry "$line"
   fi
 }
 func_m4ChangeLog_finish ()
 {
-  if test -n "$modified_m4ChangeLog"; then
-    if $doit; then
-      echo >> "$srcdir/$m4dir/ChangeLog.tmp"
-      if test -f "$srcdir/$m4dir/ChangeLog"; then
-        echo "Adding an entry to $m4dir/ChangeLog (backup is in $m4dir/ChangeLog~)"
-        cat "$srcdir/$m4dir/ChangeLog" >> "$srcdir/$m4dir/ChangeLog.tmp"
-        rm -f "$srcdir/$m4dir/ChangeLog~"
-        cp -p "$srcdir/$m4dir/ChangeLog" "$srcdir/$m4dir/ChangeLog~"
+  if test -n "$using_m4ChangeLog"; then
+    if test -n "$modified_m4ChangeLog"; then
+      if $doit; then
+        echo >> "$srcdir/$m4dir/ChangeLog.tmp"
+        if test -f "$srcdir/$m4dir/ChangeLog"; then
+          echo "Adding an entry to $m4dir/ChangeLog (backup is in $m4dir/ChangeLog~)"
+          cat "$srcdir/$m4dir/ChangeLog" >> "$srcdir/$m4dir/ChangeLog.tmp"
+          rm -f "$srcdir/$m4dir/ChangeLog~"
+          cp -p "$srcdir/$m4dir/ChangeLog" "$srcdir/$m4dir/ChangeLog~"
+        else
+          echo "Creating $m4dir/ChangeLog"
+          created_m4ChangeLog=yes
+        fi
+        cp "$srcdir/$m4dir/ChangeLog.tmp" "$srcdir/$m4dir/ChangeLog"
+        rm -f "$srcdir/$m4dir/ChangeLog.tmp"
       else
-        echo "Creating $m4dir/ChangeLog"
-      fi
-      cp "$srcdir/$m4dir/ChangeLog.tmp" "$srcdir/$m4dir/ChangeLog"
-      rm -f "$srcdir/$m4dir/ChangeLog.tmp"
-    else
-      if test -f "$srcdir/$m4dir/ChangeLog"; then
-        echo "Add an entry to $m4dir/ChangeLog"
-      else
-        echo "Create $m4dir/ChangeLog"
+        if test -f "$srcdir/$m4dir/ChangeLog"; then
+          echo "Add an entry to $m4dir/ChangeLog"
+        else
+          echo "Create $m4dir/ChangeLog"
+          created_m4ChangeLog=yes
+        fi
       fi
     fi
   fi
 }
+using_m4ChangeLog=yes
 
 if test ! -f "$srcdir/intl/Makefile.in" && test -n "$intldir"; then
   added_acoutput="$added_acoutput intl/Makefile"
@@ -555,6 +569,18 @@ test -d "$srcdir/po" || {
   added_directories="$added_directories po"
 }
 
+# Create the directory for config.rpath, mkinstalldirs, if needed.
+# This is for consistency with autoreconf and automake.
+# Note that $auxdir is either empty or ends in a slash.
+test -d "$srcdir/$auxdir" || {
+  if $doit; then
+    echo "Creating $auxdir subdirectory"
+    mkdir "$srcdir/$auxdir" || func_fatal_error "failed to create $auxdir subdirectory"
+  else
+    echo "Create $auxdir subdirectory"
+  fi
+}
+
 # Now copy all files.  Take care for the destination directories.
 for file in *; do
   case $file in
@@ -591,10 +617,15 @@ if test -n "$intldir"; then
   cd ..
 else
   echo "Not copying intl/ directory."
-  please="$please
+  # Tell the user what to put into configure.ac, if it is not already there.
+  if grep '^AM_GNU_GETTEXT([[]\?external[]]\?[ 	]*[,)]' "$srcdir/$configure_in" > /dev/null; then
+    :
+  else
+    please="$please
 Please use AM_GNU_GETTEXT([external]) in order to cause autoconfiguration
 to look for an external libintl.
 "
+  fi
 fi
 
 # Copy files to po/ subdirectory.
@@ -672,12 +703,19 @@ if test -f "$srcdir/po/stamp-cat-id"; then
   func_remove po/stamp-cat-id
   $do_changelog && func_poChangeLog_add_entry "	* stamp-cat-id: Remove file."
 fi
-$do_changelog && func_poChangeLog_finish
 if test ! -f "$srcdir/po/POTFILES.in"; then
+  if $doit; then
+    echo "Creating initial po/POTFILES.in"
+    echo '# List of source files which contain translatable strings.' > "$srcdir/po/POTFILES.in"
+  else
+    echo "Create initial po/POTFILES.in"
+  fi
+  $do_changelog && func_poChangeLog_add_entry "	* POTFILES.in: New file."
   please="$please
-Please create po/POTFILES.in as described in the documentation.
+Please fill po/POTFILES.in as described in the documentation.
 "
 fi
+$do_changelog && func_poChangeLog_finish
 
 m4filelist='  codeset.m4 gettext.m4 glibc2.m4 glibc21.m4 iconv.m4 intdiv0.m4
   intmax.m4 inttypes.m4 inttypes_h.m4 inttypes-pri.m4 isc-posix.m4 lcmessage.m4
@@ -699,6 +737,15 @@ m4filelist='  codeset.m4 gettext.m4 glibc2.m4 glibc21.m4 iconv.m4 intdiv0.m4
 # right versions of gettext.m4 et al. with it.
 if test -f "$srcdir/Makefile.am"; then
   # A package using automake.
+
+  # Determine whether it's using automake 1.8 or newer.
+  have_automake18=
+  if (aclocal --version) >/dev/null 2>/dev/null; then
+    aclocal_version=`aclocal --version | sed -n -e 1p | sed -e 's/^[^0-9]*//'`
+    case $aclocal_version in
+      1.[8-9]* | 1.[1-9][0-9]* | [2-9]*) have_automake18=yes ;;
+    esac
+  fi
 
   # Extract the macro directory name from Makefile.am.
   aclocal_amflags=`grep '^ACLOCAL_AMFLAGS[ 	]*=' "$srcdir/Makefile.am" | sed -e 's/^ACLOCAL_AMFLAGS[ 	]*=\(.*\)$/\1/'`
@@ -723,8 +770,15 @@ if test -f "$srcdir/Makefile.am"; then
     fi
   done
 
+  # Decide whether to use $m4dir/ChangeLog, or to use ChangeLog instead.
+  if test -d "$srcdir/$m4dir" && test -f "$srcdir/ChangeLog" && test ! -f "$srcdir/$m4dir/ChangeLog"; then
+    # The programmer has no $m4dir/ChangeLog so far. Don't introduce one.
+    using_m4ChangeLog=
+  fi
+
   # Update the *.m4 files and the corresponding Makefile.am.
   $do_changelog && func_m4ChangeLog_init
+  added_m4dir=
   added_m4files=
   if test -d "$srcdir/$m4dir"; then
     :
@@ -735,7 +789,7 @@ if test -f "$srcdir/Makefile.am"; then
     else
       echo "Create directory $m4dir"
     fi
-    added_directories="$added_directories $m4dir"
+    added_m4dir=yes
   fi
   for file in $m4filelist; do
     same=no
@@ -756,6 +810,7 @@ if test -f "$srcdir/Makefile.am"; then
     func_backup "$m4dir/$file"
     func_linkorcopy "@datadir@/aclocal/$file" "@datadir@/aclocal/$file" "$m4dir/$file"
   done
+  missing_m4Makefileam=
   if test -n "$added_m4files"; then
     if test -f "$srcdir/$m4dir/Makefile.am"; then
       if $doit; then
@@ -763,7 +818,7 @@ if test -f "$srcdir/Makefile.am"; then
         func_backup "$m4dir/Makefile.am"
         rm -f "$srcdir/$m4dir/Makefile.am"
         if grep '^EXTRA_DIST[ 	]*=' "$srcdir/$m4dir/Makefile.am~" > /dev/null; then
-          sed -e "s%^\(EXTRA_DIST[ 	]*=\)%\\1$added_m4files %" < "$srcdir/$m4dir/Makefile.am~" > "$srcdir/$m4dir/Makefile.am"
+          sed -e "s%^\(EXTRA_DIST[ 	]*=\) \\?%\\1$added_m4files %" < "$srcdir/$m4dir/Makefile.am~" > "$srcdir/$m4dir/Makefile.am"
           $do_changelog && func_m4ChangeLog_add_entry "	* Makefile.am (EXTRA_DIST): Add the new files."
         else
           (cat "$srcdir/$m4dir/Makefile.am~"; echo; echo "EXTRA_DIST =$added_m4files") > "$srcdir/$m4dir/Makefile.am"
@@ -774,17 +829,32 @@ if test -f "$srcdir/Makefile.am"; then
         $do_changelog && func_m4ChangeLog_add_entry "	* Makefile.am (EXTRA_DIST)."
       fi
     else
-      if $doit; then
-        echo "Creating $m4dir/Makefile.am"
-        echo "EXTRA_DIST =$added_m4files" > "$srcdir/$m4dir/Makefile.am"
+      # $m4dir/Makefile.am is not needed any more when aclocal 1.8 or newer
+      # is used.
+      if test -z "$have_automake18"; then
+        if $doit; then
+          echo "Creating $m4dir/Makefile.am"
+          echo "EXTRA_DIST =$added_m4files" > "$srcdir/$m4dir/Makefile.am"
+        else
+          echo "Create $m4dir/Makefile.am"
+        fi
+        $do_changelog && func_m4ChangeLog_add_entry "	* Makefile.am: New file."
+        added_acoutput="$added_acoutput $m4dir/Makefile"
       else
-        echo "Create $m4dir/Makefile.am"
+        missing_m4Makefileam=yes
       fi
-      $do_changelog && func_m4ChangeLog_add_entry "	* Makefile.am: New file."
-      added_acoutput="$added_acoutput $m4dir/Makefile"
     fi
   fi
+  if test -n "$added_m4dir" && test -z "$missing_m4Makefileam"; then
+    added_directories="$added_directories $m4dir"
+  fi
   $do_changelog && func_m4ChangeLog_finish
+  # automake will arrange for $m4dir/ChangeLog to be distributed if a
+  # $m4dir/Makefile.am exists. If not, we need to add it to Makefile.am's
+  # EXTRA_DIST explicitly.
+  if test -n "$created_m4ChangeLog" && test -n "$missing_m4Makefileam"; then
+    added_extradist="$added_extradist $m4dir/ChangeLog"
+  fi
 
   # Update the top-level Makefile.am.
   modified_Makefile_am=
@@ -823,8 +893,9 @@ if test -f "$srcdir/Makefile.am"; then
 
   if test -n "$added_directories"; then
     if grep '^SUBDIRS[ 	]*=' "$srcdir/Makefile.am" > /dev/null; then
-      sed -e "s%^\(SUBDIRS[ 	]*=\)%\\1$added_directories %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
-      func_modify_Makefile_am "(SUBDIRS): Add "`echo $added_directories | sed -e 's/ /, /g'`'.'
+      sed -e "s%^\(SUBDIRS[ 	]*=\) \\?%\\1$added_directories %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
+      added_directories_pretty=`echo $added_directories | sed -e 's/ /, /g'`
+      func_modify_Makefile_am "(SUBDIRS): Add $added_directories_pretty."
     else
       (cat "$srcdir/Makefile.am"; echo; echo "SUBDIRS =$added_directories") > "$srcdir/Makefile.am.tmp"
       func_modify_Makefile_am "(SUBDIRS): New variable."
@@ -849,8 +920,9 @@ if test -f "$srcdir/Makefile.am"; then
   fi
   if test -n "$added_directories"; then
     if grep '^DIST_SUBDIRS[ 	]*=' "$srcdir/Makefile.am" > /dev/null; then
-      sed -e "s%^\(DIST_SUBDIRS[ 	]*=\)%\\1$added_directories %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
-      func_modify_Makefile_am "(DIST_SUBDIRS): Add "`echo $added_directories | sed -e 's/ /, /g'`'.'
+      sed -e "s%^\(DIST_SUBDIRS[ 	]*=\) \\?%\\1$added_directories %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
+      added_directories_pretty=`echo $added_directories | sed -e 's/ /, /g'`
+      func_modify_Makefile_am "(DIST_SUBDIRS): Add $added_directories_pretty."
     fi
   fi
   if test -n "$removed_directory"; then
@@ -872,7 +944,7 @@ if test -f "$srcdir/Makefile.am"; then
   fi
   if test -z "$m4dir_is_next"; then
     if grep '^ACLOCAL_AMFLAGS[ 	]*=' "$srcdir/Makefile.am" > /dev/null; then
-      sed -e "s%^\(ACLOCAL_AMFLAGS[ 	]*=\)%\\1 -I $m4dir %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
+      sed -e "s%^\(ACLOCAL_AMFLAGS[ 	]*=\) \\?%\\1 -I $m4dir %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
       func_modify_Makefile_am "(ACLOCAL_AMFLAGS): Add -I $m4dir."
     else
       (cat "$srcdir/Makefile.am"; echo; echo "ACLOCAL_AMFLAGS = -I $m4dir") > "$srcdir/Makefile.am.tmp"
@@ -894,7 +966,8 @@ if test -f "$srcdir/Makefile.am"; then
   if test -n "$added_extradist"; then
     if grep '^EXTRA_DIST[ 	]*=' "$srcdir/Makefile.am" > /dev/null; then
       sed -e "s%^\(EXTRA_DIST[ 	]*=\)%\\1$added_extradist %" < "$srcdir/Makefile.am" > "$srcdir/Makefile.am.tmp"
-      func_modify_Makefile_am "(EXTRA_DIST): Add$added_extradist."
+      added_extradist_pretty=`echo $added_extradist | sed -e 's/ /, /g'`
+      func_modify_Makefile_am "(EXTRA_DIST): Add $added_extradist_pretty."
     else
       (cat "$srcdir/Makefile.am"; echo; echo "EXTRA_DIST =$added_extradist") > "$srcdir/Makefile.am.tmp"
       func_modify_Makefile_am "(EXTRA_DIST): New variable."
@@ -968,12 +1041,14 @@ b
 :a
 n
 ba'
-    sed -e "s%^\\(AC_CONFIG_FILES([^])\\,]*\\)%\\1$added_acoutput %$sedprog" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
-    func_modify_configure_in "(AC_CONFIG_FILES): Add "`echo $added_acoutput | sed -e 's/ /, /g'`'.'
+    sed -e "s%^\\(AC_CONFIG_FILES([^])\\,]*\\)%\\1$added_acoutput%$sedprog" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
+    added_acoutput_pretty=`echo $added_acoutput | sed -e 's/ /, /g'`
+    func_modify_configure_in "(AC_CONFIG_FILES): Add $added_acoutput_pretty."
   else
     if grep '^AC_OUTPUT(' "$srcdir/$configure_in" > /dev/null; then
-      sed -e "s%^\\(AC_OUTPUT([^])\\,]*\\)%\\1$added_acoutput %" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
-      func_modify_configure_in "(AC_OUTPUT): Add "`echo $added_acoutput | sed -e 's/ /, /g'`'.'
+      sed -e "s%^\\(AC_OUTPUT([^])\\,]*\\)%\\1$added_acoutput%" < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
+      added_acoutput_pretty=`echo $added_acoutput | sed -e 's/ /, /g'`
+      func_modify_configure_in "(AC_OUTPUT): Add $added_acoutput_pretty."
     else
       please="$please
 Please add$added_acoutput to the AC_OUTPUT or AC_CONFIG_FILES invocation in the $configure_in file.
@@ -1030,7 +1105,7 @@ sed -e 's%sed -e "/POTFILES =/r po/POTFILES" po/Makefile\.in > po/Makefile *;* *
 func_modify_configure_in "(AC_OUTPUT): Remove command that created po/Makefile."
 sed -e '/^\(dnl \|\)AC_LINK_FILES(\$nls_cv_header_libgt, \$nls_cv_header_intl)$/d' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
 func_modify_configure_in "(AC_LINK_FILES): Remove invocation."
-sed -e 's/^AM_GNU_GETTEXT_VERSION([^()]*)/AM_GNU_GETTEXT_VERSION('"$version"')/' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
+sed -e 's/^AM_GNU_GETTEXT_VERSION([^()]*)/AM_GNU_GETTEXT_VERSION(['"$version"'])/' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
 func_modify_configure_in "(AM_GNU_GETTEXT_VERSION): Bump to $version."
 $do_changelog && func_ChangeLog_finish
 
@@ -1104,8 +1179,11 @@ if test -f "$srcdir/$auxdir"config.guess && test -f "$srcdir/$auxdir"config.sub;
   :
 else
   please="$please
-You will also need config.guess and config.sub, which you can get from
-ftp://ftp.gnu.org/pub/gnu/config/.
+You will also need config.guess and config.sub, which you can get from the CVS
+of the 'config' project at http://savannah.gnu.org/. The commands to fetch them
+are
+\$ wget 'http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.guess'
+\$ wget 'http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/config/config/config.sub'
 "
 fi
 
