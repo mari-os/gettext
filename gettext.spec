@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.1
-Release: alt2
+Release: alt3
 
 %define libintl libintl3
 
@@ -16,6 +16,8 @@ Source2: %name-po-mode-start.el
 
 Patch1: %name-0.14.1-alt-gettextize-quiet.patch
 Patch2: %name-0.14.1-alt-autopoint-cvs.patch
+Patch3: %name-0.14.1-alt-func_find_curr_installdir.patch
+Patch4: %name-0.14.1-alt-m4.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -51,7 +53,10 @@ Group: Development/Other
 Provides: %name-devel = %version-%release
 Obsoletes: %name-devel
 Requires: %name = %version-%release
-Requires(post,preun): %__install_info
+Requires(post): %install_info
+Requires(preun): %uninstall_info
+# Due to "readlink -e".
+Requires: coreutils >= 5.2.1-alt3
 
 %package tools-java
 Summary: Tools for java developers and translators
@@ -112,6 +117,8 @@ This package contains msghack utility.
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %configure --with-included-gettext --enable-shared %{subst_enable static}
@@ -210,6 +217,11 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Mon Sep 13 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt3
+- autopoint, gettextize: Rewritten func_find_curr_installdir
+  using readlink(1).
+- signed.m4: Fixed "gcc -Wall -Werror" support (#5147).
+
 * Wed Mar 10 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt2
 - Updated build dependencies.
 
