@@ -1,8 +1,8 @@
 Name: gettext
-Version: 0.11.5
-Release: alt13
+Version: 0.14.1
+Release: alt1
 
-%define libintl libintl2
+%define libintl libintl3
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
 License: LGPL
@@ -14,23 +14,16 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.bz2
 Source1: msghack.py
 Source2: %name-po-mode-start.el
 
-Patch1: %name-0.10.35-rh-jbj.patch
-Patch2: %name-0.10.35-alt-aclocaldir.patch
-Patch3: %name-0.11.5-alt-m4-compat.patch
-Patch4: %name-0.11.5-alt-libobjs.patch
-Patch5: %name-0.11.5-alt-amproglex.patch
-Patch6: %name-0.11.5-alt-gettextize-quiet.patch
-Patch7: %name-0.11.5-alt-autopoint-cvs.patch
-Patch8: %name-0.11.4-rh-gettextize.patch
+Patch1: %name-0.14.1-alt-gettextize-quiet.patch
+Patch2: %name-0.14.1-alt-autopoint-cvs.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
 Requires: %libintl = %version-%release
 
-BuildPreReq: automake >= 1.6.3, autoconf >= 2.53
+%def_disable static
 
-# Automatically added by buildreq on Tue Oct 15 2002
-BuildRequires: XFree86-locales flex gcc-c++ gcc-java libgcj-devel libstdc++-devel tetex-dvips zlib-devel
+BuildPreReq: XFree86-locales emacs-nox gcc-c++ gcc-g77 gcc-java tetex-dvips
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -119,20 +112,9 @@ This package contains msghack utility.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%__ln_s misc/elisp-comp
 
 %build
-export LDFLAGS=-L$RPM_BUILD_ROOT%_libdir
-aclocal -I m4
-autoconf
-
-%configure --enable-shared --with-included-gettext
+%configure --with-included-gettext --enable-shared %{subst_enable static}
 %make_build
 
 %install
@@ -145,20 +127,23 @@ autoconf
 %__mv $RPM_BUILD_ROOT%_datadir/%name/intl/{ABOUT-NLS,archive.tar.gz} $RPM_BUILD_ROOT%_datadir/%name/
 
 %__mkdir_p $RPM_BUILD_ROOT%_datadir/%name/po
-%__install -p -m644 po/Makefile.in.in $RPM_BUILD_ROOT%_datadir/%name/po/
+%__install -p -m644 %name-runtime/po/Makefile.in.in $RPM_BUILD_ROOT%_datadir/%name/po/
 
 %__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_bindir/msghack
 %__install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/emacs/site-start.d/%name.el
 
 %__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d
 echo libintl >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl
+%if_enabled static
 echo libintl-devel >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
+%endif
 %__chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
 %__mkdir_p $RPM_BUILD_ROOT%_docdir
-%__mv $RPM_BUILD_ROOT/usr/doc/%name $RPM_BUILD_ROOT%_docdir/%name-%version
+%__mv $RPM_BUILD_ROOT%_docdir/%name $RPM_BUILD_ROOT%_docdir/%name-%version
 
-%find_lang %name
+%find_lang %name-runtime
+%find_lang %name-tools
 
 %post -n %libintl -p %post_ldconfig
 %postun -n %libintl -p %postun_ldconfig
@@ -173,6 +158,7 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl
 %_libdir/libintl*.so.*
 
+%if_enabled static
 %files -n %libintl-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 %_libdir/libintl*.so
@@ -180,30 +166,38 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %files -n %libintl-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
 %_libdir/libintl*.a
+%endif
 
-%files
+%files -f %name-runtime.lang
 %_bindir/%name
 %_bindir/n%name
+%_bindir/envsubst
+%_bindir/%name.sh
 %_man1dir/%name.*
 %_man1dir/n%name.*
+%_man1dir/envsubst.*
 
-%files tools -f %name.lang
+%files tools -f %name-tools.lang
 %_libdir/%name
 %exclude %_libdir/%name/gnu.gettext.*
-%_libdir/lib%{name}*.so
+%_libdir/lib%{name}*.so*
 %_bindir/*
 %exclude %_bindir/%name
 %exclude %_bindir/n%name
+%exclude %_bindir/envsubst
+%exclude %_bindir/%name.sh
 %exclude %_bindir/msghack
+%_includedir/%{name}*
 %_mandir/man?/*
 %exclude %_man1dir/%name.*
 %exclude %_man1dir/n%name.*
-%_infodir/*.info*
+%exclude %_man1dir/envsubst.*
+%_infodir/%name.info*
 %_datadir/%name
 %exclude %_datadir/%name/libintl.jar
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
-#%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
+%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %_docdir/%name-%version/*
 
 %files tools-java
@@ -216,6 +210,19 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Thu Feb 26 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt1
+- Updated to 0.14.1
+- Updated patches.
+- Removed obsolete or merged upstream patches:
+  rh-jbj
+  alt-m4-compat
+  alt-aclocaldir
+  alt-libobjs
+  alt-amproglex
+  rh-gettextize
+- Enabled packaging of emacs site-start.d files again.
+- Do not build static libintl library by default.
+
 * Tue Dec 09 2003 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt13
 - Do not package .la files.
 - Disabled packaging of emacs site-start.d files for a while.
