@@ -1,0 +1,28 @@
+--- gettext-0.11.5/misc/autopoint.in.orig	2002-08-06 22:55:18 +0400
++++ gettext-0.11.5/misc/autopoint.in	2002-10-25 13:44:48 +0400
+@@ -179,7 +179,8 @@
+ # users of CVS.
+ #
+ # Check availability of the CVS program.
+-(cvs -v) >/dev/null 2>/dev/null || func_fatal_error "cvs program not found"
++CVS_EXE=/usr/bin/cvs
++("$CVS_EXE" -v) >/dev/null 2>/dev/null || func_fatal_error "$CVS_EXE: program not found"
+ 
+ # Check in which directory config.rpath, mkinstalldirs etc. belong.
+ auxdir=`cat "$configure_in" | grep '^AC_CONFIG_AUX_DIR' | sed -n -e 's/AC_CONFIG_AUX_DIR(\([^()]*\))/\1/p' | sed -e 's/^\[\(.*\)\]$/\1/' | sed -e 1q`
+@@ -247,12 +248,13 @@
+ 
+ # Need to pass -d "$CVSROOT", because there may be a CVS directory in the
+ # current directory.
+-cvs -d "$CVSROOT" init
++"$CVS_EXE" -d "$CVSROOT" init
++subst 's/^LockDir/#LockDir/' "$CVSROOT/CVSROOT/config"
+ gzip -d -c < "$gettext_dir/archive.tar.gz" | (cd "$cvs_dir" && tar xf -)
+ 
+ cd "$work_dir"
+ cvsver=gettext-`echo "$ver" | sed -e 's/\./_/g'`
+-(cvs checkout -r"$cvsver" archive > /dev/null) 2>&1 | grep -v '^cvs checkout: Updating'
++("$CVS_EXE" checkout -r"$cvsver" archive > /dev/null) 2>&1 | grep -v '^cvs checkout: Updating'
+ find archive -name CVS -type d -print | xargs rm -rf
+ if test `find archive -type f -print | wc -l` = 0; then
+   cd ..

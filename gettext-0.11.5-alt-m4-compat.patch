@@ -1,0 +1,20 @@
+--- gettext-0.11.5/m4/gettext.m4.orig	2002-08-03 00:01:32 +0400
++++ gettext-0.11.5/m4/gettext.m4	2002-10-26 15:08:37 +0400
+@@ -309,6 +309,17 @@
+     GENCAT=gencat
+     AC_SUBST(GENCAT)
+ 
++    dnl For broken Makefiles.
++    if test -z "$CATALOGS" -a -n "$ALL_LINGUAS"; then
++        test -n "$as_me" && echo "$as_me: WARNING: \$CATALOGS unset but \$ALL_LINGUAS set" >&2 || echo "WARNING: \$CATALOGS unset but \$ALL_LINGUAS set" >&2
++    fi
++    if test -z "$GMOFILES" -a -n "$ALL_LINGUAS"; then
++        test -n "$as_me" && echo "$as_me: WARNING: \$GMOFILES unset but \$ALL_LINGUAS set" >&2 || echo "WARNING: \$GMOFILES unset but \$ALL_LINGUAS set" >&2
++    fi
++    if test -z "$POFILES" -a -n "$ALL_LINGUAS"; then
++        test -n "$as_me" && echo "$as_me: WARNING: \$POFILES unset but \$ALL_LINGUAS set" >&2 || echo "WARNING: \$POFILES unset but \$ALL_LINGUAS set" >&2
++    fi
++
+     dnl Enable libtool support if the surrounding package wishes it.
+     INTL_LIBTOOL_SUFFIX_PREFIX=gt_libtool_suffix_prefix
+     AC_SUBST(INTL_LIBTOOL_SUFFIX_PREFIX)

@@ -1,0 +1,41 @@
+--- gettext-0.11.5/misc/gettextize.in.orig	2002-08-05 15:51:35 +0400
++++ gettext-0.11.5/misc/gettextize.in	2002-10-23 14:07:21 +0400
+@@ -39,6 +39,7 @@
+       --version        print version information and exit
+   -c, --copy           copy files instead of making symlinks
+   -f, --force          force writing of new files even if old exist
++  -q, --quiet          don't ask acknowledgements
+       --intl           install libintl in a subdirectory
+       --no-changelog   don't update or create ChangeLog files
+   -n, --dry-run        print modifications but don't perform them
+@@ -75,6 +76,7 @@
+ # - doit            false if --dry-run was given, : otherwise
+ {
+   force=0
++  quiet=0
+   intldir=
+   try_ln_s=:
+   do_changelog=:
+@@ -91,6 +93,9 @@
+       -f | --force | --forc | --for | --fo | --f )
+         shift
+         force=1 ;;
++      -q | --quiet | --quie | --qui | --qu | --q )
++        shift
++        quiet=1 ;;
+       --help | --hel | --he | --h )
+         func_usage; exit 0 ;;
+       --intl | --int | --in | --i )
+@@ -965,10 +970,12 @@
+     5) count="five paragraphs";;
+     *) count="$count paragraphs";;
+   esac
++  if test $quiet -eq 0; then
+   echo "Press Return to acknowledge the previous $count."
+   # Read from /dev/tty, not stdin, so that gettextize cannot be abused by
+   # non-interactive tools.
+   read dummy < /dev/tty
++  fi
+ fi
+ 
+ exit 0

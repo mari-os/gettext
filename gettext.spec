@@ -1,26 +1,36 @@
 Name: gettext
-Version: 0.10.40
-Release: alt3
+Version: 0.11.5
+Release: alt12
 
-%define libintl libintl1
+%define libintl libintl2
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
 License: LGPL
 Group: System/Base
 Url: http://www.gnu.org/software/%name/
+Packager: Gettext Development Team <gettext@packages.altlinux.org>
 
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.bz2
 Source1: msghack.py
 Source2: %name-po-mode-start.el
 
-Patch1: %name-0.10.35-jbj.patch
-Patch2: %name-0.10.35-aclocaldir.patch
-Patch3: %name-0.10.38-INSTOBJEXT.patch
+Patch1: %name-0.10.35-rh-jbj.patch
+Patch2: %name-0.10.35-alt-aclocaldir.patch
+Patch3: %name-0.11.5-alt-m4-compat.patch
+Patch4: %name-0.11.5-alt-libobjs.patch
+Patch5: %name-0.11.5-alt-amproglex.patch
+Patch6: %name-0.11.5-alt-gettextize-quiet.patch
+Patch7: %name-0.11.5-alt-autopoint-cvs.patch
+Patch8: %name-0.11.4-rh-gettextize.patch
 
-Requires: %name-base = %version-%release
+Provides: %name-base = %version-%release
+Obsoletes: %name-base
+Requires: %libintl = %version-%release
 
-# Automatically added by buildreq on Thu Mar 14 2002
-BuildRequires: bison emacsen-startscripts flex gcc-c++ gcc-java libgcj libstdc++-devel tetex tetex-dvips
+BuildPreReq: automake >= 1.6.3, autoconf >= 2.53
+
+# Automatically added by buildreq on Tue Oct 15 2002
+BuildRequires: XFree86-libs XFree86-locales libXaw3d emacs-common flex gcc-c++ gcc-java libgcj-devel libstdc++-devel tetex-dvips zlib-devel
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -42,29 +52,39 @@ Requires: %libintl-devel = %version-%release
 Provides: libintl-devel-static = %version-%release
 Obsoletes: libintl-devel-static
 
-%package base
-Summary: GNU %name utility for producing multi-lingual messages
-Group: System/Base
-Requires: %libintl = %version-%release
-
-%package devel
-Summary: GNU libraries and utilities for producing multi-lingual messages
+%package tools
+Summary: Tools and documentation for developers and translators
 Group: Development/Other
-Requires: %name = %version-%release, %libintl-devel = %version-%release
+Provides: %name-devel = %version-%release
+Obsoletes: %name-devel
+Requires: %name = %version-%release
+Requires(post,preun): %__install_info
+
+%package tools-java
+Summary: Tools for java developers and translators
+Group: Development/Other
+Requires: %name-tools = %version-%release
+
+%package tools-python
+Summary: Python tools for developers and translators
+Group: Development/Other
+Requires: %name-tools = %version-%release
 
 %description
-The GNU %name package provides a set of tools and documentation for producing
-multi-lingual messages in programs. Tools include a set of conventions about
+The GNU %name provides a set of tools and documentation for producing
+multi-lingual messages in programs.  Tools include a set of conventions about
 how programs should be written to support message catalogs, a directory and
 file naming organization for the message catalogs, a runtime library which
 supports the retrieval of translated messages, and stand-alone programs for
-handling the translatable and the already translated strings. Gettext provides
+handling the translatable and the already translated strings.  Gettext provides
 an easy to use library and tools for creating, using, and modifying natural
 language catalogs and is a powerful and simple method for internationalizing
 programs.
 
+This package contains gettext and ngettext utilities.
+
 If you would like to internationalize or incorporate multi-lingual messages
-into programs that you're developing, you should install %name.
+into programs that you're developing, you should install %name-tools.
 
 %description -n %libintl
 This package contains the dynamic %libintl library.
@@ -75,21 +95,43 @@ This package contains development %libintl library.
 %description -n %libintl-devel-static
 This package contains static %libintl library.
 
-%description base
-The base package which includes the %name binary.
+%description tools
+The GNU %name provides a set of tools and documentation for producing
+multi-lingual messages in programs.  Tools include a set of conventions about
+how programs should be written to support message catalogs, a directory and
+file naming organization for the message catalogs, a runtime library which
+supports the retrieval of translated messages, and stand-alone programs for
+handling the translatable and the already translated strings.  Gettext provides
+an easy to use library and tools for creating, using, and modifying natural
+language catalogs and is a powerful and simple method for internationalizing
+programs.
 
-%description devel
-Header files, used when the libc does not provide code of handling
-multi-lingual messages.
+If you would like to internationalize or incorporate multi-lingual messages
+into programs that you're developing, you should install this package.
+
+%description tools-java
+This package adds java support to %name-tools.
+
+%description tools-python
+This package contains msghack utility.
 
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%__ln_s misc/elisp-comp
 
 %build
+export LDFLAGS=-L$RPM_BUILD_ROOT%_libdir
+aclocal -I m4
 autoconf
+
 %configure --enable-shared --with-included-gettext
 %make_build
 
@@ -97,47 +139,39 @@ autoconf
 %makeinstall \
 	lispdir=$RPM_BUILD_ROOT%_datadir/emacs/site-lisp \
 	aclocaldir=$RPM_BUILD_ROOT%_datadir/aclocal \
-	gettextsrcdir=$RPM_BUILD_ROOT%_datadir/%name/intl
+	gettextsrcdir=$RPM_BUILD_ROOT%_datadir/%name/intl \
+	#
 
-mv $RPM_BUILD_ROOT%_datadir/%name/intl/ABOUT-NLS $RPM_BUILD_ROOT%_datadir/%name
+%__mv $RPM_BUILD_ROOT%_datadir/%name/intl/{ABOUT-NLS,archive.tar.gz} $RPM_BUILD_ROOT%_datadir/%name/
 
-mkdir -p $RPM_BUILD_ROOT%_datadir/%name/po
-install -p -m644 po/Makefile.in.in $RPM_BUILD_ROOT%_datadir/%name/po
+%__mkdir_p $RPM_BUILD_ROOT%_datadir/%name/po
+%__install -p -m644 po/Makefile.in.in $RPM_BUILD_ROOT%_datadir/%name/po/
 
-install -p -m755 %SOURCE1 $RPM_BUILD_ROOT%_bindir/msghack
-install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/emacs/site-start.d/%name.el
+%__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_bindir/msghack
+%__install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/emacs/site-start.d/%name.el
 
-mkdir -p $RPM_BUILD_ROOT/{bin,lib}
-mv $RPM_BUILD_ROOT%_bindir/%name $RPM_BUILD_ROOT/bin
-ln -s ../../bin/%name $RPM_BUILD_ROOT%_bindir/%name
-
-mkdir -p $RPM_BUILD_ROOT/lib
-mv $RPM_BUILD_ROOT%_libdir/libintl*.so.* $RPM_BUILD_ROOT/lib
-
-for f in `find $RPM_BUILD_ROOT%_libdir -type l -name libintl\*`; do
-        ln -sf ../../lib/"$(basename "$(/bin/ls -l "$f" |awk '{print $11}')")" "$f"
-done
-
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d
+%__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d
 echo libintl >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl
 echo libintl-devel >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
-chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
+%__chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
+%__mkdir_p $RPM_BUILD_ROOT%_docdir
+%__mv $RPM_BUILD_ROOT/usr/doc/%name $RPM_BUILD_ROOT%_docdir/%name-%version
 
 %find_lang %name
 
-%post
+%post -n %libintl -p %post_ldconfig
+%postun -n %libintl -p %postun_ldconfig
+
+%post tools
 %install_info %name.info
 
-%preun
+%preun tools
 %uninstall_info %name.info
-
-%post -n %libintl -p /sbin/ldconfig
-%postun -n %libintl -p /sbin/ldconfig
 
 %files -n %libintl
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl
-/lib/*.so.*
+%_libdir/libintl*.so.*
 
 %files -n %libintl-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
@@ -148,26 +182,94 @@ chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
 %_libdir/libintl*.a
 
-%files base -f %name.lang
-/bin/%name
-%_bindir/%name
-
 %files
-%_bindir/msg*
-%_bindir/?gettext
-%_infodir/*.info*
-%_datadir/aclocal/*
-%_datadir/emacs/site-lisp/*.el
-%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
-#%config(noreplace) %_libdir/charset.alias
-%doc BUGS NEWS README TODO
+%_bindir/%name
+%_bindir/n%name
+%_man1dir/%name.*
+%_man1dir/n%name.*
 
-%files devel
-%_bindir/gettextize
-%_datadir/%name
+%files tools -f %name.lang
+%_libdir/%name
+%exclude %_libdir/%name/gnu.gettext.*
+%_libdir/lib%{name}*.so
+%_bindir/*
+%exclude %_bindir/%name
+%exclude %_bindir/n%name
+%exclude %_bindir/msghack
 %_mandir/man?/*
+%exclude %_man1dir/%name.*
+%exclude %_man1dir/n%name.*
+%_infodir/*.info*
+%_datadir/%name
+%exclude %_datadir/%name/libintl.jar
+%_datadir/aclocal/*
+%_datadir/emacs/site-lisp/*.el*
+%config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
+%_docdir/%name-%version/*
+
+%files tools-java
+%dir %_libdir/%name
+%_libdir/%name/gnu.gettext.*
+%dir %_datadir/%name
+%_datadir/%name/libintl.jar
+
+%files tools-python
+%_bindir/msghack
 
 %changelog
+* Fri Dec 13 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt12
+- gettextize: fixed AM_GNU_GETTEXT_VERSION corruption (rh).
+- msghack: moved to -tools-python subpackage.
+
+* Sun Dec 08 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt11
+- gettext.m4: relaxed error reporting (introduced in -alt10).
+- Specfile cleanup (removed old unneeded hacks).
+
+* Thu Nov 21 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt10
+- gettext.m4: removed broken "compatibility" patch
+  (thanks to Sergey Pinaev).
+- autopoint: fixed cvs support.
+- %name-po-mode-start.el: fixed autoload (#0001614).
+
+* Tue Oct 29 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt9
+- Relocated archive.tar.gz from %_datadir/%name/intl/ to
+  %_datadir/%name/ in order to repair autopoint.
+
+* Sat Oct 26 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt8
+- gettext.m4: fix some compatibility issues.
+
+* Fri Oct 25 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt7
+- Fixed gettext-tools subpackage:
+  + moved java support to separate subpackage;
+  + removed cvs dependence.
+
+* Thu Oct 24 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt6
+- Fixed texinfo installation scripts (reported by Alexander Bokovoy).
+
+* Wed Oct 23 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt5
+- Added "quiet" option to gettextize.
+- Resplit packages:
+  gettext-base + gettext + gettext-devel -> gettext + gettext-tools.
+
+* Tue Oct 15 2002 Dmitry V. Levin <ldv@altlinux.org> 0.11.5-alt4
+- Updated %post/%postun scripts.
+- Fixed library symlinks generation.
+- Added %_libdir/gettext to gettext subpackage.
+- Relocated all libraries from /lib/ back to %_libdir/.
+- Relocated all binaries from /bin/ back to %_bindir/.
+- Additional convention enforcement on patch file names.
+
+* Sun Oct 13 2002 Alexey Voinov <voins@voins.program.ru> 0.11.5-alt3.1
+- autopoint added to filelist of gettext-devel
+
+* Sun Oct 13 2002 Alexey Voinov <voins@voins.program.ru> 0.11.5-alt3
+- new version(0.11.5)
+- INSTOBJEXT patch updated to 0.11.5
+- libobjs patch added (fixes use of LIBOBJS substitution in configure.in)
+- amproglex patch added (hack to please automake-1.6)
+- libintl version increased
+- html docs included in gettext-devel
+
 * Tue Mar 19 2002 Dmitry V. Levin <ldv@alt-linux.org> 0.10.40-alt3
 - Added buildreq substitution rules.
 
