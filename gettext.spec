@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.1
-Release: alt3
+Release: alt4
 
 %define libintl libintl3
 
@@ -18,6 +18,10 @@ Patch1: %name-0.14.1-alt-gettextize-quiet.patch
 Patch2: %name-0.14.1-alt-autopoint-cvs.patch
 Patch3: %name-0.14.1-alt-func_find_curr_installdir.patch
 Patch4: %name-0.14.1-alt-m4.patch
+Patch5: %name-0.14.1-alt-tmp-autopoint.patch
+Patch6: %name-0.14.1-deb-x_perl_prelex.patch
+Patch7: %name-0.14.1-deb-doc.patch
+Patch8: %name-0.14.1-rh-alt-gcc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -55,8 +59,7 @@ Obsoletes: %name-devel
 Requires: %name = %version-%release
 Requires(post): %install_info
 Requires(preun): %uninstall_info
-# Due to "readlink -e".
-Requires: coreutils >= 5.2.1-alt3
+Requires: mktemp >= 1:1.3.1
 
 %package tools-java
 Summary: Tools for java developers and translators
@@ -67,6 +70,11 @@ Requires: %name-tools = %version-%release
 Summary: Python tools for developers and translators
 Group: Development/Other
 Requires: %name-tools = %version-%release
+
+%package doc
+Summary: The GNU gettext manual
+Group: Development/Other
+Requires: %name = %version-%release
 
 %description
 The GNU %name provides a set of tools and documentation for producing
@@ -113,12 +121,24 @@ This package adds java support to %name-tools.
 %description tools-python
 This package contains msghack utility.
 
+%description doc
+GNU gettext offers to programmers, translators and even users, a well
+integrated set of tools and documentation that provides a framework within
+which other free packages may produce multi-lingual messages.
+
+This manual documents GNU gettext.
+
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%__install -p -m644 gettext-{tools,runtime}/ABOUT-NLS
 
 %build
 %configure --with-included-gettext --enable-shared %{subst_enable static}
@@ -205,7 +225,9 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
-%_docdir/%name-%version/*
+
+%files doc
+%_docdir/%name-%version
 
 %files tools-java
 %dir %_libdir/%name
@@ -217,6 +239,13 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Tue Jan 04 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt4
+- Moved gettext manual to separate subpackage.
+- Fixed autopoint temporary file handling.
+- Applied few patches from Debian:
+  + fixed xgettext misparsing of perl source;
+  + improved ABOUT-NLS wording;
+
 * Mon Sep 13 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt3
 - autopoint, gettextize: Rewritten func_find_curr_installdir
   using readlink(1).
