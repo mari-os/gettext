@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -23,7 +23,7 @@ Requires: %libintl = %version-%release
 
 %def_disable static
 
-BuildPreReq: XFree86-locales emacs-nox gcc-c++ gcc-g77 gcc-java tetex-dvips
+BuildPreReq: emacs-nox gcc-c++ gcc-g77 gcc-java jdkgcj tetex-dvips
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the %name package
@@ -210,6 +210,9 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Wed Mar 10 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt2
+- Updated build dependencies.
+
 * Thu Feb 26 2004 Dmitry V. Levin <ldv@altlinux.org> 0.14.1-alt1
 - Updated to 0.14.1
 - Updated patches.
