@@ -1,0 +1,26 @@
+--- gettext-0.10.38~/m4/gettext.m4	Thu May 17 17:35:37 2001
++++ gettext-0.10.38/m4/gettext.m4	Fri May 25 12:11:07 2001
+@@ -127,6 +127,7 @@
+ 	       [test -z "`$ac_dir/$ac_word -h 2>&1 | grep '(HELP)'`"], :)
+ 
+ 	     CATOBJEXT=.gmo
++	     INSTOBJEXT=.mo
+ 	   fi
+ 	])
+ 
+@@ -149,6 +150,7 @@
+ 	BUILD_INCLUDED_LIBINTL=yes
+ 	USE_INCLUDED_LIBINTL=yes
+         CATOBJEXT=.gmo
++        INSTOBJEXT=.mo
+ 	INTLLIBS="ifelse([$3],[],\$(top_builddir)/intl,[$3])/libintl.ifelse([$1], use-libtool, [l], [])a $LIBICONV"
+ 	LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
+       fi
+@@ -248,6 +250,7 @@
+     AC_SUBST(USE_INCLUDED_LIBINTL)
+     AC_SUBST(CATALOGS)
+     AC_SUBST(CATOBJEXT)
++    AC_SUBST(INSTOBJEXT)
+     AC_SUBST(GMOFILES)
+     AC_SUBST(INTLLIBS)
+     AC_SUBST(INTLOBJS)
