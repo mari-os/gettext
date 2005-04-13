@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: hello-guile 0.14.2\n"
+"Project-Id-Version: hello-guile 0.14.3\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"PO-Revision-Date: 2005-03-05 10:28+0000\n"
+"PO-Revision-Date: 2005-04-06 11:53+0100\n"
 "Last-Translator: Marco Colombo <m.colombo@ed.ac.uk>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"

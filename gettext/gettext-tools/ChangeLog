@@ -1,3 +1,19 @@
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.4 released.
+
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* windows/gettextlib.rc: Bump version number to 0.14.4.
+	* windows/gettextsrc.rc: Likewise.
+	* windows/gettextpo.rc: Likewise.
+
+2005-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac (AC_CONFIG_AUX_DIR): Use ../build-aux.
+	* Makefile.am (ACLOCAL_AMFLAGS): Replace config/m4 with m4.
+	(gettextsrc_SCRIPTS): Replace config with build-aux.
+
 2005-03-14  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14.3 released.

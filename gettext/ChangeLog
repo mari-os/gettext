@@ -1,3 +1,24 @@
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* gettext-0.14.4 released.
+
+2005-04-11  Bruno Haible  <bruno@clisp.org>
+
+	* version.sh: Bump version number to 0.14.4.
+
+2005-04-06  Bruno Haible  <bruno@clisp.org>
+
+	* README: Recommend --program-transform-name instead of
+	--program-prefix.
+	Reported by Joel Reicher <joel@panacea.null.org>.
+
+2005-03-22  Bruno Haible  <bruno@clisp.org>
+
+	* m4: New directory, renamed from config/m4/.
+	* build-aux: New directory, renamed from config/.
+	* configure.ac (AC_CONFIG_AUX_DIR): Use build-aux.
+	* Makefile.am (EXTRA_DIST): Update.
+
 2005-03-14  Bruno Haible  <bruno@clisp.org>
 
 	* gettext-0.14.3 released.
