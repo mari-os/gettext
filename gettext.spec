@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.14.4
+Version: 0.14.5
 Release: alt1
 
 %define libintl libintl3
@@ -245,6 +245,9 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Wed Aug 17 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.5-alt1
+- Updated to 0.14.5.
+
 * Wed Apr 13 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.4-alt1
 - Updated to 0.14.4.
 

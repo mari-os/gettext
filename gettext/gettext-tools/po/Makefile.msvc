@@ -127,6 +127,9 @@ install : all force
 	-mkdir $(localedir)\uk
 	-mkdir $(localedir)\uk\LC_MESSAGES
 	$(INSTALL_DATA) uk.gmo $(localedir)\uk\LC_MESSAGES\gettext-tools.mo
+	-mkdir $(localedir)\vi
+	-mkdir $(localedir)\vi\LC_MESSAGES
+	$(INSTALL_DATA) vi.gmo $(localedir)\vi\LC_MESSAGES\gettext-tools.mo
 	-mkdir $(localedir)\zh_CN
 	-mkdir $(localedir)\zh_CN\LC_MESSAGES
 	$(INSTALL_DATA) zh_CN.gmo $(localedir)\zh_CN\LC_MESSAGES\gettext-tools.mo
@@ -200,6 +203,8 @@ installdirs : force
 	-mkdir $(localedir)\tr\LC_MESSAGES
 	-mkdir $(localedir)\uk
 	-mkdir $(localedir)\uk\LC_MESSAGES
+	-mkdir $(localedir)\vi
+	-mkdir $(localedir)\vi\LC_MESSAGES
 	-mkdir $(localedir)\zh_CN
 	-mkdir $(localedir)\zh_CN\LC_MESSAGES
 	-mkdir $(localedir)\zh_TW
@@ -237,6 +242,7 @@ uninstall : force
 	$(RM) $(localedir)\sv\LC_MESSAGES\gettext-tools.mo
 	$(RM) $(localedir)\tr\LC_MESSAGES\gettext-tools.mo
 	$(RM) $(localedir)\uk\LC_MESSAGES\gettext-tools.mo
+	$(RM) $(localedir)\vi\LC_MESSAGES\gettext-tools.mo
 	$(RM) $(localedir)\zh_CN\LC_MESSAGES\gettext-tools.mo
 	$(RM) $(localedir)\zh_TW\LC_MESSAGES\gettext-tools.mo
 
