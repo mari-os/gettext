@@ -1,23 +1,24 @@
 Name: gettext
 Version: 0.14.5
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
 License: LGPL
 Group: System/Base
-Url: http://www.gnu.org/software/%name/
+Url: http://www.gnu.org/software/gettext/
 
-Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.bz2
+Source: ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.bz2
 Source1: msghack.py
-Source2: %name-po-mode-start.el
+Source2: gettext-po-mode-start.el
 
-Patch1: %name-0.14.1-alt-gettextize-quiet.patch
-Patch2: %name-0.14.1-alt-autopoint-cvs.patch
-Patch3: %name-0.14.1-alt-m4.patch
-Patch4: %name-0.14.2-alt-tmp-autopoint.patch
-Patch5: %name-0.14.2-alt-gcc.patch
+Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
+Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
+Patch3: gettext-0.14.1-alt-m4.patch
+Patch4: gettext-0.14.2-alt-tmp-autopoint.patch
+Patch5: gettext-0.14.2-alt-gcc.patch
+Patch6: gettext-0.14.5-alt-doc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -26,10 +27,10 @@ Obsoletes: %name-base
 %def_without included_gettext
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ gcc-g77 gcc-java jdkgcj tetex-dvips
+BuildPreReq: emacs-nox gcc-c++ gcc-g77 jdkgcj tetex-dvips
 
 %package -n %libintl
-Summary: The dynamic %libintl library for the %name package
+Summary: The dynamic %libintl library for the gettext package
 Group: System/Libraries
 Provides: libintl = %version-%release
 Obsoletes: libintl
@@ -57,7 +58,9 @@ Requires: %name = %version-%release
 Requires(post): %install_info
 Requires(preun): %uninstall_info
 Requires: mktemp >= 1:1.3.1
-%{!?_with_included_gettext:Provides: preloadable_libintl.so}
+%define lib_suffix %nil
+%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
+%{!?_with_included_gettext:Provides: preloadable_libintl.so%lib_suffix}
 
 %package tools-java
 Summary: Tools for java developers and translators
@@ -75,7 +78,7 @@ Group: Development/Other
 Requires: %name = %version-%release
 
 %description
-The GNU %name provides a set of tools and documentation for producing
+The GNU gettext provides a set of tools and documentation for producing
 multi-lingual messages in programs.  Tools include a set of conventions about
 how programs should be written to support message catalogs, a directory and
 file naming organization for the message catalogs, a runtime library which
@@ -100,7 +103,7 @@ This package contains development %libintl library.
 This package contains static %libintl library.
 
 %description tools
-The GNU %name provides a set of tools and documentation for producing
+The GNU gettext provides a set of tools and documentation for producing
 multi-lingual messages in programs.  Tools include a set of conventions about
 how programs should be written to support message catalogs, a directory and
 file naming organization for the message catalogs, a runtime library which
@@ -133,6 +136,7 @@ This manual documents GNU gettext.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %configure --enable-shared %{subst_enable static} \
@@ -141,31 +145,31 @@ This manual documents GNU gettext.
 
 %install
 %makeinstall \
-	lispdir=$RPM_BUILD_ROOT%_datadir/emacs/site-lisp \
-	aclocaldir=$RPM_BUILD_ROOT%_datadir/aclocal \
-	gettextsrcdir=$RPM_BUILD_ROOT%_datadir/%name/intl \
+	lispdir=%buildroot%_datadir/emacs/site-lisp \
+	aclocaldir=%buildroot%_datadir/aclocal \
+	gettextsrcdir=%buildroot%_datadir/%name/intl \
 	#
 
-%__mv $RPM_BUILD_ROOT%_datadir/%name/intl/{ABOUT-NLS,archive.tar.gz} $RPM_BUILD_ROOT%_datadir/%name/
+mv %buildroot%_datadir/%name/intl/{ABOUT-NLS,archive.tar.gz} %buildroot%_datadir/%name/
 
-%__mkdir_p $RPM_BUILD_ROOT%_datadir/%name/po
-%__install -p -m644 %name-runtime/po/Makefile.in.in $RPM_BUILD_ROOT%_datadir/%name/po/
+mkdir -p %buildroot%_datadir/%name/po
+install -pm644 %name-runtime/po/Makefile.in.in %buildroot%_datadir/%name/po/
 
-%__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_bindir/msghack
-%__install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/emacs/site-start.d/%name.el
+install -pD -m755 %SOURCE1 %buildroot%_bindir/msghack
+install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/emacs/site-start.d/%name.el
 
 %if_with included_gettext
-%__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d
-echo libintl >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl
+mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
+echo libintl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl
 %if_enabled static
-echo libintl-devel >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
-echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
+echo libintl-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
+echo libintl-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
 %endif #enabled static
-%__chmod 644 $RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substitute.d/*
+chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 %endif #with included_gettext
-%__mkdir_p $RPM_BUILD_ROOT%_docdir
+mkdir -p %buildroot%_docdir
 %define docdir %_docdir/%name-%version
-%__mv $RPM_BUILD_ROOT%_docdir/%name $RPM_BUILD_ROOT%docdir
+mv %buildroot%_docdir/%name %buildroot%docdir
 
 %find_lang %name-runtime
 %find_lang %name-tools
@@ -245,6 +249,10 @@ echo libintl-devel-static >$RPM_BUILD_ROOT%_sysconfdir/buildreqs/packages/substi
 %_bindir/msghack
 
 %changelog
+* Thu Mar 30 2006 Dmitry V. Levin <ldv@altlinux.org> 0.14.5-alt2
+- Fixed a few typos in gettext documentation (#8526).
+- Corrected preloadable_libintl.so provides.
+
 * Wed Aug 17 2005 Dmitry V. Levin <ldv@altlinux.org> 0.14.5-alt1
 - Updated to 0.14.5.
 
