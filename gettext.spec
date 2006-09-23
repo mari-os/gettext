@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.14.5
-Release: alt2
+Version: 0.14.6
+Release: alt1
 
 %define libintl libintl3
 
@@ -8,8 +8,9 @@ Summary: GNU libraries and utilities for producing multi-lingual messages
 License: LGPL
 Group: System/Base
 Url: http://www.gnu.org/software/gettext/
+Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source: ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.bz2
+Source: ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
 
@@ -249,6 +250,9 @@ mv %buildroot%_docdir/%name %buildroot%docdir
 %_bindir/msghack
 
 %changelog
+* Sat Sep 23 2006 Dmitry V. Levin <ldv@altlinux.org> 0.14.6-alt1
+- Updated to 0.14.6.
+
 * Thu Mar 30 2006 Dmitry V. Levin <ldv@altlinux.org> 0.14.5-alt2
 - Fixed a few typos in gettext documentation (#8526).
 - Corrected preloadable_libintl.so provides.

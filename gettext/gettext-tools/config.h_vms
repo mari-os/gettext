@@ -608,7 +608,7 @@
 #define USE_UNLOCKED_IO 1
 
 /* Version number of package */
-#define VERSION "0.14.5"
+#define VERSION "0.14.6"
 
 /* Define if unsetenv() returns void, not int. */
 #undef VOID_UNSETENV

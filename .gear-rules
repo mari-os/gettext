@@ -1,4 +1,4 @@
 copy: *.el
 copy: *.patch
 copy: *.py
-tar.bz2: gettext
+tar: gettext
