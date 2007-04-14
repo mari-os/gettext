@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.14.6
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -10,7 +10,8 @@ Group: System/Base
 Url: http://www.gnu.org/software/gettext/
 Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source: ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar
+# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.gz
+Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
 
@@ -140,6 +141,7 @@ This manual documents GNU gettext.
 %patch6 -p1
 
 %build
+%add_optflags -fno-strict-aliasing
 %configure --enable-shared %{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext}
 %make_build
@@ -148,16 +150,16 @@ This manual documents GNU gettext.
 %makeinstall \
 	lispdir=%buildroot%_datadir/emacs/site-lisp \
 	aclocaldir=%buildroot%_datadir/aclocal \
-	gettextsrcdir=%buildroot%_datadir/%name/intl \
+	gettextsrcdir=%buildroot%_datadir/gettext/intl \
 	#
 
-mv %buildroot%_datadir/%name/intl/{ABOUT-NLS,archive.tar.gz} %buildroot%_datadir/%name/
+mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.tar.gz} %buildroot%_datadir/gettext/
 
-mkdir -p %buildroot%_datadir/%name/po
-install -pm644 %name-runtime/po/Makefile.in.in %buildroot%_datadir/%name/po/
+mkdir -p %buildroot%_datadir/gettext/po
+install -pm644 gettext-runtime/po/Makefile.in.in %buildroot%_datadir/gettext/po/
 
 install -pD -m755 %SOURCE1 %buildroot%_bindir/msghack
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/emacs/site-start.d/%name.el
+install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/emacs/site-start.d/gettext.el
 
 %if_with included_gettext
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -170,7 +172,7 @@ chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 %endif #with included_gettext
 mkdir -p %buildroot%_docdir
 %define docdir %_docdir/%name-%version
-mv %buildroot%_docdir/%name %buildroot%docdir
+mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %find_lang %name-runtime
 %find_lang %name-tools
@@ -179,10 +181,10 @@ mv %buildroot%_docdir/%name %buildroot%docdir
 %postun -n %libintl -p %postun_ldconfig
 
 %post tools
-%install_info %name.info
+%install_info gettext.info
 
 %preun tools
-%uninstall_info %name.info
+%uninstall_info gettext.info
 
 %if_with included_gettext
 %files -n %libintl
@@ -201,33 +203,33 @@ mv %buildroot%_docdir/%name %buildroot%docdir
 %endif #with included_gettext
 
 %files -f %name-runtime.lang
-%_bindir/%name
-%_bindir/n%name
+%_bindir/gettext
+%_bindir/ngettext
 %_bindir/envsubst
-%_bindir/%name.sh
-%_man1dir/%name.*
-%_man1dir/n%name.*
+%_bindir/gettext.sh
+%_man1dir/gettext.*
+%_man1dir/ngettext.*
 %_man1dir/envsubst.*
 
 %files tools -f %name-tools.lang
-%_libdir/%name
-%exclude %_libdir/%name/gnu.gettext.*
+%_libdir/gettext
+%exclude %_libdir/gettext/gnu.gettext.*
 %_libdir/lib%{name}*.so*
 %{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
-%exclude %_bindir/%name
-%exclude %_bindir/n%name
+%exclude %_bindir/gettext
+%exclude %_bindir/ngettext
 %exclude %_bindir/envsubst
-%exclude %_bindir/%name.sh
+%exclude %_bindir/gettext.sh
 %exclude %_bindir/msghack
 %_includedir/%{name}*
 %_mandir/man?/*
-%exclude %_man1dir/%name.*
-%exclude %_man1dir/n%name.*
+%exclude %_man1dir/gettext.*
+%exclude %_man1dir/ngettext.*
 %exclude %_man1dir/envsubst.*
-%_infodir/%name.info*
-%_datadir/%name
-%exclude %_datadir/%name/libintl.jar
+%_infodir/gettext.info*
+%_datadir/gettext
+%exclude %_datadir/gettext/libintl.jar
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
@@ -241,15 +243,18 @@ mv %buildroot%_docdir/%name %buildroot%docdir
 %exclude %docdir/tutorial.html
 
 %files tools-java
-%dir %_libdir/%name
-%_libdir/%name/gnu.gettext.*
-%dir %_datadir/%name
-%_datadir/%name/libintl.jar
+%dir %_libdir/gettext
+%_libdir/gettext/gnu.gettext.*
+%dir %_datadir/gettext
+%_datadir/gettext/libintl.jar
 
 %files tools-python
 %_bindir/msghack
 
 %changelog
+* Sat Apr 14 2007 Dmitry V. Levin <ldv@altlinux.org> 0.14.6-alt2
+- Disabled optimization based on strict aliasing rules.
+
 * Sat Sep 23 2006 Dmitry V. Levin <ldv@altlinux.org> 0.14.6-alt1
 - Updated to 0.14.6.
 
