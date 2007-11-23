@@ -78,6 +78,15 @@ Summary: The GNU gettext manual
 Group: Development/Other
 Requires: %name = %version-%release
 
+%package -n libasprintf
+Summary: formatted output to strings in C++
+Group: Development/C++
+
+%package -n libasprintf-devel
+Summary: header files for libasprintf
+Group: Development/C++
+Requires: libasprintf = %version-%release
+
 %description
 The GNU gettext provides a set of tools and documentation for producing
 multi-lingual messages in programs.  Tools include a set of conventions about
@@ -129,6 +138,15 @@ integrated set of tools and documentation that provides a framework within
 which other free packages may produce multi-lingual messages.
 
 This manual documents GNU gettext.
+
+%description -n libasprintf
+This package makes the C formatted output routines (fprintf et al.)
+usable in C++ programs, for use with the <string> strings and the
+<iostream> streams.
+
+%description -n libasprintf-devel
+This packages contains development files for libasprintf,
+a formatted output library for C++.
 
 %prep
 %setup -q
@@ -246,6 +264,14 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %files tools-python
 %_bindir/msghack
+
+%files -n libasprintf
+%_libdir/libasprintf.so.*
+
+%files -n libasprintf-devel
+%_includedir/autosprintf.h
+%_libdir/libasprintf.so
+%_infodir/autosprintf.info*
 
 %changelog
 * Fri Nov 23 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt1
