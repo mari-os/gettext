@@ -17,7 +17,6 @@ Source2: gettext-po-mode-start.el
 
 Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
 Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
-Patch3: gettext-0.14.1-alt-m4.patch
 Patch4: gettext-0.14.2-alt-tmp-autopoint.patch
 Patch5: gettext-0.14.2-alt-gcc.patch
 Patch6: gettext-0.14.5-alt-doc.patch
@@ -135,7 +134,6 @@ This manual documents GNU gettext.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
