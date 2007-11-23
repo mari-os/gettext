@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.14.6
-Release: alt2
+Version: 0.17
+Release: alt1
 
 %define libintl libintl3
 
@@ -252,6 +252,9 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_bindir/msghack
 
 %changelog
+* Fri Nov 23 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt1
+- Updated to 0.17.
+
 * Sat Apr 14 2007 Dmitry V. Levin <ldv@altlinux.org> 0.14.6-alt2
 - Disabled optimization based on strict aliasing rules.
 
