@@ -1,7 +1,8 @@
 --- gettext-0.14.2/gettext-tools/misc/autopoint.in.orig	2005-03-01 19:02:09 +0300
 +++ gettext-0.14.2/gettext-tools/misc/autopoint.in	2005-03-01 19:24:26 +0300
-@@ -30,33 +30,31 @@ version=@VERSION@
+@@ -30,34 +30,32 @@ version=@VERSION@
  prefix="@prefix@"
+ datarootdir="@datarootdir@"
  gettext_dir="@datadir@/gettext"
  
 +tmp=
@@ -34,7 +35,7 @@
    {
 -    # Use the mktemp program if available. If not available, hide the error
 -    # message.
--    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+-    tmp=`(umask 077 && mktemp -d "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
 -    test -n "$tmp" && test -d "$tmp"
 -  } ||
 -  {
