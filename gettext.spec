@@ -274,6 +274,7 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_includedir/autosprintf.h
 %_libdir/libasprintf.so
 %_infodir/autosprintf.info*
+%_defaultdocdir/libasprintf
 
 %changelog
 * Fri Nov 23 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt1
