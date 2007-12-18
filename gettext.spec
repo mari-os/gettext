@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -277,6 +277,9 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Dec 18 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt2
+- Fixed %files: everything java-related in tools-java again.
+
 * Fri Nov 23 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt1
 - Updated to 0.17.
 
