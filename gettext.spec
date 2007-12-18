@@ -229,6 +229,7 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %files tools -f %name-tools.lang
 %_libdir/gettext
+%exclude %_libdir/gettext/gnu.gettext.*
 %_libdir/lib%{name}*.so*
 %{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
@@ -259,6 +260,7 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %files tools-java
 %dir %_libdir/gettext
+%_libdir/gettext/gnu.gettext.*
 %dir %_datadir/gettext
 %_datadir/gettext/libintl.jar
 
