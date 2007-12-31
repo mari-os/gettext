@@ -26,9 +26,10 @@ Obsoletes: %name-base
 
 %def_disable static
 %def_without included_gettext
+%def_with java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ gcc-g77 jdkgcj tetex-dvips
+BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -229,7 +230,7 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %files tools -f %name-tools.lang
 %_libdir/gettext
-%exclude %_libdir/gettext/gnu.gettext.*
+%{?_with_java:%exclude %_libdir/gettext/gnu.gettext.*}
 %_libdir/lib%{name}*.so*
 %{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
@@ -245,7 +246,7 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %exclude %_man1dir/envsubst.*
 %_infodir/gettext.info*
 %_datadir/gettext
-%exclude %_datadir/gettext/libintl.jar
+%{?_with_java:%exclude %_datadir/gettext/libintl.jar}
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
@@ -258,11 +259,13 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %exclude %docdir/FAQ.html
 %exclude %docdir/tutorial.html
 
+%if_with java
 %files tools-java
 %dir %_libdir/gettext
 %_libdir/gettext/gnu.gettext.*
 %dir %_datadir/gettext
 %_datadir/gettext/libintl.jar
+%endif
 
 %files tools-python
 %_bindir/msghack
