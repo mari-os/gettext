@@ -29,7 +29,7 @@ Obsoletes: %name-base
 %def_with java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj}
+BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj /proc}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -156,6 +156,13 @@ a formatted output library for C++.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
+%if_with java
+if [ ! -f /proc/self/maps ]; then
+	echo 'java support is enabled, but /proc/self/maps is not available'
+	exit 1
+fi
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
