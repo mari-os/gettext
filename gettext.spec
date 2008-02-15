@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt2
+Release: alt3
 
 %define libintl libintl3
 
@@ -287,6 +287,11 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Fri Feb 15 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt3
+- Added --with/without java build option (Kirill A. Shutemov).
+- If java support is requested, then ensure that /proc is mounted
+  during build (#14483).
+
 * Tue Dec 18 2007 Alex V. Myltsev <avm@altlinux.ru> 0.17-alt2
 - Fixed %files: everything java-related in tools-java again.
 
