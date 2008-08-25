@@ -1,6 +1,7 @@
 #!/usr/bin/python
+## -*- coding: utf-8 -*-
 ## Copyright (C) 2001 Red Hat, Inc.
-## Copyright (C) 2001 Trond Eivind Glomsrød <teg@redhat.com>
+## Copyright (C) 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 
 ## v0.2 - 2001-08-21
 
@@ -342,16 +343,36 @@ class GTMaster:
             res=res+str(message)+"\n"
         return res
 
+def printUsage():
+    "Print the usage messages"
+    print "Usage: ", str(sys.argv[0])," [OPTION] file.po [ref.po]\n\
+This program can be used to alter .po files in ways no sane mind would think about.\n\
+    -o                result will be written to FILE\n\
+    --invert          invert a po file by switching msgid and msgstr\n\
+    --master          join any number of files in a master-formatted catalog\n\
+    --empty           empty the contents of the .po file, creating a .pot\n\
+    --append          append entries from ref.po that don't exist in file.po\n\
+\n\
+Note: It is just a replacement of msghack for backward support.\n"
+
 
 if __name__=="__main__":
     output=None
     res=None
     if("-o") in sys.argv:
-        output=sys.argv[sys.argv.index("-o")+1]
+	if (len(sys.argv)<=sys.argv.index("-o")+1):
+		print "file.po and ref.po are not specified!\n"
+		printUsage()
+		exit(1)
+	output=sys.argv[sys.argv.index("-o")+1]
         sys.argv.remove("-o")
-        sys.argv.remove(output)
+	sys.argv.remove(output)
     if("--invert") in sys.argv:
-        file=sys.argv[sys.argv.index("--invert")+1]
+	if (len(sys.argv)<=sys.argv.index("--invert")+1):
+	    print "file.po is not specified!\n"
+	    printUsage()
+	    exit(1)
+	file=sys.argv[sys.argv.index("--invert")+1]
         gtf=GTFile(file)
         res1=gtf.msgidDupes()
         if res1:
@@ -359,25 +380,38 @@ if __name__=="__main__":
             sys.exit(1)
         res=str(gtf.invertedStrings())
     elif("--empty") in sys.argv:
-        file=sys.argv[sys.argv.index("--empty")+1]
+	if (len(sys.argv)<=sys.argv.index("--empty")+1):
+	    print "file.po is not specified!\n"
+	    printUsage()
+	    exit(1)
+	file=sys.argv[sys.argv.index("--empty")+1]
         gtf=GTFile(file)
         res=str(gtf.emptyMsgStrings())
     elif("--master") in sys.argv:
-        loc=sys.argv.index("--master")+1
+	if (len(sys.argv)<=sys.argv.index("--master")+1):
+	    print "file.po is not specified!\n"
+	    printUsage()
+	    exit(1)
+	loc=sys.argv.index("--master")+1
         gtfs=[]
         for file in sys.argv[loc:]:
             gtfs.append(GTFile(file))
         master=GTMaster(gtfs)
         res=str(master)
     elif("--append") in sys.argv:
-        file=sys.argv[sys.argv.index("--append")+1]
+	if (len(sys.argv)<=sys.argv.index("--append")+2):
+	    print "file.po and/or ref.po are not specified!\n"
+	    printUsage()
+	    exit(1)
+	file=sys.argv[sys.argv.index("--append")+1]
         file2=sys.argv[sys.argv.index("--append")+2]
         gtf=GTFile(file)
         gtf2=GTFile(file2)
         gtf.append(gtf2)
         res=str(gtf)
     else:
-        print "Not implemented: "+str(sys.argv)
+        #print "Not implemented: "+str(sys.argv)
+	printUsage()
         sys.exit(1)
     if not output:
         print res
