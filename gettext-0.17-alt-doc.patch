@@ -1,0 +1,22 @@
+--- gettext-0.17/gettext-runtime/doc/rt-gettext.texi
++++ gettext-0.17/gettext-runtime/doc/rt-gettext.texi
+@@ -41,7 +41,7 @@ Display this help and exit.
+ @item -n
+ @opindex -n@r{, @code{gettext} option}
+ Suppress trailing newline.  By default, @code{gettext} adds a newline to
+-the output.
++the output when the @code{-s} option is specified.
+ 
+ @item -V
+ @itemx --version
+--- gettext-0.17/gettext-tools/doc/gettext.texi
++++ gettext-0.17/gettext-tools/doc/gettext.texi
+@@ -597,7 +597,7 @@ as a vehicle for documenting its structure and methods.  This goes
+ beyond the strict technicalities of documenting the GNU @code{gettext}
+ proper.  By so doing, translators will find in a single place, as
+ far as possible, all they need to know for properly doing their
+-translating work.  Also, this supplemental documentation might also
++translating work.  This supplemental documentation might also
+ help programmers, and even curious users, in understanding how GNU
+ @code{gettext} is related to the remainder of the Translation
+ Project, and consequently, have a glimpse at the @emph{big picture}.

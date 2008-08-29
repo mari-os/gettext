@@ -19,7 +19,7 @@ Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
 Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
 Patch4: gettext-0.14.2-alt-tmp-autopoint.patch
 Patch5: gettext-0.14.2-alt-gcc.patch
-Patch6: gettext-0.14.5-alt-doc.patch
+Patch6: gettext-0.17-alt-doc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
