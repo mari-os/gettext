@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt3
+Release: alt4
 
 %define libintl libintl3
 
@@ -300,6 +300,10 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sat Aug 30 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt4
+- Fixed "gettext -n" description (closes: #16770).
+- Applied some upstream fixes.
+
 * Fri Feb 15 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt3
 - Added --with/without java build option (Kirill A. Shutemov).
 - If java support is requested, then ensure that /proc is mounted
