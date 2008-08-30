@@ -20,6 +20,8 @@ Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
 Patch4: gettext-0.14.2-alt-tmp-autopoint.patch
 Patch5: gettext-0.14.2-alt-gcc.patch
 Patch6: gettext-0.17-alt-doc.patch
+Patch7: gettext-0.17-up-open.patch
+Patch8: gettext-0.17-up-autopoint.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -165,6 +167,8 @@ a formatted output library for C++.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p0
+%patch8 -p0
 
 %if_with java
 if [ ! -f /proc/self/maps ]; then
