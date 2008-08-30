@@ -5,7 +5,7 @@ Release: alt3
 %define libintl libintl3
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
-License: LGPL
+License: GPLv3+ and LGPLv2+
 Group: System/Base
 Url: http://www.gnu.org/software/gettext/
 Packager: Dmitry V. Levin <ldv@altlinux.org>
@@ -33,12 +33,14 @@ BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj /proc}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
+License: LGPLv2+
 Group: System/Libraries
 Provides: libintl = %version-%release
 Obsoletes: libintl
 
 %package -n %libintl-devel
 Summary: Development library for %libintl
+License: LGPLv2+
 Group: Development/C
 Requires: %libintl = %version-%release
 Provides: libintl-devel = %version-%release
@@ -46,6 +48,7 @@ Obsoletes: libintl-devel
 
 %package -n %libintl-devel-static
 Summary: Development static library for %libintl
+License: LGPLv2+
 Group: Development/C
 Requires: %libintl-devel = %version-%release
 Provides: libintl-devel-static = %version-%release
@@ -53,6 +56,7 @@ Obsoletes: libintl-devel-static
 
 %package tools
 Summary: Tools and documentation for developers and translators
+License: GPLv3+
 Group: Development/Other
 Provides: %name-devel = %version-%release
 Obsoletes: %name-devel
@@ -66,25 +70,30 @@ Requires: mktemp >= 1:1.3.1
 
 %package tools-java
 Summary: Tools for java developers and translators
+License: GPLv3+
 Group: Development/Other
 Requires: %name-tools = %version-%release
 
 %package tools-python
 Summary: Python tools for developers and translators
+License: GPLv3+
 Group: Development/Other
 Requires: %name-tools = %version-%release
 
 %package doc
 Summary: The GNU gettext manual
+License: GPLv2+ or GFDLv1.2+
 Group: Development/Other
 Requires: %name = %version-%release
 
 %package -n libasprintf
 Summary: formatted output to strings in C++
+License: LGPLv2+
 Group: Development/C++
 
 %package -n libasprintf-devel
 Summary: header files for libasprintf
+License: LGPLv2+
 Group: Development/C++
 Requires: libasprintf = %version-%release
 
