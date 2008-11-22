@@ -86,6 +86,7 @@ Requires: %name-tools = %version-%release
 Summary: The GNU gettext manual
 License: GPLv2+ or GFDLv1.2+
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %package -n libasprintf
