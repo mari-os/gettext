@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt5
+Release: alt6
 
 %define libintl libintl3
 
@@ -215,9 +215,6 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %find_lang %name-runtime
 %find_lang %name-tools
 
-%post -n %libintl -p %post_ldconfig
-%postun -n %libintl -p %postun_ldconfig
-
 %post tools
 %install_info gettext.info
 
@@ -301,6 +298,9 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sun Dec 14 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt6
+- Packaged -doc subpackage as noarch.
+
 * Sun Nov 02 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt5
 - Rebuilt with gcc4.3.
 
