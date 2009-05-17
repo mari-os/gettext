@@ -63,8 +63,6 @@ Group: Development/Other
 Provides: %name-devel = %version-%release
 Obsoletes: %name-devel
 Requires: %name = %version-%release
-Requires(post): %install_info
-Requires(preun): %uninstall_info
 Requires: mktemp >= 1:1.3.1
 %define lib_suffix %nil
 %{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
@@ -214,12 +212,6 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 
 %find_lang %name-runtime
 %find_lang %name-tools
-
-%post tools
-%install_info gettext.info
-
-%preun tools
-%uninstall_info gettext.info
 
 %if_with included_gettext
 %files -n %libintl
