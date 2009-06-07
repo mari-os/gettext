@@ -195,6 +195,7 @@ fi
 %configure --enable-shared %{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext}
 %make_build
+%{?!__buildreqs:%{?!_without_check:%{?!_disable_check:%make_build -k check}}}
 
 %install
 %makeinstall \
