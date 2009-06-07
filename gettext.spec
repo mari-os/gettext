@@ -25,6 +25,7 @@ Patch7: gettext-0.17-up-open.patch
 Patch8: gettext-0.17-up-autopoint.patch
 Patch9: gettext-0.17-up-python-unicode.patch
 Patch10: gettext-0.17-up-msgmerge.patch
+Patch11: gettext-0.17-up-libxml2.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -173,6 +174,7 @@ a formatted output library for C++.
 %patch8 -p0
 %patch9 -p0
 %patch10 -p1
+%patch11 -p1
 
 %if_with java
 if [ ! -f /proc/self/maps ]; then
