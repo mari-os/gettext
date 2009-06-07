@@ -180,6 +180,9 @@ a formatted output library for C++.
 %patch10 -p1
 %patch11 -p1
 
+# Regenerate texinfo documentation
+find -type f -name '*.info*' -delete
+
 %if_with java
 if [ ! -f /proc/self/maps ]; then
 	echo 'java support is enabled, but /proc/self/maps is not available'
