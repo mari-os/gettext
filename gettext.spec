@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt6
+Release: alt7
 
 %define libintl libintl3
 
@@ -307,6 +307,13 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sun Jun 07 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt7
+- Removed obsolete %%install_info/%%uninstall_info calls.
+- Backported several upstream fixes.
+- Added README.ALT.
+- Built --color support with system libraries instead of embedded.
+- Enabled testsuite during build by default.
+
 * Sun Dec 14 2008 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt6
 - Packaged -doc subpackage as noarch.
 
