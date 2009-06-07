@@ -14,6 +14,7 @@ Packager: Dmitry V. Levin <ldv@altlinux.org>
 Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
+Source3: README.ALT
 
 Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
 Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
@@ -209,8 +210,8 @@ echo libintl-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.
 chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 %endif #with included_gettext
 mkdir -p %buildroot%_docdir
-%define docdir %_docdir/%name-%version
-mv %buildroot%_docdir/gettext %buildroot%docdir
+%define docdir %_docdir/gettext
+install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 
 %find_lang %name-runtime
 %find_lang %name-tools
@@ -264,11 +265,13 @@ mv %buildroot%_docdir/gettext %buildroot%docdir
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %dir %docdir
 %docdir/FAQ.html
+%docdir/README.ALT
 %docdir/tutorial.html
 
 %files doc
 %docdir
 %exclude %docdir/FAQ.html
+%exclude %docdir/README.ALT
 %exclude %docdir/tutorial.html
 
 %if_with java
