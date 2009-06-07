@@ -1,0 +1,142 @@
+From 200d679787dbb24f3c135ad0f6c1465cea6e8444 Mon Sep 17 00:00:00 2001
+From: Bruno Haible <bruno@clisp.org>
+Date: Sun, 24 Aug 2008 01:01:23 +0000
+Subject: [PATCH] Fix behaviour of "msgmerge --update" when sorting is requested and obsolete
+ messages are present.
+
+--- a/gettext-tools/src/msgmerge.c
++++ b/gettext-tools/src/msgmerge.c
+@@ -156,6 +156,7 @@ static void usage (int status)
+ #endif
+ ;
+ static void compendium (const char *filename);
++static void msgdomain_list_stablesort_by_obsolete (msgdomain_list_ty *mdlp);
+ static msgdomain_list_ty *merge (const char *fn1, const char *fn2,
+ 				 catalog_input_format_ty input_syntax,
+ 				 msgdomain_list_ty **defp);
+@@ -405,6 +406,11 @@ There is NO WARRANTY, to the extent permitted by law.\n\
+ 
+   if (update_mode)
+     {
++      /* Before comparing result with def, sort the result into the same order
++	 as would be done implicitly by output_syntax->print.  */
++      if (output_syntax->sorts_obsoletes_to_end)
++	msgdomain_list_stablesort_by_obsolete (result);
++
+       /* Do nothing if the original file and the result are equal.  Also do
+ 	 nothing if the original file and the result differ only by the
+ 	 POT-Creation-Date in the header entry; this is needed for projects
+@@ -617,6 +623,50 @@ compendium (const char *filename)
+ }
+ 
+ 
++/* Sorts obsolete messages to the end, for every domain.  */
++static void
++msgdomain_list_stablesort_by_obsolete (msgdomain_list_ty *mdlp)
++{
++  size_t k;
++
++  for (k = 0; k < mdlp->nitems; k++)
++    {
++      message_list_ty *mlp = mdlp->item[k]->messages;
++
++      /* Sort obsolete messages to the end.  */
++      if (mlp->nitems > 0)
++	{
++	  message_ty **l1 = XNMALLOC (mlp->nitems, message_ty *);
++	  size_t n1;
++	  message_ty **l2 = XNMALLOC (mlp->nitems, message_ty *);
++	  size_t n2;
++	  size_t j;
++
++	  /* Sort the non-obsolete messages into l1 and the obsolete messages
++	     into l2.  */
++	  n1 = 0;
++	  n2 = 0;
++	  for (j = 0; j < mlp->nitems; j++)
++	    {
++	      message_ty *mp = mlp->item[j];
++
++	      if (mp->obsolete)
++		l2[n2++] = mp;
++	      else
++		l1[n1++] = mp;
++	    }
++	  if (n1 > 0 && n2 > 0)
++	    {
++	      memcpy (mlp->item, l1, n1 * sizeof (message_ty *));
++	      memcpy (mlp->item + n1, l2, n2 * sizeof (message_ty *));
++	    }
++	  free (l2);
++	  free (l1);
++	}
++    }
++}
++
++
+ /* Data structure representing the messages with known translations.
+    They are composed of
+      - A message list from def.po,
+--- a/gettext-tools/src/write-catalog.h
++++ b/gettext-tools/src/write-catalog.h
+@@ -1,5 +1,5 @@
+ /* GNU gettext - internationalization aids
+-   Copyright (C) 1995-1998, 2000-2003, 2006 Free Software Foundation, Inc.
++   Copyright (C) 1995-1998, 2000-2003, 2006, 2008 Free Software Foundation, Inc.
+ 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+@@ -50,6 +50,9 @@ struct catalog_output_format
+   /* Whether the format supports plurals.  */
+   bool supports_plurals;
+ 
++  /* Whether the formats sorts obsolete messages at the end.  */
++  bool sorts_obsoletes_to_end;
++
+   /* Whether the PO file format is a suitable alternative output format for
+      this one.  */
+   bool alternative_is_po;
+--- a/gettext-tools/src/write-po.c
++++ b/gettext-tools/src/write-po.c
+@@ -1511,6 +1511,7 @@ const struct catalog_output_format output_format_po =
+   true,					/* supports_multiple_domains */
+   true,					/* supports_contexts */
+   true,					/* supports_plurals */
++  true,					/* sorts_obsoletes_to_end */
+   false,				/* alternative_is_po */
+   false					/* alternative_is_java_class */
+ };
+--- a/gettext-tools/src/write-properties.c
++++ b/gettext-tools/src/write-properties.c
+@@ -1,5 +1,5 @@
+ /* Writing Java .properties files.
+-   Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
++   Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
+    Written by Bruno Haible <bruno@clisp.org>, 2003.
+ 
+    This program is free software: you can redistribute it and/or modify
+@@ -299,6 +299,7 @@ const struct catalog_output_format output_format_properties =
+   false,				/* supports_multiple_domains */
+   false,				/* supports_contexts */
+   false,				/* supports_plurals */
++  false,				/* sorts_obsoletes_to_end */
+   true,					/* alternative_is_po */
+   true					/* alternative_is_java_class */
+ };
+--- a/gettext-tools/src/write-stringtable.c
++++ b/gettext-tools/src/write-stringtable.c
+@@ -1,5 +1,5 @@
+ /* Writing NeXTstep/GNUstep .strings files.
+-   Copyright (C) 2003, 2006-2007 Free Software Foundation, Inc.
++   Copyright (C) 2003, 2006-2008 Free Software Foundation, Inc.
+    Written by Bruno Haible <bruno@clisp.org>, 2003.
+ 
+    This program is free software: you can redistribute it and/or modify
+@@ -319,6 +319,7 @@ const struct catalog_output_format output_format_stringtable =
+   false,				/* supports_multiple_domains */
+   false,				/* supports_contexts */
+   false,				/* supports_plurals */
++  false,				/* sorts_obsoletes_to_end */
+   false,				/* alternative_is_po */
+   false					/* alternative_is_java_class */
+ };
