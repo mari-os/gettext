@@ -37,6 +37,10 @@ Obsoletes: %name-base
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
 BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj /proc}
 
+# Needed for the --color option of the various programs.
+# Otherwise, an embedded version is used, which is forbidden by policy.
+BuildRequires: libncurses-devel, libxml2-devel, glib2-devel, libcroco-devel
+
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
 License: LGPLv2+
@@ -184,7 +188,7 @@ fi
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -I/usr/include/libxml2
 %configure --enable-shared %{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext}
 %make_build
