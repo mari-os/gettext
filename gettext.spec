@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt7
+Release: alt8
 
 %define libintl libintl3
 
@@ -192,7 +192,8 @@ fi
 
 %build
 %add_optflags -fno-strict-aliasing -I/usr/include/libxml2
-%configure --enable-shared %{subst_enable static} \
+%configure --enable-shared --without-included-regex \
+	%{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext}
 %make_build
 %{?!__buildreqs:%{?!_without_check:%{?!_disable_check:%make_build -k check}}}
@@ -307,6 +308,9 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sun Jun 07 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt8
+- Built --without-included-regex.
+
 * Sun Jun 07 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt7
 - Removed obsolete %%install_info/%%uninstall_info calls.
 - Backported several upstream fixes.
