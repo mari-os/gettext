@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt8
+Release: alt9
 
 %define libintl libintl3
 
@@ -310,6 +310,9 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt9
+- Moved "make check" to %%check section.
+
 * Sun Jun 07 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt8
 - Built --without-included-regex.
 
