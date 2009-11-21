@@ -197,6 +197,10 @@ fi
 %configure --enable-shared --without-included-regex \
 	%{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext}
+# We have to edit libtool files by hand until autoreconf can be used here.
+find -type f -name libtool -print0 |
+	xargs -r0 grep -lZ '^sys_lib_dlsearch_path_spec="' -- |
+	xargs -r0 sed -i 's|^\(sys_lib_dlsearch_path_spec="\).*|\1/%_lib %_libdir"|' --
 %make_build
 
 %check
