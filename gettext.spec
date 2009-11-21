@@ -26,6 +26,7 @@ Patch8: gettext-0.17-up-autopoint.patch
 Patch9: gettext-0.17-up-python-unicode.patch
 Patch10: gettext-0.17-up-msgmerge.patch
 Patch11: gettext-0.17-up-libxml2.patch
+Patch12: gettext-0.17-alt-sys_lib_dlsearch_path_spec.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -179,6 +180,7 @@ a formatted output library for C++.
 %patch9 -p0
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 # Regenerate texinfo documentation
 find -type f -name '*.info*' -delete
