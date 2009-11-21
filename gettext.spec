@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt9
+Release: alt10
 
 %define libintl libintl3
 
@@ -316,6 +316,11 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sun Nov 22 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt10
+- autopoint: Disabled sys_lib_dlsearch_path_spec settings in
+  installed files to avoid breaking libtool.
+- Fixed build of utilities to avoid unwanted RPATH on x86-64.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt9
 - Moved "make check" to %%check section.
 
