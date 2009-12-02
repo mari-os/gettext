@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.17
-Release: alt10
+Release: alt10.1
 
 %define libintl libintl3
 
@@ -316,6 +316,9 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Wed Dec 02 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt10.1
+- Rebuilt with python 2.6
+
 * Sun Nov 22 2009 Dmitry V. Levin <ldv@altlinux.org> 0.17-alt10
 - autopoint: Disabled sys_lib_dlsearch_path_spec settings in
   installed files to avoid breaking libtool.
