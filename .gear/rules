@@ -1,5 +1,4 @@
 copy: *.el
 copy: *.patch
 copy: *.py
-copy: README.ALT
 tar: gettext

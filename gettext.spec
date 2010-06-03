@@ -14,7 +14,6 @@ Packager: Dmitry V. Levin <ldv@altlinux.org>
 Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
-Source3: README.ALT
 
 Patch0: gettext-0.18-up-20100517.patch
 Patch1: gettext-0.18-alt-gettextize-quiet.patch
@@ -32,11 +31,12 @@ Obsoletes: %name-base
 %def_with java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips xz %{?_with_java:jdkgcj /proc}
-
+BuildPreReq: emacs-nox gcc-c++ xz %{?_with_java:jdkgcj /proc}
+# Required for --without-cvs --without-git.
+BuildRequires: cvs rcs
 # Needed for the --color option of the various programs.
 # Otherwise, an embedded version is used, which is forbidden by policy.
-BuildRequires: libncurses-devel, libxml2-devel, glib2-devel, libcroco-devel
+BuildRequires: libncurses-devel libxml2-devel glib2-devel libcroco-devel
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -178,6 +178,7 @@ a formatted output library for C++.
 sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
 	gettext-tools/misc/{*.in,Makefile.*}
 
+# Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 archive=gettext-tools/misc/archive.cvs.tar.gz
 tar -xf $archive
 find archive -type f -print0 |
@@ -186,8 +187,11 @@ find archive -type f -print0 |
 tar --owner=root --group=root --xz -cf ${archive%%.gz}.xz archive
 rm -rf archive
 
-# Regenerate texinfo documentation
+# Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
+
+# Update outdated build files.
+cp -a build-aux/config.[gs]* gettext-tools/examples/hello-c++-kde/admin/
 
 %build
 %if_with java
@@ -196,19 +200,21 @@ if [ ! -f /proc/self/maps ]; then
 	exit 1
 fi
 %endif
-
-%add_optflags -fno-strict-aliasing -I/usr/include/libxml2
-%configure --enable-shared --without-included-regex \
+./autogen.sh --quick --skip-gnulib
+%add_optflags -fno-strict-aliasing
+export ac_cv_prog_STRIP=:
+%configure --enable-shared \
+	--without-included-regex \
+	--disable-csharp \
+	--without-cvs --without-git \
 	%{subst_enable static} \
-	%{?_with_included_gettext:--with-included-gettext}
+	%{?_with_included_gettext:--with-included-gettext} \
+	CPPFLAGS=-I/usr/include/libxml2
 # We have to edit libtool files by hand until autoreconf can be used here.
 find -type f -name libtool -print0 |
 	xargs -r0 grep -lZ '^sys_lib_dlsearch_path_spec="' -- |
 	xargs -r0 sed -i 's|^\(sys_lib_dlsearch_path_spec="\).*|\1/%_lib %_libdir"|' --
 %make_build
-
-%check
-%make_build -k check
 
 %install
 %makeinstall \
@@ -217,13 +223,16 @@ find -type f -name libtool -print0 |
 	gettextsrcdir=%buildroot%_datadir/gettext/intl \
 	#
 
-mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.tar.?z} %buildroot%_datadir/gettext/
+mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.*.tar.?z} \
+	%buildroot%_datadir/gettext/
 
 mkdir -p %buildroot%_datadir/gettext/po
 install -pm644 gettext-runtime/po/Makefile.in.in %buildroot%_datadir/gettext/po/
 
-install -pD -m755 %SOURCE1 %buildroot%_bindir/msghack
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/emacs/site-start.d/gettext.el
+install -pD -m755 %_sourcedir/msghack.py \
+	%buildroot%_bindir/msghack
+install -pD -m644 %_sourcedir/gettext-po-mode-start.el \
+	%buildroot%_sysconfdir/emacs/site-start.d/gettext.el
 
 %if_with included_gettext
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -236,10 +245,12 @@ chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 %endif #with included_gettext
 mkdir -p %buildroot%_docdir
 %define docdir %_docdir/gettext
-install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 
 %find_lang %name-runtime
 %find_lang %name-tools
+
+%check
+%make_build -k check
 
 %if_with included_gettext
 %files -n %libintl
@@ -290,13 +301,11 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %dir %docdir
 %docdir/FAQ.html
-%docdir/README.ALT
 %docdir/tutorial.html
 
 %files doc
 %docdir
 %exclude %docdir/FAQ.html
-%exclude %docdir/README.ALT
 %exclude %docdir/tutorial.html
 
 %if_with java
@@ -320,6 +329,11 @@ install -pm644 %_sourcedir/README.ALT %buildroot%docdir/
 %_defaultdocdir/libasprintf
 
 %changelog
+* Thu Jun 03 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18-alt1
+- Updated to 0.18.
+- autopoint: built without cvs dependency.
+- Dropped clumsy urlview helper, changed all scripts to work without it.
+
 * Wed Dec 02 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt10.1
 - Rebuilt with python 2.6
 
