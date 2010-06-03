@@ -22,6 +22,7 @@ Patch2: gettext-0.18-alt-cvs-git.patch
 Patch3: gettext-0.18-alt-tmp-autopoint.patch
 Patch4: gettext-0.18-alt-gcc.patch
 Patch5: gettext-0.18-alt-doc.patch
+Patch6: gettext-0.18-alt-urlview.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -171,6 +172,7 @@ a formatted output library for C++.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # autopoint: replace gzip with xz.
 sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
