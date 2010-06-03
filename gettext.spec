@@ -31,7 +31,7 @@ Obsoletes: %name-base
 %def_with java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips %{?_with_java:jdkgcj /proc}
+BuildPreReq: emacs-nox gcc-c++ gcc-g77 tetex-dvips xz %{?_with_java:jdkgcj /proc}
 
 # Needed for the --color option of the various programs.
 # Otherwise, an embedded version is used, which is forbidden by policy.
@@ -172,12 +172,16 @@ a formatted output library for C++.
 %patch4 -p1
 %patch5 -p1
 
+# autopoint: replace gzip with xz.
+sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
+	gettext-tools/misc/{*.in,Makefile.*}
+
 archive=gettext-tools/misc/archive.cvs.tar.gz
 tar -xf $archive
 find archive -type f -print0 |
 	xargs -r0 grep -lZ '\<sys_lib_\(dl\)\?search_path_spec=' -- |
 	xargs -r0 sed -i 's/\<sys_lib_\(dl\)\?search_path_spec=/#&/' --
-tar --owner=root --group=root -czf $archive archive
+tar --owner=root --group=root --xz -cf ${archive%%.gz}.xz archive
 rm -rf archive
 
 # Regenerate texinfo documentation
@@ -211,7 +215,7 @@ find -type f -name libtool -print0 |
 	gettextsrcdir=%buildroot%_datadir/gettext/intl \
 	#
 
-mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.tar.gz} %buildroot%_datadir/gettext/
+mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.tar.?z} %buildroot%_datadir/gettext/
 
 mkdir -p %buildroot%_datadir/gettext/po
 install -pm644 gettext-runtime/po/Makefile.in.in %buildroot%_datadir/gettext/po/
