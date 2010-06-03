@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.18
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -81,8 +81,9 @@ Requires: %name-tools = %version-%release
 
 %package tools-python
 Summary: Python tools for developers and translators
-License: GPLv3+
+License: GPLv2+
 Group: Development/Other
+BuildArch: noarch
 Requires: %name-tools = %version-%release
 
 %package doc
@@ -329,6 +330,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Thu Jun 03 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18-alt2
+- Packaged tools-python subpackage as noarch.
+
 * Thu Jun 03 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18-alt1
 - Updated to 0.18.
 - autopoint: built without cvs dependency.
