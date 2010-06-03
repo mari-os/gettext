@@ -17,12 +17,11 @@ Source2: gettext-po-mode-start.el
 Source3: README.ALT
 
 Patch0: gettext-0.18-up-20100517.patch
-Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
-Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
-Patch3: gettext-0.14.2-alt-tmp-autopoint.patch
-Patch4: gettext-0.14.2-alt-gcc.patch
-Patch5: gettext-0.17-alt-doc.patch
-Patch6: gettext-0.17-alt-sys_lib_dlsearch_path_spec.patch
+Patch1: gettext-0.18-alt-gettextize-quiet.patch
+Patch2: gettext-0.18-alt-cvs-git.patch
+Patch3: gettext-0.18-alt-tmp-autopoint.patch
+Patch4: gettext-0.18-alt-gcc.patch
+Patch5: gettext-0.18-alt-doc.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -172,11 +171,19 @@ a formatted output library for C++.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+
+archive=gettext-tools/misc/archive.cvs.tar.gz
+tar -xf $archive
+find archive -type f -print0 |
+	xargs -r0 grep -lZ '\<sys_lib_\(dl\)\?search_path_spec=' -- |
+	xargs -r0 sed -i 's/\<sys_lib_\(dl\)\?search_path_spec=/#&/' --
+tar --owner=root --group=root -czf $archive archive
+rm -rf archive
 
 # Regenerate texinfo documentation
 find -type f -name '*.info*' -delete
 
+%build
 %if_with java
 if [ ! -f /proc/self/maps ]; then
 	echo 'java support is enabled, but /proc/self/maps is not available'
@@ -184,7 +191,6 @@ if [ ! -f /proc/self/maps ]; then
 fi
 %endif
 
-%build
 %add_optflags -fno-strict-aliasing -I/usr/include/libxml2
 %configure --enable-shared --without-included-regex \
 	%{subst_enable static} \

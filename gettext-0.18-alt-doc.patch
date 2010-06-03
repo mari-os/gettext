@@ -1,5 +1,5 @@
---- gettext-0.17/gettext-runtime/doc/rt-gettext.texi
-+++ gettext-0.17/gettext-runtime/doc/rt-gettext.texi
+--- gettext/gettext-runtime/doc/rt-gettext.texi
++++ gettext/gettext-runtime/doc/rt-gettext.texi
 @@ -41,7 +41,7 @@ Display this help and exit.
  @item -n
  @opindex -n@r{, @code{gettext} option}
@@ -9,9 +9,9 @@
  
  @item -V
  @itemx --version
---- gettext-0.17/gettext-tools/doc/gettext.texi
-+++ gettext-0.17/gettext-tools/doc/gettext.texi
-@@ -597,7 +597,7 @@ as a vehicle for documenting its structure and methods.  This goes
+--- gettext/gettext-tools/doc/gettext.texi
++++ gettext/gettext-tools/doc/gettext.texi
+@@ -598,7 +598,7 @@ as a vehicle for documenting its structure and methods.  This goes
  beyond the strict technicalities of documenting the GNU @code{gettext}
  proper.  By so doing, translators will find in a single place, as
  far as possible, all they need to know for properly doing their
