@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.17
-Release: alt10.1
+Version: 0.18
+Release: alt1
 
 %define libintl libintl3
 
@@ -16,17 +16,13 @@ Source1: msghack.py
 Source2: gettext-po-mode-start.el
 Source3: README.ALT
 
+Patch0: gettext-0.18-up-20100517.patch
 Patch1: gettext-0.14.1-alt-gettextize-quiet.patch
 Patch2: gettext-0.14.1-alt-autopoint-cvs.patch
-Patch4: gettext-0.14.2-alt-tmp-autopoint.patch
-Patch5: gettext-0.14.2-alt-gcc.patch
-Patch6: gettext-0.17-alt-doc.patch
-Patch7: gettext-0.17-up-open.patch
-Patch8: gettext-0.17-up-autopoint.patch
-Patch9: gettext-0.17-up-python-unicode.patch
-Patch10: gettext-0.17-up-msgmerge.patch
-Patch11: gettext-0.17-up-libxml2.patch
-Patch12: gettext-0.17-alt-sys_lib_dlsearch_path_spec.patch
+Patch3: gettext-0.14.2-alt-tmp-autopoint.patch
+Patch4: gettext-0.14.2-alt-gcc.patch
+Patch5: gettext-0.17-alt-doc.patch
+Patch6: gettext-0.17-alt-sys_lib_dlsearch_path_spec.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -170,17 +166,13 @@ a formatted output library for C++.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p0
-%patch8 -p0
-%patch9 -p0
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 # Regenerate texinfo documentation
 find -type f -name '*.info*' -delete
