@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.18
-Release: alt2
+Version: 0.18.1
+Release: alt1
 
 %define libintl libintl3
 
@@ -15,13 +15,13 @@ Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
 
-Patch0: gettext-0.18-up-20100517.patch
 Patch1: gettext-0.18-alt-gettextize-quiet.patch
 Patch2: gettext-0.18-alt-cvs-git.patch
 Patch3: gettext-0.18-alt-tmp-autopoint.patch
 Patch4: gettext-0.18-alt-gcc.patch
 Patch5: gettext-0.18-alt-doc.patch
 Patch6: gettext-0.18-alt-urlview.patch
+Patch7: gettext-0.18-alt-libunistring.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -32,11 +32,9 @@ Obsoletes: %name-base
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
 BuildPreReq: emacs-nox gcc-c++ xz %{?_with_java:jdkgcj /proc}
-# Required for --without-cvs --without-git.
-BuildRequires: cvs rcs
 # Needed for the --color option of the various programs.
-# Otherwise, an embedded version is used, which is forbidden by policy.
-BuildRequires: libncurses-devel libxml2-devel glib2-devel libcroco-devel
+# Otherwise, embedded versions are used, which is forbidden by policy.
+BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
@@ -167,25 +165,29 @@ a formatted output library for C++.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # autopoint: replace gzip with xz.
 sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
 	gettext-tools/misc/{*.in,Makefile.*}
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
-archive=gettext-tools/misc/archive.cvs.tar.gz
+mkdir archive
+cd archive
+archive=../gettext-tools/misc/archive.dir.tar.gz
 tar -xf $archive
-find archive -type f -print0 |
+find -type f -print0 |
 	xargs -r0 grep -lZ '\<sys_lib_\(dl\)\?search_path_spec=' -- |
 	xargs -r0 sed -i 's/\<sys_lib_\(dl\)\?search_path_spec=/#&/' --
-tar --owner=root --group=root --xz -cf ${archive%%.gz}.xz archive
+tar --owner=root --group=root --xz -cf ${archive%%.gz}.xz *
+rm $archive
+cd -
 rm -rf archive
 
 # Regenerate texinfo documentation.
@@ -330,6 +332,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Fri Jun 04 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18.1-alt1
+- Updated to 0.18.1.
+
 * Thu Jun 03 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18-alt2
 - Packaged tools-python subpackage as noarch.
 
