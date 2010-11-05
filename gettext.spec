@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.18.1
+Version: 0.18.1.1
 Release: alt1
 
 %define libintl libintl3
@@ -21,7 +21,6 @@ Patch3: gettext-0.18-alt-tmp-autopoint.patch
 Patch4: gettext-0.18-alt-gcc.patch
 Patch5: gettext-0.18-alt-doc.patch
 Patch6: gettext-0.18-alt-urlview.patch
-Patch7: gettext-0.18-alt-libunistring.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -171,7 +170,6 @@ a formatted output library for C++.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # autopoint: replace gzip with xz.
 sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
@@ -332,6 +330,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Fri Nov 05 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18.1.1-alt1
+- Updated to 0.18.1.1 (no changes, just rebuilt for soname set-versions).
+
 * Fri Jun 04 2010 Dmitry V. Levin <ldv@altlinux.org> 0.18.1-alt1
 - Updated to 0.18.1.
 
