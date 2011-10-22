@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.18.1.1
-Release: alt2
+Release: alt2.1
 
 %define libintl libintl3
 
@@ -331,6 +331,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.18.1.1-alt2.1
+- Rebuild with Python-2.7
+
 * Tue Jun 28 2011 Dmitry V. Levin <ldv@altlinux.org> 0.18.1.1-alt2
 - Fixed build on linux kernel >= 2.6.39.
 
