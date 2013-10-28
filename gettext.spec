@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.18.2.1
+Version: 0.18.3.1
 Release: alt1
 
 %define libintl libintl3
@@ -18,13 +18,12 @@ Source3: gettext-po-mode-start.el
 Patch4: gettext-0.18.1.1-deb-project-id.patch
 Patch5: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
 
-Patch11: gettext-0.18-alt-gettextize-quiet.patch
-Patch12: gettext-0.18-alt-cvs-git.patch
-Patch13: gettext-0.18-alt-tmp-autopoint.patch
+Patch11: gettext-0.18.3-alt-gettextize-quiet.patch
+Patch12: gettext-0.18.3-alt-autopoint-cvs-git.patch
+Patch13: gettext-0.18.3-alt-tmp-autopoint.patch
 Patch14: gettext-0.18-alt-gcc.patch
 Patch15: gettext-0.18-alt-doc.patch
-Patch16: gettext-0.18.2.1-alt-urlview.patch
-Patch17: gettext-0.18.2.1-alt-libxml.patch
+Patch16: gettext-0.18.3-alt-urlview.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -177,7 +176,6 @@ a formatted output library for C++.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -326,6 +324,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.3.1-alt1
+- Updated to 0.18.3.1.
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.2.1-alt1
 - Updated to 0.18.2.1.
 

@@ -1,6 +1,6 @@
---- gettext-0.18/gettext-tools/misc/gettextize.in
-+++ gettext-0.18/gettext-tools/misc/gettextize.in
-@@ -160,6 +160,7 @@ Options:
+--- gettext/gettext-tools/misc/gettextize.in
++++ gettext/gettext-tools/misc/gettextize.in
+@@ -168,6 +168,7 @@ Options:
        --help           print this help and exit
        --version        print version information and exit
    -f, --force          force writing of new files even if old exist
@@ -8,7 +8,7 @@
        --intl           install libintl in a subdirectory (deprecated)
        --po-dir=DIR     specify directory with PO files
        --no-changelog   don't update or create ChangeLog files
-@@ -203,6 +204,7 @@ func_fatal_error ()
+@@ -211,6 +212,7 @@ func_fatal_error ()
  # - doit            false if --dry-run was given, : otherwise
  {
    force=0
@@ -16,7 +16,7 @@
    intldir=
    podirs=
    try_ln_s=false
-@@ -219,6 +221,9 @@ func_fatal_error ()
+@@ -227,6 +229,9 @@ func_fatal_error ()
        -f | --force | --forc | --for | --fo | --f )
          shift
          force=1 ;;
@@ -26,7 +26,7 @@
        --help | --hel | --he | --h )
          func_usage; exit 0 ;;
        --intl | --int | --in | --i )
-@@ -1272,10 +1277,12 @@ if $doit; then
+@@ -1293,10 +1298,12 @@ if $doit; then
      5) count="five paragraphs";;
      *) count="$count paragraphs";;
    esac

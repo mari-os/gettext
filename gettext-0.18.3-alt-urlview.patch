@@ -9,6 +9,3310 @@
  sed_addnl='s,</li>,</li>\
  ,g'
  sed_extract_address='s,^.*"/teams/'"$catalog"'">[^<>]*</a>.*<a href=[^<>]*>\(.*\)</a>.*<a href=[^<>]*>.*</a>.*,\1,p'
+--- gettext/gettext-tools/projects/GNOME/teams.html
++++ gettext/gettext-tools/projects/GNOME/teams.html
+@@ -1,69 +1,67 @@
+ 
+ 
+-<!DOCTYPE html
+-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
++
++<!DOCTYPE html>
++<html lang="en-us">
+ <head>
+-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
++  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <title>GNOME Translation Teams</title>
+-  <link rel="icon" type="image/png" href="/media/img/foot-16.png"/>
+-  <link rel="stylesheet" href="/media/css/main.css"/>
+-  <link rel="stylesheet" href="/media/css/layout.css"/>
+-  <link rel="stylesheet" href="/media/css/style.css"/>
++  <link rel="icon" type="image/png" href="/static/img/foot-16.png">
++  <link rel="stylesheet" type="text/css" href="/static/css/template.css">
++  <link rel="stylesheet" href="/static/css/overlays.css">
++
++  <script type="text/javascript" src="/static/js/main.js"></script>
++  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
++  <script type="text/javascript" src="/static/js/jquery.tools.min.js"></script>
++  <script type="text/javascript" src="/static/js/overlayhelpers.js"></script>
++
++  <script type="text/javascript">
++    $(document).ready(function () {
++      $('.show-overlay').prepOverlay({subtype:'ajax',
++                                      filter: '#content > *',
++                                      config: {expose:{color:'#ccc' }}
++                                     });
++    });
++  </script>
+ 
+-  <script type="text/javascript" src="/media/js/main.js"></script>
+-  <script type="text/javascript" src="/media/js/jquery.min.js"></script>
+   
+   
+ </head>
+ 
+ <body>
+-  <div id="page">
+-    <ul id="general">
+-      <li id="siteaction-gnome_home" class="home"><a href="http://www.gnome.org/">Home</a></li>
+-      <li id="siteaction-gnome_news"><a href="http://news.gnome.org">News</a></li>
+-      <li id="siteaction-gnome_projects"><a href="http://www.gnome.org/projects/">Projects</a></li>
+-      <li id="siteaction-gnome_art"><a href="http://art.gnome.org">Art</a></li>
+-      <li id="siteaction-gnome_support"><a href="http://www.gnome.org/support/">Support</a></li>
+-      <li id="siteaction-gnome_development"><a href="http://developer.gnome.org">Development</a></li>
+-      <li id="siteaction-gnome_community"><a href="http://www.gnome.org/community/">Community</a></li>
+-    </ul>
+-    <div id="header">
+-      <h1>Damned Lies</h1>
+-      <div id="tabs">
+-        <ul id="portal-globalnav">
+-          <li
++    <!-- global gnome.org domain bar -->
++    <div id="global_domain_bar">
++        <div class="maxwidth">
++            <div class="tab">
++                <a class="root" href="http://www.gnome.org/">GNOME.org</a>
++                
++                    <a href="/login/">Log in</a>
++                
++            </div>
++        </div>
++    </div>
+ 
+-            ><a href="/" title="Back to Damned Lies home page"><span>Home</span></a>
+-          </li>
+-      <li
++    <div id="gnome_header">
+ 
+-      class="selected"
++        <div class="maxwidth">
+ 
+-       ><a href="/teams/"><span>Teams</span></a></li>
+-      <li
++            <h1><a href="/" title="Back to Damned Lies home page"><img src="/static/img/foot.png" alt="GNOME" /> Damned Lies</a></h1>
+ 
+-       ><a href="/languages/"><span>Languages</span></a></li>
+-      <li
++            <ul id="globalnav">
++                <li><a href="/" title="Back to Damned Lies home page"><span>Home</span></a></li>
++                <li class="active"><a href="/teams/"><span>Teams</span></a></li>
++                <li><a href="/languages/"><span>Languages</span></a></li>
++                <li><a href="/releases/"><span>Release sets</span></a></li>
++                <li><a href="/module/"><span>Modules</span></a></li>
++            </ul>
+ 
+-       ><a href="/releases/"><span>Release sets</span></a></li>
+-      <li
++            <div class="clear"></div>
++        </div>
+ 
+-       ><a href="/module/"><span>Modules</span></a></li>
+-        </ul>
+-      </div> <!-- end of #tabs -->
+-    </div> <!-- end of #header -->
+-  </div>
+-  <!-- end site header -->
+-  <div id="authenticated">
+-    
+-    <a href="/login/">Log in</a>
+-    
+-  </div>
++    </div>
+ 
+   <div class="body">
+-    <div id="content">
++    <div id="content" class="maxwidth">
+     
+ 
+     
+@@ -74,1761 +72,1365 @@
+ 
+ <p>Select a team below to see more information about it:</p>
+ 
+-    <ul class="foot">
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/af">Afrikaans</a>
+-      
+-        &mdash; <a href="http://translate.org.za/">http://translate.org.za/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/friedel@translate.org.za/">Friedel Wolff</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/sq">Albanian</a>
+-      
+-        &mdash; <a href="http://gnome-albanian.sourceforge.net/">http://gnome-albanian.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/laurenti/">Laurent Dhima</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/am">Amharic</a>
+-      
+-        &mdash; <a href="http://gnome.geez.org/Amharic/">http://gnome.geez.org/Amharic/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/yacob/">Daniel Yacob</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ar">Arabic</a>
+-      
+-        &mdash; <a href="http://www.arabeyes.org/">http://www.arabeyes.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/khaled/">خالد حسني</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/an">Aragonese</a>
+-      
+-        &mdash; <a href="http://wiki.softaragones.org/">http://wiki.softaragones.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jesmar/">Daniel Martinez Cucalon</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/hy">Armenian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/noch/">Norayr Chilingaryan</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/as">Assamese</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/amitakhya/">Amitakhya Phukan</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ast">Asturian</a>
+-      
+-        &mdash; <a href="http://softastur.org/">http://softastur.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/xandruarmesto/">Xandru Armesto</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/en_AU">Australian English</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/gnome-i18n@six-by-nine.com.au/">Peter Lawler</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/az">Azerbaijani</a>
+-      
+-        &mdash; <a href="http://www.linux.gen.az/">http://www.linux.gen.az/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rundll32/">Metin Amiroff</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bal">Balochi</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mostafa@daneshvar.org.uk/">Mostafa Daneshvar</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/eu">Basque</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/dooteo/">Iñaki Larrañaga Murgoitio</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/be">Belarusian</a>
+-      
+-        &mdash; <a href="http://mounik.org/">http://mounik.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/iharh/">Ihar Hrachyshka</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bem">Bemba</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/goof/">Anthony Musaluke</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bn">Bengali</a>
+-      
+-        &mdash; <a href="http://www.ankur.org.bd/">http://www.ankur.org.bd/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jahmed/">Jamil Ahmed</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bn_IN">Bengali (India)</a>
+-      
+-        &mdash; <a href="http://www.bengalinux.org/projects/gnome/">http://www.bengalinux.org/projects/gnome/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/sayamindu/">Sayamindu Dasgupta</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bs">Bosnian</a>
+-      
+-        &mdash; <a href="http://projekti.linux.org.ba/">http://projekti.linux.org.ba/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/aakagic/">Amila Akagić</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/pt_BR">Brazilian Portuguese</a>
+-      
+-        &mdash; <a href="http://br.gnome.org/">http://br.gnome.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/dnoway/">Djavan Fagundes</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/br">Breton</a>
+-      
+-        &mdash; <a href="http://www.stationlinux.org/gnomebr/">http://www.stationlinux.org/gnomebr/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jeremylf/">Jérémy Ar Floc&#39;h</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/en_GB">British English</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/BritishEnglish">http://live.gnome.org/BritishEnglish</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/hadess/">Bastien Nocera</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/bg">Bulgarian</a>
+-      
+-        &mdash; <a href="http://fsa-bg.org/project/gtp">http://fsa-bg.org/project/gtp</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/al_shopov/">Alexander Shopov</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/my">Burmese</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/russellkyaw/">Russell Kyaw</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/en_CA">Canadian English</a>
+-      
+-        &mdash; <a href="http://www.vectors.cx/en_ca.html">http://www.vectors.cx/en_ca.html</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/adamw/">Adam Weinberger</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ca">Catalan</a>
+-      
+-        &mdash; <a href="http://www.softcatala.org/wiki/GNOME">http://www.softcatala.org/wiki/GNOME</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/gforcada/">Gil Forcada</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/zh_CN">Chinese (China)</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/fwang/">Funda Wang</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/zh_trad">Chinese Traditional</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pesder/">Chao-Hsiung Liao</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/crh">Crimean Tatar</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rsabiq/">Reşat Sabıq</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/hr">Croatian</a>
+-      
+-        &mdash; <a href="http://lokalizacija.linux.hr/">http://lokalizacija.linux.hr/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rsedak/">Robert Sedak</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/cs">Czech</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/Czech">http://live.gnome.org/Czech</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pmkovar/">Petr Kovář</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/da">Danish</a>
+-      
+-        &mdash; <a href="http://www.dansk-gruppen.dk/index.php?ID=18&amp;lang=da">http://www.dansk-gruppen.dk/index.php?ID=18&amp;lang=da</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kennethn/">Kenneth Nielsen</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/dv">Divehi</a>
+-      
+-        &mdash; <a href="http://www.moss.org.mv/">http://www.moss.org.mv/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/inash/">Inash Zubair</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/nl">Dutch</a>
+-      
+-        &mdash; <a href="http://nl.gnome.org/">http://nl.gnome.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/wbolster/">Wouter Bolsterlee</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/dz">Dzongkha</a>
+-      
+-        &mdash; <a href="http://savannah.nongnu.org/projects/dzongkha-gnome/">http://savannah.nongnu.org/projects/dzongkha-gnome/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pgeyleg/">Pema Geyleg</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/eo">Esperanto</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jn0101/">Jacob Nordfalk</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/et">Estonian</a>
+-      
+-        &mdash; <a href="http://gnome.linux.ee/">http://gnome.linux.ee/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/plaes/">Priit Laes</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/fi">Finnish</a>
+-      
+-        &mdash; <a href="http://www.gnome.fi/">http://www.gnome.fi/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ituohela/">Ilkka Tuohela</a>
+-      </span>
++
++<div class="col3_container">
++  
++  
++  <div class="col2_column">
++    <ul>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/af/">Afrikaans</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/friedel@translate.org.za/">Friedel Wolff</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sq/">Albanian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/laurenti/">Laurent Dhima</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/am/">Amharic</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/yacob/">Daniel Yacob</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ar/">Arabic</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/abderrahim/">Abderrahim Kitouni</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/an/">Aragonese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jesmar/">Daniel Martínez</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/hy/">Armenian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/noch/">Norayr Chilingaryan</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/as/">Assamese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/amitakhya/">Amitakhya Phukan</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ast/">Asturian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/xandruarmesto/">Xandru Armesto</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/en_AU/">Australian English</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/k3lt01/">Michael Findlay</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/az/">Azerbaijani</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rundll32/">Metin Amiroff</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bal/">Balochi</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mostafa@daneshvar.org.uk/">Mostafa Daneshvar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/eu/">Basque</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/dooteo/">Iñaki Larrañaga Murgoitio</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/be/">Belarusian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/iharh/">Ihar Hrachyshka</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bem/">Bemba</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/goof/">Anthony Musaluke</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bn/">Bengali</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jahmed/">Jamil Ahmed</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bn_IN/">Bengali (India)</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/sayamindu/">Sayamindu Dasgupta</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/brx/">Bodo</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/alayaran/">Sanjib Narzary</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bs/">Bosnian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/megaribi/">Samir Ribic</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/pt_BR/">Brazilian Portuguese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rafaelff1/">Rafael Ferreira</a>, <a href="/users/enrico/">Enrico Nicoletto</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/br/">Breton</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jeremylf/">Jérémy Ar Floc'h</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/en_GB/">British English</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/hadess/">Bastien Nocera</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bg/">Bulgarian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/al_shopov/">Alexander Shopov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/my/">Burmese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/russellkyaw/">Russell Kyaw</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/en_CA/">Canadian English</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/adamw/">Adam Weinberger</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ca/">Catalan</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/gforcada/">Gil Forcada</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/nhn/">Central Nahuatl</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jrbec/">jorge becerril</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/zh_CN/">Chinese (China)</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/cnfavor/">Aron Xu</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/zh_trad/">Chinese Traditional</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pesder/">Chao-Hsiung Liao</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/crh/">Crimean Tatar</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rsabiq/">Reşat Sabıq</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/hr/">Croatian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rsedak/">Robert Sedak</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/cs/">Czech</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pmkovar/">Petr Kovář</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/da/">Danish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kennethn/">Kenneth Nielsen</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/dv/">Divehi</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/inash/">Inash Zubair</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/nl/">Dutch</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/wbolster/">Wouter Bolsterlee</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/dz/">Dzongkha</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pgeyleg/">Pema Geyleg</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/eo/">Esperanto</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jn0101/">Jacob Nordfalk</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/et/">Estonian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/plaes/">Priit Laes</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/fi/">Finnish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ituohela/">Ilkka Tuohela</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/fr/">French</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/afranke/">Alexandre Franke</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/fy/">Frisian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/sehofstede/">Sense Hofstede</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/fur/">Friulian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/TmTFx/">Fabio Tomat</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ff/">Fula</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ibrahima.sarr@pulaagu.com/">Ibrahima Sarr</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/gl/">Galician</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/frandieguez/">Fran Diéguez</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ka/">Georgian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/vsichi/">Vladimer Sichinava</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/de/">German</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ckirbach/">Christian Kirbach</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/el/">Greek</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/simos/">Simos Xenitellis</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/gn/">Guarani</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/colorido@riseup.net/">Moreno Saraiva Martins</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/gu/">Gujarati</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ankitp/">Ankit Patel</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ha/">Hausa</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/nuimam@fossnigeria.org/">Nasir Usman Imam</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/he/">Hebrew</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/yairhr/">יאיר הרשקוביץ</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/hi/">Hindi</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/karunakar/">Guntupalli Karunakar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/hu/">Hungarian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kelemeng/">Gábor Kelemen</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/is/">Icelandic</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/annaj@hi.is/">Anna Jonna Armannsdottir</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/io/">Ido</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mterry/">Michael Terry</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/id/">Indonesian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/andika/">Andika Triwidada</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ia/">Interlingua</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/nikka/">Nik Kalach</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/az_IR/">Iranian Azerbaijani</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/amir@bamdad.org/">Amir Hedayaty</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ga/">Irish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/sdeburca/">Seán de Búrca</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/it/">Italian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/elle.uca/">Luca Ferretti</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ja/">Japanese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kusano/">Takayuki KUSANO</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/kn/">Kannada</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/sprasad/">Shankar Prasad</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ks/">Kashmiri</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rakesh.pandit@gmail.com/">Rakesh Pandit</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/kk/">Kazakh</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/cray/">Baurzhan Muftakhidinov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/km/">Khmer</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/khem/">Khoem Sokhem</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/kg/">Kikongo</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/lukongo/">Kibavuidi NSIANGANI</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/rw/">Kinyarwanda</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/smurphy/">Steve Murphy</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ky/">Kirghiz</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/timurj/">Timur Zhamakeev</a>
++          
++        </span>
++      </li>
+       
++    </ul>
++  </div>
++  
++  <div class="col2_column">
++    <ul>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ko/">Korean</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/cwryu/">Changwoo Ryu</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ku/">Kurdish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/eronahi/">Erdal Ronahi</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/lo/">Lao</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/laonux/">Anousak Souphavanh</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/la/">Latin</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/paul@paulnorton.org/">Paul Norton</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/lv/">Latvian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/peterisk/">Peteris Krisjanis</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/li/">Limburgian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kenneth/">Kenneth Rohde Christiansen</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/lt/">Lithuanian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/aurisc4/">Aurimas Černius</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/nds/">Low German</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            <em>No coordinator</em>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/lg/">Luganda</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kizito/">Kizito Birabwa</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mk/">Macedonian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            <em>No coordinator</em>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mai/">Maithili</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/rajeshkajha@yahoo.com/">Rajesh Ranjan</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mg/">Malagasy</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/thierryr/">Thierry Randrianiriana</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ms/">Malay</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/umarzuki/">Umarzuki Bin Mochlis Moktar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ml/">Malayalam</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/anipeter/">Ani Peter</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/gv/">Manx</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ReubenPotts/">ReubenPotts</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mi/">Maori</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/jbarstow/">John C Barstow</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mr/">Marathi</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/sandeeps/">Sandeep Shedmake</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/es_MX/">Mexican Spanish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            <em>No coordinator</em>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/mn/">Mongolian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/badaa/">Sanlig Badral</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/nap/">Neapolitan</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/s.cretella@gmail.com/">Sabine Emmy Eller</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ne/">Nepali</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pachimho/">Pawan Chitrakar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/nso/">Northern Sotho</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/dbailey/">Dwayne Bailey</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/no/">Norwegian (Bokmål and Nynorsk)</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kmaraas/">Kjartan Maraas</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/oc/">Occitan</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/Cedric31/">Cédric Valmary</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ang/">Old English</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/modean52@comcast.net/">James R. Johnson</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/or/">Oriya</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/gmohanty/">Gora Mohanty</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/os/">Ossetian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/soslan/">Soslan Khubulov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ps/">Pashto</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/khalid/">Khalid Amiri</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/fa/">Persian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/arashm/">Arash Mousavi</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/pl/">Polish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/raven/">Piotr Drąg</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/pt/">Portuguese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/dnloreto/">Duarte Loreto</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/pa/">Punjabi</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/aman/">A S Alam</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/quz/">Quechua</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            <em>No coordinator</em>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ro/">Romanian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/lucian/">Lucian Adrian Grijincu</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ru/">Russian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/YuriMyasoedov/">Yuri Myasoedov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/gd/">Scottish Gaelic</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/akerbeltz/">akerbeltz</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sr/">Serbian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mpopovic/">Милош Поповић</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/en@shaw/">Shavian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/tthurman@gnome.org/">Thomas Thurman</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/szl/">Silesian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/przemub/">Przemysław Buczkowski</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/si/">Sinhala</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/snavin/">Danishka Navin</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sk/">Slovak</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/etkinator/">Peter Mráz</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sl/">Slovenian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mateju/">Matej Urbančič</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/so/">Somali</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ismaelhssn/">Ismael Omar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/es/">Spanish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/Leo/">Daniel Mustieles</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sw/">Swahili</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/lugke/">lugke</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/sv/">Swedish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/menthos/">Christian Rose</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/tl/">Tagalog</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/epareja/">Eric Pareja</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/tg/">Tajik</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ibragimov/">Victor Ibragimov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ta/">Tamil</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/njaya/">Jayaradha N.</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/tt/">Tatar</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ainurshakirov/">Ainur Shakirov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/te/">Telugu</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kkrothap/">Krishnababu Krothapalli</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/th/">Thai</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/tkaroonb/">Theppitak Karoonboonyanan</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/bo/">Tibetan</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/Tennom/">Tennom</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ts/">Tsonga</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mashern/">Ernest Mashele</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/tr/">Turkish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/kara/">Muhammet Kara</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/tk/">Turkmen</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/ghomota/">Ghorban M. Tavakoly</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ug/">Uighur</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/aabdurix/">Abdurixit Abduxukur</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/uk/">Ukrainian</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/Wiseacre/">Daniel Korostil</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/ur/">Urdu</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/mwalam_uk@yahoo.co.uk/">Muhammad Waqas Alam</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/uz/">Uzbek</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/6ahodir/">Bahodir Mansurov</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/vi/">Vietnamese</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pclouds/">Nguyễn Thái Ngọc Duy</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/wa/">Walloon</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/pablo/">Pablo Saratxaga</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/cy/">Welsh</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/daf/">Dafydd Harries</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/xh/">Xhosa</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/aattar/">Adi Attar</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/yi/">Yiddish</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/RaphaelFinkel/">Raphael Finkel</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/yo/">Yoruba</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/bonibz@hotmail.com/">Abayomi Mobolaji Onibudo</a>
++          
++        </span>
++      </li>
++      
++      <li style="font-size: 120%;">
++        <a href="/teams/zu/">Zulu</a>
++        &mdash;
++        <span style="font-size: 80%;">
++          
++            Coordinated by <a href="/users/dbailey/">Dwayne Bailey</a>
++          
++        </span>
++      </li>
+       
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/fr">French</a>
+-      
+-        &mdash; <a href="http://gnomefr.traduc.org/">http://gnomefr.traduc.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/annoa/">Bruno Brouard</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/fy">Frisian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/sehofstede/">Sense Hofstede</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/fur">Friulian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/massimo.furlani@libero.it/">Massimo Furlani</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ff">Fula</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ibrahima.sarr@pulaagu.com/">Ibrahima Sarr</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/gl">Galician</a>
+-      
+-        &mdash; <a href="http://l10n.gnome.org/teams/gl">http://l10n.gnome.org/teams/gl</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/frandieguez/">Fran Diéguez</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ka">Georgian</a>
+-      
+-        &mdash; <a href="http://gnome.inet.ge/">http://gnome.inet.ge/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/vsichi/">Vladimer Sichinava</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/de">German</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/de/Uebersetzung">http://live.gnome.org/de/Uebersetzung</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/hendrikr/">Hendrik Richter</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/el">Greek</a>
+-      
+-        &mdash; <a href="http://www.gnome.gr/">http://www.gnome.gr/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/simos/">Simos Xenitellis</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/gn">Guarani</a>
+-      
+-        &mdash; <a href="http://www.gnome.org/">http://www.gnome.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/colorido@riseup.net/">Moreno Saraiva Martins</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/gu">Gujarati</a>
+-      
+-        &mdash; <a href="http://www.utkarsh.org/">http://www.utkarsh.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ankitp/">Ankit Patel</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ha">Hausa</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/nuimam@fossnigeria.org/">Nasir Usman Imam</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/he">Hebrew</a>
+-      
+-        &mdash; <a href="http://gnome-il.sourceforge.net/">http://gnome-il.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/yairhr/">יאיר הרשקוביץ</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/hi">Hindi</a>
+-      
+-        &mdash; <a href="http://www.indlinux.org/hindi/">http://www.indlinux.org/hindi/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/karunakar/">Guntupalli Karunakar</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/hu">Hungarian</a>
+-      
+-        &mdash; <a href="http://www.gnome.hu/">http://www.gnome.hu/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kelemeng/">Gábor Kelemen</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/is">Icelandic</a>
+-      
+-        &mdash; <a href="http://www.rglug.org/wiki/index.php/Þýðingarlisti_RGLUG">http://www.rglug.org/wiki/index.php/Þýðingarlisti_RGLUG</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/annaj@hi.is/">Anna Jonna Armannsdottir</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/io">Ido</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mterry/">Michael Terry</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/id">Indonesian</a>
+-      
+-        &mdash; <a href="http://i15n.org/GNOME">http://i15n.org/GNOME</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/andika/">Andika Triwidada</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/az_IR">Iranian Azerbaijani</a>
+-      
+-        &mdash; <a href="http://www.farsiweb.info/wiki/Main/GNOME">http://www.farsiweb.info/wiki/Main/GNOME</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/amir@bamdad.org/">Amir Hedayaty</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ga">Irish</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/sdeburca/">Seán de Búrca</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/it">Italian</a>
+-      
+-        &mdash; <a href="http://www.it.gnome.org/">http://www.it.gnome.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/elle.uca/">Luca Ferretti</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ja">Japanese</a>
+-      
+-        &mdash; <a href="http://www.gnome.gr.jp/">http://www.gnome.gr.jp/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kusano/">Takayuki KUSANO</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/kn">Kannada</a>
+-      
+-        &mdash; <a href="http://kannada.sourceforge.net/">http://kannada.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/sprasad/">Shankar Prasad</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ks">Kashmiri</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rakesh.pandit@gmail.com/">Rakesh Pandit</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/kk">Kazakh</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/cray/">Baurzhan Muftakhidinov</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/km">Khmer</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/khem/">Khoem Sokhem</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/kg">Kikongo</a>
+-      
+-        &mdash; <a href="http://lundombe.zaya-dio.com">http://lundombe.zaya-dio.com</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/lukongo/">Kibavuidi NSIANGANI</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/rw">Kinyarwanda</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/smurphy/">Steve Murphy</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ky">Kirghiz</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/timurj/">Timur Jamakeev</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ko">Korean</a>
+-      
+-        &mdash; <a href="http://groups.google.com/group/gnome-kr">http://groups.google.com/group/gnome-kr</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/cwryu/">Changwoo Ryu</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ku">Kurdish</a>
+-      
+-        &mdash; <a href="http://gnome-kurdi.sourceforge.net/">http://gnome-kurdi.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/eronahi/">Erdal Ronahi</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/lo">Lao</a>
+-      
+-        &mdash; <a href="http://laofoss.sourceforge.net/">http://laofoss.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/laonux/">Anousak Souphavanh</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/la">Latin</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/Latin">http://live.gnome.org/Latin</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/paul@paulnorton.org/">Paul Norton</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/lv">Latvian</a>
+-      
+-        &mdash; <a href="http://ll10nt.laka.lv/">http://ll10nt.laka.lv/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/peterisk/">Peteris Krisjanis</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/li">Limburgian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kenneth/">Kenneth Rohde Christiansen</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/lt">Lithuanian</a>
+-      
+-        &mdash; <a href="http://akl.lt/lietuvybe.org">http://akl.lt/lietuvybe.org</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/gintas/">Gintautas Miliauskas</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/nds">Low German</a>
+-      
+-        &mdash; <a href="http://nds.sourceforge.net/">http://nds.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ncfiedler/">Nils-Christoph Fiedler</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/lg">Luganda</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kizito/">kizito</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mk">Macedonian</a>
+-      
+-        &mdash; <a href="http://gnome.linux.net.mk/">http://gnome.linux.net.mk/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jovanna/">Jovan Naumovski</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mai">Maithili</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rajeshkajha@yahoo.com/">Rajesh Ranjan</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mg">Malagasy</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/thierryr/">Thierry Randrianiriana</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ms">Malay</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/umarzuki/">Umarzuki Bin Mochlis Moktar</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ml">Malayalam</a>
+-      
+-        &mdash; <a href="http://wiki.smc.org.in/GNOME">http://wiki.smc.org.in/GNOME</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/anipeter/">Peter Ani</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/gv">Manx</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ReubenPotts/">ReubenPotts</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mi">Maori</a>
+-      
+-        &mdash; <a href="http://www.nzlinux.org.nz/l10n/">http://www.nzlinux.org.nz/l10n/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jbarstow/">John C Barstow</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mr">Marathi</a>
+-      
+-        &mdash; <a href="http://www.indictrans.org/">http://www.indictrans.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/sandeeps/">Sandeep Shedmake</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/mn">Mongolian</a>
+-      
+-        &mdash; <a href="http://gnome.openmn.org/">http://gnome.openmn.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/badaa/">Sanlig Badral</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/nap">Neapolitan</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/s.cretella@gmail.com/">Sabine Emmy Eller</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ne">Nepali</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pachimho/">Pawan Chitrakar</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/nso">Northern Sotho</a>
+-      
+-        &mdash; <a href="http://translate.org.za/">http://translate.org.za/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/dbailey/">Dwayne Bailey</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/no">Norwegian (Bokmål and Nynorsk)</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/kmaraas/">Kjartan Maraas</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/oc">Occitan</a>
+-      
+-        &mdash; <a href="http://www.totenoc.org/">http://www.totenoc.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ymarcheg/">Yannig Marchegay</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ang">Old English</a>
+-      
+-        &mdash; <a href="http://home.comcast.net/~modean52/oeme_gnome.htm">http://home.comcast.net/~modean52/oeme_gnome.htm</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/modean52@comcast.net/">James R. Johnson</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/or">Oriya</a>
+-      
+-        &mdash; <a href="http://oriya.sarovar.org/">http://oriya.sarovar.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/gmohanty/">Gora Mohanty</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ps">Pashto</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/khalid/">Khalid Amiri</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/fa">Persian</a>
+-      
+-        &mdash; <a href="http://ifsug.org/wiki/index.php?title=Gnome_translation">http://ifsug.org/wiki/index.php?title=Gnome_translation</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/moonfriend/">Mahyar Moghimi</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/pl">Polish</a>
+-      
+-        &mdash; <a href="http://wiki.aviary.pl/GNOME">http://wiki.aviary.pl/GNOME</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/tomaszd/">Tomasz Dominikowski</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/pt">Portuguese</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/dnloreto/">Duarte Loreto</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/pa">Punjabi</a>
+-      
+-        &mdash; <a href="http://satluj.com">http://satluj.com</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/aman/">A S Alam</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ro">Romanian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/adiroiban/">Adi Roiban</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ru">Russian</a>
+-      
+-        &mdash; <a href="http://www.gnome.org.ru/">http://www.gnome.org.ru/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/lkanter/">Leonid Kanter</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/sr">Serbian</a>
+-      
+-        &mdash; <a href="http://prevod.org/">http://prevod.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mpopovic/">Милош Поповић</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/en@shaw">Shavian</a>
+-      
+-        &mdash; <a href="http://ubuntu.shavian.org.uk/">http://ubuntu.shavian.org.uk/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/tthurman@gnome.org/">Thomas Thurman</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/si">Sinhala</a>
+-      
+-        &mdash; <a href="http://sinhala.linux.lk/">http://sinhala.linux.lk/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/snavin/">Danishka Navin</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/sk">Slovak</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/SlovakTranslation">http://live.gnome.org/SlovakTranslation</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/palos/">Pavol Šimo</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/sl">Slovenian</a>
+-      
+-        &mdash; <a href="https://wiki.lugos.si/slovenjenje:gnome:gnome">https://wiki.lugos.si/slovenjenje:gnome:gnome</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mateju/">Matej Urbančič</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/es">Spanish</a>
+-      
+-        &mdash; <a href="http://es.gnome.org/Documentacion/Traductores">http://es.gnome.org/Documentacion/Traductores</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/jorgegonz/">Jorge González González</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/sv">Swedish</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/Swedish">http://live.gnome.org/Swedish</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/menthos/">Christian Rose</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/tl">Tagalog</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/epareja/">Eric Pareja</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/tg">Tajik</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/rkovacs@khujand.org/">Roger Kovacs</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ta">Tamil</a>
+-      
+-        &mdash; <a href="http://tamilgnome.sourceforge.net/">http://tamilgnome.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/njaya/">Jayaradha N.</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/tt">Tatar</a>
+-      
+-        &mdash; <a href="http://soft.beznen.net/">http://soft.beznen.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/tatarish.l10n@gmail.com/">Albert Fazlí</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/te">Telugu</a>
+-      
+-        &mdash; <a href="http://www.indlinux.org/telugu/">http://www.indlinux.org/telugu/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/smohan/">Sunil Mohan</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/th">Thai</a>
+-      
+-        &mdash; <a href="http://gnome-th.sourceforge.net/">http://gnome-th.sourceforge.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/tkaroonb/">Theppitak Karoonboonyanan</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/tr">Turkish</a>
+-      
+-        &mdash; <a href="http://www.gnome.org.tr/">http://www.gnome.org.tr/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/bcicek/">Barış Çiçek</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/tk">Turkmen</a>
+-      
+-        &mdash; <a href="http://kakilik.sf.net/">http://kakilik.sf.net/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/ghomota/">Ghorban M. Tavakoly</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ug">Uighur</a>
+-      
+-        &mdash; <a href="http://groups.yahoo.com/group/gnome-uighur/">http://groups.yahoo.com/group/gnome-uighur/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/aabdurix/">Abdurixit Abduxukur</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/uk">Ukrainian</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mdziumanenko/">Maxim V. Dziumanenko</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/ur">Urdu</a>
+-      
+-        &mdash; <a href="http://www.urduweb.org/">http://www.urduweb.org/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/mwalam_uk@yahoo.co.uk/">Muhammad Waqas Alam</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/uz">Uzbek</a>
+-      
+-        &mdash; <a href="http://groups.google.com/group/floss-uz-l10n">http://groups.google.com/group/floss-uz-l10n</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/anurali/">Nurali Abdurahmonov</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/vi">Vietnamese</a>
+-      
+-        &mdash; <a href="http://live.gnome.org/GnomeVi">http://live.gnome.org/GnomeVi</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pclouds/">Nguyễn Thái Ngọc Duy</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/wa">Walloon</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/pablo/">Pablo Saratxaga</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/cy">Welsh</a>
+-      
+-        &mdash; <a href="http://muse.19inch.net/~daf/gnome-cy/">http://muse.19inch.net/~daf/gnome-cy/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/daf/">Dafydd Harries</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/xh">Xhosa</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/aattar/">Adi Attar</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/yi">Yiddish</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/RaphaelFinkel/">Raphael Finkel</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/yo">Yoruba</a>
+-      
+-        &mdash; <a href="http://www.wazobiasoft.org/gnome/yoruba.htm">http://www.wazobiasoft.org/gnome/yoruba.htm</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/bonibz@hotmail.com/">Abayomi Mobolaji Onibudo</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+-    <li style="font-size: 120%;">
+-      <a href="/teams/zu">Zulu</a>
+-      
+-        &mdash; <a href="http://translate.org.za/">http://translate.org.za/</a>
+-      
+-      
+-      
+-      <br />
+-      <span style="font-size: 80%;">
+-        Coordinated by <a href="/users/dbailey/">Dwayne Bailey</a>
+-      </span>
+-      
+-      
+-    </li>
+-    
+     </ul>
++  </div>
++  
++</div>
+ 
+-    <p class="comment">If anything should be changed on this page, please <a href="http://bugzilla.gnome.org/enter_bug.cgi?product=damned-lies&amp;component=l10n.gnome.org">submit a bug report</a>.</p>
++<p class="comment clear">If anything should be changed on this page, please <a href="https://bugzilla.gnome.org/enter_bug.cgi?product=damned-lies&amp;component=l10n.gnome.org">submit a bug report</a>.</p>
+ 
+ 
+ 
+@@ -1836,12 +1438,63 @@
+ 
+     </div>
+ 
++  <div id="footer_art">
++  </div>
++
++  <div id="footer_grass">
++  </div>
++
+   <div id="footer">
+-    Copyright &copy; 2006-2009 <a href="http://www.gnome.org/">The GNOME Project</a>.
+-    <br />
+-Maintained in the <a href='http://git.gnome.org/browse/damned-lies/'>damned-lies</a> module on <a href='http://git.gnome.org/'>git.gnome.org</a>
+- <br />
+-    Hosted by <a href='http://www.canonical.com/'>Canonical</a>.
++	<div class="maxwidth">
++      <div class="links">
++		<div>
++		<ul id="menu-footer" class="menu">
++			<li><a href="http://www.gnome.org">The GNOME Project</a>
++			<ul class="sub-menu">
++				<li><a href="http://www.gnome.org/about/">About Us</a></li>
++				<li><a href="http://www.gnome.org/get-involved/">Get Involved</a></li>
++				<li><a href="http://www.gnome.org/teams/">Teams</a></li>
++				<li><a href="http://www.gnome.org/support-gnome/">Support GNOME</a></li>
++				<li><a href="http://www.gnome.org/contact/">Contact Us</a></li>
++				<li><a href="http://www.gnome.org/foundation/">The GNOME Foundation</a></li>
++			</ul>
++		</li>
++		<li><a href="#">Resources</a>
++			<ul class="sub-menu">
++				<li><a href="https://developer.gnome.org">Developer Center</a></li>
++				<li><a href="https://help.gnome.org">Documentation</a></li>
++				<li><a href="http://live.gnome.org">Wiki</a></li>
++				<li><a href="http://mail.gnome.org/mailman/listinfo">Mailing Lists</a></li>
++				<li><a href="https://live.gnome.org/GnomeIrcChannels">IRC Channels</a></li>
++				<li><a href="https://bugzilla.gnome.org/">Bug Tracker</a></li>
++				<li><a href="https://git.gnome.org/browse/">Development Code</a></li>
++				<li><a href="https://live.gnome.org/Jhbuild">Build Tool</a></li>
++		</ul>
++		</li>
++		<li><a href="http://www.gnome.org/news/">News</a>
++		<ul class="sub-menu">
++			<li><a href="http://www.gnome.org/press/">Press Releases</a></li>
++			<li><a href="http://www.gnome.org/start/stable">Latest Release</a></li>
++			<li><a href="https://planet.gnome.org">Planet GNOME</a></li>
++			<li><a href="http://gnomejournal.org">GNOME Journal</a></li>
++			<li><a href="https://news.gnome.org">Development News</a></li>
++			<li><a href="http://identi.ca/gnome">Identi.ca</a></li>
++			<li><a href="http://twitter.com/gnome">Twitter</a></li>
++		</ul>
++		</li>
++	</ul>
++	</div>
++	</div> <!-- end of div.links -->
++
++      <div id="footnotes">
++        Copyright &copy; 2006-2012 <strong><a href="http://www.gnome.org/">The GNOME Project</a></strong>.
++        <br />
++        <a href="/about/">About Damned Lies</a>.
++        Optimized for standards.
++        Hosted by <a href='http://www.canonical.com/'>Canonical</a>.
++        Powered by <a href='https://www.djangoproject.com/'>Django</a>.
++      </div>
++    </div>
+   </div>
+ 
+ </div> <!-- end of div.body -->
 --- gettext/gettext-tools/projects/KDE/team-address
 +++ gettext/gettext-tools/projects/KDE/team-address
 @@ -7,7 +7,7 @@ catalog="$3"  # e.g. "pt_BR"
@@ -22,7 +3326,7 @@
  # translate ourselves...
 --- gettext/gettext-tools/projects/KDE/teams.html
 +++ gettext/gettext-tools/projects/KDE/teams.html
-@@ -1,2039 +1,1165 @@
+@@ -1,2039 +1,1155 @@
 -<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 6.0::19990601::extensions to HTML 4.0//EN" "hmpro6.dtd">
 -<HTML> 
 -  <HEAD> <META NAME="Description" CONTENT="KDE Translation Teams">
@@ -1038,11 +4342,6 @@
 -				  <LI>doc statistics: --</LI> 
 -				</UL></TD> 
 -		  </TR>
-+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-+<head>
-+  <title>KDE Localization - Translation Teams</title>
  
 -<!-- Italian -->
 -		  <TR BGCOLOR="#C8C8FF"> 
@@ -2067,6 +5366,12 @@
 -		<A HREF="mailto:thd@kde.org">Thomas Diehl</A>. Last update 11 Oktober
 -		2001</FONT></CENTER> </BODY>
 -</HTML>
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
++    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
++<head>
++  <title>KDE Localization - Translation Teams</title>
++
 +<style type="text/css">
 +  .cp-doNotDisplay { display: none; }
 +  @media aural, braille, handheld, tty { .cp-doNotDisplay { display: inline; speak: normal; }}
@@ -2115,9 +5420,7 @@
 +    </div>
 +
 +    <div id="menu">
-+<ul><li><a href=".//sitemap.php">Sitemap</a></li>
-+<li><a href=".//contact.php">Contact Us</a></li>
-+</ul>    </div>
++&nbsp;    </div>
 +  </div>
 +</div>
 +<!-- End page header -->
@@ -2129,7 +5432,7 @@
 +          <div id="main">
 +            <div class="clearer">&nbsp;</div>
 +<a name="cp-content"></a>
-+<h1>Translation Teams</h1>
++<h2>Translation Teams</h2>
 +
 +
 +
@@ -2146,17 +5449,22 @@
 +      <option value="sq" >Albanian (sq)</option>
 +      <option value="ar" >Arabic (ar)</option>
 +      <option value="hy" >Armenian (hy)</option>
++      <option value="as" >Assamese (as)</option>
 +      <option value="ast" >Asturian (ast)</option>
 +      <option value="az" >Azerbaijani (az)</option>
 +      <option value="eu" >Basque (eu)</option>
 +      <option value="be" >Belarusian (be)</option>
++      <option value="be@latin" >Belarusian Latin (be@latin)</option>
 +      <option value="bn" >Bengali (bn)</option>
++      <option value="bn_IN" >Bengali (India) (bn_IN)</option>
 +      <option value="bs" >Bosnian (bs)</option>
 +      <option value="pt_BR" >Brazilian Portuguese (pt_BR)</option>
 +      <option value="br" >Breton (br)</option>
 +      <option value="en_GB" >British English (en_GB)</option>
 +      <option value="bg" >Bulgarian (bg)</option>
 +      <option value="ca" >Catalan (ca)</option>
++      <option value="ca@valencia" >Catalan (Valencian) (ca@valencia)</option>
++      <option value="hne" >Chhattisgarhi (hne)</option>
 +      <option value="zh_HK" >Chinese Hong Kong (zh_HK)</option>
 +      <option value="zh_CN" >Chinese Simplified (zh_CN)</option>
 +      <option value="zh_TW" >Chinese Traditional (zh_TW)</option>
@@ -2177,6 +5485,7 @@
 +      <option value="de" >German (de)</option>
 +      <option value="el" >Greek (el)</option>
 +      <option value="gu" >Gujarati (gu)</option>
++      <option value="ha" >Hausa (ha)</option>
 +      <option value="he" >Hebrew (he)</option>
 +      <option value="hi" >Hindi (hi)</option>
 +      <option value="hu" >Hungarian (hu)</option>
@@ -2196,7 +5505,7 @@
 +      <option value="rw" >Kinyarwanda (rw)</option>
 +      <option value="ky" >Kirghiz (ky)</option>
 +      <option value="sw" >Kiswahili (sw)</option>
-+      <option value="ko" >Korean (í•œêµ­ì–´) (ko)</option>
++      <option value="ko" >Korean (한국어) (ko)</option>
 +      <option value="ku" >Kurdish (ku)</option>
 +      <option value="lo" >Lao (lo)</option>
 +      <option value="la" >Latin (la)</option>
@@ -2215,7 +5524,8 @@
 +      <option value="mn" >Mongolian (mn)</option>
 +      <option value="ne" >Nepali (ne)</option>
 +      <option value="se" >Northern Sami (se)</option>
-+      <option value="nb" >Norwegian Bookmal (nb)</option>
++      <option value="nso" >Northern Sotho (nso)</option>
++      <option value="nb" >Norwegian Bokmål (nb)</option>
 +      <option value="nn" >Norwegian Nynorsk (nn)</option>
 +      <option value="oc" >Occitan (oc)</option>
 +      <option value="or" >Oriya (or)</option>
@@ -2246,7 +5556,9 @@
 +      <option value="uk" >Ukrainian (uk)</option>
 +      <option value="hsb" >Upper Sorbian (hsb)</option>
 +      <option value="ur" >Urdu (ur)</option>
++      <option value="ug" >Uyghur (ug)</option>
 +      <option value="uz" >Uzbek (uz)</option>
++      <option value="uz@cyrillic" >Uzbek (Cyrillic) (uz@cyrillic)</option>
 +      <option value="ven" >Venda (ven)</option>
 +      <option value="vi" >Vietnamese (vi)</option>
 +      <option value="wa" >Walloon (wa)</option>
@@ -2273,6 +5585,16 @@
 +			</thead>
 +			<tbody>
 +	<tr class='odd'><td class='teamname'>
++						<a href='team-infos.php?teamcode=sq' title='Details...'>
++				Albanian
++							<span style='font-size:x-small;'>(sq)</span>
++			</a>
++					</td>
++					<td style='text-align:right'>
++						<a href='../stats/gui/trunk-kde4/team/sq/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/sq/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++					</td>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=ar' title='Details...'>
 +				Arabic
 +							<span style='font-size:x-small;'>(ar)</span>
@@ -2281,16 +5603,6 @@
 +					<td style='text-align:right'>
 +						<a href='../stats/gui/trunk-kde4/team/ar/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/ar/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
-+		</tr><tr class='even'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=hy' title='Details...'>
-+				Armenian
-+							<span style='font-size:x-small;'>(hy)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/hy/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/hy/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=ast' title='Details...'>
@@ -2313,16 +5625,6 @@
 +						<a href='../stats/doc/trunk-kde4/team/eu/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=be' title='Details...'>
-+				Belarusian
-+							<span style='font-size:x-small;'>(be)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/be/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/be/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
-+		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=bn' title='Details...'>
 +				Bengali
 +							<span style='font-size:x-small;'>(bn)</span>
@@ -2331,6 +5633,16 @@
 +					<td style='text-align:right'>
 +						<a href='../stats/gui/trunk-kde4/team/bn/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/bn/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++					</td>
++		</tr><tr class='even'><td class='teamname'>
++						<a href='team-infos.php?teamcode=bs' title='Details...'>
++				Bosnian
++							<span style='font-size:x-small;'>(bs)</span>
++			</a>
++					</td>
++					<td style='text-align:right'>
++						<a href='../stats/gui/trunk-kde4/team/bs/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/bs/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=pt_BR' title='Details...'>
@@ -2373,6 +5685,16 @@
 +						<a href='../stats/doc/trunk-kde4/team/ca/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
++						<a href='team-infos.php?teamcode=ca@valencia' title='Details...'>
++				Catalan (Valencian)
++							<span style='font-size:x-small;'>(ca@valencia)</span>
++			</a>
++					</td>
++					<td style='text-align:right'>
++						<a href='../stats/gui/trunk-kde4/team/ca%40valencia/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/ca%40valencia/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++					</td>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=zh_CN' title='Details...'>
 +				Chinese Simplified
 +							<span style='font-size:x-small;'>(zh_CN)</span>
@@ -2382,7 +5704,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/zh_CN/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/zh_CN/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=zh_TW' title='Details...'>
 +				Chinese Traditional
 +							<span style='font-size:x-small;'>(zh_TW)</span>
@@ -2391,16 +5713,6 @@
 +					<td style='text-align:right'>
 +						<a href='../stats/gui/trunk-kde4/team/zh_TW/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/zh_TW/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
-+		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=crh' title='Details...'>
-+				Crimean Tatar (Crimean Turkish)
-+							<span style='font-size:x-small;'>(crh)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/crh/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/crh/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=hr' title='Details...'>
@@ -2643,16 +5955,6 @@
 +						<a href='../stats/doc/trunk-kde4/team/kn/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='even'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=csb' title='Details...'>
-+				Kashubian
-+							<span style='font-size:x-small;'>(csb)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/csb/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/csb/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
-+		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=kk' title='Details...'>
 +				Kazakh
 +							<span style='font-size:x-small;'>(kk)</span>
@@ -2662,7 +5964,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/kk/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/kk/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=km' title='Details...'>
 +				Khmer
 +							<span style='font-size:x-small;'>(km)</span>
@@ -2672,9 +5974,9 @@
 +						<a href='../stats/gui/trunk-kde4/team/km/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/km/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=ko' title='Details...'>
-+				Korean (í•œêµ­ì–´)
++				Korean (한국어)
 +							<span style='font-size:x-small;'>(ko)</span>
 +			</a>
 +					</td>
@@ -2682,27 +5984,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/ko/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/ko/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=ku' title='Details...'>
-+				Kurdish
-+							<span style='font-size:x-small;'>(ku)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/ku/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/ku/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
 +		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=lo' title='Details...'>
-+				Lao
-+							<span style='font-size:x-small;'>(lo)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/lo/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/lo/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
-+		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=lv' title='Details...'>
 +				Latvian
 +							<span style='font-size:x-small;'>(lv)</span>
@@ -2712,7 +5994,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/lv/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/lv/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=lt' title='Details...'>
 +				Lithuanian
 +							<span style='font-size:x-small;'>(lt)</span>
@@ -2722,7 +6004,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/lt/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/lt/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=nds' title='Details...'>
 +				Low Saxon
 +							<span style='font-size:x-small;'>(nds)</span>
@@ -2732,7 +6014,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/nds/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/nds/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=mk' title='Details...'>
 +				Macedonian
 +							<span style='font-size:x-small;'>(mk)</span>
@@ -2742,7 +6024,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/mk/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/mk/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=mai' title='Details...'>
 +				Maithili
 +							<span style='font-size:x-small;'>(mai)</span>
@@ -2752,7 +6034,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/mai/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/mai/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=ms' title='Details...'>
 +				Malay
 +							<span style='font-size:x-small;'>(ms)</span>
@@ -2762,7 +6044,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/ms/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/ms/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=ml' title='Details...'>
 +				Malayalam | മലയാളം
 +							<span style='font-size:x-small;'>(ml)</span>
@@ -2772,7 +6054,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/ml/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/ml/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=mr' title='Details...'>
 +				Marathi
 +							<span style='font-size:x-small;'>(mr)</span>
@@ -2782,7 +6064,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/mr/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/mr/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=se' title='Details...'>
 +				Northern Sami
 +							<span style='font-size:x-small;'>(se)</span>
@@ -2792,9 +6074,9 @@
 +						<a href='../stats/gui/trunk-kde4/team/se/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/se/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
++		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=nb' title='Details...'>
-+				Norwegian Bookmal
++				Norwegian Bokmål
 +							<span style='font-size:x-small;'>(nb)</span>
 +			</a>
 +					</td>
@@ -2802,7 +6084,7 @@
 +						<a href='../stats/gui/trunk-kde4/team/nb/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/nb/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='even'><td class='teamname'>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=nn' title='Details...'>
 +				Norwegian Nynorsk
 +							<span style='font-size:x-small;'>(nn)</span>
@@ -2812,25 +6094,15 @@
 +						<a href='../stats/gui/trunk-kde4/team/nn/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
 +						<a href='../stats/doc/trunk-kde4/team/nn/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
-+		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=or' title='Details...'>
-+				Oriya
-+							<span style='font-size:x-small;'>(or)</span>
-+			</a>
-+					</td>
-+					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/or/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/or/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
-+					</td>
 +		</tr><tr class='even'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=ps' title='Details...'>
-+				Pashto
-+							<span style='font-size:x-small;'>(ps)</span>
++						<a href='team-infos.php?teamcode=oc' title='Details...'>
++				Occitan
++							<span style='font-size:x-small;'>(oc)</span>
 +			</a>
 +					</td>
 +					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/ps/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/ps/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++						<a href='../stats/gui/trunk-kde4/team/oc/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/oc/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=fa' title='Details...'>
@@ -2973,14 +6245,14 @@
 +						<a href='../stats/doc/trunk-kde4/team/ta/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=te' title='Details...'>
-+				Telugu
-+							<span style='font-size:x-small;'>(te)</span>
++						<a href='team-infos.php?teamcode=tt' title='Details...'>
++				Tatarish
++							<span style='font-size:x-small;'>(tt)</span>
 +			</a>
 +					</td>
 +					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/te/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/te/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++						<a href='../stats/gui/trunk-kde4/team/tt/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/tt/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='even'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=th' title='Details...'>
@@ -3013,16 +6285,26 @@
 +						<a href='../stats/doc/trunk-kde4/team/uk/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='odd'><td class='teamname'>
-+						<a href='team-infos.php?teamcode=hsb' title='Details...'>
-+				Upper Sorbian
-+							<span style='font-size:x-small;'>(hsb)</span>
++						<a href='team-infos.php?teamcode=ug' title='Details...'>
++				Uyghur
++							<span style='font-size:x-small;'>(ug)</span>
 +			</a>
 +					</td>
 +					<td style='text-align:right'>
-+						<a href='../stats/gui/trunk-kde4/team/hsb/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
-+						<a href='../stats/doc/trunk-kde4/team/hsb/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++						<a href='../stats/gui/trunk-kde4/team/ug/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/ug/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
 +					</td>
 +		</tr><tr class='even'><td class='teamname'>
++						<a href='team-infos.php?teamcode=vi' title='Details...'>
++				Vietnamese
++							<span style='font-size:x-small;'>(vi)</span>
++			</a>
++					</td>
++					<td style='text-align:right'>
++						<a href='../stats/gui/trunk-kde4/team/vi/'><img src='../img/guistats.png' width='16' height='16' alt='View Applications Statistics' title='View GUI Statistics...' /></a>
++						<a href='../stats/doc/trunk-kde4/team/vi/'><img src='../img/docstats.png' width='16' height='16' alt='View Documentations Statistics' title='View DOC Statistics...' /></a>
++					</td>
++		</tr><tr class='odd'><td class='teamname'>
 +						<a href='team-infos.php?teamcode=wa' title='Details...'>
 +				Walloon
 +							<span style='font-size:x-small;'>(wa)</span>
@@ -3049,7 +6331,7 @@
 +        </div>
 +        <div id="left">
 +          <div class="menu_box">
-+<!-- /srv/www/l10n.kde.org/-->
++<!-- /var/www/l10n.kde.org/-->
 +<!-- teams-list.php-->
 +<!-- /-->
 +<div class="menutitle"><div>
@@ -3071,6 +6353,12 @@
 +</li>
 +<li>
 +<a href="/about.php">About</a>
++</li>
++<li>
++<a href="/sitemap.php">Sitemap</a>
++</li>
++<li>
++<a href="/contact.php">Contact Us</a>
 +</li>
 +</ul>
 +
@@ -3127,7 +6415,7 @@
 +</div></div>
 +<ul>
 +<li>
-+<a href="/stats/gui/trunk-kde4/team/"><span class='modeStats'>KDE 4.5</span></a>
++<a href="/stats/gui/trunk-kde4/team/"><span class='modeStats'>KDE SC 4.12 + trunk</span></a>
 +</li>
 +<li>
 +<a href="/stats/gui/trunk-kde4/team/"><span class='menuStats'><img src='/img/application.png' alt='gui' />Applications</span></a>
@@ -3136,7 +6424,7 @@
 +<a href="/stats/doc/trunk-kde4/team/"><span class='menuStats'><img src='/img/documentation.png' alt='doc' />Documentation</span></a>
 +</li>
 +<li>
-+<a href="/stats/gui/stable-kde4/team/"><span class='modeStats'>KDE 4.4 stable</span></a>
++<a href="/stats/gui/stable-kde4/team/"><span class='modeStats'>KDE SC 4.11 + stable</span></a>
 +</li>
 +<li>
 +<a href="/stats/gui/stable-kde4/team/"><span class='menuStats'><img src='/img/application.png' alt='gui' />Applications</span></a>
@@ -3161,7 +6449,10 @@
 +<a href="/checks/">Documentation Errors</a>
 +</li>
 +<li>
-+<a href="http://www.kde.cat/aacid/xml_errors/stable/">XML Errors</a>
++<a href="/check-kde-tp-results/trunk">Pology check-kde-tp Trunk Errors</a>
++</li>
++<li>
++<a href="/check-kde-tp-results/stable">Pology check-kde-tp Stable Errors</a>
 +</li>
 +</ul>
 +
@@ -3200,6 +6491,8 @@
 +               <input style="width:80%" type="text" size="10" name="q" id="Search" value="" /><br />
 +               <input style="width:80%" type="submit" value=" Search " name="Button" id="searchButton" />
 +             </p></form>
++
++
 +          </div>
 +        </div>
 +        <div class="clearer"></div>
@@ -3210,7 +6503,7 @@
 +
 +    <div id="footer"><div id="footer_text">
 +        Maintained by <a href="mailto:nicolas.ternisien@gmail.com">Nicolas Ternisien</a><br />
-+				KDE<sup>&#174;</sup> and <a href="/media/images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of 				<a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
++				KDE<sup>&#174;</sup> and <a href="/media/images/trademark_kde_gear_black_logo.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of 				<a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
 +        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
 +    </div></div>
 +  </div>
@@ -3218,9 +6511,10 @@
 +<!--
 +WARNING: DO NOT SEND MAIL TO THE FOLLOWING EMAIL ADDRESS! YOU WILL
 +BE BLOCKED INSTANTLY AND PERMANENTLY!
-+<a href="mailto:aaaatrap-4c0823b64fa4aa91@kde.org">Block me</a>
++<a href="mailto:aaaatrap-526e61632ebc0005@kde.org">Block me</a>
 +WARNING END
 +-->
++
 +
 +
 +
@@ -3239,7 +6533,7 @@
  address=`echo "$html" | tr '\012' '|' | sed -e "$sed_addnl" | sed -n -e "s,^.*<td>$catalog</td>[^<>]*<td>[^|]*</td>[^<>]*<td><a href=\"\\([^\"]*\\)\">[^<>]*</a></td>.*\$,\\1,p" | sed 1q`
 --- gettext/gettext-tools/projects/TP/teams.html
 +++ gettext/gettext-tools/projects/TP/teams.html
-@@ -2,14 +2,14 @@
+@@ -2,14 +2,15 @@
  <html>
   <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -3247,6 +6541,7 @@
 -  <meta name="robots" content="noindex,nofollow">
 +  <title>Translation teams</title>
 +  <meta name="robots" content="index,follow">
++  <link rel="icon" href="http://translationproject.org/favicon.png" type="image/png">
   </head>
   <body>
    <table cellpadding=5 width="100%">
@@ -3257,7 +6552,7 @@
        <h1>Translation Project</h1>
       </td>
      </tr>
-@@ -20,11 +20,10 @@
+@@ -20,11 +21,10 @@
  
  	<tr><td><font size=-1>
  	   <a href="../html/welcome.html"><b>Welcome</b></a><br>
@@ -3270,7 +6565,7 @@
  	<tr><td><font size=-1>
  	   <a href="../domain/index.html"><b>The Packages</b></a><br>
  	   <a href="../team/index.html"><b>The Teams</b></a><br>
-@@ -33,488 +32,477 @@
+@@ -33,487 +33,500 @@
  	  </font></td></tr>
  	<tr><td height=5></td></tr>
  
@@ -3302,6 +6597,10 @@
 +	   <a href="../obsolete/"><b>Obsolete</b></a><br>
 +	 </font></td></tr>
 +	<tr><td height=5></td></tr>
++
++    <tr><td><font size=-1>
++       <a style="text-decoration:'none'" href="../feeds/tp_po.xml"><img src="../img/feed-icon-28x28.png" alt="rss feed of translation updates"></a> 
++	 </font></td></tr>
 +
        </table>
       </td>
@@ -3338,7 +6637,8 @@
 +    <td><a href="ar.html">Arabic</a></td>
      <td>ar</td>
 -    <td><a href="../team/ar.html">Arabic</a></td>
-     <td><a href="mailto:doc@arabeyes.org">doc@arabeyes.org</a></td>
+-    <td><a href="mailto:doc@arabeyes.org">doc@arabeyes.org</a></td>
++    <td><a href="mailto:(nothing)">(nothing)</a></td>
     </tr>
     <tr align=center>
 -    <td>es_AR</td>
@@ -3409,7 +6709,8 @@
 +    <td><a href="pt_BR.html">Brazilian Portuguese</a></td>
      <td>pt_BR</td>
 -    <td><a href="../team/pt_BR.html">Brazilian Portuguese</a></td>
-     <td><a href="mailto:ldp-br@bazar.conectiva.com.br">ldp-br@bazar.conectiva.com.br</a></td>
+-    <td><a href="mailto:ldp-br@bazar.conectiva.com.br">ldp-br@bazar.conectiva.com.br</a></td>
++    <td><a href="mailto:ldpbr-translation@lists.sourceforge.net">ldpbr-translation@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
 +    <td><a href="bg.html">Bulgarian</a></td>
@@ -3573,7 +6874,7 @@
      <td>is</td>
 -    <td><a href="../team/is.html">Icelandic</a></td>
 -    <td><a href="mailto:kde-isl@mmedia.is">kde-isl@mmedia.is</a></td>
-+    <td><a href="mailto:(nothing)">(nothing)</a></td>
++    <td><a href="mailto:translation-team-is@lists.sourceforge.net">translation-team-is@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
 +    <td><a href="id.html">Indonesian</a></td>
@@ -3582,6 +6883,11 @@
      <td><a href="mailto:translation-team-id@lists.sourceforge.net">translation-team-id@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
++    <td><a href="ia.html">Interlingua</a></td>
++    <td>ia</td>
++    <td><a href="mailto:translation-team-ia@lists.sourceforge.net">translation-team-ia@lists.sourceforge.net</a></td>
++   </tr>
++   <tr align=center>
 +    <td><a href="ga.html">Irish</a></td>
      <td>ga</td>
 -    <td><a href="../team/ga.html">Irish</a></td>
@@ -3633,13 +6939,13 @@
 -    <td><a href="../team/ku.html">Kurdish</a></td>
 -    <td><a href="mailto:ku@li.org">ku@li.org</a></td>
 +    <td><a href="mailto:translation-team-ku (at) ferheng.org">translation-team-ku (at) ferheng.org</a></td>
-+   </tr>
-+   <tr align=center>
+    </tr>
+    <tr align=center>
 +    <td><a href="lo.html">Lao</a></td>
 +    <td>lo</td>
 +    <td><a href="mailto:lao-ict@googlegroups.com">lao-ict@googlegroups.com</a></td>
-    </tr>
-    <tr align=center>
++   </tr>
++   <tr align=center>
 +    <td><a href="lv.html">Latvian</a></td>
      <td>lv</td>
 -    <td><a href="../team/lv.html">Latvian</a></td>
@@ -3656,11 +6962,8 @@
 -    <td>art-lojban</td>
 -    <td><a href="../team/art-lojban.html">Lojban</a></td>
 -    <td><a href="mailto:translation-art-lojban@lists.sourceforge.net">translation-art-lojban@lists.sourceforge.net</a></td>
-+    <td><a href="nds.html">Low German</a></td>
-+    <td>nds</td>
-+    <td><a href="mailto:nds-lowgerman@lists.sourceforge.net">nds-lowgerman@lists.sourceforge.net</a></td>
-    </tr>
-    <tr align=center>
+-   </tr>
+-   <tr align=center>
 +    <td><a href="lg.html">Luganda</a></td>
      <td>lg</td>
 -    <td><a href="../team/lg.html">Luganda</a></td>
@@ -3695,13 +6998,13 @@
 -    <td><a href="../team/mt.html">Maltese</a></td>
 -    <td><a href="mailto:l10n@linux.org.mt">l10n@linux.org.mt</a></td>
 +    <td><a href="mailto:translation-team-mt@lists.sourceforge.net">translation-team-mt@lists.sourceforge.net</a></td>
-    </tr>
-    <tr align=center>
-+    <td><a href="mr.html">Marathi</a></td>
-+    <td>mr</td>
-+    <td><a href="mailto:fedora-trans-mr@redhat.com">fedora-trans-mr@redhat.com</a></td>
 +   </tr>
 +   <tr align=center>
++    <td><a href="mr.html">Marathi</a></td>
++    <td>mr</td>
++    <td><a href="mailto:sshedmak@redhat.com">sshedmak@redhat.com</a></td>
+    </tr>
+    <tr align=center>
 +    <td><a href="mn.html">Mongolian</a></td>
      <td>mn</td>
 -    <td><a href="../team/mn.html">Mongolian</a></td>
@@ -3752,11 +7055,16 @@
 -    <td>or</td>
 -    <td><a href="../team/or.html">Oriya</a></td>
 -    <td><a href="mailto:gora_mohanty@yahoo.co.in">gora_mohanty@yahoo.co.in</a></td>
++    <td><a href="os.html">Ossetian</a></td>
++    <td>os</td>
++    <td><a href="mailto:translation-team-os@lists.sourceforge.net">translation-team-os@lists.sourceforge.net</a></td>
+    </tr>
+    <tr align=center>
 +    <td><a href="ps.html">Pashto</a></td>
 +    <td>ps</td>
 +    <td><a href="mailto:pathanisation@googlegroups.com">pathanisation@googlegroups.com</a></td>
-    </tr>
-    <tr align=center>
++   </tr>
++   <tr align=center>
 +    <td><a href="fa.html">Persian</a></td>
      <td>fa</td>
 -    <td><a href="../team/fa.html">Persian</a></td>
@@ -3803,14 +7111,15 @@
 +    <td><a href="sr.html">Serbian</a></td>
      <td>sr</td>
 -    <td><a href="../team/sr.html">Serbian</a></td>
-     <td><a href="mailto:gnu@prevod.org">gnu@prevod.org</a></td>
-    </tr>
-    <tr align=center>
+-    <td><a href="mailto:gnu@prevod.org">gnu@prevod.org</a></td>
+-   </tr>
+-   <tr align=center>
 -    <td>si</td>
 -    <td><a href="../team/si.html">Sinhalese</a></td>
 -    <td><a href="mailto:ananda.ruhunuhewa@inalco.fr">ananda.ruhunuhewa@inalco.fr</a></td>
--   </tr>
--   <tr align=center>
++    <td><a href="mailto:(nothing)">(nothing)</a></td>
+    </tr>
+    <tr align=center>
 +    <td><a href="sk.html">Slovak</a></td>
      <td>sk</td>
 -    <td><a href="../team/sk.html">Slovak</a></td>
@@ -3867,14 +7176,14 @@
      <td>ta</td>
 -    <td><a href="../team/ta.html">Tamil</a></td>
 -    <td><a href="mailto:translation-team-ta@lists.sourceforge.net">translation-team-ta@lists.sourceforge.net</a></td>
-+    <td><a href="mailto:gnome-tamil-translation@googlegroups.com">gnome-tamil-translation@googlegroups.com</a></td>
-    </tr>
-    <tr align=center>
++    <td><a href="mailto:(nothing)">(nothing)</a></td>
++   </tr>
++   <tr align=center>
 +    <td><a href="te.html">Telugu</a></td>
 +    <td>te</td>
 +    <td><a href="mailto:Fedora-trans-te@redhat.com">Fedora-trans-te@redhat.com</a></td>
-+   </tr>
-+   <tr align=center>
+    </tr>
+    <tr align=center>
 +    <td><a href="th.html">Thai</a></td>
      <td>th</td>
 -    <td><a href="../team/th.html">Thai</a></td>
@@ -3882,17 +7191,22 @@
 +    <td><a href="mailto:translation-team-th@lists.sourceforge.net">translation-team-th@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
-+    <td><a href="tr.html">Turkish</a></td>
-     <td>tr</td>
+-    <td>tr</td>
 -    <td><a href="../team/tr.html">Turkish</a></td>
-     <td><a href="mailto:gnu-tr-u12a@lists.sourceforge.net">gnu-tr-u12a@lists.sourceforge.net</a></td>
+-    <td><a href="mailto:gnu-tr-u12a@lists.sourceforge.net">gnu-tr-u12a@lists.sourceforge.net</a></td>
++    <td><a href="bo.html">Tibetan</a></td>
++    <td>bo</td>
++    <td><a href="mailto:translation-team-bo@lists.sourceforge.net">translation-team-bo@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
 -    <td>tk</td>
 -    <td><a href="../team/tk.html">Turkmen</a></td>
 -    <td><a href="mailto:kakilikgroup@yahoo.com">kakilikgroup@yahoo.com</a></td>
--   </tr>
--   <tr align=center>
++    <td><a href="tr.html">Turkish</a></td>
++    <td>tr</td>
++    <td><a href="mailto:gnu-tr-u12a@lists.sourceforge.net">gnu-tr-u12a@lists.sourceforge.net</a></td>
+    </tr>
+    <tr align=center>
 +    <td><a href="uk.html">Ukrainian</a></td>
      <td>uk</td>
 -    <td><a href="../team/uk.html">Ukrainian</a></td>
@@ -3902,12 +7216,16 @@
 -    <td>ven</td>
 -    <td><a href="../team/ven.html">Venda</a></td>
 -    <td><a href="mailto:venda@translate.org.za">venda@translate.org.za</a></td>
--   </tr>
--   <tr align=center>
++    <td><a href="ur.html">Urdu</a></td>
++    <td>ur</td>
++    <td><a href="mailto:jessbody@gmail.com">jessbody@gmail.com</a></td>
+    </tr>
+    <tr align=center>
 +    <td><a href="vi.html">Vietnamese</a></td>
      <td>vi</td>
 -    <td><a href="../team/vi.html">Vietnamese</a></td>
-     <td><a href="mailto:vi-VN@googlegroups.com">vi-VN@googlegroups.com</a></td>
+-    <td><a href="mailto:vi-VN@googlegroups.com">vi-VN@googlegroups.com</a></td>
++    <td><a href="mailto:translation-team-vi@lists.sourceforge.net">translation-team-vi@lists.sourceforge.net</a></td>
     </tr>
     <tr align=center>
 +    <td><a href="wa.html">Walloon</a></td>
@@ -3915,7 +7233,7 @@
 -    <td><a href="../team/wa.html">Walloon</a></td>
      <td><a href="mailto:linux-wa@walon.org">linux-wa@walon.org</a></td>
     </tr>
--   <tr align=center>
+    <tr align=center>
 -    <td>cy</td>
 -    <td><a href="../team/cy.html">Welsh</a></td>
 -    <td><a href="mailto:cy@pengwyn.linux.org.uk">cy@pengwyn.linux.org.uk</a></td>
@@ -3929,44 +7247,32 @@
 -    <td>zu</td>
 -    <td><a href="../team/zu.html">Zulu</a></td>
 -    <td><a href="mailto:zulu@translate.org.za">zulu@translate.org.za</a></td>
--   </tr>
++    <td><a href="wo.html">Wolof</a></td>
++    <td>wo</td>
++    <td><a href="mailto:translation-team-wo@lists.sourceforge.net">translation-team-wo@lists.sourceforge.net</a></td>
+    </tr>
    </table>
       </td>
-     </tr>
-@@ -522,12 +510,21 @@
+@@ -522,7 +535,7 @@
      <tr align=left valign=bottom>
       <td bgcolor="white"></td>
       <td width="100%" bgcolor="white">
 -      <p align=left><font size="-2">(Last updated on 2007-06-27 11:28 +0200.)</font></p>
-+      <p align=left><font size="-2">(Last updated on 2010-06-03 11:46 +0200.)</font></p>
++      <p align=left><font size="-2">(Last updated on 2013-10-28 11:19 +0100.)</font></p>
        <p align=right>
         Your <a href="mailto:comments@translationproject.org">comments</a>
         are welcome.</p>
-      </td>
-     </tr>
-   </table>
-+<!-- twitter follow badge by go2web20 -->
-+<script src='http://files.go2web20.net/twitterbadge/1.0/badge.js' type='text/javascript'></script><script type='text/javascript' charset='utf-8'><!--
-+tfb.account = 'translationproj';
-+tfb.label = 'follow-us';
-+tfb.color = '#fbaf5a';
-+tfb.side = 'l';
-+tfb.top = 510;
-+tfb.showbadge();
-+--></script>
-  </body>
- </html>
 --- gettext/gettext-tools/src/Makefile.am
 +++ gettext/gettext-tools/src/Makefile.am
-@@ -450,7 +450,6 @@ po-gram-gen2.h: po-gram-gen.h
+@@ -454,7 +454,6 @@ po-gram-gen2.h: po-gram-gen.h
  install-exec-local:
- 	$(mkdir_p) $(DESTDIR)$(pkglibdir)
+ 	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
  	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) hostname$(EXEEXT) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
 -	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) urlget$(EXEEXT) $(DESTDIR)$(pkglibdir)/urlget$(EXEEXT)
  	$(INSTALL_SCRIPT) user-email $(DESTDIR)$(pkglibdir)/user-email
  	$(INSTALL_SCRIPT) $(srcdir)/project-id $(DESTDIR)$(pkglibdir)/project-id
  
-@@ -459,7 +458,6 @@ installdirs-local:
+@@ -463,7 +462,6 @@ installdirs-local:
  
  uninstall-local:
  	$(RM) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)

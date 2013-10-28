@@ -1,5 +1,5 @@
---- gettext-0.18/gettext-tools/misc/autopoint.in
-+++ gettext-0.18/gettext-tools/misc/autopoint.in
+--- gettext/gettext-tools/misc/autopoint.in
++++ gettext/gettext-tools/misc/autopoint.in
 @@ -30,33 +30,31 @@ prefix="@prefix@"
  datarootdir="@datarootdir@"
  gettext_dir="@datadir@/gettext"
@@ -30,8 +30,7 @@
 -  # users to specify a different temporary directory, for example, if their
 -  # /tmp is filled up or too small.
 -  : ${TMPDIR=/tmp}
-+  tmp="$(mktemp -dt autopoint.XXXXXXXXXX)" ||
-   {
+-  {
 -    # Use the mktemp program if available. If not available, hide the error
 -    # message.
 -    tmp=`(umask 077 && mktemp -d "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
@@ -46,23 +45,14 @@
 -    tmp=$TMPDIR/gt$$-$RANDOM
 -    (umask 077 && mkdir "$tmp")
 -  } ||
--  {
++  tmp="$(mktemp -dt autopoint.XXXXXXXXXX)" ||
+   {
 -    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
 +    echo "$0: cannot create a temporary directory in ${TMPDIR:-/tmp}" >&2
      { (exit 1); exit 1; }
    }
  }
-@@ -78,7 +76,8 @@ func_find_curr_installdir ()
-         else
-           PATH_SEPARATOR=:
-         fi
--        rm -rf "$tmp"
-+        rm -rf -- "$tmp"
-+        tmp=
-       fi
-       save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
-       for dir in $PATH; do
-@@ -368,14 +367,8 @@ fi
+@@ -374,14 +372,8 @@ fi
  # Set up a temporary checkout directory.
  # Set variables
  # - work_dir        directory containing the temporary checkout
@@ -79,15 +69,15 @@
  
  # We support three archive formats.
  #
-@@ -392,7 +385,6 @@ case "@ARCHIVE_FORMAT@" in
-     # require special tools.
-     gzip -d -c < "$gettext_dir/archive.dir.tar.gz" | (cd "$work_dir" && tar xf - "gettext-$ver")
+@@ -403,7 +395,6 @@ case "@ARCHIVE_FORMAT@" in
+     esac \
+       | (cd "$work_dir" && tar xf - "gettext-$ver")
      if test `find "$work_dir" -type f -print | wc -l` = 0; then
 -      rm -rf "$work_dir"
        func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
      fi
      mv "$work_dir/gettext-$ver" "$work_dir/archive"
-@@ -448,16 +440,7 @@ case "@ARCHIVE_FORMAT@" in
+@@ -466,16 +457,7 @@ case "@ARCHIVE_FORMAT@" in
      # given, we need to compare the existing files with the checked out ones.
      # Set variables
      # - cvs_dir         directory containing the temporary repository
@@ -105,7 +95,7 @@
      CVSROOT="$srcdir/$cvs_dir"
      unset CVS_CLIENT_LOG
      unset CVS_CLIENT_PORT
-@@ -484,15 +467,12 @@ case "@ARCHIVE_FORMAT@" in
+@@ -511,15 +493,12 @@ case "@ARCHIVE_FORMAT@" in
      ($cvs -d "$CVSROOT" checkout -r"$cvsver" archive > /dev/null) 2>&1 | grep -v '^cvs checkout: Updating'
      find archive -name CVS -type d -print | xargs rm -rf
      cd ..
@@ -121,7 +111,7 @@
        func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
      fi
      ;;
-@@ -504,7 +484,6 @@ case "@ARCHIVE_FORMAT@" in
+@@ -531,7 +510,6 @@ case "@ARCHIVE_FORMAT@" in
      mkdir "$work_dir/archive"
      gzip -d -c < "$gettext_dir/archive.git.tar.gz" | (cd "$work_dir/archive" && tar xf -)
      (cd "$work_dir/archive" && $git checkout -q "gettext-$ver") || {
@@ -129,7 +119,7 @@
        func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
      }
      (cd "$work_dir/archive" && rm -rf .git .gitignore)
-@@ -615,10 +594,8 @@ if test -z "$force"; then
+@@ -642,10 +620,8 @@ if test -z "$force"; then
      fi
    done
    if test -n "$mismatch"; then
@@ -140,7 +130,7 @@
  fi
  
  # func_mkdir_for to
-@@ -631,7 +608,8 @@ func_mkdir_for ()
+@@ -658,7 +634,8 @@ func_mkdir_for ()
      func_mkdir_for "$base"
      # Recompute base. It was clobbered by the recursive call.
      base=`echo "$1" | sed -e 's,/[^/]*$,,'`
@@ -150,7 +140,7 @@
    fi
  }
  
-@@ -700,5 +678,4 @@ for file in `find "$work_dir/archive" -t
+@@ -727,5 +704,4 @@ for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/arch
  done
  
  # That's it.
