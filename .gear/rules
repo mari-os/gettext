@@ -1,3 +1,4 @@
+copy: *.1
 copy: *.el
 copy: *.patch
 copy: *.py

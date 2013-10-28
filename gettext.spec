@@ -12,7 +12,8 @@ Url: http://www.gnu.org/software/gettext/
 # ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.gz
 Source: gettext-%version.tar
 Source1: msghack.py
-Source2: gettext-po-mode-start.el
+Source2: msghack.1
+Source3: gettext-po-mode-start.el
 
 Patch4: gettext-0.18.1.1-deb-project-id.patch
 Patch5: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
@@ -224,6 +225,7 @@ find -type f -name libtool -print0 |
 
 install -pD -m755 %_sourcedir/msghack.py \
 	%buildroot%_bindir/msghack
+install -pm644 %_sourcedir/msghack.1 %buildroot%_man1dir/
 install -pD -m644 %_sourcedir/gettext-po-mode-start.el \
 	%buildroot%_sysconfdir/emacs/site-start.d/gettext.el
 
@@ -286,6 +288,7 @@ mkdir -p %buildroot%_docdir
 %exclude %_man1dir/gettext.*
 %exclude %_man1dir/ngettext.*
 %exclude %_man1dir/envsubst.*
+%exclude %_man1dir/msghack.*
 %_infodir/gettext.info*
 %_datadir/gettext
 %{?_with_java:%exclude %_datadir/gettext/libintl.jar}
@@ -311,6 +314,7 @@ mkdir -p %buildroot%_docdir
 
 %files tools-python
 %_bindir/msghack
+%_man1dir/msghack.*
 
 %files -n libasprintf
 %_libdir/libasprintf.so.*
