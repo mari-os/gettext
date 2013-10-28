@@ -1,0 +1,57 @@
+From b764ac2689be4891d8a223afa7a281ced7c6c2a4 Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <ueno@gnu.org>
+Date: Tue, 24 Sep 2013 14:15:29 +0900
+Subject: [PATCH 5/8] autopoint: discard stderr of autom4te
+
+---
+ gettext-tools/misc/ChangeLog     | 7 +++++++
+ gettext-tools/misc/autopoint.in  | 2 +-
+ gettext-tools/misc/gettextize.in | 2 +-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/gettext-tools/misc/ChangeLog b/gettext-tools/misc/ChangeLog
+index 6352518..bc11572 100644
+--- a/gettext-tools/misc/ChangeLog
++++ b/gettext-tools/misc/ChangeLog
+@@ -1,5 +1,12 @@
+ 2013-09-24  Daiki Ueno  <ueno@gnu.org>
+ 
++	* autopoint.in (func_trace): Discard stderr of autom4te.
++	* gettextize.in (func_trace): Likewise.
++	Reported by Gary V. Vaughan in
++	<http://savannah.gnu.org/bugs/?40083>.
++
++2013-09-24  Daiki Ueno  <ueno@gnu.org>
++
+ 	* autopoint.in: Recognize multiple arguments of AM_GNU_GETTEXT
+ 	when tracing.
+ 	* gettextize.in: Likewise.
+diff --git a/gettext-tools/misc/autopoint.in b/gettext-tools/misc/autopoint.in
+index 2c03562..72b268b 100644
+--- a/gettext-tools/misc/autopoint.in
++++ b/gettext-tools/misc/autopoint.in
+@@ -152,7 +152,7 @@ m4_define([AM_GNU_GETTEXT], [])
+ m4_define([AM_GNU_GETTEXT_VERSION], [])
+ ' \
+   | autom4te --no-cache --language=Autoconf-without-aclocal-m4 \
+-    --trace="$1":\$% - "$2"
++    --trace="$1":\$% - "$2" 2>/dev/null
+ }
+ 
+ # func_usage
+diff --git a/gettext-tools/misc/gettextize.in b/gettext-tools/misc/gettextize.in
+index be837b9..9b0b465 100644
+--- a/gettext-tools/misc/gettextize.in
++++ b/gettext-tools/misc/gettextize.in
+@@ -152,7 +152,7 @@ m4_define([AM_GNU_GETTEXT], [])
+ m4_define([AM_GNU_GETTEXT_VERSION], [])
+ ' \
+   | autom4te --no-cache --language=Autoconf-without-aclocal-m4 \
+-    --trace="$1":\$% - "$2"
++    --trace="$1":\$% - "$2" 2>/dev/null
+ }
+ 
+ # func_usage
+-- 
+1.8.3.4
+

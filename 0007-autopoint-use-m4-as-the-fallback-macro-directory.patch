@@ -1,0 +1,43 @@
+From fc6045db77c6bb15899a693f0550acc0f05e7005 Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <ueno@gnu.org>
+Date: Wed, 16 Oct 2013 16:34:48 +0900
+Subject: [PATCH 7/8] autopoint: use 'm4' as the fallback macro directory
+
+---
+ gettext-tools/misc/ChangeLog    | 7 +++++++
+ gettext-tools/misc/autopoint.in | 4 ++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/gettext-tools/misc/ChangeLog b/gettext-tools/misc/ChangeLog
+index bc11572..d143293 100644
+--- a/gettext-tools/misc/ChangeLog
++++ b/gettext-tools/misc/ChangeLog
+@@ -1,3 +1,10 @@
++2013-10-16  Daiki Ueno  <ueno@gnu.org>
++
++	* autopoint.in: Use 'm4' as the default macro directory if it is
++	not specified in configure.ac nor Makefile.am.
++	Reported by Michał Górny in
++	<http://savannah.gnu.org/bugs/?40278>.
++
+ 2013-09-24  Daiki Ueno  <ueno@gnu.org>
+ 
+ 	* autopoint.in (func_trace): Discard stderr of autom4te.
+diff --git a/gettext-tools/misc/autopoint.in b/gettext-tools/misc/autopoint.in
+index 72b268b..d8c7d74 100644
+--- a/gettext-tools/misc/autopoint.in
++++ b/gettext-tools/misc/autopoint.in
+@@ -347,6 +347,10 @@ if test -z "$m4dir" && test -f Makefile.am; then
+   done
+ fi
+ 
++if test -z "$m4dir"; then
++  m4dir=m4
++fi
++
+ # Check whether to omit the intl/ directory.
+ omitintl=
+ xargs=`func_trace AM_GNU_GETTEXT "$configure_in"`
+-- 
+1.8.3.4
+
