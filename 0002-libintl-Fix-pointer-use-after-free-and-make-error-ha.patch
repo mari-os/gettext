@@ -1,7 +1,7 @@
-From 538b4650ef432fbfbdedb26a6c6996db037f7473 Mon Sep 17 00:00:00 2001
+From 6c3febd040e90250e156dad8f4025ef416f290a5 Mon Sep 17 00:00:00 2001
 From: Carlos O'Donell <carlos@redhat.com>
 Date: Fri, 6 Sep 2013 15:52:57 +0900
-Subject: [PATCH 3/8] libintl: Fix pointer use after free and make error
+Subject: [PATCH 2/4] libintl: Fix pointer use after free and make error
  handling robuster
 
 Previously, _nl_find_msg had a use of pointer after free'd.  Also,
@@ -130,5 +130,5 @@ index 9abee08..3b8ff18 100644
  
   out:
 -- 
-1.8.3.4
+1.8.4.3
 
