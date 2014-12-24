@@ -1,4 +1,4 @@
-# generated automatically by aclocal 1.14 -*- Autoconf -*-
+# generated automatically by aclocal 1.14.1 -*- Autoconf -*-
 
 # Copyright (C) 1996-2013 Free Software Foundation, Inc.
 
@@ -35,7 +35,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 [am__api_version='1.14'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.14], [],
+m4_if([$1], [1.14.1], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
@@ -51,7 +51,7 @@ m4_define([_AM_AUTOCONF_VERSION], [])
 # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
 # This function is AC_REQUIREd by AM_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-[AM_AUTOMAKE_VERSION([1.14])dnl
+[AM_AUTOMAKE_VERSION([1.14.1])dnl
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
@@ -1148,6 +1148,7 @@ AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
 m4_include([gnulib-m4/00gnulib.m4])
+m4_include([gnulib-m4/absolute-header.m4])
 m4_include([gnulib-m4/alloca.m4])
 m4_include([gnulib-m4/ansi-c++.m4])
 m4_include([gnulib-m4/asm-underscore.m4])
@@ -1163,6 +1164,7 @@ m4_include([gnulib-m4/errno_h.m4])
 m4_include([gnulib-m4/error.m4])
 m4_include([gnulib-m4/extensions.m4])
 m4_include([gnulib-m4/getopt.m4])
+m4_include([gnulib-m4/gettimeofday.m4])
 m4_include([gnulib-m4/gnulib-common.m4])
 m4_include([gnulib-m4/gnulib-comp.m4])
 m4_include([gnulib-m4/iconv_h.m4])
@@ -1222,6 +1224,7 @@ m4_include([gnulib-m4/strnlen.m4])
 m4_include([gnulib-m4/strtoul.m4])
 m4_include([gnulib-m4/sys_socket_h.m4])
 m4_include([gnulib-m4/sys_stat_h.m4])
+m4_include([gnulib-m4/sys_time_h.m4])
 m4_include([gnulib-m4/sys_types_h.m4])
 m4_include([gnulib-m4/time_h.m4])
 m4_include([gnulib-m4/unistd_h.m4])
@@ -1231,7 +1234,6 @@ m4_include([gnulib-m4/wchar_h.m4])
 m4_include([gnulib-m4/wctype_h.m4])
 m4_include([gnulib-m4/wcwidth.m4])
 m4_include([../m4/fixautomake.m4])
-m4_include([../m4/init-package-version.m4])
 m4_include([../m4/libtool.m4])
 m4_include([../m4/ltoptions.m4])
 m4_include([../m4/ltsugar.m4])
