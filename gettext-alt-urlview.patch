@@ -7264,7 +7264,7 @@
         are welcome.</p>
 --- gettext/gettext-tools/src/Makefile.am
 +++ gettext/gettext-tools/src/Makefile.am
-@@ -454,7 +454,6 @@ po-gram-gen2.h: po-gram-gen.h
+@@ -462,7 +462,6 @@ po-gram-gen2.h: po-gram-gen.h
  install-exec-local:
  	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
  	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) hostname$(EXEEXT) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
@@ -7272,7 +7272,7 @@
  	$(INSTALL_SCRIPT) user-email $(DESTDIR)$(pkglibdir)/user-email
  	$(INSTALL_SCRIPT) $(srcdir)/project-id $(DESTDIR)$(pkglibdir)/project-id
  
-@@ -463,7 +462,6 @@ installdirs-local:
+@@ -471,7 +470,6 @@ installdirs-local:
  
  uninstall-local:
  	$(RM) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
