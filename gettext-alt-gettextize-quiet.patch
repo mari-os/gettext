@@ -1,6 +1,6 @@
 --- gettext/gettext-tools/misc/gettextize.in
 +++ gettext/gettext-tools/misc/gettextize.in
-@@ -191,6 +191,7 @@ Options:
+@@ -192,6 +192,7 @@ Options:
        --help           print this help and exit
        --version        print version information and exit
    -f, --force          force writing of new files even if old exist
@@ -8,7 +8,7 @@
        --intl           install libintl in a subdirectory (deprecated)
        --po-dir=DIR     specify directory with PO files
        --no-changelog   don't update or create ChangeLog files
-@@ -238,6 +239,7 @@ unset CLICOLOR_FORCE GREP_OPTIONS
+@@ -239,6 +240,7 @@ unset CLICOLOR_FORCE GREP_OPTIONS
  # - doit            false if --dry-run was given, : otherwise
  {
    force=0
@@ -16,7 +16,7 @@
    intldir=
    podirs=
    try_ln_s=false
-@@ -254,6 +256,9 @@ unset CLICOLOR_FORCE GREP_OPTIONS
+@@ -255,6 +257,9 @@ unset CLICOLOR_FORCE GREP_OPTIONS
        -f | --force | --forc | --for | --fo | --f )
          shift
          force=1 ;;
@@ -26,7 +26,7 @@
        --help | --hel | --he | --h )
          func_usage; exit 0 ;;
        --intl | --int | --in | --i )
-@@ -1334,10 +1339,12 @@ if $doit; then
+@@ -1338,10 +1343,12 @@ if $doit; then
      5) count="five paragraphs";;
      *) count="$count paragraphs";;
    esac

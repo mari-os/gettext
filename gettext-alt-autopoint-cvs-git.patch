@@ -1,6 +1,6 @@
 --- gettext/gettext-tools/misc/autopoint.in
 +++ gettext/gettext-tools/misc/autopoint.in
-@@ -508,7 +508,8 @@ case "@ARCHIVE_FORMAT@" in
+@@ -539,7 +539,8 @@ case "@ARCHIVE_FORMAT@" in
      # (see <http://lists.gnu.org/archive/html/bug-cvs/2010-06/msg00011.html>).
      #
      # Check availability of the CVS program.
@@ -10,7 +10,7 @@
  
      # Set up a temporary CVS repository.
      # We need the temporary CVS repository because any checkout needs write
-@@ -553,12 +554,13 @@ case "@ARCHIVE_FORMAT@" in
+@@ -584,12 +585,13 @@ case "@ARCHIVE_FORMAT@" in
  
      # Need to pass -d "$CVSROOT", because there may be a CVS directory in the
      # current directory.
@@ -26,7 +26,7 @@
      find archive -name CVS -type d -print | xargs rm -rf
      cd ..
      rm -rf "$cvs_dir"
-@@ -576,10 +578,11 @@ case "@ARCHIVE_FORMAT@" in
+@@ -607,10 +609,11 @@ case "@ARCHIVE_FORMAT@" in
  
    git)
      # Check availability of the git program.

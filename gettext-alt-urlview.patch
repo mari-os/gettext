@@ -7264,19 +7264,19 @@
         are welcome.</p>
 --- gettext/gettext-tools/src/Makefile.am
 +++ gettext/gettext-tools/src/Makefile.am
-@@ -462,7 +462,6 @@ po-gram-gen2.h: po-gram-gen.h
+@@ -469,7 +469,6 @@ po-gram-gen.h: po-gram-gen.c
  install-exec-local:
  	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
  	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) hostname$(EXEEXT) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
 -	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) urlget$(EXEEXT) $(DESTDIR)$(pkglibdir)/urlget$(EXEEXT)
+ 	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) cldr-plurals$(EXEEXT) $(DESTDIR)$(pkglibdir)/cldr-plurals$(EXEEXT)
  	$(INSTALL_SCRIPT) user-email $(DESTDIR)$(pkglibdir)/user-email
  	$(INSTALL_SCRIPT) $(srcdir)/project-id $(DESTDIR)$(pkglibdir)/project-id
- 
-@@ -471,7 +470,6 @@ installdirs-local:
+@@ -479,7 +478,6 @@ installdirs-local:
  
  uninstall-local:
  	$(RM) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
 -	$(RM) $(DESTDIR)$(pkglibdir)/urlget$(EXEEXT)
+ 	$(RM) $(DESTDIR)$(pkglibdir)/cldr-plurals$(EXEEXT)
  	$(RM) $(DESTDIR)$(pkglibdir)/user-email
  	$(RM) $(DESTDIR)$(pkglibdir)/project-id
- 
