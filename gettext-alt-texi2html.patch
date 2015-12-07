@@ -1,0 +1,57 @@
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Date: Mon, 7 Dec 2015 23:01:24 +0000
+Subject: [PATCH] texi2html: fix perl syntax
+
+Apply the following patch:
+
+git grep -l 'defined(@[^)]\+)' |
+	xargs -r sed -i 's/defined(\(@[^)]\+\))/\1/' --
+
+This fixes the following perl syntax error:
+
+Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at ./texi2html line 1564.
+---
+ gettext/gettext-runtime/libasprintf/texi2html | 4 ++--
+ gettext/gettext-tools/doc/texi2html           | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+--- gettext/gettext-runtime/libasprintf/texi2html
++++ gettext/gettext-runtime/libasprintf/texi2html
+@@ -1561,7 +1561,7 @@ sub update_sec_num {
+     $level--; # here we start at 0
+     if ($name =~ /^appendix/) {
+ 	# appendix style
+-	if (defined(@appendix_sec_num)) {
++	if (@appendix_sec_num) {
+ 	    &incr_sec_num($level, @appendix_sec_num);
+ 	} else {
+ 	    @appendix_sec_num = ('A', 0, 0, 0);
+@@ -1569,7 +1569,7 @@ sub update_sec_num {
+ 	return(join('.', @appendix_sec_num[0..$level]));
+     } else {
+ 	# normal style
+-	if (defined(@normal_sec_num)) {
++	if (@normal_sec_num) {
+ 	    &incr_sec_num($level, @normal_sec_num);
+ 	} else {
+ 	    @normal_sec_num = (1, 0, 0, 0);
+--- gettext/gettext-tools/doc/texi2html
++++ gettext/gettext-tools/doc/texi2html
+@@ -1561,7 +1561,7 @@ sub update_sec_num {
+     $level--; # here we start at 0
+     if ($name =~ /^appendix/) {
+ 	# appendix style
+-	if (defined(@appendix_sec_num)) {
++	if (@appendix_sec_num) {
+ 	    &incr_sec_num($level, @appendix_sec_num);
+ 	} else {
+ 	    @appendix_sec_num = ('A', 0, 0, 0);
+@@ -1569,7 +1569,7 @@ sub update_sec_num {
+ 	return(join('.', @appendix_sec_num[0..$level]));
+     } else {
+ 	# normal style
+-	if (defined(@normal_sec_num)) {
++	if (@normal_sec_num) {
+ 	    &incr_sec_num($level, @normal_sec_num);
+ 	} else {
+ 	    @normal_sec_num = (1, 0, 0, 0);
