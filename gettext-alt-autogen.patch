@@ -1,6 +1,6 @@
 --- gettext/autogen.sh
 +++ gettext/autogen.sh
-@@ -385,16 +385,6 @@ if test -n "$GNULIB_TOOL"; then
+@@ -403,16 +403,6 @@ if test -n "$GNULIB_TOOL"; then
    for file in config.guess config.sub; do
      $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file || exit $?
    done

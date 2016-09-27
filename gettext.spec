@@ -15,7 +15,8 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch12: gettext-deb-msgfmt-default-little-endian.patch
+Patch1: 0001-po-mode-Fix-po-send-mail-behaviour-on-Emacs-25.patch
+Patch2: 0002-xgettext-Fix-crash-with-.po-file-input.patch
 
 Patch20: gettext-alt-autogen.patch
 Patch21: gettext-alt-gettextize-quiet.patch
@@ -24,8 +25,7 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
-Patch27: gettext-alt-texi2html.patch
-Patch28: gettext-gnulib-tests-hack.patch
+Patch27: gettext-gnulib-tests-hack.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -169,8 +169,8 @@ a formatted output library for C++.
 
 %prep
 %setup
-%patch12 -p1
-
+%patch1 -p1
+%patch2 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -179,7 +179,6 @@ a formatted output library for C++.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%patch28 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive

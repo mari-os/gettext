@@ -1,0 +1,40 @@
+From a0ecec28cdc4a7a69e499077ca62a0fee4180729 Mon Sep 17 00:00:00 2001
+From: Daiki Ueno <ueno@gnu.org>
+Date: Wed, 3 Aug 2016 14:10:13 +0200
+Subject: [PATCH] po-mode: Fix po-send-mail behaviour on Emacs 25
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+* gettext-tools/misc/po-mode.el (po-send-mail): Don't rely on
+region markers.
+Reported by Göran Uddeborg in:
+http://lists.gnu.org/archive/html/bug-gettext/2016-07/msg00027.html
+---
+ gettext-tools/misc/po-mode.el | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/gettext-tools/misc/po-mode.el b/gettext-tools/misc/po-mode.el
+index 9189cb3..b0eed21 100644
+--- a/gettext-tools/misc/po-mode.el
++++ b/gettext-tools/misc/po-mode.el
+@@ -3518,10 +3518,12 @@ Write to your team?  ('n' if writing to the Translation Project robot) ")))
+             (re-search-forward
+              (concat "^" (regexp-quote mail-header-separator) "\n"))
+             (save-excursion
+-              (insert-buffer-substring buffer)
+-              (shell-command-on-region
+-               (region-beginning) (region-end)
+-               (concat po-gzip-uuencode-command " " name ".gz") t t))))))
++              (save-restriction
++                (narrow-to-region (point) (point))
++                (insert-buffer-substring buffer)
++                (shell-command-on-region
++                 (point-min) (point-max)
++                 (concat po-gzip-uuencode-command " " name ".gz") t t)))))))
+   (message ""))
+ 
+ (defun po-confirm-and-quit ()
+-- 
+2.7.4
+
