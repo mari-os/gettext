@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.19.6
+Version: 0.19.8.1
 Release: alt1
 
 %define libintl libintl3
@@ -9,7 +9,7 @@ License: GPLv3+ and LGPLv2.1+
 Group: System/Base
 Url: http://www.gnu.org/software/gettext/
 
-# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.gz
+# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.xz
 Source: gettext-%version.tar
 Source1: msghack.py
 Source2: msghack.1
@@ -295,7 +295,8 @@ mkdir -p %buildroot%_docdir
 %exclude %_man1dir/envsubst.*
 %exclude %_man1dir/msghack.*
 %_infodir/gettext.info*
-%_datadir/gettext
+%_datadir/gettext/
+%_datadir/gettext-*/
 %{?_with_java:%exclude %_datadir/gettext/libintl.jar}
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
@@ -331,6 +332,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Sep 27 2016 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt1
+- 0.19.6 -> 0.19.8.1 (closes: #31007).
+
 * Tue Dec 08 2015 Dmitry V. Levin <ldv@altlinux.org> 0.19.6-alt1
 - Updated to 0.19.6.
 
