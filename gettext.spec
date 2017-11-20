@@ -20,7 +20,7 @@ Patch2: 0002-xgettext-Fix-crash-with-.po-file-input.patch
 
 Patch20: gettext-alt-autogen.patch
 Patch21: gettext-alt-gettextize-quiet.patch
-Patch22: gettext-alt-autopoint-cvs-git.patch
+Patch22: gettext-alt-autopoint-archive.patch
 Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch

@@ -1,18 +1,16 @@
 --- gettext/gettext-tools/misc/autopoint.in
 +++ gettext/gettext-tools/misc/autopoint.in
-@@ -32,33 +32,31 @@ datarootdir="@datarootdir@"
+@@ -32,33 +32,29 @@ datarootdir="@datarootdir@"
  : ${gettext_datadir="@datadir@/gettext"}
  : ${AUTOM4TE=autom4te}
  
 +tmp=
 +cur_dir=
-+cvs_dir=
 +work_dir=
 +cleanup()
 +{
 +	local rc=$1
 +	[ -z "$tmp" ] || rm -rf -- "$tmp"
-+	[ -z "$cur_dir" -o -z "$cvs_dir" ] || rm -rf -- "$cur_dir/$cvs_dir"
 +	[ -z "$cur_dir" -o -z "$work_dir" ] || rm -rf -- "$cur_dir/$work_dir"
 +	exit $rc
 +}
@@ -36,7 +34,8 @@
 -    tmp=`(umask 077 && mktemp -d "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
 -    test -n "$tmp" && test -d "$tmp"
 -  } ||
--  {
++  tmp="$(mktemp -dt autopoint.XXXXXXXXXX)" ||
+   {
 -    # Use a simple mkdir command. It is guaranteed to fail if the directory
 -    # already exists.  $RANDOM is bash specific and expands to empty in shells
 -    # other than bash, ksh and zsh.  Its use does not increase security;
@@ -45,14 +44,13 @@
 -    tmp=$TMPDIR/gt$$-$RANDOM
 -    (umask 077 && mkdir "$tmp")
 -  } ||
-+  tmp="$(mktemp -dt autopoint.XXXXXXXXXX)" ||
-   {
+-  {
 -    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
 +    echo "$0: cannot create a temporary directory in ${TMPDIR:-/tmp}" >&2
      { (exit 1); exit 1; }
    }
  }
-@@ -457,14 +455,8 @@ fi
+@@ -457,21 +455,14 @@ fi
  # Set up a temporary checkout directory.
  # Set variables
  # - work_dir        directory containing the temporary checkout
@@ -67,59 +65,16 @@
 +cur_dir=`pwd` || exit
 +work_dir="$(mktemp -d tmpwrk.XXXXXXXXXX)" || exit
  
- # We support three archive formats.
- #
-@@ -486,7 +478,6 @@ case "@ARCHIVE_FORMAT@" in
-     esac \
+ # We support dirxz archive format only.
+ 
+ xz -d -c < "$gettext_datadir/archive.dir.tar.xz" \
        | (cd "$work_dir" && tar xf - "gettext-$ver")
      if test `find "$work_dir" -type f -print | wc -l` = 0; then
 -      rm -rf "$work_dir"
        func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
      fi
      mv "$work_dir/gettext-$ver" "$work_dir/archive"
-@@ -549,16 +540,7 @@ case "@ARCHIVE_FORMAT@" in
-     # given, we need to compare the existing files with the checked out ones.
-     # Set variables
-     # - cvs_dir         directory containing the temporary repository
--    cvs_dir=tmpcvs$$
--    # Use an umask of 077, to avoid attacks that work by overwriting files in
--    # the "$CVSROOT"/CVSROOT directory.
--    (umask 077 && mkdir "$cvs_dir") || {
--      if test -d "$cvs_dir"; then
--        func_fatal_error "directory $cvs_dir already exists"
--      else
--        func_fatal_error "cannot create directory $cvs_dir"
--      fi
--    }
-+    cvs_dir="$(mktemp -d tmpcvs.XXXXXXXXXX)" || exit
-     CVSROOT="$srcdir/$cvs_dir"
-     unset CVS_CLIENT_LOG
-     unset CVS_CLIENT_PORT
-@@ -594,15 +576,12 @@ case "@ARCHIVE_FORMAT@" in
-     ($cvs -d "$CVSROOT" checkout -r"$cvsver" archive > /dev/null) 2>&1 | grep -v '^cvs checkout: Updating'
-     find archive -name CVS -type d -print | xargs rm -rf
-     cd ..
--    rm -rf "$cvs_dir"
-     # Check that really all CVS directories are gone, otherwise we would overwrite
-     # the contents of the user's CVS directories.
-     if test `find $work_dir/archive -name CVS -type d -print | wc -l` != 0; then
--      rm -rf "$work_dir"
-       func_fatal_error "failed to remove all CVS subdirectories"
-     fi
-     if test `find $work_dir/archive -type f -print | wc -l` = 0; then
--      rm -rf "$work_dir"
-       func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
-     fi
-     ;;
-@@ -614,7 +593,6 @@ case "@ARCHIVE_FORMAT@" in
-     mkdir "$work_dir/archive"
-     gzip -d -c < "$gettext_datadir/archive.git.tar.gz" | (cd "$work_dir/archive" && tar xf -)
-     (cd "$work_dir/archive" && $git checkout -q "gettext-$ver") || {
--      rm -rf "$work_dir"
-       func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
-     }
-     (cd "$work_dir/archive" && rm -rf .git .gitignore)
-@@ -725,10 +703,8 @@ if test -z "$force"; then
+@@ -580,10 +571,8 @@ if test -z "$force"; then
      fi
    done
    if test -n "$mismatch"; then
@@ -130,7 +85,7 @@
  fi
  
  # func_mkdir_for to
-@@ -741,7 +717,8 @@ func_mkdir_for ()
+@@ -596,7 +585,8 @@ func_mkdir_for ()
      func_mkdir_for "$base"
      # Recompute base. It was clobbered by the recursive call.
      base=`echo "$1" | sed -e 's,/[^/]*$,,'`
@@ -140,7 +95,7 @@
    fi
  }
  
-@@ -810,5 +787,4 @@ for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/arch
+@@ -665,5 +655,4 @@ for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/arch
  done
  
  # That's it.
