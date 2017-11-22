@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -330,6 +330,11 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt2
+- autopoint: removed unused code that caused shell.req to generate
+  a few bogus dependencies.
+- Fixed build with glibc >= 2.25.
+
 * Tue Sep 27 2016 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt1
 - 0.19.6 -> 0.19.8.1 (closes: #31007).
 
