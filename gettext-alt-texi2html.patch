@@ -1,57 +1,112 @@
 From: "Dmitry V. Levin" <ldv@altlinux.org>
-Date: Mon, 7 Dec 2015 23:01:24 +0000
+Date: Tue, 3 Apr 2018 22:04:21 +0000
 Subject: [PATCH] texi2html: fix perl syntax
 
 Apply the following patch:
 
-git grep -l 'defined(@[^)]\+)' |
-	xargs -r sed -i 's/defined(\(@[^)]\+\))/\1/' --
+git grep -l '/.*[^\\]{(' |
+	xargs -r sed -i 's/\(\/.*[^\\]\)\({(\)/\1\\\2/'
 
-This fixes the following perl syntax error:
+This fixes the following perl syntax errors:
 
-Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at ./texi2html line 1564.
+Unescaped left brace in regex is deprecated here (and will be fatal in Perl 5.30), passed through in regex; marked by <-- HERE in m/\@(\w+|"|\~|,|\^){ <-- HERE ([^\{\}]+)}/ at ./texi2html line 1813.
+Unescaped left brace in regex is illegal here in regex; marked by <-- HERE in m/\@value{ <-- HERE ([^\s\{\}]+)}/ at ./texi2html line 882, <FH001> line 3.
 ---
- gettext/gettext-runtime/libasprintf/texi2html | 4 ++--
- gettext/gettext-tools/doc/texi2html           | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ gettext/gettext-runtime/libasprintf/texi2html | 10 +++++-----
+ gettext/gettext-tools/doc/texi2html           | 10 +++++-----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 --- gettext/gettext-runtime/libasprintf/texi2html
 +++ gettext/gettext-runtime/libasprintf/texi2html
-@@ -1561,7 +1561,7 @@ sub update_sec_num {
-     $level--; # here we start at 0
-     if ($name =~ /^appendix/) {
- 	# appendix style
--	if (defined(@appendix_sec_num)) {
-+	if (@appendix_sec_num) {
- 	    &incr_sec_num($level, @appendix_sec_num);
- 	} else {
- 	    @appendix_sec_num = ('A', 0, 0, 0);
-@@ -1569,7 +1569,7 @@ sub update_sec_num {
- 	return(join('.', @appendix_sec_num[0..$level]));
-     } else {
- 	# normal style
--	if (defined(@normal_sec_num)) {
-+	if (@normal_sec_num) {
- 	    &incr_sec_num($level, @normal_sec_num);
- 	} else {
- 	    @normal_sec_num = (1, 0, 0, 0);
+@@ -727,7 +727,7 @@ while ($_ = &next_line) {
+ 	    next;
+ 	} elsif ($tag eq 'setref') {
+ 	    &protect_html; # if setref contains '&' for instance
+-	    if (/^\@$tag\s*{($NODERE)}\s*$/) {
++	    if (/^\@$tag\s*\{($NODERE)}\s*$/) {
+ 		$setref = $1;
+ 		$setref =~ s/\s+/ /g; # normalize
+ 		$setref =~ s/ $//;
+@@ -879,7 +879,7 @@ while ($_ = &next_line) {
+     s/\@refill\s+//g;
+     # other substitutions
+     &simple_substitutions;
+-    s/\@value{($VARRE)}/$value{$1}/eg;
++    s/\@value\{($VARRE)}/$value{$1}/eg;
+     s/\@footnote\{/\@footnote$docu_doc\{/g; # mark footnotes, cf. pass 4
+     #
+     # analyze the tag again
+@@ -1204,7 +1204,7 @@ while (@lines) {
+     #
+     # xref
+     #
+-    while (/\@(x|px|info|)ref{($XREFRE)(}?)/o) {
++    while (/\@(x|px|info|)ref\{($XREFRE)(}?)/o) {
+ 	# note: Texinfo may accept other characters
+ 	($type, $nodes, $full) = ($1, $2, $3);
+ 	($before, $after) = ($`, $');
+@@ -1798,7 +1798,7 @@ sub apply_style {
+ # remove Texinfo styles
+ sub remove_style {
+     local($_) = @_;
+-    s/\@\w+{([^\{\}]+)}/$1/g;
++    s/\@\w+\{([^\{\}]+)}/$1/g;
+     return($_);
+ }
+ 
+@@ -1810,7 +1810,7 @@ sub substitute_style {
+     while ($changed) {
+ 	$changed = 0;
+ 	$done = '';
+-	while (/\@(\w+|"|\~|,|\^){([^\{\}]+)}/) {
++	while (/\@(\w+|"|\~|,|\^)\{([^\{\}]+)}/) {
+ 	    $text = &apply_style($1, $2);
+ 	    if ($text) {
+ 		$_ = "$`$text$'";
 --- gettext/gettext-tools/doc/texi2html
 +++ gettext/gettext-tools/doc/texi2html
-@@ -1561,7 +1561,7 @@ sub update_sec_num {
-     $level--; # here we start at 0
-     if ($name =~ /^appendix/) {
- 	# appendix style
--	if (defined(@appendix_sec_num)) {
-+	if (@appendix_sec_num) {
- 	    &incr_sec_num($level, @appendix_sec_num);
- 	} else {
- 	    @appendix_sec_num = ('A', 0, 0, 0);
-@@ -1569,7 +1569,7 @@ sub update_sec_num {
- 	return(join('.', @appendix_sec_num[0..$level]));
-     } else {
- 	# normal style
--	if (defined(@normal_sec_num)) {
-+	if (@normal_sec_num) {
- 	    &incr_sec_num($level, @normal_sec_num);
- 	} else {
- 	    @normal_sec_num = (1, 0, 0, 0);
+@@ -727,7 +727,7 @@ while ($_ = &next_line) {
+ 	    next;
+ 	} elsif ($tag eq 'setref') {
+ 	    &protect_html; # if setref contains '&' for instance
+-	    if (/^\@$tag\s*{($NODERE)}\s*$/) {
++	    if (/^\@$tag\s*\{($NODERE)}\s*$/) {
+ 		$setref = $1;
+ 		$setref =~ s/\s+/ /g; # normalize
+ 		$setref =~ s/ $//;
+@@ -879,7 +879,7 @@ while ($_ = &next_line) {
+     s/\@refill\s+//g;
+     # other substitutions
+     &simple_substitutions;
+-    s/\@value{($VARRE)}/$value{$1}/eg;
++    s/\@value\{($VARRE)}/$value{$1}/eg;
+     s/\@footnote\{/\@footnote$docu_doc\{/g; # mark footnotes, cf. pass 4
+     #
+     # analyze the tag again
+@@ -1204,7 +1204,7 @@ while (@lines) {
+     #
+     # xref
+     #
+-    while (/\@(x|px|info|)ref{($XREFRE)(}?)/o) {
++    while (/\@(x|px|info|)ref\{($XREFRE)(}?)/o) {
+ 	# note: Texinfo may accept other characters
+ 	($type, $nodes, $full) = ($1, $2, $3);
+ 	($before, $after) = ($`, $');
+@@ -1798,7 +1798,7 @@ sub apply_style {
+ # remove Texinfo styles
+ sub remove_style {
+     local($_) = @_;
+-    s/\@\w+{([^\{\}]+)}/$1/g;
++    s/\@\w+\{([^\{\}]+)}/$1/g;
+     return($_);
+ }
+ 
+@@ -1810,7 +1810,7 @@ sub substitute_style {
+     while ($changed) {
+ 	$changed = 0;
+ 	$done = '';
+-	while (/\@(\w+|"|\~|,|\^){([^\{\}]+)}/) {
++	while (/\@(\w+|"|\~|,|\^)\{([^\{\}]+)}/) {
+ 	    $text = &apply_style($1, $2);
+ 	    if ($text) {
+ 		$_ = "$`$text$'";

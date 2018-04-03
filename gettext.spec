@@ -25,6 +25,7 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
+Patch27: gettext-alt-texi2html.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -177,6 +178,7 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
