@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt5
+Release: alt6
 
 %define libintl libintl3
 
@@ -338,6 +338,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Oct 30 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt6
+- Updated %%check build dependencies.
+
 * Thu May 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt5
 - spec: added emacs knob (enabled by default; by mike@).
 
