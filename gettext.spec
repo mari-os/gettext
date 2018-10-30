@@ -40,6 +40,8 @@ BuildPreReq: gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc} %{?_with_emacs:emac
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
 BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
+# Needed for the test suite.
+%{?!_without_check:%{?!_disable_check:BuildRequires: python-modules}}
 
 %package -n %libintl
 Summary: The dynamic %libintl library for the gettext package
