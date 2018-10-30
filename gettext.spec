@@ -252,7 +252,7 @@ mkdir -p %buildroot%_docdir
 %find_lang %name-tools
 
 %check
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %if_with included_gettext
 %files -n %libintl
