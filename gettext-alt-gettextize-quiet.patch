@@ -5,9 +5,9 @@
        --version        print version information and exit
    -f, --force          force writing of new files even if old exist
 +  -q, --quiet          don't ask acknowledgements
-       --intl           install libintl in a subdirectory (deprecated)
        --po-dir=DIR     specify directory with PO files
        --no-changelog   don't update or create ChangeLog files
+       --symlink        make symbolic links instead of copying files
 @@ -239,6 +240,7 @@ unset CLICOLOR_FORCE GREP_OPTIONS
  # - doit            false if --dry-run was given, : otherwise
  {
@@ -26,7 +26,7 @@
        --help | --hel | --he | --h )
          func_usage; exit 0 ;;
        --intl | --int | --in | --i )
-@@ -1338,10 +1343,12 @@ if $doit; then
+@@ -1303,10 +1308,12 @@ if $doit; then
      5) count="five paragraphs";;
      *) count="$count paragraphs";;
    esac

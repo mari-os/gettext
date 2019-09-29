@@ -1,0 +1,26 @@
+From 78a041880f0422b1193f5bec59983e3f456f41a6 Mon Sep 17 00:00:00 2001
+From: Bruno Haible <bruno@clisp.org>
+Date: Sun, 29 Sep 2019 16:50:15 +0200
+Subject: [PATCH 9/9] libxml: Fix buffer overrun.
+
+Reported by GCC 8 -Wformat-truncation warning.
+
+* gnulib-local/lib/libxml/parser.c (xmlParseReference): Increase size of buffer
+'out' to 12 bytes.
+---
+ gnulib-local/lib/libxml/parser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gnulib-local/lib/libxml/parser.c b/gnulib-local/lib/libxml/parser.c
+index 5813a6643..486c16d40 100644
+--- a/gnulib-local/lib/libxml/parser.c
++++ b/gnulib-local/lib/libxml/parser.c
+@@ -7009,7 +7009,7 @@ xmlParseReference(xmlParserCtxtPtr ctxt) {
+      */
+     if (NXT(1) == '#') {
+ 	int i = 0;
+-	xmlChar out[10];
++	xmlChar out[12];
+ 	int hex = NXT(2);
+ 	int value = xmlParseCharRef(ctxt);
+ 

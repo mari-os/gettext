@@ -15,8 +15,15 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch1: 0001-po-mode-Fix-po-send-mail-behaviour-on-Emacs-25.patch
-Patch2: 0002-xgettext-Fix-crash-with-.po-file-input.patch
+Patch1: 0001-msgmerge-Fix-behaviour-of-for-msgfmt-on-PO-files-wit.patch
+Patch2: 0002-intl-Make-autoconf-macro-more-robust.patch
+Patch3: 0003-build-Avoid-warnings-from-bison-versions-3.3.patch
+Patch4: 0004-xgettext-Fix-endless-loop-in-shell-parser.patch
+Patch5: 0005-xgettext-Fix-parsing-of-escaped-single-quote-charact.patch
+Patch6: 0006-gettext-ngettext-Fix-the-expansion-of-and-octal-esca.patch
+Patch7: 0007-xgettext-Handle-newlines-in-Lua-long-bracket-literal.patch
+Patch8: 0008-build-Avoid-failing-a-configure-test-due-to-CFLAGS-W.patch
+Patch9: 0009-libxml-Fix-buffer-overrun.patch
 
 Patch20: gettext-alt-autogen.patch
 Patch21: gettext-alt-gettextize-quiet.patch
@@ -25,7 +32,6 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
-Patch27: gettext-alt-texi2html.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -174,6 +180,13 @@ a formatted output library for C++.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -181,7 +194,6 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-%patch27 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive

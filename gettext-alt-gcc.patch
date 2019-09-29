@@ -1,6 +1,6 @@
 --- gettext/gettext-tools/src/x-c.c
 +++ gettext/gettext-tools/src/x-c.c
-@@ -85,7 +85,7 @@
+@@ -92,7 +92,7 @@
  static bool trigraphs = false;
  
  void
@@ -9,7 +9,7 @@
  {
    trigraphs = true;
  }
-@@ -102,7 +102,7 @@ static bool default_keywords = true;
+@@ -109,7 +109,7 @@ static bool default_keywords = true;
  
  
  void
@@ -18,7 +18,7 @@
  {
    extract_all = true;
  }
-@@ -155,7 +155,7 @@ activate_additional_keywords_kde ()
+@@ -162,7 +162,7 @@ activate_additional_keywords_kde ()
  /* Finish initializing the keywords hash tables.
     Called after argument processing, before each file is processed.  */
  static void
@@ -27,7 +27,7 @@
  {
    if (default_keywords)
      {
-@@ -242,7 +242,7 @@ init_keywords ()
+@@ -249,7 +249,7 @@ init_keywords ()
  }
  
  void
@@ -36,7 +36,7 @@
  {
    xgettext_record_flag ("gettext:1:pass-c-format");
    xgettext_record_flag ("dgettext:2:pass-c-format");
-@@ -354,7 +354,7 @@ init_flag_table_c ()
+@@ -361,7 +361,7 @@ init_flag_table_c ()
  }
  
  void
@@ -45,7 +45,7 @@
  {
    /* Since the settings done in init_flag_table_c() also have an effect for
       the ObjectiveC parser, we don't have to repeat them here.  */
-@@ -389,7 +389,7 @@ init_flag_table_objc ()
+@@ -396,7 +396,7 @@ init_flag_table_objc ()
  }
  
  void
