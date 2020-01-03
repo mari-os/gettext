@@ -1,15 +1,15 @@
 Name: gettext
-Version: 0.19.8.1
-Release: alt6
+Version: 0.20.1
+Release: alt1
 
 %define libintl libintl3
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
-License: GPLv3+ and LGPLv2.1+
+License: GPLv3+ and LGPLv2.1+ and GFDL-1.2+
 Group: System/Base
-Url: http://www.gnu.org/software/gettext/
+Url: https://www.gnu.org/software/gettext/
 
-# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.xz
+# https://ftp.gnu.org/gnu/gettext/gettext-%version.tar.xz
 Source: gettext-%version.tar
 Source1: msghack.py
 Source2: msghack.1
@@ -32,6 +32,7 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
+Patch27: gettext-alt-libtextstyle.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -80,8 +81,7 @@ Provides: %name-devel = %version-%release
 Obsoletes: %name-devel
 Requires: %name = %version-%release
 Requires: mktemp >= 1:1.3.1
-%define lib_suffix %nil
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
+%define lib_suffix %{?_is_libsuff:()(%{_libsuff}bit)}
 %{!?_with_included_gettext:Provides: preloadable_libintl.so%lib_suffix}
 
 %package tools-java
@@ -99,21 +99,32 @@ Requires: %name-tools = %version-%release
 
 %package doc
 Summary: The GNU gettext manual
-License: GPLv2+ or GFDLv1.2+
+License: GPLv2+ or GFDL-1.2+
 Group: Development/Other
 BuildArch: noarch
 Requires: %name = %version-%release
 
 %package -n libasprintf
-Summary: formatted output to strings in C++
+Summary: Formatted output to strings in C++
 License: LGPLv2+
 Group: Development/C++
 
 %package -n libasprintf-devel
-Summary: header files for libasprintf
+Summary: Development related files for libasprintf
 License: LGPLv2+
 Group: Development/C++
 Requires: libasprintf = %version-%release
+
+%package -n libtextstyle
+Summary: A text styling library
+License: GPLv3+
+Group: Development/C++
+
+%package -n libtextstyle-devel
+Summary: Development related files for libtextstyle
+License: GPLv3+
+Group: Development/C++
+Requires: libtextstyle = %version-%release
 
 %description
 The GNU gettext provides a set of tools and documentation for producing
@@ -176,6 +187,15 @@ usable in C++ programs, for use with the <string> strings and the
 This packages contains development files for libasprintf,
 a formatted output library for C++.
 
+%description -n libtextstyle
+The GNU libtextstyle is a text styling library that provides an easy way
+to add styling to programs that produce output to a console or terminal
+emulator window.
+
+%description -n libtextstyle-devel
+This packages contains all development related files for the GNU libtextstyle,
+a text styling library.
+
 %prep
 %setup
 %patch1 -p1
@@ -194,6 +214,7 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -210,9 +231,11 @@ rm -rf archive
 # Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
 
-# Taken from gnulib.
-grep -lZ '^test_.*@LIBMULTITHREAD@' gettext-tools/gnulib-tests/Makefile.* |
-        xargs -r0 sed -i 's/^\(test_[^ +=]\+\)\(_LDADD.*\)@LIBMULTITHREAD@\(.*\)/\1\2-lpthread\3\n\1_LDFLAGS = -Wl,--no-as-needed/' --
+# Guard against libtextstyle attempt to bundle libcroco and libxml2.
+# The comments indicate this is done because the libtextstyle authors do
+# not want applications using their code to suffer startup delays due to
+# the relocations in these libraries.  This is not an acceptable reason.
+rm -r libtextstyle/gnulib-local/lib/lib* libtextstyle/lib/lib{croco,xml}
 
 %build
 %if_with java
@@ -223,9 +246,11 @@ fi
 %endif
 ./autogen.sh --skip-gnulib
 %add_optflags -fno-strict-aliasing
-export ac_cv_prog_STRIP=:
 %configure --enable-shared \
 	--without-included-regex \
+	--without-included-glib \
+	--without-included-libcroco \
+	--without-included-libxml \
 	--disable-csharp \
 	--without-cvs --without-git \
 	%{subst_with emacs} \
@@ -253,10 +278,10 @@ install -pD -m644 %_sourcedir/gettext-po-mode-start.el \
 %if_with included_gettext
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo libintl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl
-%if_enabled static
+#if_enabled static
 echo libintl-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 echo libintl-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
-%endif #enabled static
+#endif #enabled static
 chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 %endif #with included_gettext
 mkdir -p %buildroot%_docdir
@@ -268,12 +293,15 @@ mkdir -p %buildroot%_docdir
 %check
 %make_build -k check VERBOSE=1
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
 %if_with included_gettext
 %files -n %libintl
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl
 %_libdir/libintl*.so.*
 
-%if_enabled static
+#if_enabled static
 %files -n %libintl-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel
 %_libdir/libintl*.so
@@ -281,7 +309,7 @@ mkdir -p %buildroot%_docdir
 %files -n %libintl-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libintl-devel-static
 %_libdir/libintl*.a
-%endif #enabled static
+#endif #enabled static
 %endif #with included_gettext
 
 %files -f %name-runtime.lang
@@ -349,7 +377,19 @@ mkdir -p %buildroot%_docdir
 %_infodir/autosprintf.info*
 %_defaultdocdir/libasprintf
 
+%files -n libtextstyle
+%_libdir/libtextstyle.so.*
+
+%files -n libtextstyle-devel
+%_includedir/textstyle*
+%_libdir/libtextstyle.so
+%_infodir/libtextstyle.info*
+%_defaultdocdir/libtextstyle/
+
 %changelog
+* Fri Jan 03 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.1-alt1
+- 0.19.8.1 -> 0.20.1 (closes: #37078).
+
 * Tue Oct 30 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt6
 - Updated %%check build dependencies.
 
@@ -654,7 +694,7 @@ mkdir -p %buildroot%_docdir
 * Sun Sep 13 1998 Cristian Gafton <gafton@redhat.com>
 - include the aclocal support files
 
-* Fri Sep  3 1998 Bill Nottingham <notting@redhat.com>
+* Thu Sep  3 1998 Bill Nottingham <notting@redhat.com>
 - remove devel package (functionality is in glibc)
 
 * Tue Sep  1 1998 Jeff Johnson <jbj@redhat.com>

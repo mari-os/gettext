@@ -1,0 +1,38 @@
+--- gettext/libtextstyle/gnulib-m4/gnulib-comp.m4
++++ gettext/libtextstyle/gnulib-m4/gnulib-comp.m4
+@@ -92,6 +92,8 @@ AC_DEFUN([lts_EARLY],
+   # Code from module isnanf-nolibm:
+   # Code from module isnanl:
+   # Code from module isnanl-nolibm:
++  # Code from module largefile:
++  AC_REQUIRE([AC_SYS_LARGEFILE])
+   # Code from module libcroco:
+   # Code from module libglib:
+   # Code from module libxml:
+@@ -290,7 +292,7 @@ AC_DEFUN([lts_INIT],
+   #       - libstdc++.so has more than 4600 relocations.
+   # These are more than 12800 relocations, to perform at program startup.
+   # So, force the use of the included libcroco part.
+-  gl_LIBCROCO([yes])
++  gl_LIBCROCO
+   # In libtextstyle, we don't want to use an external libglib, because its
+   # dynamic relocations have an impact on the startup time of a program that
+   # is linked with it. As you can see by using 'readelf -r ... | wc -l',
+@@ -299,7 +301,7 @@ AC_DEFUN([lts_INIT],
+   # - But libtextstyle needs only less than 10% of libglib: out of the more
+   #   than 1600 exported symbols, libtextstyle needs less than 160.
+   # So, force the use of the included libglib part.
+-  gl_LIBGLIB([yes])
++  gl_LIBGLIB
+   # In libtextstyle, we don't want to use an external libxml, because its
+   # dependencies and their dynamic relocations have an impact on the startup
+   # time of a program that is linked with it. As you can see by using
+@@ -309,7 +311,7 @@ AC_DEFUN([lts_INIT],
+   #     - libstdc++.so has more than 4600 relocations.
+   # These are more than 12800 relocations, to perform at program startup.
+   # So, force the use of the included libxml part.
+-  gl_LIBXML([yes])
++  gl_LIBXML
+   gl_LIMITS_H
+   gl_FUNC_LOG10
+   if test $REPLACE_LOG10 = 1; then
