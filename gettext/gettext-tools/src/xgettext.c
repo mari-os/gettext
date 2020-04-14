@@ -1,5 +1,5 @@
 /* Extracts strings from C source file to Uniforum style .po file.
-   Copyright (C) 1995-1998, 2000-2016, 2018-2019 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2016, 2018-2020 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -347,7 +347,7 @@ main (int argc, char *argv[])
 
   /* Set initial value of variables.  */
   default_domain = MESSAGE_DOMAIN_DEFAULT;
-  xgettext_global_source_encoding = po_charset_ascii;
+  xgettext_global_source_encoding = NULL;
   init_flag_table_c ();
   init_flag_table_objc ();
   init_flag_table_gcc_internal ();
@@ -669,7 +669,7 @@ License GPLv3+: GNU GPL version 3 or later <%s>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "1995-2019", "https://gnu.org/licenses/gpl.html");
+              "1995-2020", "https://gnu.org/licenses/gpl.html");
       printf (_("Written by %s.\n"), proper_name ("Ulrich Drepper"));
       exit (EXIT_SUCCESS);
     }
@@ -746,11 +746,11 @@ xgettext cannot work without keywords to look for"));
      the special name "-" we write to stdout.  */
   if (output_file)
     {
-      if (IS_ABSOLUTE_PATH (output_file) || strcmp (output_file, "-") == 0)
-        file_name = xstrdup (output_file);
-      else
+      if (IS_RELATIVE_FILE_NAME (output_file) && strcmp (output_file, "-") != 0)
         /* Please do NOT add a .po suffix! */
         file_name = xconcatenated_filename (output_dir, output_file, NULL);
+      else
+        file_name = xstrdup (output_file);
     }
   else if (strcmp (default_domain, "-") == 0)
     file_name = "-";
@@ -768,7 +768,8 @@ xgettext cannot work without keywords to look for"));
 
   /* Allocate converter from xgettext_global_source_encoding to UTF-8 (except
      from ASCII or UTF-8, when this conversion is a no-op).  */
-  if (xgettext_global_source_encoding != po_charset_ascii
+  if (xgettext_global_source_encoding != NULL
+      && xgettext_global_source_encoding != po_charset_ascii
       && xgettext_global_source_encoding != po_charset_utf8)
     {
 #if HAVE_ICONV
@@ -965,7 +966,8 @@ xgettext cannot work without keywords to look for"));
 
   /* Free the allocated converter.  */
 #if HAVE_ICONV
-  if (xgettext_global_source_encoding != po_charset_ascii
+  if (xgettext_global_source_encoding != NULL
+      && xgettext_global_source_encoding != po_charset_ascii
       && xgettext_global_source_encoding != po_charset_utf8)
     iconv_close (xgettext_global_source_iconv);
 #endif
@@ -1700,16 +1702,7 @@ xgettext_open (const char *fn,
       logical_file_name = xstrdup (new_name);
       fp = stdin;
     }
-  else if (IS_ABSOLUTE_PATH (fn))
-    {
-      new_name = xstrdup (fn);
-      fp = fopen (fn, "r");
-      if (fp == NULL)
-        error (EXIT_FAILURE, errno,
-               _("error while opening \"%s\" for reading"), fn);
-      logical_file_name = xstrdup (new_name);
-    }
-  else
+  else if (IS_RELATIVE_FILE_NAME (fn))
     {
       int j;
 
@@ -1740,6 +1733,15 @@ xgettext_open (const char *fn,
          file name which was searched for.  */
       logical_file_name = xstrdup (fn);
     }
+  else
+    {
+      new_name = xstrdup (fn);
+      fp = fopen (fn, "r");
+      if (fp == NULL)
+        error (EXIT_FAILURE, errno,
+               _("error while opening \"%s\" for reading"), fn);
+      logical_file_name = xstrdup (new_name);
+    }
 
   *logical_file_name_p = logical_file_name;
   *real_file_name_p = new_name;
@@ -1764,7 +1766,9 @@ extract_from_file (const char *file_name, extractor_ty extractor,
 
   /* Set the default for the source file encoding.  May be overridden by
      the extractor function.  */
-  xgettext_current_source_encoding = xgettext_global_source_encoding;
+  xgettext_current_source_encoding =
+    (xgettext_global_source_encoding != NULL ? xgettext_global_source_encoding :
+     po_charset_ascii);
 #if HAVE_ICONV
   xgettext_current_source_iconv = xgettext_global_source_iconv;
 #endif

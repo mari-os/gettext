@@ -34,7 +34,7 @@ File: libtextstyle.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU libtextstyle
 ****************
 
-   This manual documents the GNU libtextstyle library, version 0.20.
+   This manual documents the GNU libtextstyle library, version 0.20.2.
 
 * Menu:
 
@@ -925,7 +925,7 @@ Its type is 'memory_ostream_t'.  It is a subclass of 'ostream_t'.
      It stores them in '*BUFP' and '*BUFLENP', respectively.
 
      Note: These two return values become invalid when more output is
-     done to the stream.
+     done to the stream or when the stream is freed.
 
 
 File: libtextstyle.info,  Node: The iconv_ostream class,  Prev: The memory_ostream class,  Up: ostream subclasses without styling
@@ -2434,44 +2434,44 @@ General Index
 
 Tag Table:
 Node: Top1338
-Node: Introduction1747
-Node: Style definitions2421
-Node: Built-in versus separate styling5065
-Node: The user's view6251
-Node: The TERM variable7173
-Node: Terminal emulators8255
-Node: Consoles10462
-Node: Emacs10833
-Node: The --color option11181
-Node: The --style option13114
-Node: Style rules13933
-Node: Debugging style files16764
-Node: The programmer's view17774
-Node: Basic use19010
-Node: Include files20457
-Node: Link options20695
-Node: Command-line options22504
-Node: The output stream hierarchy25223
-Node: The ostream class26719
-Node: The styled_ostream class27488
-Node: ostream subclasses without styling28916
-Node: The file_ostream class29560
-Node: The fd_ostream class30159
-Node: The term_ostream class30883
-Node: The html_ostream class33710
-Node: The memory_ostream class35654
-Node: The iconv_ostream class36604
-Node: styled_ostream subclasses37371
-Node: The term_styled_ostream class37786
-Node: The html_styled_ostream class39475
-Node: The noop_styled_ostream class40327
-Node: Debugging the styling code41331
-Node: What to document41932
-Node: Licenses42960
-Node: GNU GPL44553
-Node: GNU FDL82083
-Node: Function Index107189
-Node: Variable Index111902
-Node: Index112344
+Node: Introduction1749
+Node: Style definitions2423
+Node: Built-in versus separate styling5067
+Node: The user's view6253
+Node: The TERM variable7175
+Node: Terminal emulators8257
+Node: Consoles10464
+Node: Emacs10835
+Node: The --color option11183
+Node: The --style option13116
+Node: Style rules13935
+Node: Debugging style files16766
+Node: The programmer's view17776
+Node: Basic use19012
+Node: Include files20459
+Node: Link options20697
+Node: Command-line options22506
+Node: The output stream hierarchy25225
+Node: The ostream class26721
+Node: The styled_ostream class27490
+Node: ostream subclasses without styling28918
+Node: The file_ostream class29562
+Node: The fd_ostream class30161
+Node: The term_ostream class30885
+Node: The html_ostream class33712
+Node: The memory_ostream class35656
+Node: The iconv_ostream class36634
+Node: styled_ostream subclasses37401
+Node: The term_styled_ostream class37816
+Node: The html_styled_ostream class39505
+Node: The noop_styled_ostream class40357
+Node: Debugging the styling code41361
+Node: What to document41962
+Node: Licenses42990
+Node: GNU GPL44583
+Node: GNU FDL82113
+Node: Function Index107219
+Node: Variable Index111932
+Node: Index112374
 
 End Tag Table

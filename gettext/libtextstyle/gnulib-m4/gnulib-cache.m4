@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@
 #  html-styled-ostream \
 #  iconv-ostream \
 #  isatty \
+#  largefile \
 #  memory-ostream \
 #  noop-styled-ostream \
 #  ostream \
@@ -66,6 +67,7 @@ gl_MODULES([
   html-styled-ostream
   iconv-ostream
   isatty
+  largefile
   memory-ostream
   noop-styled-ostream
   ostream

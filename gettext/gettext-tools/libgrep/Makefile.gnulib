@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #  --avoid=mbrtowc \
 #  --avoid=mbsinit \
 #  --avoid=multiarch \
+#  --avoid=setlocale-null \
 #  --avoid=ssize_t \
 #  --avoid=stdbool \
 #  --avoid=stddef \
@@ -54,6 +55,10 @@
 #  --avoid=verify \
 #  --avoid=wchar \
 #  --avoid=wctype-h \
+#  --avoid=windows-mutex \
+#  --avoid=windows-once \
+#  --avoid=windows-recmutex \
+#  --avoid=windows-rwlock \
 #  mbrlen \
 #  regex
 
@@ -78,13 +83,6 @@ EXTRA_DIST += btowc.c
 EXTRA_libgrep_a_SOURCES += btowc.c
 
 ## end   gnulib module btowc
-
-## begin gnulib module havelib
-
-
-EXTRA_DIST += $(top_srcdir)/../build-aux/config.rpath
-
-## end   gnulib module havelib
 
 ## begin gnulib module intprops
 
@@ -212,8 +210,6 @@ EXTRA_DIST += warn-on-use.h
 ## begin gnulib module threadlib
 
 libgrep_a_SOURCES += glthread/threadlib.c
-
-EXTRA_DIST += $(top_srcdir)/../build-aux/config.rpath
 
 ## end   gnulib module threadlib
 

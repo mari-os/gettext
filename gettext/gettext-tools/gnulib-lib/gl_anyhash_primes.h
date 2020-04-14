@@ -1,5 +1,5 @@
 /* Table of primes, for use by hash tables.
-   Copyright (C) 2006, 2009-2019 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -74,7 +74,7 @@ static const size_t primes[] =
     SIZE_MAX /* sentinel, to ensure the search terminates */
   };
 
-/* Return a suitable prime >= ESTIMATE.  */
+/* Returns a suitable prime >= ESTIMATE.  */
 static size_t
 next_prime (size_t estimate)
 {

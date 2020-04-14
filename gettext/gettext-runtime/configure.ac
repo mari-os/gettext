@@ -62,6 +62,9 @@ AC_EXEEXT
 dnl For a 64-bit build on AIX, AC_PROG_RANLIB is not sufficient.
 gl_PROG_AR_RANLIB
 
+dnl Set preferences for the gnulib module 'threadlib'.
+gl_AVOID_WINPTHREAD
+
 dnl Make sure we see all GNU and Solaris extensions.
 gl_EARLY
 AM_PROG_CC_C_O
@@ -83,6 +86,13 @@ case "$host_os" in
   *) is_woe32=no ;;
 esac
 AM_CONDITIONAL([WOE32], [test $is_woe32 = yes])
+
+dnl Some code is only meant to be compiled on native Windows.
+case "$host_os" in
+  mingw*) is_windows_native=yes ;;
+  *) is_windows_native=no ;;
+esac
+AM_CONDITIONAL([WINDOWS_NATIVE], [test $is_windows_native = yes])
 
 dnl Checks for libraries.
 

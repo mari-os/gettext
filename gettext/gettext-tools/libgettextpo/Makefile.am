@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/libgettextpo subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2016, 2019 Free Software Foundation, Inc.
+## Copyright (C) 1995-1998, 2000-2016, 2019-2020 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ AM_CPPFLAGS = \
   -I../src -I$(top_srcdir)/src \
   -I../intl -I$(top_srcdir)/../gettext-runtime/intl
 
-DEFS = -DIN_LIBGETTEXTPO=1 @DEFS@
+DEFS = -DIN_LIBGETTEXTPO=1 -DOMIT_SETLOCALE_LOCK=1 @DEFS@
 
 # libgettextpo contains the public API for PO files.
 libgettextpo_la_SOURCES = \
@@ -99,7 +99,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT=5
-LTV_REVISION=5
+LTV_REVISION=6
 LTV_AGE=5
 
 # How to build libgettextpo.la.
@@ -175,8 +175,8 @@ config.h: $(BUILT_SOURCES)
 	          ;; \
 	      esac; \
 	    done; \
-	  } 5>&1 \
-	    | sed -e 's,.* ,,' | LC_ALL=C sort | LC_ALL=C uniq \
+	  } 5>&1 1>&2 \
+	    | sed -e 's,.* ,,' | grep -v '@' | LC_ALL=C sort | LC_ALL=C uniq \
 	    | sed -e 's,^obstack_free$$,__obstack_free,' \
 	    | sed -e 's,^\(.*\)$$,#define \1 libgettextpo_\1,' > config.h-t && \
 	  if test -f config.h; then \

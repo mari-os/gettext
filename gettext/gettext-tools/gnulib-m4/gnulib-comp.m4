@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module absolute-header:
   # Code from module accept:
   # Code from module accept-tests:
+  # Code from module access:
+  # Code from module access-tests:
   # Code from module acl:
   # Code from module acl-permissions:
   # Code from module acl-tests:
@@ -85,6 +87,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module c-strcasestr-tests:
   # Code from module c-strstr:
   # Code from module c-strstr-tests:
+  # Code from module c99:
   # Code from module canonicalize-lgpl:
   # Code from module canonicalize-lgpl-tests:
   # Code from module careadlinkat:
@@ -102,7 +105,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module connect:
   # Code from module connect-tests:
   # Code from module copy-file:
+  # Code from module copy-file-range:
   # Code from module copy-file-tests:
+  # Code from module creat:
+  # Code from module creat-tests:
   # Code from module csharpcomp:
   # Code from module csharpcomp-script:
   # Code from module csharpexec:
@@ -114,7 +120,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module dirent-tests:
   # Code from module dirfd:
   # Code from module dirname-lgpl:
-  # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module dtotimespec:
   # Code from module dup:
@@ -168,7 +173,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module ftell:
   # Code from module ftell-tests:
   # Code from module ftello:
-  AC_REQUIRE([AC_FUNC_FSEEKO])
+  AC_REQUIRE([gl_SET_LARGEFILE_SOURCE])
   # Code from module ftello-tests:
   # Code from module ftruncate:
   # Code from module ftruncate-tests:
@@ -199,6 +204,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module gettimeofday-tests:
   # Code from module gperf:
   # Code from module hard-locale:
+  # Code from module hard-locale-tests:
   # Code from module hash:
   # Code from module havelib:
   # Code from module iconv:
@@ -239,6 +245,10 @@ AC_DEFUN([gl_EARLY],
   # Code from module isnanl-tests:
   # Code from module iswblank:
   # Code from module iswblank-tests:
+  # Code from module iswdigit:
+  # Code from module iswdigit-tests:
+  # Code from module iswxdigit:
+  # Code from module iswxdigit-tests:
   # Code from module java:
   # Code from module javacomp:
   # Code from module javacomp-script:
@@ -344,6 +354,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module pow-tests:
   # Code from module progname:
   # Code from module propername:
+  # Code from module pthread-h:
+  gl_ANYTHREADLIB_EARLY
+  # Code from module pthread-h-tests:
+  # Code from module pthread-thread:
+  # Code from module pthread-thread-tests:
   # Code from module pthread_sigmask:
   # Code from module pthread_sigmask-tests:
   # Code from module putenv:
@@ -367,9 +382,11 @@ AC_DEFUN([gl_EARLY],
   # Code from module realloc-posix:
   # Code from module relocatable-prog:
   # Code from module relocatable-prog-wrapper:
+  AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module relocatable-script:
   # Code from module rmdir:
   # Code from module rmdir-tests:
+  # Code from module root-uid:
   # Code from module safe-read:
   # Code from module safe-write:
   # Code from module same-inode:
@@ -381,6 +398,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module setenv:
   # Code from module setenv-tests:
   # Code from module setlocale:
+  # Code from module setlocale-null:
+  # Code from module setlocale-null-tests:
   # Code from module setlocale-tests:
   # Code from module setsockopt:
   # Code from module setsockopt-tests:
@@ -421,12 +440,14 @@ AC_DEFUN([gl_EARLY],
   # Code from module stat-tests:
   # Code from module stat-time:
   # Code from module stat-time-tests:
+  # Code from module std-gnu11:
   # Code from module stdalign:
   # Code from module stdalign-tests:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  gl_PROG_CC_C99 arranges for this.
   gl_PROG_CC_C99
+  # Code from module stdarg-tests:
   # Code from module stdbool:
   # Code from module stdbool-tests:
   # Code from module stddef:
@@ -573,6 +594,12 @@ AC_DEFUN([gl_EARLY],
   # Code from module wctype-h-tests:
   # Code from module wcwidth:
   # Code from module wcwidth-tests:
+  # Code from module windows-mutex:
+  # Code from module windows-once:
+  # Code from module windows-recmutex:
+  # Code from module windows-rwlock:
+  # Code from module windows-thread:
+  # Code from module windows-tls:
   # Code from module write:
   # Code from module write-tests:
   # Code from module xalloc:
@@ -609,6 +636,11 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gnulib-lib'
+  gl_FUNC_ACCESS
+  if test $REPLACE_ACCESS = 1; then
+    AC_LIBOBJ([access])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([access])
   gl_FUNC_ACL
   gl_FUNC_ALLOCA
   AC_REQUIRE([gl_ANSI_CXX])
@@ -628,6 +660,7 @@ AC_DEFUN([gl_INIT],
   gl_MODULE_INDICATOR([canonicalize-lgpl])
   gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
   gl_STDLIB_MODULE_INDICATOR([realpath])
+  AC_REQUIRE([AC_C_RESTRICT])
   AC_CHECK_FUNCS_ONCE([readlinkat])
   AC_DEFINE([SIGNAL_SAFE_LIST], [1], [Define if lists must be signal-safe.])
   gl_CLOCK_TIME
@@ -644,6 +677,11 @@ AC_DEFUN([gl_INIT],
   gl_DIRENT_MODULE_INDICATOR([closedir])
   gl_CONFIGMAKE_PREP
   gl_COPY_FILE
+  gl_FUNC_COPY_FILE_RANGE
+  if test $HAVE_COPY_FILE_RANGE = 0; then
+    AC_LIBOBJ([copy-file-range])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([copy-file-range])
   AC_REQUIRE([gt_CSHARPCOMP])
   AC_CONFIG_FILES([csharpcomp.sh:../build-aux/csharpcomp.sh.in])
   # You need to invoke gt_CSHARPEXEC yourself, possibly with arguments.
@@ -761,6 +799,7 @@ AC_DEFUN([gl_INIT],
     GNULIB_GL_UNISTD_H_GETOPT=1
   fi
   AC_SUBST([GNULIB_GL_UNISTD_H_GETOPT])
+  gl_UNISTD_MODULE_INDICATOR([getopt-posix])
   gl_FUNC_GETPROGNAME
   dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.
   AM_GNU_GETTEXT_VERSION([0.20])
@@ -773,6 +812,9 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_GETTIMEOFDAY
   fi
   gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
+  AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
+  LIB_HARD_LOCALE="$LIB_SETLOCALE_NULL"
+  AC_SUBST([LIB_HARD_LOCALE])
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -786,6 +828,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([iconv_close])
   fi
   gl_INLINE
+  gl_INTTYPES_INCOMPLETE
   gl_ISINF
   if test $REPLACE_ISINF = 1; then
     AC_LIBOBJ([isinf])
@@ -844,6 +887,24 @@ AC_DEFUN([gl_INIT],
     fi
   fi
   gl_WCTYPE_MODULE_INDICATOR([iswblank])
+  gl_FUNC_ISWDIGIT
+  if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
+    :
+  else
+    if test $REPLACE_ISWDIGIT = 1; then
+      AC_LIBOBJ([iswdigit])
+    fi
+  fi
+  gl_WCTYPE_MODULE_INDICATOR([iswdigit])
+  gl_FUNC_ISWXDIGIT
+  if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
+    :
+  else
+    if test $REPLACE_ISWXDIGIT = 1; then
+      AC_LIBOBJ([iswxdigit])
+    fi
+  fi
+  gl_WCTYPE_MODULE_INDICATOR([iswxdigit])
   gt_JAVA_CHOICE
   # You need to invoke gt_JAVACOMP yourself, possibly with arguments.
   AC_CONFIG_FILES([javacomp.sh:../build-aux/javacomp.sh.in])
@@ -898,6 +959,11 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_MBRTOWC
   if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
     AC_LIBOBJ([mbrtowc])
+    if test $REPLACE_MBSTATE_T = 1; then
+      AC_LIBOBJ([lc-charset-dispatch])
+      AC_LIBOBJ([mbtowc-lock])
+      gl_PREREQ_MBTOWC_LOCK
+    fi
     gl_PREREQ_MBRTOWC
   fi
   gl_WCHAR_MODULE_INDICATOR([mbrtowc])
@@ -976,6 +1042,11 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_PIPE2
   gl_UNISTD_MODULE_INDICATOR([pipe2])
   gl_MODULE_INDICATOR([pipe2-safer])
+  gl_POSIX_SPAWN
+  if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
+    AC_LIBOBJ([spawni])
+    gl_PREREQ_POSIX_SPAWN_INTERNAL
+  fi
   gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1 || test $REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE = 1; then
     AC_LIBOBJ([spawn_faction_addclose])
@@ -1024,8 +1095,6 @@ AC_DEFUN([gl_INIT],
   gl_POSIX_SPAWN
   if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
     AC_LIBOBJ([spawnp])
-    AC_LIBOBJ([spawni])
-    gl_PREREQ_POSIX_SPAWN_INTERNAL
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawnp])
   gl_FUNC_POW
@@ -1076,6 +1145,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([progreloc])
     AC_LIBOBJ([relocatable])
   fi
+  AC_REQUIRE([AC_C_RESTRICT])
   gl_FUNC_READLINK_SEPARATE
   gl_CANONICALIZE_LGPL_SEPARATE
   gl_MALLOCA
@@ -1109,7 +1179,14 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_SETLOCALE
   fi
   gl_LOCALE_MODULE_INDICATOR([setlocale])
+  gl_FUNC_SETLOCALE_NULL
+  if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
+    AC_LIBOBJ([setlocale-lock])
+    gl_PREREQ_SETLOCALE_LOCK
+  fi
+  gl_LOCALE_MODULE_INDICATOR([setlocale_null])
   gl_SH_FILENAME
+  AC_REQUIRE([AC_C_RESTRICT])
   gl_SIGACTION
   if test $HAVE_SIGACTION = 0; then
     AC_LIBOBJ([sigaction])
@@ -1253,7 +1330,7 @@ AC_DEFUN([gl_INIT],
   gl_SYS_WAIT_H
   AC_PROG_MKDIR_P
   gl_FUNC_GEN_TEMPNAME
-  gl_THREADLIB
+  AC_REQUIRE([gl_THREADLIB])
   gl_HEADER_TIME_H
   gl_TIMESPEC
   gl_TLS
@@ -1304,6 +1381,7 @@ AC_DEFUN([gl_INIT],
   gl_UTIME_MODULE_INDICATOR([utime])
   gl_UTIME_H
   gl_UTIMENS
+  AC_REQUIRE([AC_C_RESTRICT])
   gl_FUNC_VASNPRINTF
   gl_FUNC_VASPRINTF
   gl_STDIO_MODULE_INDICATOR([vasprintf])
@@ -1327,13 +1405,42 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_WCWIDTH
   fi
   gl_WCHAR_MODULE_INDICATOR([wcwidth])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-mutex])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-once])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-recmutex])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-rwlock])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-tls])
+      ;;
+  esac
   gl_FUNC_WRITE
   if test $REPLACE_WRITE = 1; then
     AC_LIBOBJ([write])
     gl_PREREQ_WRITE
   fi
   gl_UNISTD_MODULE_INDICATOR([write])
-  AC_LIBOBJ([xmemdup0])
   gl_XSIZE
   gl_XVASPRINTF
   m4_ifdef([AM_XGETTEXT_OPTION],
@@ -1389,6 +1496,7 @@ changequote([, ])dnl
     AC_LIBOBJ([accept])
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([accept])
+  AC_CHECK_FUNCS_ONCE([geteuid])
   gl_HEADER_ARPA_INET
   AC_PROG_MKDIR_P
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
@@ -1411,6 +1519,11 @@ changequote([, ])dnl
     AC_LIBOBJ([connect])
   fi
   gl_SYS_SOCKET_MODULE_INDICATOR([connect])
+  gl_FUNC_CREAT
+  if test $REPLACE_CREAT = 1; then
+    AC_LIBOBJ([creat])
+  fi
+  gl_FCNTL_MODULE_INDICATOR([creat])
   gl_CTYPE_H
   gl_FUNC_DUP
   if test $REPLACE_DUP = 1; then
@@ -1444,15 +1557,17 @@ changequote([, ])dnl
     AC_LIBOBJ([getpagesize])
   fi
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
+  gl_MUSL_LIBC
+  dnl Distinguish OpenBSD >= 6.2 from OpenBSD < 6.2.
+  AC_CHECK_FUNCS_ONCE([duplocale])
   gl_FUNC_INET_PTON
-  if test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1; then
+  if test $HAVE_INET_PTON = 0 || test $REPLACE_INET_PTON = 1; then
     AC_LIBOBJ([inet_pton])
     gl_PREREQ_INET_PTON
   fi
   gl_ARPA_INET_MODULE_INDICATOR([inet_pton])
   AC_C_BIGENDIAN
   gl_INTTYPES_H
-  gl_INTTYPES_INCOMPLETE
   gl_FUNC_IOCTL
   if test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1; then
     AC_LIBOBJ([ioctl])
@@ -1462,6 +1577,7 @@ changequote([, ])dnl
   if test $HAVE_ISBLANK = 0; then
     AC_LIBOBJ([isblank])
   fi
+  gl_MODULE_INDICATOR([isblank])
   gl_CTYPE_MODULE_INDICATOR([isblank])
   gl_FLOAT_EXPONENT_LOCATION
   gl_DOUBLE_EXPONENT_LOCATION
@@ -1479,6 +1595,14 @@ changequote([, ])dnl
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   gl_LONG_DOUBLE_EXPONENT_LOCATION
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gt_LOCALE_FR
+  gt_LOCALE_FR_UTF8
+  gt_LOCALE_JA
+  gt_LOCALE_ZH_CN
+  gt_LOCALE_FR
+  gt_LOCALE_FR_UTF8
+  gt_LOCALE_JA
+  gt_LOCALE_ZH_CN
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   if test "$ac_cv_header_winsock2_h" = yes; then
     AC_LIBOBJ([listen])
@@ -1488,6 +1612,7 @@ changequote([, ])dnl
   AC_CHECK_FUNCS_ONCE([newlocale])
   AC_CHECK_HEADERS_ONCE([semaphore.h])
   AC_CHECK_DECLS_ONCE([alarm])
+  AC_REQUIRE([gl_SEMAPHORE])
   gt_LOCALE_FR
   gt_LOCALE_FR_UTF8
   gt_LOCALE_JA
@@ -1536,6 +1661,12 @@ changequote([, ])dnl
     [posix_spawn_ported=no],
     [posix_spawn_ported=yes])
   AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
+  gl_PTHREAD_H
+  gl_PTHREAD_THREAD
+  if test $HAVE_PTHREAD_CREATE = 0 || test $REPLACE_PTHREAD_CREATE = 1; then
+    AC_LIBOBJ([pthread-thread])
+  fi
+  gl_PTHREAD_MODULE_INDICATOR([pthread-thread])
   gl_FUNC_PTHREAD_SIGMASK
   if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
     AC_LIBOBJ([pthread_sigmask])
@@ -1663,7 +1794,13 @@ changequote([, ])dnl
     gl_PREREQ_WCTOMB
   fi
   gl_STDLIB_MODULE_INDICATOR([wctomb])
-  gl_YIELD
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-thread])
+      ;;
+  esac
+  AC_REQUIRE([gl_YIELD])
   m4_popdef([gl_MODULE_INDICATOR_CONDITION])
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
@@ -1768,6 +1905,7 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/relocatable.sh.in
   doc/relocatable.texi
   lib/_Noreturn.h
+  lib/access.c
   lib/acl-errno-valid.c
   lib/acl-internal.c
   lib/acl-internal.h
@@ -1821,6 +1959,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/concat-filename.c
   lib/concat-filename.h
   lib/copy-acl.c
+  lib/copy-file-range.c
   lib/copy-file.c
   lib/copy-file.h
   lib/csharpcomp.c
@@ -1833,7 +1972,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/dirfd.c
   lib/dirname-lgpl.c
   lib/dirname.h
-  lib/dosname.h
   lib/dup-safer-flag.c
   lib/dup-safer.c
   lib/dup2.c
@@ -1922,10 +2060,12 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/iconv_open-irix.gperf
   lib/iconv_open-osf.gperf
   lib/iconv_open-solaris.gperf
+  lib/iconv_open-zos.gperf
   lib/iconv_open.c
   lib/iconveh.h
   lib/ignore-value.h
   lib/intprops.h
+  lib/inttypes.in.h
   lib/isinf.c
   lib/isnan.c
   lib/isnand-nolibm.h
@@ -1935,6 +2075,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/isnanl-nolibm.h
   lib/isnanl.c
   lib/iswblank.c
+  lib/iswdigit.c
+  lib/iswxdigit.c
   lib/itold.c
   lib/javacomp.c
   lib/javacomp.h
@@ -1945,6 +2087,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/javaversion.h
   lib/javaversion.java
   lib/langinfo.in.h
+  lib/lc-charset-dispatch.c
+  lib/lc-charset-dispatch.h
   lib/libunistring.valgrind
   lib/libxml/COPYING
   lib/libxml/DOCBparser.c
@@ -2068,6 +2212,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mbchar.h
   lib/mbiter.c
   lib/mbiter.h
+  lib/mbrtowc-impl-utf8.h
+  lib/mbrtowc-impl.h
   lib/mbrtowc.c
   lib/mbsinit.c
   lib/mbslen.c
@@ -2077,6 +2223,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mbsstr.c
   lib/mbswidth.c
   lib/mbswidth.h
+  lib/mbtowc-lock.c
+  lib/mbtowc-lock.h
   lib/mbuiter.c
   lib/mbuiter.h
   lib/memchr.c
@@ -2140,7 +2288,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/set-acl.c
   lib/set-permissions.c
   lib/setenv.c
+  lib/setlocale-lock.c
   lib/setlocale.c
+  lib/setlocale_null.c
+  lib/setlocale_null.h
   lib/sh-quote.c
   lib/sh-quote.h
   lib/sig-handler.c
@@ -2284,6 +2435,17 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/wctype-h.c
   lib/wctype.in.h
   lib/wcwidth.c
+  lib/windows-initguard.h
+  lib/windows-mutex.c
+  lib/windows-mutex.h
+  lib/windows-once.c
+  lib/windows-once.h
+  lib/windows-recmutex.c
+  lib/windows-recmutex.h
+  lib/windows-rwlock.c
+  lib/windows-rwlock.h
+  lib/windows-tls.c
+  lib/windows-tls.h
   lib/write.c
   lib/xalloc-oversized.h
   lib/xalloc.h
@@ -2311,6 +2473,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xvasprintf.h
   m4/00gnulib.m4
   m4/absolute-header.m4
+  m4/access.m4
   m4/acl.m4
   m4/alloca.m4
   m4/ansi-c++.m4
@@ -2329,7 +2492,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/closedir.m4
   m4/codeset.m4
   m4/configmake.m4
+  m4/copy-file-range.m4
   m4/copy-file.m4
+  m4/creat.m4
   m4/csharp.m4
   m4/csharpcomp.m4
   m4/csharpexec.m4
@@ -2401,6 +2566,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/isnanf.m4
   m4/isnanl.m4
   m4/iswblank.m4
+  m4/iswdigit.m4
+  m4/iswxdigit.m4
   m4/java.m4
   m4/javacomp.m4
   m4/javaexec.m4
@@ -2426,7 +2593,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/localtime.m4
   m4/lock.m4
   m4/log10.m4
-  m4/longlong.m4
   m4/lseek.m4
   m4/lstat.m4
   m4/malloc.m4
@@ -2453,6 +2619,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
+  m4/musl.m4
   m4/nanosleep.m4
   m4/netinet_in_h.m4
   m4/nls.m4
@@ -2462,6 +2629,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/off_t.m4
   m4/omp_h.m4
   m4/open-cloexec.m4
+  m4/open-slash.m4
   m4/open.m4
   m4/opendir.m4
   m4/pathmax.m4
@@ -2473,6 +2641,8 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/pow.m4
   m4/printf.m4
   m4/progtest.m4
+  m4/pthread-thread.m4
+  m4/pthread_h.m4
   m4/pthread_rwlock_rdlock.m4
   m4/pthread_sigmask.m4
   m4/putenv.m4
@@ -2493,8 +2663,10 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sched_h.m4
   m4/secure_getenv.m4
   m4/select.m4
+  m4/semaphore.m4
   m4/setenv.m4
   m4/setlocale.m4
+  m4/setlocale_null.m4
   m4/sh-filename.m4
   m4/sig_atomic_t.m4
   m4/sigaction.m4
@@ -2514,6 +2686,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ssize_t.m4
   m4/stat-time.m4
   m4/stat.m4
+  m4/std-gnu11.m4
   m4/stdalign.m4
   m4/stdarg.m4
   m4/stdbool.m4
@@ -2562,6 +2735,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/utimes.m4
   m4/vasnprintf.m4
   m4/vasprintf.m4
+  m4/visibility.m4
   m4/vsnprintf.m4
   m4/wait-process.m4
   m4/waitpid.m4
@@ -2578,9 +2752,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/xsize.m4
   m4/xvasprintf.m4
   m4/yield.m4
+  m4/zzgnulib.m4
   tests/iconvsupport.c
   tests/infinity.h
   tests/init.sh
+  tests/locale.c
   tests/macros.h
   tests/minus-zero.h
   tests/nan.h
@@ -2589,6 +2765,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/randomd.c
   tests/signature.h
   tests/test-accept.c
+  tests/test-access.c
   tests/test-alignof.c
   tests/test-alloca-opt.c
   tests/test-areadlink.c
@@ -2622,6 +2799,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-copy-file-2.sh
   tests/test-copy-file.c
   tests/test-copy-file.sh
+  tests/test-creat.c
   tests/test-ctype.c
   tests/test-dirent.c
   tests/test-dup-safer.c
@@ -2672,6 +2850,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-getopt_long.h
   tests/test-getprogname.c
   tests/test-gettimeofday.c
+  tests/test-hard-locale.c
   tests/test-iconv-h.c
   tests/test-iconv.c
   tests/test-ignore-value.c
@@ -2693,6 +2872,10 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-isnanl.c
   tests/test-isnanl.h
   tests/test-iswblank.c
+  tests/test-iswdigit.c
+  tests/test-iswdigit.sh
+  tests/test-iswxdigit.c
+  tests/test-iswxdigit.sh
   tests/test-langinfo.c
   tests/test-limits-h.c
   tests/test-listen.c
@@ -2713,6 +2896,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-mbrtowc-w32-3.sh
   tests/test-mbrtowc-w32-4.sh
   tests/test-mbrtowc-w32-5.sh
+  tests/test-mbrtowc-w32-6.sh
+  tests/test-mbrtowc-w32-7.sh
   tests/test-mbrtowc-w32.c
   tests/test-mbrtowc.c
   tests/test-mbrtowc1.sh
@@ -2759,6 +2944,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-posix_spawn_file_actions_adddup2.c
   tests/test-posix_spawn_file_actions_addopen.c
   tests/test-pow.c
+  tests/test-pthread-thread.c
+  tests/test-pthread.c
   tests/test-pthread_sigmask1.c
   tests/test-pthread_sigmask2.c
   tests/test-quotearg-simple.c
@@ -2789,6 +2976,9 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-setlocale1.sh
   tests/test-setlocale2.c
   tests/test-setlocale2.sh
+  tests/test-setlocale_null-mt-all.c
+  tests/test-setlocale_null-mt-one.c
+  tests/test-setlocale_null.c
   tests/test-setsockopt.c
   tests/test-sh-quote.c
   tests/test-sigaction.c
@@ -2857,6 +3047,8 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-wcrtomb-w32-3.sh
   tests/test-wcrtomb-w32-4.sh
   tests/test-wcrtomb-w32-5.sh
+  tests/test-wcrtomb-w32-6.sh
+  tests/test-wcrtomb-w32-7.sh
   tests/test-wcrtomb-w32.c
   tests/test-wcrtomb.c
   tests/test-wcrtomb.sh
@@ -2890,6 +3082,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/zerosize-ptr.h
   tests=lib/_Noreturn.h
   tests=lib/accept.c
+  tests=lib/acl-internal.h
   tests=lib/alloca.c
   tests=lib/arg-nonnull.h
   tests=lib/arpa_inet.in.h
@@ -2897,6 +3090,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/btowc.c
   tests=lib/c++defs.h
   tests=lib/connect.c
+  tests=lib/creat.c
   tests=lib/ctype.in.h
   tests=lib/dtotimespec.c
   tests=lib/dup.c
@@ -2910,7 +3104,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/glthread/thread.h
   tests=lib/glthread/yield.h
   tests=lib/inet_pton.c
-  tests=lib/inttypes.in.h
   tests=lib/ioctl.c
   tests=lib/isblank.c
   tests=lib/listen.c
@@ -2920,8 +3113,11 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/netinet_in.in.h
   tests=lib/perror.c
   tests=lib/pipe.c
+  tests=lib/pthread-thread.c
+  tests=lib/pthread.in.h
   tests=lib/pthread_sigmask.c
   tests=lib/putenv.c
+  tests=lib/root-uid.h
   tests=lib/same-inode.h
   tests=lib/select.c
   tests=lib/setsockopt.c
@@ -2948,4 +3144,6 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/wctob.c
   tests=lib/wctomb-impl.h
   tests=lib/wctomb.c
+  tests=lib/windows-thread.c
+  tests=lib/windows-thread.h
 ])

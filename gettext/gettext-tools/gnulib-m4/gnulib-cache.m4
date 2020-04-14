@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -126,6 +126,7 @@
 #  relocatable-prog \
 #  relocatable-script \
 #  setlocale \
+#  setlocale-null \
 #  sh-filename \
 #  sh-quote \
 #  sigpipe \
@@ -170,6 +171,10 @@
 #  wait-process \
 #  wchar \
 #  wctype-h \
+#  windows-mutex \
+#  windows-once \
+#  windows-recmutex \
+#  windows-rwlock \
 #  write \
 #  xalloc \
 #  xconcat-filename \
@@ -258,6 +263,7 @@ gl_MODULES([
   relocatable-prog
   relocatable-script
   setlocale
+  setlocale-null
   sh-filename
   sh-quote
   sigpipe
@@ -302,6 +308,10 @@ gl_MODULES([
   wait-process
   wchar
   wctype-h
+  windows-mutex
+  windows-once
+  windows-recmutex
+  windows-rwlock
   write
   xalloc
   xconcat-filename

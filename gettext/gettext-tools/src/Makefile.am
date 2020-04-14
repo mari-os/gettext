@@ -188,9 +188,26 @@ xgettext_SOURCES += \
   xg-mixed-string.c \
   xg-arglist-context.c xg-arglist-callshape.c xg-arglist-parser.c \
   xg-message.c \
-  x-c.c x-po.c x-sh.c x-python.c x-lisp.c x-elisp.c x-librep.c x-scheme.c \
-  x-smalltalk.c x-java.c x-csharp.c x-awk.c x-ycp.c x-tcl.c x-perl.c x-php.c \
-  x-rst.c x-lua.c x-javascript.c x-vala.c \
+  x-c.c \
+  x-po.c \
+  x-sh.c ../../gettext-runtime/src/escapes.h \
+  x-python.c \
+  x-lisp.c \
+  x-elisp.c \
+  x-librep.c \
+  x-scheme.c \
+  x-smalltalk.c \
+  x-java.c \
+  x-csharp.c \
+  x-awk.c \
+  x-ycp.c \
+  x-tcl.c \
+  x-perl.c \
+  x-php.c \
+  x-rst.c \
+  x-lua.c \
+  x-javascript.c \
+  x-vala.c \
   x-desktop.c
 if !WOE32DLL
 msgattrib_SOURCES = msgattrib.c
@@ -250,6 +267,9 @@ cldr_plurals_SOURCES = cldr-plural.y cldr-plural-exp.c cldr-plurals.c
 cldr_plurals_CFLAGS = $(AM_CFLAGS) $(INCXML)
 cldr_plurals_LDADD = libgettextsrc.la $(LDADD)
 
+if USE_INSTALLED_LIBTEXTSTYLE
+LT_LIBTEXTSTYLE = @LTLIBTEXTSTYLE@
+else
 # How to get the include files of libtextstyle.
 textstyle.h textstyle/stdbool.h textstyle/version.h textstyle/woe32dll.h:
 	here=`pwd`; \
@@ -257,6 +277,9 @@ textstyle.h textstyle/stdbool.h textstyle/version.h textstyle/woe32dll.h:
 	  $(MAKE) install-nobase_includeHEADERS install-nobase_nodist_includeHEADERS includedir="$$here"
 BUILT_SOURCES    += textstyle.h textstyle/stdbool.h textstyle/version.h textstyle/woe32dll.h
 MOSTLYCLEANFILES += textstyle.h textstyle/stdbool.h textstyle/version.h textstyle/woe32dll.h
+# Where to find the built libtextstyle library.
+LT_LIBTEXTSTYLE = ../../libtextstyle/lib/libtextstyle.la
+endif
 
 # How to build libgettextsrc.la.
 # Need ../gnulib-lib/libgettextlib.la.
@@ -268,7 +291,7 @@ MOSTLYCLEANFILES += textstyle.h textstyle/stdbool.h textstyle/version.h textstyl
 # use iconv().
 libgettextsrc_la_LDFLAGS = \
   -release @VERSION@ \
-  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) ../../libtextstyle/lib/libtextstyle.la @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
+  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) $(LT_LIBTEXTSTYLE) @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
 # OS/2 does not support a DLL name longer than 8 characters.
 if OS2
@@ -610,8 +633,13 @@ all-csharp-no:
 msgfmt.net.exe: msgfmt.cs
 	$(CSHARPCOMP) $(CSHARPCOMPFLAGS) -o $@ $(srcdir)/msgfmt.cs
 
+if USE_INSTALLED_CSHARP_DLL
+CSHARP_DLL_DIR = $(libdir)
+else
+CSHARP_DLL_DIR = ../../gettext-runtime/intl-csharp
+endif
 msgunfmt.net.exe: msgunfmt.cs
-	$(CSHARPCOMP) $(CSHARPCOMPFLAGS) -o $@ -L ../../gettext-runtime/intl-csharp -l GNU.Gettext $(srcdir)/msgunfmt.cs
+	$(CSHARPCOMP) $(CSHARPCOMPFLAGS) -o $@ -L '$(CSHARP_DLL_DIR)' -l GNU.Gettext $(srcdir)/msgunfmt.cs
 
 install-exec-local: install-exec-csharp-@BUILDCSHARP@
 install-exec-csharp-yes: all-csharp-yes

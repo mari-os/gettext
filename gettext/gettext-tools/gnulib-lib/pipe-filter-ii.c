@@ -1,5 +1,5 @@
 /* Filtering of data through a subprocess.
-   Copyright (C) 2001-2003, 2008-2019 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2008-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify
@@ -478,7 +478,7 @@ pipe_filter_ii_execute (const char *progname,
                 /* Writing to a pipe in non-blocking mode is tricky: The
                    write() call may fail with EAGAIN, simply because sufficient
                    space is not available in the pipe. See POSIX:2008
-                   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
+                   <https://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
                    This happens actually on AIX and IRIX, when bufsize >= 8192
                    (even though PIPE_BUF and pathconf ("/", _PC_PIPE_BUF) are
                    both 32768).  */

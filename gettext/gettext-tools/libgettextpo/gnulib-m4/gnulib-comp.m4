@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,7 +57,6 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module concat-filename:
   # Code from module diffseq:
   # Code from module dirname-lgpl:
-  # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module dup2:
   # Code from module errno:
@@ -92,6 +91,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module include_next:
   # Code from module inline:
   # Code from module intprops:
+  # Code from module inttypes-incomplete:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module libtextstyle-dummy:
@@ -100,6 +100,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module linked-list:
   # Code from module list:
   # Code from module localcharset:
+  # Code from module locale:
   # Code from module lock:
   # Code from module malloc-posix:
   # Code from module malloca:
@@ -119,6 +120,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module rawmemchr:
   # Code from module realloc-posix:
   # Code from module relocatable-lib:
+  # Code from module setlocale-null:
   # Code from module signal-h:
   # Code from module sigpipe:
   # Code from module sigprocmask:
@@ -191,6 +193,11 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module wchar:
   # Code from module wctype-h:
   # Code from module wcwidth:
+  # Code from module windows-mutex:
+  # Code from module windows-once:
+  # Code from module windows-recmutex:
+  # Code from module windows-rwlock:
+  # Code from module windows-tls:
   # Code from module xalloc:
   # Code from module xalloc-die:
   # Code from module xalloc-oversized:
@@ -301,6 +308,9 @@ AC_DEFUN([gtpo_INIT],
   gl_FUNC_GETPROGNAME
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
+  LIB_HARD_LOCALE="$LIB_SETLOCALE_NULL"
+  AC_SUBST([LIB_HARD_LOCALE])
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -314,6 +324,7 @@ AC_DEFUN([gtpo_INIT],
     AC_LIBOBJ([iconv_close])
   fi
   gl_INLINE
+  gl_INTTYPES_INCOMPLETE
   AC_REQUIRE([gl_LARGEFILE])
   AC_REQUIRE([AC_C_INLINE])
   AC_CHECK_FUNCS_ONCE([tcdrain])
@@ -323,6 +334,7 @@ AC_DEFUN([gtpo_INIT],
   dnl For backward compatibility. Some packages still use this.
   LOCALCHARSET_TESTS_ENVIRONMENT=
   AC_SUBST([LOCALCHARSET_TESTS_ENVIRONMENT])
+  gl_LOCALE_H
   gl_LOCK
   gl_MODULE_INDICATOR([lock])
   gl_FUNC_MALLOC_POSIX
@@ -334,6 +346,11 @@ AC_DEFUN([gtpo_INIT],
   gl_FUNC_MBRTOWC
   if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
     AC_LIBOBJ([mbrtowc])
+    if test $REPLACE_MBSTATE_T = 1; then
+      AC_LIBOBJ([lc-charset-dispatch])
+      AC_LIBOBJ([mbtowc-lock])
+      gl_PREREQ_MBTOWC_LOCK
+    fi
     gl_PREREQ_MBRTOWC
   fi
   gl_WCHAR_MODULE_INDICATOR([mbrtowc])
@@ -391,6 +408,12 @@ AC_DEFUN([gtpo_INIT],
   if test $RELOCATABLE = yes; then
     AC_LIBOBJ([relocatable])
   fi
+  gl_FUNC_SETLOCALE_NULL
+  if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
+    AC_LIBOBJ([setlocale-lock])
+    gl_PREREQ_SETLOCALE_LOCK
+  fi
+  gl_LOCALE_MODULE_INDICATOR([setlocale_null])
   gl_SIGNAL_H
   gl_SIGNAL_SIGPIPE
   dnl Define the C macro GNULIB_SIGPIPE to 1.
@@ -484,7 +507,7 @@ AC_DEFUN([gtpo_INIT],
   AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P
-  gl_THREADLIB
+  AC_REQUIRE([gl_THREADLIB])
   gl_HEADER_TIME_H
   gl_TLS
   gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniconv.h])
@@ -520,6 +543,7 @@ AC_DEFUN([gtpo_INIT],
   gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniwidth.h])
   gl_LIBUNISTRING_MODULE([0.9.8], [uniwidth/width])
   gl_FUNC_GLIBC_UNLOCKED_IO
+  AC_REQUIRE([AC_C_RESTRICT])
   gl_FUNC_VASNPRINTF
   gl_FUNC_VASPRINTF
   gl_STDIO_MODULE_INDICATOR([vasprintf])
@@ -534,6 +558,36 @@ AC_DEFUN([gtpo_INIT],
     gl_PREREQ_WCWIDTH
   fi
   gl_WCHAR_MODULE_INDICATOR([wcwidth])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-mutex])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-once])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-recmutex])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-rwlock])
+      ;;
+  esac
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([windows-tls])
+      ;;
+  esac
   gl_XSIZE
   gl_XVASPRINTF
   m4_ifdef([AM_XGETTEXT_OPTION],
@@ -702,7 +756,6 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/diffseq.h
   lib/dirname-lgpl.c
   lib/dirname.h
-  lib/dosname.h
   lib/dup2.c
   lib/errno.in.h
   lib/error-progname.c
@@ -759,23 +812,32 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/iconv_open-irix.gperf
   lib/iconv_open-osf.gperf
   lib/iconv_open-solaris.gperf
+  lib/iconv_open-zos.gperf
   lib/iconv_open.c
   lib/iconveh.h
   lib/intprops.h
+  lib/inttypes.in.h
   lib/itold.c
+  lib/lc-charset-dispatch.c
+  lib/lc-charset-dispatch.h
   lib/libunistring.valgrind
   lib/limits.in.h
   lib/localcharset.c
   lib/localcharset.h
+  lib/locale.in.h
   lib/malloc.c
   lib/malloca.c
   lib/malloca.h
   lib/markup.c
   lib/markup.h
+  lib/mbrtowc-impl-utf8.h
+  lib/mbrtowc-impl.h
   lib/mbrtowc.c
   lib/mbsinit.c
   lib/mbswidth.c
   lib/mbswidth.h
+  lib/mbtowc-lock.c
+  lib/mbtowc-lock.h
   lib/memchr.c
   lib/memchr.valgrind
   lib/minmax.h
@@ -798,6 +860,9 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/relocatable.c
   lib/relocatable.h
   lib/relocatable.valgrind
+  lib/setlocale-lock.c
+  lib/setlocale_null.c
+  lib/setlocale_null.h
   lib/signal.in.h
   lib/sigprocmask.c
   lib/size_max.h
@@ -885,6 +950,17 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/wctype-h.c
   lib/wctype.in.h
   lib/wcwidth.c
+  lib/windows-initguard.h
+  lib/windows-mutex.c
+  lib/windows-mutex.h
+  lib/windows-once.c
+  lib/windows-once.h
+  lib/windows-recmutex.c
+  lib/windows-recmutex.h
+  lib/windows-rwlock.c
+  lib/windows-rwlock.h
+  lib/windows-tls.c
+  lib/windows-tls.h
   lib/xalloc-oversized.h
   lib/xalloc.h
   lib/xasprintf.c
@@ -936,6 +1012,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/include_next.m4
   m4/inline.m4
   m4/intmax_t.m4
+  m4/inttypes.m4
   m4/inttypes_h.m4
   m4/largefile.m4
   m4/lib-ld.m4
@@ -949,8 +1026,8 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/locale-fr.m4
   m4/locale-ja.m4
   m4/locale-zh.m4
+  m4/locale_h.m4
   m4/lock.m4
-  m4/longlong.m4
   m4/malloc.m4
   m4/malloca.m4
   m4/math_h.m4
@@ -968,6 +1045,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/obstack.m4
   m4/off_t.m4
   m4/open-cloexec.m4
+  m4/open-slash.m4
   m4/open.m4
   m4/pathmax.m4
   m4/printf.m4
@@ -976,6 +1054,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/rawmemchr.m4
   m4/realloc.m4
   m4/relocatable-lib.m4
+  m4/setlocale_null.m4
   m4/signal_h.m4
   m4/signalblocking.m4
   m4/sigpipe.m4
@@ -1006,6 +1085,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/unlocked-io.m4
   m4/vasnprintf.m4
   m4/vasprintf.m4
+  m4/visibility.m4
   m4/warn-on-use.m4
   m4/wchar_h.m4
   m4/wchar_t.m4
@@ -1014,4 +1094,5 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/wint_t.m4
   m4/xsize.m4
   m4/xvasprintf.m4
+  m4/zzgnulib.m4
 ])

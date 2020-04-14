@@ -1,5 +1,5 @@
 /* Shell quoting.
-   Copyright (C) 2001-2002, 2004, 2009-2019 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2004, 2009-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ extern size_t shell_quote_length (const char *string);
 
 /* Copies the quoted string to p and returns the incremented p.
    There must be room for shell_quote_length (string) + 1 bytes at p.  */
-extern char * shell_quote_copy (char *p, const char *string);
+extern char * shell_quote_copy (char *restrict p, const char *string);
 
 /* Returns the freshly allocated quoted string.  */
 extern char * shell_quote (const char *string);

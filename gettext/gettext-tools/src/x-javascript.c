@@ -929,11 +929,29 @@ phase5_scan_regexp (void)
       phase2_ungetc (c);
 }
 
-/* Number of open '{' tokens.  */
-static int brace_depth;
-
 /* Number of open template literals `...${  */
 static int template_literal_depth;
+
+/* Number of open '{' tokens, at each template literal level.
+   The "current" element is brace_depths[template_literal_depth].  */
+static int *brace_depths;
+/* Number of allocated elements in brace_depths.  */
+static size_t brace_depths_alloc;
+
+/* Adds a new brace_depths level after template_literal_depth was
+   incremented.  */
+static void
+new_brace_depth_level (void)
+{
+  if (template_literal_depth == brace_depths_alloc)
+    {
+      brace_depths_alloc = 2 * brace_depths_alloc + 1;
+      /* Now template_literal_depth < brace_depths_alloc.  */
+      brace_depths =
+        (int *) xrealloc (brace_depths, brace_depths_alloc * sizeof (int));
+    }
+  brace_depths[template_literal_depth] = 0;
+}
 
 /* Number of open XML elements.  */
 static int xml_element_depth;
@@ -1163,10 +1181,10 @@ phase5_get (token_ty *tp)
         case '"': case '\'':
           /* Strings.  */
           {
-            int quote_char;
+            int quote_char = c;
+            lexical_context_ty saved_lexical_context = lexical_context;
             struct mixed_string_buffer msb;
 
-            quote_char = c;
             lexical_context = lc_string;
             /* Start accumulating the string.  */
             mixed_string_buffer_init (&msb, lexical_context,
@@ -1193,7 +1211,7 @@ phase5_get (token_ty *tp)
               }
             tp->mixed_string = mixed_string_buffer_result (&msb);
             tp->comment = add_reference (savable_comment);
-            lexical_context = lc_outside;
+            lexical_context = saved_lexical_context;
             tp->type = last_token_type = token_type_string;
             return;
           }
@@ -1227,6 +1245,7 @@ phase5_get (token_ty *tp)
                     mixed_string_buffer_destroy (&msb);
                     tp->type = last_token_type = token_type_ltemplate;
                     template_literal_depth++;
+                    new_brace_depth_level ();
                     break;
                   }
 
@@ -1306,7 +1325,7 @@ phase5_get (token_ty *tp)
                   break;
 
                 case lc_xml_close_tag:
-                  if (xml_element_depth-- > 0)
+                  if (--xml_element_depth > 0)
                     lexical_context = lc_xml_content;
                   else
                     lexical_context = lc_outside;
@@ -1330,7 +1349,12 @@ phase5_get (token_ty *tp)
                 {
                   c = phase2_getc ();
                   if (c == '>')
-                    lexical_context = lc_outside;
+                    {
+                      if (--xml_element_depth > 0)
+                        lexical_context = lc_xml_content;
+                      else
+                        lexical_context = lc_outside;
+                    }
                   else
                     phase2_ungetc (c);
                 }
@@ -1357,15 +1381,15 @@ phase5_get (token_ty *tp)
           if (xml_element_depth > 0 && !inside_embedded_js_in_xml)
             inside_embedded_js_in_xml = true;
           else
-            brace_depth++;
+            brace_depths[template_literal_depth]++;
           tp->type = last_token_type = token_type_other;
           return;
 
         case '}':
           if (xml_element_depth > 0 && inside_embedded_js_in_xml)
             inside_embedded_js_in_xml = false;
-          else if (brace_depth > 0)
-            brace_depth--;
+          else if (brace_depths[template_literal_depth] > 0)
+            brace_depths[template_literal_depth]--;
           else if (template_literal_depth > 0)
             {
               /* Middle or right part of template literal.  */
@@ -1695,12 +1719,14 @@ extract_javascript (FILE *f,
   last_comment_line = -1;
   last_non_comment_line = -1;
 
-  brace_depth = 0;
   template_literal_depth = 0;
+  new_brace_depth_level ();
   xml_element_depth = 0;
   inside_embedded_js_in_xml = false;
 
-  xgettext_current_file_source_encoding = xgettext_global_source_encoding;
+  xgettext_current_file_source_encoding =
+    (xgettext_global_source_encoding != NULL ? xgettext_global_source_encoding :
+     po_charset_ascii);
 #if HAVE_ICONV
   xgettext_current_file_source_iconv = xgettext_global_source_iconv;
 #endif

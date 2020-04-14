@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on May, 12 2019 by texi2html 1.78a -->
+<!-- Created on April, 14 2020 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="gettext_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="gettext_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="gettext_21.html#SEC376" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="gettext_21.html#SEC377" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="gettext_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
@@ -905,8 +905,8 @@ built-in.  It has no effect.
 </dd>
 <dt> &lsquo;<samp>-n</samp>&rsquo;</dt>
 <dd><a name="IDX1076"></a>
-<p>Suppress trailing newline.  By default, <code>gettext</code> adds a newline to
-the output.
+<p>This option has only an effect if the <code>-s</code> option is given.  It
+suppresses the additional newline at the end.
 </p>
 </dd>
 <dt> &lsquo;<samp>-V</samp>&rsquo;</dt>
@@ -929,7 +929,10 @@ environment variable <code>TEXTDOMAINDIR</code>.
 </p>
 <p>When used with the <code>-s</code> option the program behaves like the &lsquo;<samp>echo</samp>&rsquo;
 command.  But it does not simply copy its arguments to stdout.  Instead those
-messages found in the selected catalog are translated.
+messages found in the selected catalog are translated.  Also, a newline is
+added at the end, unless either the option <code>-n</code> is specified or the
+option <code>-e</code> is specified and some of the argument strings contains a
+&lsquo;<samp>\c</samp>&rsquo; escape sequence.
 </p>
 <p>Note: <code>xgettext</code> supports only the one-argument form of the
 <code>gettext</code> invocation, where no options are present and the
@@ -971,7 +974,7 @@ corresponds to a package, a program, or a module of a program.
 <dd><a name="IDX1084"></a>
 <p>Enable expansion of some escape sequences.  This option is for compatibility
 with the &lsquo;<samp>gettext</samp>&rsquo; program.  The escape sequences
-&lsquo;<samp>\a</samp>&rsquo;, &lsquo;<samp>\b</samp>&rsquo;, &lsquo;<samp>\c</samp>&rsquo;, &lsquo;<samp>\f</samp>&rsquo;, &lsquo;<samp>\n</samp>&rsquo;, &lsquo;<samp>\r</samp>&rsquo;, &lsquo;<samp>\t</samp>&rsquo;,
+&lsquo;<samp>\a</samp>&rsquo;, &lsquo;<samp>\b</samp>&rsquo;, &lsquo;<samp>\f</samp>&rsquo;, &lsquo;<samp>\n</samp>&rsquo;, &lsquo;<samp>\r</samp>&rsquo;, &lsquo;<samp>\t</samp>&rsquo;,
 &lsquo;<samp>\v</samp>&rsquo;, &lsquo;<samp>\\</samp>&rsquo;, and &lsquo;<samp>\</samp>&rsquo; followed by one to three octal digits, are
 interpreted like the System V &lsquo;<samp>echo</samp>&rsquo; program did.
 </p>
@@ -1717,7 +1720,7 @@ Example: <code>I18N Locale default messages domain: 'gettext' localeDirectory: /
 </p>
 </dd>
 <dt> gettext shorthand</dt>
-<dd><p>_(&quot;abc&quot;)
+<dd><p>i18n(&quot;abc&quot;)
 </p>
 </dd>
 <dt> gettext/ngettext functions</dt>
@@ -1746,7 +1749,7 @@ Example: <code>I18N Locale default messages domain: 'gettext' localeDirectory: /
 </p>
 </dd>
 <dt> Extractor</dt>
-<dd><p><code>xgettext -k_</code>
+<dd><p><code>xgettext -ki18n</code>
 </p>
 </dd>
 <dt> Formatting with positions</dt>
@@ -1840,19 +1843,19 @@ holding the <code>ResourceBundle</code> instance and the shorthand:
 
 <table><tr><td>&nbsp;</td><td><pre class="smallexample">private static ResourceBundle myResources =
   ResourceBundle.getBundle(&quot;domain-name&quot;);
-public static String _(String s) {
+public static String i18n(String s) {
   return myResources.getString(s);
 }
 </pre></td></tr></table>
 
 <p>All classes containing internationalized strings then contain
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="smallexample">import static Util._;
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">import static Util.i18n;
 </pre></td></tr></table>
 
 <p>and the shorthand is used like this:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(_(&quot;Operation completed.&quot;));
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(i18n(&quot;Operation completed.&quot;));
 </pre></td></tr></table>
 
 </li><li>
@@ -1866,12 +1869,12 @@ holding the <code>ResourceBundle</code> instance:
 <p>All classes containing internationalized strings then contain
 </p>
 <table><tr><td>&nbsp;</td><td><pre class="smallexample">private static ResourceBundle res = Util.myResources;
-private static String _(String s) { return res.getString(s); }
+private static String i18n(String s) { return res.getString(s); }
 </pre></td></tr></table>
 
 <p>and the shorthand is used like this:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(_(&quot;Operation completed.&quot;));
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(i18n(&quot;Operation completed.&quot;));
 </pre></td></tr></table>
 
 </li><li>
@@ -1881,7 +1884,7 @@ definition of the resource bundle and of the shorthand:
 <table><tr><td>&nbsp;</td><td><pre class="smallexample">public class S {
   public static ResourceBundle myResources =
     ResourceBundle.getBundle(&quot;domain-name&quot;);
-  public static String _(String s) {
+  public static String i18n(String s) {
     return myResources.getString(s);
   }
 }
@@ -1889,7 +1892,7 @@ definition of the resource bundle and of the shorthand:
 
 <p>and the shorthand is used like this:
 </p>
-<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(S._(&quot;Operation completed.&quot;));
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">System.out.println(S.i18n(&quot;Operation completed.&quot;));
 </pre></td></tr></table>
 </li></ul>
 
@@ -3824,12 +3827,12 @@ appropriate one, and install it through
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="gettext_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="gettext_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="gettext_21.html#SEC376" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="gettext_21.html#SEC377" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="gettext_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>May, 12 2019</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>April, 14 2020</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

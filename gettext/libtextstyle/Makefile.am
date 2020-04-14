@@ -20,7 +20,7 @@ AUTOMAKE_OPTIONS = 1.13 gnu no-dependencies
 ACLOCAL_AMFLAGS = -I m4 -I gnulib-m4
 
 # The list of subdirectories containing Makefiles.
-SUBDIRS = doc lib tests adhoc-tests
+SUBDIRS = lib tests adhoc-tests doc
 
 EXTRA_DIST = \
   version.sh \
@@ -37,9 +37,11 @@ EXTRA_DIST = \
   gnulib-local/lib/glib/ghash.in.h \
   gnulib-local/lib/glib/glist.c \
   gnulib-local/lib/glib/glist.in.h \
+  gnulib-local/lib/glib/gmacros.in.h \
   gnulib-local/lib/glib/gmessages.c \
   gnulib-local/lib/glib/gprimes.c \
   gnulib-local/lib/glib/gprimes.in.h \
+  gnulib-local/lib/glib/gprintfint.in.h \
   gnulib-local/lib/glib/gstrfuncs.c \
   gnulib-local/lib/glib/gstrfuncs.in.h \
   gnulib-local/lib/glib/gstring.c \
@@ -175,6 +177,7 @@ EXTRA_DIST = \
   gnulib-local/tests/test-term-ostream-xterm-basic-italic.out \
   gnulib-local/tests/test-term-ostream-xterm-basic.out \
   gnulib-local/tests/test-term-ostream-xterm-freebsd101.out \
+  gnulib-local/tests/test-term-ostream-xterm-freebsd-italic.out \
   gnulib-local/tests/test-term-ostream-xterm-irix65.out \
   gnulib-local/tests/test-term-ostream-xterm-linux-debian.out \
   gnulib-local/tests/test-term-ostream-xterm-linux-mandriva.out \

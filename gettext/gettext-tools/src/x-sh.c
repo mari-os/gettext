@@ -41,6 +41,7 @@
 #include "error-progname.h"
 #include "xalloc.h"
 #include "hash.h"
+#include "../../gettext-runtime/src/escapes.h"
 #include "gettext.h"
 
 #define _(s) gettext(s)
@@ -599,7 +600,7 @@ phase2_getc ()
       /* The count of backslashes is > 0 and < expected_count, therefore the
          result depends on c, the first character after the backslashes.
          Note: The formulas below don't necessarily have a logic; they were
-         empirically determined such that 1. the xgettext-30 test succeeds,
+         empirically determined such that 1. the xgettext-sh-1 test succeeds,
          2. the behaviour for count == 0 would correspond to the one without
          any baskslash.  */
       if (c == '\'')
@@ -611,7 +612,9 @@ phase2_getc ()
             }
           else
             return ((open_doublequote
-                     || (open_singlequote && open_singlequote_terminator != c))
+                     || (open_singlequote
+                         ? open_singlequote_terminator != c
+                         : count == (expected_count >> 1)))
                     ? QUOTED (c)
                     : c);
         }
@@ -807,12 +810,29 @@ read_word (struct word *wp, int looking_for, flag_context_ty context)
         phase2_ungetc (c2);
     }
 
-  if (looking_for == CLOSING_BACKQUOTE && c == CLOSING_BACKQUOTE)
+  if (c == CLOSING_BACKQUOTE)
     {
-      saw_closing_backquote ();
-      wp->type = t_backquote;
-      last_non_comment_line = line_number;
-      return;
+      if (looking_for == CLOSING_BACKQUOTE)
+        {
+          saw_closing_backquote ();
+          wp->type = t_backquote;
+          last_non_comment_line = line_number;
+          return;
+        }
+      else if (looking_for == ')')
+        {
+          /* The input is invalid syntax, such as `a<(`
+             Push back the closing backquote and pretend that we have seen a
+             closing parenthesis.  */
+          phase2_ungetc (c);
+          wp->type = t_paren;
+          last_non_comment_line = line_number;
+          return;
+        }
+      else
+        /* We shouldn't be reading a CLOSING_BACKQUOTE when
+           looking_for == '\0'.  */
+        abort ();
     }
 
   if (looking_for == ')' && c == ')')
@@ -1222,6 +1242,8 @@ read_command (int looking_for, flag_context_ty outer_context)
      command.  */
   int arg = 0;                  /* Current argument number.  */
   bool arg_of_redirect = false; /* True right after a redirection operator.  */
+  bool must_expand_arg_strings = false; /* True if need to expand escape
+                                           sequences in arguments.  */
   flag_context_list_iterator_ty context_iter;
   const struct callshapes *shapes = NULL;
   struct arglist_parser *argparser = NULL;
@@ -1317,6 +1339,11 @@ read_command (int looking_for, flag_context_ty outer_context)
                       && memcmp (argparser->keyword, "gettext", 7) == 0)
                      || (argparser->keyword_len == 8
                          && memcmp (argparser->keyword, "ngettext", 8) == 0));
+                  bool accepts_expand =
+                    ((argparser->keyword_len == 7
+                      && memcmp (argparser->keyword, "gettext", 7) == 0)
+                     || (argparser->keyword_len == 8
+                         && memcmp (argparser->keyword, "ngettext", 8) == 0));
                   if (accepts_context && argparser->next_is_msgctxt)
                     {
                       char *s = string_of_word (&inner);
@@ -1358,13 +1385,38 @@ read_command (int looking_for, flag_context_ty outer_context)
                                                        inner.line_number_at_start);
                       matters_for_argparser = false;
                     }
+                  else if (accepts_expand
+                           && inner.token->charcount == 2
+                           && memcmp (inner.token->chars, "-e", 2) == 0)
+                    {
+                      must_expand_arg_strings = true;
+                      matters_for_argparser = false;
+                    }
                   else
                     {
                       char *s = string_of_word (&inner);
-                      mixed_string_ty *ms =
-                        mixed_string_alloc_simple (s, lc_string,
-                                                   logical_file_name,
-                                                   inner.line_number_at_start);
+                      mixed_string_ty *ms;
+
+                      /* When '-e' was specified, expand escape sequences in s.  */
+                      if (accepts_expand && must_expand_arg_strings)
+                        {
+                          bool expands_backslash_c =
+                            (argparser->keyword_len == 7
+                             && memcmp (argparser->keyword, "gettext", 7) == 0);
+                          bool backslash_c = false;
+                          char *expanded =
+                            (char *)
+                            expand_escapes (s, expands_backslash_c ? &backslash_c : NULL);
+                          /* We can ignore the value of expands_backslash_c, because
+                             here we don't support the gettext '-s' option.  */
+                          if (expanded != s)
+                            free (s);
+                          s = expanded;
+                        }
+
+                      ms = mixed_string_alloc_simple (s, lc_string,
+                                                      logical_file_name,
+                                                      inner.line_number_at_start);
                       free (s);
                       arglist_parser_remember (argparser, arg, ms,
                                                inner_context,

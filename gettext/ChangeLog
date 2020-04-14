@@ -1,3 +1,814 @@
+2020-04-14  Bruno Haible  <bruno@clisp.org>
+
+	Update translations (from the TP).
+	* gettext-runtime/po/*.po: Update.
+	* gettext-tools/po/*.po: Update.
+	* gettext-tools/examples/po/*.po: Update.
+	* gettext-tools/examples/po/LINGUAS: Add 'sq'.
+	* gettext-tools/examples/hello-*/po/LINGUAS: Likewise.
+	* gettext-tools/examples/Makefile.am (EXAMPLESPOFILES): Add sq.po.
+
+	examples: Use infrastructure from gettext version 0.20.2.
+	* gettext-tools/examples/hello-*/configure.ac: Use AM_GNU_GETTEXT_VERSION with
+	version 0.20.2.
+	* gettext-tools/examples/hello-c++-kde/configure.in.in: Likewise.
+
+	Prepare for 0.20.2 release.
+	* gettext-runtime/doc/matrix.texi: Update from TP.
+	* gettext-runtime/doc/nls.texi (STATUS): Update.
+	* gettext-runtime/intl/Makefile.am (LTV_*): Bump to 9:7:1.
+	* gettext-runtime/intl/libgnuintl.in.h (LIBINTL_VERSION): Bump.
+	* gettext-tools/configure.ac (ARCHIVE_VERSION): Bump to 0.20.2.
+	* gettext-tools/libgettextpo/Makefile.am (LTV_*): Bump to 5:6:5.
+	* gettext-tools/libgettextpo/gettext-po.in.h (LIBGETTEXTPO_VERSION): Bump.
+	* gettext-runtime/src/envsubst.c: Update copyright years in --version output.
+	* gettext-runtime/src/gettext.c: Likewise.
+	* gettext-runtime/src/gettext.sh.in: Likewise.
+	* gettext-runtime/src/ngettext.c: Likewise.
+	* gettext-tools/src/cldr-plurals.c: Likewise.
+	* gettext-tools/src/hostname.c: Likewise.
+	* gettext-tools/src/msgattrib.c: Likewise.
+	* gettext-tools/src/msgcat.c: Likewise.
+	* gettext-tools/src/msgcmp.c: Likewise.
+	* gettext-tools/src/msgcomm.c: Likewise.
+	* gettext-tools/src/msgconv.c: Likewise.
+	* gettext-tools/src/msgen.c: Likewise.
+	* gettext-tools/src/msgexec.c: Likewise.
+	* gettext-tools/src/msgfilter.c: Likewise.
+	* gettext-tools/src/msgfmt.c: Likewise.
+	* gettext-tools/src/msggrep.c: Likewise.
+	* gettext-tools/src/msginit.c: Likewise.
+	* gettext-tools/src/msgmerge.c: Likewise.
+	* gettext-tools/src/msgunfmt.c: Likewise.
+	* gettext-tools/src/msguniq.c: Likewise.
+	* gettext-tools/src/recode-sr-latin.c: Likewise.
+	* gettext-tools/src/urlget.c: Likewise.
+	* gettext-tools/src/xgettext.c: Likewise.
+	* gettext-tools/misc/convert-archive.in: Likewise.
+	* gettext-tools/misc/gettextize.in: Likewise.
+	* gettext-tools/misc/autopoint.in: Likewise. Handle version 0.20.2.
+	* libtextstyle/lib/Makefile.am (LTV_*): Bump to 0:1:0.
+	* libtextstyle/version.sh: Update VERSION_NUMBER and RELEASE_DATE.
+
+	maint: Update download location of jdom-1.0.jar.
+
+	build: Fix the generation of hello-c-gnome3.pot (regression from 2019-10-04).
+	* gettext-tools/examples/po/Makefile.am (USE_BUILT_PROGS): Set also
+	GETTEXTDATADIR.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Fix a compilation error (regression from 2019-12-24).
+	* gettext-tools/src/write-desktop.c: Include <stdint.h>.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix a report by an undefined-behaviour sanitizer.
+	Reported by Jeffrey Walton <noloader@gmail.com> in
+	<https://lists.gnu.org/archive/html/bug-gettext/2020-01/msg00029.html>.
+
+	* gettext-tools/src/read-properties.c (read_escaped_string): Don't call memcpy
+	with a NULL argument.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	po, examples: In the .po -> .gmo rules, really consider the newest changes to the POT file.
+	Reported by Petr Ovtchenkov <ptr@void-ptr.info> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2020-04/msg00000.html>.
+	Helped by Paul Smith.
+
+	* gettext-runtime/po/Makefile.in.in (.po.gmo): Write dependency on the POT file
+	as a target rule, since inference rules don't support prerequisites.
+	* gettext-tools/examples/hello-*/po/Makefile.am: Likewise, also for the .po.qm
+	rule.
+	* NEWS: Mention the fix.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	The next release will be 0.20.2, not 0.21.
+	* gettext-runtime/m4/gettext.m4: Update header comment.
+	* gettext-runtime/m4/intdiv0.m4: Likewise.
+	* gettext-tools/m4/exported.m4: Likewise.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	doc: Don't recommend to use the reserved identifier '_' in Java.
+	Reported by Akim Demaille <akim.demaille@gmail.com>.
+
+	* gettext-tools/doc/gettext.texi (Java): Use i18n instead _ as magic identifier.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Fix link error on MSVC with --disable-shared.
+	* gettext-tools/tests/setlocale.c (setlocale): Define to fake_setlocale on
+	native Windows.
+	* gettext-tools/tests/format-c-3-prg.c (setlocale): Likewise.
+	* gettext-tools/tests/format-c-4-prg.c (setlocale): Likewise.
+	* gettext-tools/tests/plural-1-prg.c (setlocale): Likewise.
+	* gettext-tools/tests/tstgettext.c (setlocale): Likewise.
+	* gettext-tools/tests/tstngettext.c (setlocale): Likewise.
+
+	build: Fix build error on MSVC with --disable-shared.
+	* gettext-tools/configure.ac (AH_BOTTOM): On MSVC with --disable-shared, even
+	when compiling with option -MD, define DLL_VARIABLE to empty.
+
+2020-04-13  Dmitry V. Levin  <ldv@altlinux.org>
+
+	libtextstyle: Enable large files and, on Linux, 64-bit inodes support.
+	* libtextstyle/autogen.sh (GNULIB_MODULES): Add 'largefile' to enable
+	large files support on systems where this is not the default and 64-bit
+	inodes in 32-bit applications on Linux.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Fix a test failure of msgfmt-desktop-2 on HP-UX with cc.
+	* gettext-tools/src/write-desktop.c (msgfmt_desktop_handle_pair): Don't cast
+	directly from 'void *' to 'bool'.
+
+	Fix test failures on Haiku.
+	* gettext-tools/tests/init.cfg (func_filter_POT_Creation_Date): New function.
+	* gettext-tools/tests/xgettext-*: Use it.
+
+	build: Fix build failures on HP-UX 11.31/hppa with cc.
+	* gnulib-local/lib/libxml/parser.c (struct _xmlDefAttrs): Don't use ISO C 99
+	syntax with this compiler.
+	* gettext-runtime/intl/plural-exp.h (HAVE_STRUCT_INITIALIZER): Set to 0 with
+	this compiler.
+
+	libtextstyle: Update .gitignore after 2019-12-24 change.
+
+	libtextstyle: Don't erase the .sym.in file if 'sed' is not GNU sed.
+	* libtextstyle/lib/Makefile.am (libtextstyle.sym.in): Test the exit status of
+	the declared.sh command. Preserve the existing libtextstyle.sym if it failed.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libcroco: Improve copyright headers.
+	The copyright headers should be unambiguous even if a single file is copied from
+	the GNU gettext package and used elsewhere. Reported by John Darrington.
+
+	* libtextstyle/gnulib-local/lib/libcroco/*: Inline the COPYRIGHT file where
+	applicable. Add copyright header.
+	* libtextstyle/gnulib-local/lib/libcroco/libcroco-config.h: Add copyright header.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libxml: Improve copyright headers.
+	The copyright headers should be unambiguous even if a single file is copied from
+	the GNU gettext package and used elsewhere. Reported by John Darrington.
+
+	* gnulib-local/lib/libxml/*: Inline this directory's COPYING file where
+	applicable. Add FSF copyright header.
+	* gnulib-local/lib/libxml/trionan.c: Add copyright header.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	glib: Improve copyright headers.
+	The copyright headers should be unambiguous even if a single file is copied from
+	the GNU gettext package and used elsewhere. Reported by John Darrington.
+
+	* libtextstyle/gnulib-local/lib/glib*: Add FSF copyright header.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Clarify memory_stream_contents function.
+	* libtextstyle/gnulib-local/lib/memory-ostream.oo.h (memory_stream::contents):
+	Clarify extent of return values.
+	* libtextstyle/doc/libtextstyle.texi (The memory_ostream class): Likewise.
+
+	build: Fix typo in comment.
+	* gettext-tools/gnulib-tests/Makefile.am: Fix typo.
+	* libtextstyle/adhoc-tests/Makefile.am: Likewise.
+	* libtextstyle/tests/Makefile.am: Likewise.
+
+	build: Fix failure to build the doc in a VPATH build.
+	* gettext-tools/doc/Makefile.am ($(srcdir)/stamp-vti): Create version.texi in
+	the source directory.
+
+	Correct indentation.
+	* gettext-tools/src/x-scheme.c (read_object): Correct indentation.
+
+	doc: Mention packages needed for Javascript support.
+	* HACKING: Mention the gir1.2-gtk-3.0 package alongside with gjs.
+
+	doc: Don't need an ar_SA locale.
+	* HACKING: Remove command that creates an ar_SA locale.
+
+	doc: Update list of external dependencies.
+	* DEPENDENCIES: Don't list glib2 and libcroco (not needed any more since
+	2019-02-15).
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Fix the build error in gettext-tools/examples/po.
+	Reported by Nick Alcock <nix@esperi.org.uk>
+	at <https://savannah.gnu.org/bugs/?56529>.
+
+	* gettext-tools/examples/po/Makefile.am (USE_BUILT_PROGS): New variable.
+	(hello-*.pot): Use it.
+	($(srcdir)/../hello-*/po/$(LL).po): Likewise.
+	* HACKING: Remove the workaround.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Make it easier to build the code when the documentation tools don't work.
+	* libtextstyle/Makefile.am (SUBDIRS): Move 'doc' to the end.
+
+	build: Don't fetch gnulib a second time in libtextstyle.
+	* autogen.sh: Set GNULIB_SRCDIR when invoking libtextstyle/autogen.sh.
+	* libtextstyle/autogen.sh: Remove all git operations. Look at the GNULIB_SRCDIR
+	environment variable. Ignore the GNULIB_TOOL environment variable.
+
+	libtextstyle: Fix failure to download texinfo.tex.
+	* libtextstyle/autogen.sh: Create build-aux directory.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libxml: Fix buffer overrun.
+	Reported by GCC 8 -Wformat-truncation warning.
+
+	* gnulib-local/lib/libxml/parser.c (xmlParseReference): Increase size of buffer
+	'out' to 12 bytes.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix parsing of XML tags.
+	* gettext-tools/src/x-javascript.c (phase5_get): Fix lexical_context after
+	decrementing xml_element_depth.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix parsing of XML tags that end in /> and have attributes.
+	Reported by Matej Marusak <marusak.matej@gmail.com>
+	in <https://savannah.gnu.org/bugs/?56848>.
+
+	* gettext-tools/src/x-javascript.c (phase5_get): After reading a string, reset
+	the lexical_context to the previous one, not to lc_outside. When reading /> at
+	the end of an XML element, decrement xml_element_depth.
+	* gettext-tools/tests/xgettext-javascript-6: Add a test.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Verify parsing of JavaScript template literals inside objects.
+	Reported by Andy Holmes <andrew.g.r.holmes@gmail.com>
+	in <https://savannah.gnu.org/bugs/?50920>.
+
+	* gettext-tools/tests/xgettext-javascript-7: Test template literals inside an
+	object.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Document improvement done on 2019-05-20.
+	* gettext-runtime/NEWS: Document improvement.
+	* NEWS: Likewise.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Install gettext.h with the LGPL license header, not with the GPL header.
+	Reported by Joachim Metz <joachim.metz@gmail.com>
+	in <https://lists.gnu.org/archive/html/bug-gettext/2012-09/msg00000.html>.
+
+	* gettext-tools/gnulib-lib/Makefile.am (gettextsrcdir, gettextsrc_DATA): Remove
+	variables.
+	* gnulib-local/Makefile.am (gettextsrcdir, gettextsrc_DATA): Define them here.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Clarify license of gettext.m4.
+	* gettext-runtime/m4/gettext.m4: Update comments: libintl is under LGPLv2.1+.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Avoid failing a configure test due to CFLAGS="-Werror".
+	Reported by Florian Weimer <fweimer@redhat.com>.
+
+	* gettext-runtime/m4/intdiv0.m4 (gt_INTDIV0): In the test program, include
+	<unistd.h>, for the declaration of _exit().
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Add support for shallow-cloning of subdirectories.
+	* gitsub.sh (func_usage): Document allowed git options with 'git pull'.
+	(func_pull): Accept GIT_OPTIONS argument.
+	(pull): Parse git options before complaining about too many arguments.
+	Pass the git options to func_pull.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Assume that Python source files are in UTF-8 by default.
+	Reported by ilias iliadis <apiuano-bugs@yahoo.gr>
+	at <https://savannah.gnu.org/bugs/?55231>.
+
+	* gettext-tools/src/xg-encoding.h (xgettext_global_source_encoding): Allow a
+	NULL value.
+	* gettext-tools/src/xg-encoding.c (xgettext_global_source_encoding): Likewise.
+	* gettext-tools/src/xgettext.c (main): Initialize
+	xgettext_global_source_encoding with NULL, not "ASCII". Handle a NULL
+	xgettext_global_source_encoding.
+	(extract_from_file): Use ASCII as default for xgettext_global_source_encoding.
+	* gettext-tools/src/x-javascript.c (extract_javascript): Likewise.
+	* gettext-tools/src/x-python.c (phase2_getc): Signal an error when encountering
+	an invalid or incomplete UTF-8 character.
+	(set_current_file_source_encoding): In the error message, use
+	xgettext_current_file_source_encoding instead of
+	xgettext_global_source_encoding.
+	(extract_python): Use UTF-8 as default for xgettext_global_source_encoding.
+	* gettext-tools/tests/xgettext-python-3: Verify that if the source file has no
+	magic coding comment but is UTF-8 encoded, xgettext succeeds.
+	* NEWS: Mention the change.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	desktop: Small parser fix.
+	* gettext-tools/src/read-desktop.c (desktop_lex): Fix handling of control
+	characters in group names.
+
+	autogen.sh: Make more reliable.
+	* autogen.sh: Really bail out if gnulib-tool fails to copy config.{guess,sub}.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Handle newlines in Lua long bracket literal strings correctly.
+	Reported by Frans de Jonge <fransdejonge@gmail.com>
+	at <https://savannah.gnu.org/bugs/?56794>.
+
+	* gettext-tools/src/x-lua.c (phase3_get): Test for EOF first. After an opening
+	long bracket, swallow one newline.
+	* gettext-tools/tests/xgettext-lua-1: Add tests for newlines in long brackets.
+	* gettext-tools/tests/xgettext-lua-2: Update comment.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Recognize gettext -e invocations in shell parser.
+	Reported by Eugene V. Lyubimkin <jackyf.devel@gmail.com>
+	in <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507091>.
+
+	* gettext-runtime/src/escapes.h: New file, extracted from
+	gettext-runtime/src/gettext.c.
+	* gettext-runtime/src/gettext.c: Include escapes.h.
+	(expand_escape): Remove function.
+	(inhibit_added_newline): New variable.
+	(add_newline): Remove variable.
+	(main): Initialize inhibit_added_newline. Invoke expand_escapes instead of
+	expand_escape.
+	* gettext-runtime/src/ngettext.c: Include escapes.h.
+	(expand_escape): Remove function.
+	(main): Invoke expand_escapes instead of expand_escape.
+	* gettext-runtime/src/Makefile.am (gettext_SOURCES, ngettext_SOURCES): Add
+	escapes.h.
+	* gettext-tools/tests/tstgettext.c: Include escapes.h.
+	(expand_escape): Remove function.
+	(inhibit_added_newline): New variable.
+	(add_newline): Remove variable.
+	(main): Initialize inhibit_added_newline. Invoke expand_escapes instead of
+	expand_escape.
+	* gettext-tools/tests/Makefile.am (tstgettext_SOURCES): Add escapes.h.
+	* gettext-tools/src/x-sh.c: Include escapes.h.
+	(read_command): Recognize a '-e' option in the argument list of gettext and
+	ngettext.
+	* gettext-tools/src/Makefile.am (xgettext_SOURCES): Add escapes.h.
+	* gettext-tools/tests/xgettext-sh-1: Test the recognition of gettext -e
+	arguments.
+	* NEWS: Mention the change.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	doc: Fix documentation of gettext, ngettext programs.
+	* gettext-runtime/doc/rt-gettext.texi: Clarify when the additional newline is
+	emitted.
+	* gettext-runtime/doc/rt-ngettext.texi: Remove '\c' from the list of recognized
+	escape sequences.
+
+	gettext, ngettext: Fix the expansion of '\\' and octal escape sequences.
+	* gettext-runtime/src/gettext.c (expand_escape): Don't swallow the expansion
+	of '\\' and octal escape sequences.
+	* gettext-runtime/src/ngettext.c (expand_escape): Likewise.
+	* gettext-tools/tests/tstgettext.c (expand_escape): Likewise.
+	* NEWS: Mention the change.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix parsing of escaped single-quote characters in shell parser.
+	Reported by Markus Gothe <nietzsche@lysator.liu.se>
+	at <https://savannah.gnu.org/bugs/?49809>.
+
+	* gettext-tools/src/x-sh.c (phase2_getc): Handle the case c == '\''
+	&& !open_singlequote && !open_doublequote differently.
+	* gettext-tools/tests/xgettext-sh-1: Add test with an escape single-quote.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix endless loop in shell parser.
+	Reported by Hanno Boeck at <https://savannah.gnu.org/bugs/?45408>.
+	Based on patch by Daiki Ueno.
+
+	* gettext-tools/src/x-sh.c (read_word): React on CLOSING_BACKQUOTE even when we
+	are currently not looking for a closing backquote.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Don't use an obsolete libtool macro.
+	* gettext-tools/m4/exported.m4 (gt_GLOBAL_SYMBOL_PIPE): Require
+	_LT_CMD_GLOBAL_SYMBOLS, not AC_LIBTOOL_SYS_GLOBAL_SYMBOL_PIPE.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Don't extract Icon values from .desktop files into POT files.
+	Reported by Piotr Drąg <piotrdrag@gmail.com>
+	at <https://savannah.gnu.org/support/?108887>
+	and by Will Thompson <wjt@endlessm.com>
+	at <https://savannah.gnu.org/bugs/?56543>.
+
+	There was a discussion starting at
+	<https://lists.freedesktop.org/archives/xdg/2019-June/014158.html>.
+	The most interesting posts in this thread were
+	<https://lists.freedesktop.org/archives/xdg/2019-June/014164.html>
+	<https://lists.freedesktop.org/archives/xdg/2019-June/014167.html>.
+
+	* gettext-tools/doc/gettext.texi (Icons): New subsubsection.
+	* gettext-tools/src/read-desktop.c (desktop_add_default_keywords): Don't add
+	"Icon".
+	* gettext-tools/src/x-desktop.c: Update comments.
+	* gettext-tools/doc/xgettext.texi (Desktop): Remove 'Icon' from the list of
+	extracted keys.
+	* gettext-tools/tests/xgettext-desktop-2: New file.
+	* gettext-tools/tests/msgfmt-desktop-3: New file.
+	* gettext-tools/tests/Makefile.am (TESTS): Add them.
+	* NEWS: Mention the change.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	maint: Document how to deal with the build error in gettext-tools/examples/po.
+	Reported by Nick Alcock <nix@esperi.org.uk>
+	at <https://savannah.gnu.org/bugs/?56529>.
+
+	* HACKING (Building off the Git repository): Explain the common build error and
+	how to fix it.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Fix VPATH build (regression from yesterday).
+	* libtextstyle/lib/Makefile.am (AM_CPPFLAGS): Search also the glib subdirectory
+	of the build dir.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Upgrade to libcroco-0.6.13.
+	This fixes a couple of warnings.
+
+	Reported by Frank Hunleth <fhunleth@troodon-software.com>
+	at <https://savannah.gnu.org/bugs/?55356>.
+
+	* libtextstyle/gnulib-local/lib/libcroco/*: Upgrade to version 0.6.13.
+	* libtextstyle/gnulib-local/modules/libcroco: Update.
+	* libtextstyle/gnulib-local/lib/glib/gmacros.in.h: New file, based on
+	glib-2.12.4/glib/gmacros.h.
+	* libtextstyle/gnulib-local/lib/glib/gprintfint.in.h: New file, based on
+	glib-2.12.4/glib/gprintfint.h.
+	* libtextstyle/Makefile.am (EXTRA_DIST): Add them.
+	* libtextstyle/gnulib-local/m4/libglib.m4 (gl_LIBGLIB): Add glib/gmacros.h and
+	glib/gprintfint.h to LIBGLIB_H.
+	* libtextstyle/gnulib-local/modules/libglib (Files): Add lib/glib/gmacros.in.h,
+	lib/glib/gprintfint.in.h.
+	(Depends-on): Add snprintf-posix.
+	(glib/gmacros.h, glib/gprintfint.h): New rules.
+	(MOSTLYCLEANFILES): Add glib/gmacros.h, glib/gprintfint.h.
+	* libtextstyle/gnulib-local/lib/glib.in.h: Include glib/gmacros.h.
+	* libtextstyle/gnulib-local/lib/glib/gstrfuncs.in.h (g_ascii_dtostr,
+	g_ascii_formatd, g_ascii_strcasecmp): Enable declarations.
+	* libtextstyle/gnulib-local/lib/glib/gstrfuncs.c: Include gprintfint.h.
+	(g_ascii_dtostr, g_ascii_formatd): Enable.
+	(ISSPACE, ISUPPER, ISLOWER, ISALPHA, TOUPPER, TOLOWER): Move out of function
+	g_parse_long_long.
+	(g_ascii_strcasecmp): Enable.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	xgettext: Fix parsing of JavaScript template literals inside functions.
+	Reported by Dmitry Vinnik <vinnik.dmitry07@gmail.com>
+	in <https://savannah.gnu.org/bugs/?56678>.
+
+	* gettext-tools/src/x-javascript.c (brace_depths, brace_depths_alloc): New
+	variables.
+	(brace_depth): Remove variable.
+	(new_brace_depth_level): New function.
+	(phase5_get): Invoke it. Access the top of the brace_depths stack.
+	(extract_javascript): Don't set brace_depth. Invoke new_brace_depth_level
+	instead.
+	* gettext-tools/tests/xgettext-javascript-7: Test template literals inside a
+	function.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Fix test failure on MSVC.
+	* gettext-tools/tests/lang-c++: On MSVC, use <iostream>, not <iostream.h>.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Avoid warnings from bison versions >= 3.3.
+	Reported by Bernhard Voelker <mail@bernhard-voelker.de>.
+
+	* gettext-runtime/intl/Makefile.am (YACC): Remove option '-y'.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Fix link error when compiled with GCC 3.3.x.
+	Reported by Jeffrey Walton <noloader@gmail.com>.
+
+	* gnulib-local/lib/libxml/timsort.h (CLZ): Don't define based on __builtin_clzll
+	in GCC versions < 3.4.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	intl: Don't export the glwthread* symbols from libintl on native Windows.
+	* gettext-runtime/intl/Makefile.am (OTHER_LDFLAGS): Add an -export-symbols-regex
+	option.
+
+	build: Fix build errors with MSVC.
+	* gettext-tools/src/lang-table.h (language_table, language_variant_table):
+	Declare with C linkage.
+	* gettext-tools/src/read-po.h (input_format_po): Likewise.
+	* gettext-tools/src/read-properties.h (input_format_properties): Likewise.
+	* gettext-tools/src/read-stringtable.h (input_format_stringtable): Likewise.
+	* gettext-tools/src/write-properties.h (output_format_properties): Likewise.
+	* gettext-tools/src/write-stringtable.h (output_format_stringtable): Likewise.
+
+	build: Fix build error with MSVC.
+	* gettext-runtime/intl/Makefile.am (INTL_WINDOWS_LIBS): New variable.
+	(OTHER_LDFLAGS): Add it.
+
+	build: Fix build error with MSVC.
+	* gettext-runtime/intl/export.h (LIBINTL_DLL_EXPORTED): Define differently for
+	MSVC.
+
+	build: Fix build errors with MSVC.
+	* gettext-tools/libgettextpo/exported.sh.in: Remove one level of eval.
+	* gettext-tools/libgettextpo/Makefile.am (config.h): Redirect compiler output to
+	stderr. Remove symbols that contain an '@'.
+	* libtextstyle/lib/Makefile.am (config.h): Likewise.
+
+	build: Avoid endless "config.status --recheck" loop (regression from yesterday).
+	* gettext-tools/configure.ac: Use AC_MSG_WARN instead of AC_MSG_ERROR.
+
+	intl: Work around setlocale bug on Android 4.3.
+	* gettext-runtime/intl/setlocale.c (setlocale_unixlike): New wrapper for
+	Android.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	msgmerge: Fix behaviour of --for-msgfmt on PO files with no translations.
+	Reported by Don Lawrence <dlawrence@iecok.com>
+	in <https://lists.freedesktop.org/archives/p11-glue/2019-May/000700.html>
+	via Daiki Ueno
+	in <https://lists.gnu.org/archive/html/bug-gettext/2019-05/msg00124.html>.
+
+	* gettext-tools/src/msgmerge.c (main): Treat force_po like true if for_msgfmt
+	is true.
+	* gettext-tools/tests/msgmerge-26: Add test of PO file with no translations.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Restore the ability to build gettext-tools separately, part 2.
+	* gettext-tools/configure.ac: New option --with-installed-csharp-dll.
+	(USE_INSTALLED_CSHARP_DLL): New conditional.
+	* gettext-tools/src/Makefile.am (CSHARP_DLL_DIR): New variable.
+	(msgunfmt.net.exe): Use it.
+	* configure.ac: Filter out --with-installed-csharp-dll from inherited --help
+	output.
+	* PACKAGING: Document that gettext-tools's configure needs to be invoked with
+	--with-installed-csharp-dll.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Restore the ability to build gettext-tools separately, part 1.
+	Reported by Hanspeter Niederstrasser <nieder@users.sourceforge.net>
+	in <https://savannah.gnu.org/bugs/?56333>.
+
+	Code based on patch by Miguel Ángel Arruga Vivas <rosen644835@gmail.com>.
+
+	* autogen.sh: Copy libtextstyle.m4 for use by gettext-tools.
+	* gettext-tools/configure.ac: New option --with-installed-libtextstyle.
+	(USE_INSTALLED_LIBTEXTSTYLE): New conditional.
+	* gettext-tools/src/Makefile.am (textstyle.h): Disable rule if
+	USE_INSTALLED_LIBTEXTSTYLE is true.
+	(LT_LIBTEXTSTYLE): New variable.
+	(libgettextsrc_la_LDFLAGS): Use it instead of hardcoding a relative filename of
+	libtextstyle.la.
+	* configure.ac: Filter out --with-installed-libtextstyle from inherited --help
+	output.
+	* Makefile.am (distcheck-hook): Compare different copies of libtextstyle.m4.
+	* PACKAGING: Document that gettext-tools's configure needs to be invoked with
+	--with-installed-libtextstyle.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Complete commit from 2019-04-28.
+	* libtextstyle/Makefile.am (EXTRA_DIST): Add
+	test-term-ostream-xterm-freebsd-italic.out.
+
+	build: Avoid the use of mingw winpthreads for multithreading.
+	* gettext-runtime/configure.ac: Invoke gl_AVOID_WINPTHREAD.
+	* gettext-tools/configure.ac: Likewise.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Avoid trouble on mingw caused by mingw's *printf functions.
+	Reported by Michele Locati <michele@locati.it>
+	in <https://lists.gnu.org/archive/html/bug-gettext/2019-05/msg00103.html>.
+
+	* gettext-runtime/intl/Makefile.am (AM_CPPFLAGS): Define __USE_MINGW_ANSI_STDIO
+	to 0.
+	* gettext-runtime/libasprintf/Makefile.am (DEFS): Likewise.
+	* libtextstyle/lib/Makefile.am (AM_CPPFLAGS): Likewise.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libasprintf: Avoid compilation error on mingw with -D__USE_MINGW_ANSI_STDIO=1.
+	* gettext-runtime/libasprintf/lib-asprintf.c (asprintf, vasprintf): Don't define
+	on mingw when __USE_MINGW_ANSI_STDIO is non-zero.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	doc: Don't mention trademarks.
+	Reported by John Darrington <john@darrington.wattle.id.au>
+	in <https://savannah.gnu.org/bugs/?56340>.
+
+	* gettext-tools/doc/gettext.texi (catgets): Drop trademark annotation.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	build: Fix "make install" failure with --disable-shared on glibc systems.
+	Reported by Gabor Z. Papp <gzp@papp.hu>.
+
+	This is a regression from 2018-11-25.
+
+	* gettext-tools/configure.ac (PRELOADABLE_LIBINTL): Set to false if
+	--disable-shared was specified.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	libtextstyle: Update gitignore list.
+	* libtextstyle/.gitignore: Update.
+
+	The gettext library is under LGPL 2.1, not 2.0.
+	* gettext-runtime/m4/intl.m4: Fix comments regarding the gettext library.
+	* gettext-runtime/m4/intlmacosx.m4: Likewise.
+	* gettext-runtime/m4/nls.m4: Likewise.
+	* gettext-runtime/m4/po.m4: Likewise.
+	* gettext-runtime/m4/progtest.m4: Likewise.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	intl: Make autoconf macro more robust.
+	Reported by Bernhard Voelker <mail@bernhard-voelker.de>.
+
+	* gettext-runtime/m4/intl.m4 (gt_INTL_SUBDIR_CORE): Don't make assumptions about
+	the version numbers of future Bison versions.
+
+2020-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Update after gnulib changed.
+	* gnulib-local/lib/regex_internal.h.diff: Update.
+	* gnulib-local/lib/unistd.in.h.diff: Update.
+	* gettext-runtime/intl/filename.h: New file, from gnulib.
+	* gettext-runtime/intl/dcigettext.c (ISSLASH, HAS_DEVICE, IS_ABSOLUTE_PATH,
+	IS_PATH_WITH_DIR): Remove macros. Instead, include filename.h.
+	(IS_ABSOLUTE_FILE_NAME, IS_RELATIVE_FILE_NAME, IS_FILE_NAME_WITH_DIR): New
+	macros.
+	(DCIGETTEXT): Use IS_RELATIVE_FILE_NAME, IS_FILE_NAME_WITH_DIR.
+	* gettext-runtime/intl/l10nflist.c (ISSLASH, HAS_DEVICE, IS_ABSOLUTE_PATH):
+	Remove macros. Instead, include filename.h.
+	(IS_ABSOLUTE_FILE_NAME, IS_RELATIVE_FILE_NAME): New macros.
+	(_nl_make_l10nflist): Use IS_RELATIVE_FILE_NAME.
+	* gettext-runtime/intl/Makefile.am (EXTRA_DIST): Add filename.h.
+	(l10nflist.lo, dcigettext.lo): Depend on it.
+	* Makefile.am (distcheck-hook): Check also gettext-runtime/intl/filename.h.
+	* gettext-runtime/intl/lock.c: Update from gnulib.
+	* gettext-runtime/intl/lock.h: Likewise.
+	* gettext-runtime/intl/relocatable.c: Likewise.
+	* gettext-tools/src/locating-rule.c (locating_rule_list_locate): Use
+	IS_RELATIVE_FILE_NAME instead of IS_ABSOLUTE_PATH.
+	* gettext-tools/src/open-catalog.c (try_open_catalog_file): Likewise.
+	* gettext-tools/src/xgettext.c (main, xgettext_open): Likewise.
+	* libtextstyle/lib/color.c (style_file_lookup): Use IS_FILE_NAME_WITH_DIR
+	instead of IS_PATH_WITH_DIR.
+
+	Update after gnulib changed.
+
+	Update after gnulib changed.
+	* gettext-runtime/intl/localcharset.c: Update from gnulib.
+	* gettext-runtime/intl/setlocale-lock.c: Likewise.
+
+	Update after gnulib changed: Support building with --enable-threads=isoc.
+	* gettext-runtime/intl/dcigettext.c (lock): Move outside _nl_find_msg.
+	* gettext-runtime/intl/finddomain.c (lock): Move outside _nl_find_domain.
+	* gettext-runtime/intl/loadmsgcat.c (lock): Move outside _nl_load_domain.
+
+	Update after gnulib changed: Fix test failures on FreeBSD, NetBSD, macOS.
+	* gettext-tools/tests/setlocale.c (setlocale): Undefine.
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): Add
+	setlocale-null.
+	* gettext-runtime/intl/localcharset.h: Update from gnulib.
+	* gettext-runtime/intl/localcharset.c: Likewise.
+	* gettext-runtime/intl/localename.c: Likewise.
+	* gettext-runtime/intl/setlocale_null.h: New file, from gnulib.
+	* gettext-runtime/intl/arg-nonnull.h: New file, from gnulib.
+	* gettext-runtime/intl/setlocale_null.c: New file, from gnulib.
+	* gettext-runtime/intl/setlocale-lock.c: New file, from gnulib.
+	* gettext-runtime/intl/lock.h: Update from gnulib.
+	* gettext-runtime/intl/lock.c: Likewise.
+	* gettext-runtime/intl/threadlib.c: Likewise.
+	* gettext-runtime/intl/vasnprintf.c: Likewise.
+	* gettext-runtime/intl/verify.h: Likewise.
+	* gettext-runtime/intl/Makefile.am (EXTRA_DIST): Add arg-nonnull.h,
+	setlocale_null.h.
+	(LIBINTLSOURCES): Add setlocale-lock.c, setlocale_null.c.
+	(setlocale-lock.lo, setlocale_null.lo): New rules.
+	(localename.lo, setlocale-lock.lo, setlocale_null.lo): Update dependencies.
+	* Makefile.am (distcheck-hook): Check the new files in gettext-runtime/intl/.
+	* gettext-runtime/libasprintf/vasnprintf.c: Update from gnulib.
+	* gettext-tools/libgettextpo/Makefile.am (DEFS): Define OMIT_SETLOCALE_LOCK.
+	* gettext-runtime/NEWS: Mention the multithread-safety fix in localcharset.c.
+	* NEWS: Likewise.
+
+	Update after gnulib changed.
+	* gettext-runtime/intl/localcharset.c: Update from gnulib.
+	* gettext-runtime/intl/verify.h: Likewise.
+
+	Update after gnulib changed.
+	* gettext-runtime/intl/localcharset.c: Update from gnulib.
+	* gettext-runtime/intl/verify.h: Likewise.
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): Add
+	windows-rwlock.
+	* gettext-runtime/intl/windows-rwlock.h: New file, from gnulib.
+	* gettext-runtime/intl/windows-rwlock.c: New file, from gnulib.
+	* gettext-runtime/intl/windows-initguard.h: New file, from gnulib.
+	* gettext-runtime/intl/windows-spinlock.h: Remove file.
+	* gettext-runtime/intl/lock.h: Update from gnulib.
+	* gettext-runtime/intl/lock.c: Likewise.
+	* gettext-runtime/intl/verify.h: Likewise.
+	* gettext-runtime/intl/windows-mutex.h: Likewise.
+	* gettext-runtime/intl/windows-recmutex.h: Likewise.
+	* gettext-runtime/intl/Makefile.am (EXTRA_DIST): Add windows-rwlock.h,
+	windows-initguard.h. Remove windows-spinlock.h.
+	(LIBINTLSOURCES): Conditionally add windows-rwlock.c.
+	(windows-rwlock.lo): New rule.
+	(*.lo): Update dependencies.
+	* Makefile.am (distcheck-hook): Check that gettext-runtime/intl/windows-*.[hc]
+	are up-to-date.
+	* gnulib-local/lib/libxml/threads.c: Test HAVE_PTHREAD_H, HAVE_WIN32_THREADS,
+	HAVE_BEOS_THREADS only if LIBXML_THREAD_ENABLED is defined; otherwise use a
+	fallback suitable for single-threaded applications.
+
+	Update after gnulib changed.
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES): Add
+	windows-mutex, windows-once, windows-recmutex.
+	* gettext-runtime/m4/flexmember.m4: Update from gnulib.
+	* gettext-runtime/intl/flexmember.h: Likewise.
+	* gettext-runtime/intl/localcharset.c: Likewise.
+	* gettext-runtime/intl/windows-mutex.h: New file, from gnulib.
+	* gettext-runtime/intl/windows-mutex.c: New file, from gnulib.
+	* gettext-runtime/intl/windows-once.h: New file, from gnulib.
+	* gettext-runtime/intl/windows-once.c: New file, from gnulib.
+	* gettext-runtime/intl/windows-recmutex.h: New file, from gnulib.
+	* gettext-runtime/intl/windows-recmutex.c: New file, from gnulib.
+	* gettext-runtime/intl/windows-spinlock.h: New file, from gnulib.
+	* gettext-runtime/intl/lock.h: Update from gnulib.
+	* gettext-runtime/intl/lock.c: Likewise.
+	* gettext-runtime/intl/Makefile.am (EXTRA_DIST): Add windows-*.h.
+	(LIBINTLSOURCES): Conditionally add windows-*.c.
+	(windows-mutex.lo, windows-recmutex.lo, windows-once.lo): New rules.
+	(*.lo): Update dependencies.
+	* gettext-runtime/configure.ac: New condition WINDOWS_NATIVE.
+	* gettext-tools/configure.ac: Likewise.
+	* Makefile.am (distcheck-hook): Check that gettext-runtime/intl/windows-*.[hc]
+	are up-to-date.
+
+	Update after gnulib changed.
+	* gettext-runtime/intl/setlocale.c (search): Optimize away a redundant strcmp()
+	invocation.
+	(locales_with_principal_territory): New array.
+	(langcmp, get_main_locale_with_same_language): New functions.
+	(locales_with_principal_language): New array.
+	(terrcmp, get_main_locale_with_same_territory): New functions.
+	(rpl_setlocale): When setlocale_single failed, try again with a locale that is
+	more likely to exist. Don't warn if the environment variable SETLOCALE_VERBOSE
+	is not set.
+
+	Update after gnulib changed.
+	* gettext-runtime/m4/intlmacosx.m4 (gt_INTL_MACOSX): Don't test for
+	CFLocaleCopyCurrent.
+	* gettext-runtime/intl/localename.c: Remove includes for
+	HAVE_CFLOCALECOPYCURRENT.
+	(gl_locale_name_environ, gl_locale_name_default): Remove code for
+	HAVE_CFLOCALECOPYCURRENT.
+
+	Update to the newest gnulib.
+
 2019-05-12  Bruno Haible  <bruno@clisp.org>
 
 	Update translations (from the TP).

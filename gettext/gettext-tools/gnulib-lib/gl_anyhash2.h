@@ -1,5 +1,5 @@
 /* Hash table for sequential list, set, and map data type.
-   Copyright (C) 2006, 2009-2019 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include "gl_anyhash_primes.h"
 
-/* Resize the hash table with a new estimated size.  */
+/* Resizes the hash table with a new estimated size.  */
 static void
 hash_resize (CONTAINER_T container, size_t estimate)
 {
@@ -70,7 +70,7 @@ hash_resize (CONTAINER_T container, size_t estimate)
   return;
 }
 
-/* Resize the hash table if needed, after CONTAINER_COUNT (container) was
+/* Resizes the hash table if needed, after CONTAINER_COUNT (container) was
    incremented.  */
 static void
 hash_resize_after_add (CONTAINER_T container)

@@ -1,5 +1,5 @@
-# posix_spawn.m4 serial 16
-dnl Copyright (C) 2008-2019 Free Software Foundation, Inc.
+# posix_spawn.m4 serial 17
+dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -38,6 +38,15 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
        AC_CHECK_FUNCS_ONCE([posix_spawn_file_actions_addchdir_np])
        if test $ac_cv_func_posix_spawn_file_actions_addchdir_np = no; then
          dnl In order to implement the posix_spawn_file_actions_addchdir
+         dnl function, we need to replace the entire posix_spawn facility.
+         REPLACE_POSIX_SPAWN=1
+       fi
+      ])
+    m4_ifdef([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR],
+      [dnl Module 'posix_spawn_file_actions_addfchdir' is present.
+       AC_CHECK_FUNCS_ONCE([posix_spawn_file_actions_addfchdir_np])
+       if test $ac_cv_func_posix_spawn_file_actions_addfchdir_np = no; then
+         dnl In order to implement the posix_spawn_file_actions_addfchdir
          dnl function, we need to replace the entire posix_spawn facility.
          REPLACE_POSIX_SPAWN=1
        fi

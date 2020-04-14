@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,7 +53,6 @@ AC_DEFUN([lts_EARLY],
   # Code from module close:
   # Code from module concat-filename:
   # Code from module dirname-lgpl:
-  # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module errno:
   # Code from module error:
@@ -70,6 +69,10 @@ AC_DEFUN([lts_EARLY],
   # Code from module float:
   # Code from module fpieee:
   AC_REQUIRE([gl_FP_IEEE])
+  # Code from module fpucw:
+  # Code from module frexp-nolibm:
+  # Code from module frexpl-nolibm:
+  # Code from module fstat:
   # Code from module fsync:
   # Code from module full-write:
   # Code from module getprogname:
@@ -83,6 +86,7 @@ AC_DEFUN([lts_EARLY],
   # Code from module include_next:
   # Code from module inline:
   # Code from module intprops:
+  # Code from module inttypes-incomplete:
   # Code from module isatty:
   # Code from module isinf:
   # Code from module isnan:
@@ -92,6 +96,8 @@ AC_DEFUN([lts_EARLY],
   # Code from module isnanf-nolibm:
   # Code from module isnanl:
   # Code from module isnanl-nolibm:
+  # Code from module largefile:
+  AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module libcroco:
   # Code from module libglib:
   # Code from module libxml:
@@ -99,6 +105,7 @@ AC_DEFUN([lts_EARLY],
   # Code from module list:
   # Code from module log10:
   # Code from module malloc-posix:
+  # Code from module malloca:
   # Code from module math:
   # Code from module memchr:
   # Code from module memory-ostream:
@@ -108,10 +115,15 @@ AC_DEFUN([lts_EARLY],
   # Code from module msvc-nothrow:
   # Code from module multiarch:
   # Code from module no-c++:
+  # Code from module nocrash:
   # Code from module noop-styled-ostream:
   # Code from module obstack:
   # Code from module ostream:
+  # Code from module pathmax:
   # Code from module pow:
+  # Code from module printf-frexp:
+  # Code from module printf-frexpl:
+  # Code from module printf-safe:
   # Code from module raise:
   # Code from module read:
   # Code from module safe-read:
@@ -128,7 +140,10 @@ AC_DEFUN([lts_EARLY],
   # Code from module snippet/unused-parameter:
   # Code from module snippet/warn-on-use:
   # Code from module snprintf:
+  # Code from module snprintf-posix:
   # Code from module ssize_t:
+  # Code from module stat:
+  # Code from module stat-time:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  gl_PROG_CC_C99 arranges for this.
@@ -143,6 +158,7 @@ AC_DEFUN([lts_EARLY],
   # Code from module strerror-override:
   # Code from module string:
   # Code from module styled-ostream:
+  # Code from module sys_stat:
   # Code from module sys_types:
   # Code from module term-ostream:
   # Code from module term-ostream-tests:
@@ -150,6 +166,7 @@ AC_DEFUN([lts_EARLY],
   # Code from module term-styled-ostream:
   # Code from module terminfo:
   # Code from module terminfo-h:
+  # Code from module time:
   # Code from module unistd:
   # Code from module unistr/base:
   # Code from module unistr/u8-mbtouc:
@@ -162,6 +179,7 @@ AC_DEFUN([lts_EARLY],
   # Code from module write:
   # Code from module xalloc:
   # Code from module xalloc-die:
+  # Code from module xalloc-oversized:
   # Code from module xconcat-filename:
   # Code from module xlist:
   # Code from module xsize:
@@ -212,6 +230,27 @@ AC_DEFUN([lts_INIT],
   if test $REPLACE_ITOLD = 1; then
     AC_LIBOBJ([itold])
   fi
+  gl_FUNC_FREXP_NO_LIBM
+  if test $gl_func_frexp_no_libm != yes; then
+    AC_LIBOBJ([frexp])
+  fi
+  gl_MATH_MODULE_INDICATOR([frexp])
+  gl_FUNC_FREXPL_NO_LIBM
+  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; then
+    AC_LIBOBJ([frexpl])
+  fi
+  gl_MATH_MODULE_INDICATOR([frexpl])
+  gl_FUNC_FSTAT
+  if test $REPLACE_FSTAT = 1; then
+    AC_LIBOBJ([fstat])
+    case "$host_os" in
+      mingw*)
+        AC_LIBOBJ([stat-w32])
+        ;;
+    esac
+    gl_PREREQ_FSTAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([fstat])
   gl_FUNC_FSYNC
   if test $HAVE_FSYNC = 0; then
     AC_LIBOBJ([fsync])
@@ -225,6 +264,7 @@ AC_DEFUN([lts_INIT],
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
   gl_INLINE
+  gl_INTTYPES_INCOMPLETE
   gl_FUNC_ISATTY
   if test $REPLACE_ISATTY = 1; then
     AC_LIBOBJ([isatty])
@@ -280,6 +320,7 @@ AC_DEFUN([lts_INIT],
     AC_LIBOBJ([isnanl])
     gl_PREREQ_ISNANL
   fi
+  AC_REQUIRE([gl_LARGEFILE])
   # In libtextstyle, we don't want to use an external libcroco, because its
   # dependencies and their dynamic relocations have an impact on the startup
   # time of a program that is linked with it. As you can see by using
@@ -321,6 +362,7 @@ AC_DEFUN([lts_INIT],
     AC_LIBOBJ([malloc])
   fi
   gl_STDLIB_MODULE_INDICATOR([malloc-posix])
+  gl_MALLOCA
   gl_MATH_H
   gl_FUNC_MEMCHR
   if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
@@ -343,7 +385,11 @@ AC_DEFUN([lts_INIT],
   gt_NO_CXX
   AC_FUNC_OBSTACK
   dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
+  gl_PATHMAX
   gl_FUNC_POW
+  gl_FUNC_PRINTF_FREXP
+  gl_FUNC_PRINTF_FREXPL
+  m4_divert_text([INIT_PREPARE], [gl_printf_safe=yes])
   gl_FUNC_RAISE
   if test $HAVE_RAISE = 0 || test $REPLACE_RAISE = 1; then
     AC_LIBOBJ([raise])
@@ -382,7 +428,21 @@ AC_DEFUN([lts_INIT],
   gl_FUNC_SNPRINTF
   gl_STDIO_MODULE_INDICATOR([snprintf])
   gl_MODULE_INDICATOR([snprintf])
+  gl_FUNC_SNPRINTF_POSIX
   gt_TYPE_SSIZE_T
+  gl_FUNC_STAT
+  if test $REPLACE_STAT = 1; then
+    AC_LIBOBJ([stat])
+    case "$host_os" in
+      mingw*)
+        AC_LIBOBJ([stat-w32])
+        ;;
+    esac
+    gl_PREREQ_STAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
+  gl_STAT_TIME
+  gl_STAT_BIRTHTIME
   gl_STDARG_H
   AM_STDBOOL_H
   gl_STDDEF_H
@@ -408,17 +468,21 @@ AC_DEFUN([lts_INIT],
     gl_PREREQ_SYS_H_WINSOCK2
   fi
   gl_HEADER_STRING_H
+  gl_HEADER_SYS_STAT_H
+  AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P
   gl_TERM_OSTREAM
   AC_REQUIRE([AC_C_INLINE])
   AC_CHECK_FUNCS_ONCE([tcgetattr])
   gl_TERMINFO
+  gl_HEADER_TIME_H
   gl_UNISTD_H
   gl_LIBUNISTRING_LIBHEADER([0.9.4], [unistr.h])
   gl_MODULE_INDICATOR([unistr/u8-mbtouc])
   gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-mbtouc])
   gl_LIBUNISTRING_LIBHEADER([0.9.4], [unitypes.h])
+  AC_REQUIRE([AC_C_RESTRICT])
   gl_FUNC_VASNPRINTF
   gl_FUNC_VASPRINTF
   gl_STDIO_MODULE_INDICATOR([vasprintf])
@@ -598,7 +662,6 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/concat-filename.h
   lib/dirname-lgpl.c
   lib/dirname.h
-  lib/dosname.h
   lib/errno.in.h
   lib/error.c
   lib/error.h
@@ -617,6 +680,10 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/float+.h
   lib/float.c
   lib/float.in.h
+  lib/fpucw.h
+  lib/frexp.c
+  lib/frexpl.c
+  lib/fstat.c
   lib/fsync.c
   lib/full-write.c
   lib/full-write.h
@@ -634,9 +701,11 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/glib/ghash.in.h
   lib/glib/glist.c
   lib/glib/glist.in.h
+  lib/glib/gmacros.in.h
   lib/glib/gmessages.c
   lib/glib/gprimes.c
   lib/glib/gprimes.in.h
+  lib/glib/gprintfint.in.h
   lib/glib/gstrfuncs.c
   lib/glib/gstrfuncs.in.h
   lib/glib/gstring.c
@@ -652,6 +721,7 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/iconv-ostream.oo.c
   lib/iconv-ostream.oo.h
   lib/intprops.h
+  lib/inttypes.in.h
   lib/isatty.c
   lib/isinf.c
   lib/isnan.c
@@ -818,6 +888,8 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/limits.in.h
   lib/log10.c
   lib/malloc.c
+  lib/malloca.c
+  lib/malloca.h
   lib/math.c
   lib/math.in.h
   lib/memchr.c
@@ -836,8 +908,13 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/obstack.h
   lib/ostream.oo.c
   lib/ostream.oo.h
+  lib/pathmax.h
   lib/printf-args.c
   lib/printf-args.h
+  lib/printf-frexp.c
+  lib/printf-frexp.h
+  lib/printf-frexpl.c
+  lib/printf-frexpl.h
   lib/printf-parse.c
   lib/printf-parse.h
   lib/raise.c
@@ -857,6 +934,11 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/sigprocmask.c
   lib/size_max.h
   lib/snprintf.c
+  lib/stat-time.c
+  lib/stat-time.h
+  lib/stat-w32.c
+  lib/stat-w32.h
+  lib/stat.c
   lib/stdarg.in.h
   lib/stdbool.in.h
   lib/stddef.in.h
@@ -872,6 +954,7 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/styled-ostream.oo.c
   lib/styled-ostream.oo.h
   lib/sys-limits.h
+  lib/sys_stat.in.h
   lib/sys_types.in.h
   lib/term-ostream.oo.c
   lib/term-ostream.oo.h
@@ -880,6 +963,7 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/term-styled-ostream.oo.c
   lib/term-styled-ostream.oo.h
   lib/terminfo.h
+  lib/time.in.h
   lib/tparm.c
   lib/tputs.c
   lib/unistd.c
@@ -897,6 +981,7 @@ AC_DEFUN([lts_FILE_LIST], [
   lib/warn-on-use.h
   lib/wchar.in.h
   lib/write.c
+  lib/xalloc-oversized.h
   lib/xalloc.h
   lib/xasprintf.c
   lib/xconcat-filename.c
@@ -914,6 +999,7 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/curses.m4
   m4/dirname.m4
   m4/double-slash-root.m4
+  m4/eealloc.m4
   m4/errno_h.m4
   m4/error.m4
   m4/exponentd.m4
@@ -927,6 +1013,9 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/fcntl_h.m4
   m4/float_h.m4
   m4/fpieee.m4
+  m4/frexp.m4
+  m4/frexpl.m4
+  m4/fstat.m4
   m4/fsync.m4
   m4/getprogname.m4
   m4/gnulib-common.m4
@@ -935,6 +1024,7 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/include_next.m4
   m4/inline.m4
   m4/intmax_t.m4
+  m4/inttypes.m4
   m4/inttypes_h.m4
   m4/isatty.m4
   m4/isinf.m4
@@ -942,6 +1032,8 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/isnand.m4
   m4/isnanf.m4
   m4/isnanl.m4
+  m4/largefile.m4
+  m4/ldexpl.m4
   m4/lib-ld.m4
   m4/lib-link.m4
   m4/lib-prefix.m4
@@ -951,8 +1043,8 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/libxml.m4
   m4/limits-h.m4
   m4/log10.m4
-  m4/longlong.m4
   m4/malloc.m4
+  m4/malloca.m4
   m4/math_h.m4
   m4/mathfunc.m4
   m4/memchr.m4
@@ -963,9 +1055,13 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/msvc-nothrow.m4
   m4/multiarch.m4
   m4/no-c++.m4
+  m4/nocrash.m4
   m4/obstack.m4
   m4/off_t.m4
+  m4/pathmax.m4
   m4/pow.m4
+  m4/printf-frexp.m4
+  m4/printf-frexpl.m4
   m4/printf.m4
   m4/raise.m4
   m4/read.m4
@@ -977,8 +1073,11 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/signalblocking.m4
   m4/signbit.m4
   m4/size_max.m4
+  m4/snprintf-posix.m4
   m4/snprintf.m4
   m4/ssize_t.m4
+  m4/stat-time.m4
+  m4/stat.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4
@@ -990,9 +1089,11 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/strerror.m4
   m4/string_h.m4
   m4/sys_socket_h.m4
+  m4/sys_stat_h.m4
   m4/sys_types_h.m4
   m4/term-ostream.m4
   m4/terminfo.m4
+  m4/time_h.m4
   m4/unistd_h.m4
   m4/vasnprintf.m4
   m4/vasprintf.m4
@@ -1004,6 +1105,7 @@ AC_DEFUN([lts_FILE_LIST], [
   m4/write.m4
   m4/xsize.m4
   m4/xvasprintf.m4
+  m4/zzgnulib.m4
   tests/test-term-ostream-xterm-16color.out
   tests/test-term-ostream-xterm-256color.out
   tests/test-term-ostream-xterm-88color.out

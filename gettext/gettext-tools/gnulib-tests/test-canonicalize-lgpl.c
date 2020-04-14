@@ -1,5 +1,5 @@
-/* Test of execution of program termination handlers.
-   Copyright (C) 2007-2019 Free Software Foundation, Inc.
+/* Test of execution of file name canonicalization.
+   Copyright (C) 2007-2020 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,6 +15,11 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
+
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   may "optimize" the null_ptr function, when its result gets passed to a
+   function that has an argument declared as _GL_ARG_NONNULL.  */
+#define _GL_ARG_NONNULL(params)
 
 #include <config.h>
 
@@ -34,7 +39,10 @@ SIGNATURE_CHECK (canonicalize_file_name, char *, (const char *));
 #include "same-inode.h"
 #include "ignore-value.h"
 
-#include "null-ptr.h"
+#if GNULIB_defined_canonicalize_file_name
+# include "null-ptr.h"
+#endif
+
 #include "macros.h"
 
 #define BASE "t-can-lgpl.tmp"
@@ -66,14 +74,22 @@ main (void)
     ASSERT (strstr (result, "/" BASE "/tra")
             == result + strlen (result) - strlen ("/" BASE "/tra"));
     free (result);
+
     errno = 0;
     result = canonicalize_file_name ("");
     ASSERT (result == NULL);
     ASSERT (errno == ENOENT);
+
+    /* This test works only if the canonicalize_file_name implementation
+       comes from gnulib.  If it comes from libc, we have no way to prevent
+       gcc from "optimizing" the null_ptr function in invalid ways.  See
+       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93156>.  */
+#if GNULIB_defined_canonicalize_file_name
     errno = 0;
     result = canonicalize_file_name (null_ptr ());
     ASSERT (result == NULL);
     ASSERT (errno == EINVAL);
+#endif
   }
 
   /* Check that a non-directory with trailing slash yields NULL.  */

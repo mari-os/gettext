@@ -804,6 +804,7 @@ with_aix_soname
 with_gnu_ld
 with_sysroot
 enable_libtool_lock
+enable_cross_guesses
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1448,6 +1449,8 @@ Optional Features:
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
+  --enable-cross-guesses={conservative|risky}
+                          specify policy for cross-compilation guesses
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2268,6 +2271,10 @@ rm -f conftest.val
 # accordingly.
 ac_fn_c_check_decl ()
 {
+  ac_save_ac_compile="$ac_compile"
+  if test -n "$ac_compile_for_check_decl"; then
+    ac_compile="$ac_compile_for_check_decl"
+  fi
   as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
   as_decl_name=`echo $2|sed 's/ *(.*//'`
   as_decl_use=`echo $2|sed -e 's/(/((/' -e 's/)/) 0&/' -e 's/,/) 0& (/g'`
@@ -2305,6 +2312,7 @@ eval ac_res=\$$3
 	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
 $as_echo "$ac_res" >&6; }
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
+  ac_compile="$ac_save_ac_compile"
 
 } # ac_fn_c_check_decl
 cat >config.log <<_ACEOF
@@ -4119,6 +4127,80 @@ ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the compiler is clang" >&5
+$as_echo_n "checking whether the compiler is clang... " >&6; }
+if ${gl_cv_compiler_clang+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+                 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+           #ifdef __clang__
+           barfbarf
+           #endif
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  gl_cv_compiler_clang=no
+else
+  gl_cv_compiler_clang=yes
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $gl_cv_compiler_clang" >&5
+$as_echo "$gl_cv_compiler_clang" >&6; }
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for compiler option needed when checking for declarations" >&5
+$as_echo_n "checking for compiler option needed when checking for declarations... " >&6; }
+if ${gl_cv_compiler_check_decl_option+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test $gl_cv_compiler_clang = yes; then
+                     save_ac_compile="$ac_compile"
+       ac_compile="$ac_compile -Werror=implicit-function-declaration"
+                     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  gl_cv_compiler_check_decl_option='-Werror=implicit-function-declaration'
+else
+  gl_cv_compiler_check_decl_option=none
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+       ac_compile="$save_ac_compile"
+     else
+       gl_cv_compiler_check_decl_option=none
+     fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $gl_cv_compiler_check_decl_option" >&5
+$as_echo "$gl_cv_compiler_check_decl_option" >&6; }
+  if test "x$gl_cv_compiler_check_decl_option" != xnone; then
+    ac_compile_for_check_decl="$ac_compile $gl_cv_compiler_check_decl_option"
+  else
+    ac_compile_for_check_decl="$ac_compile"
+  fi
 
 DEPDIR="${am__leading_dot}deps"
 
@@ -17297,12 +17379,8 @@ _ACEOF
 
   if test $gl_cv_header_inttypes_h = no && test $gl_cv_header_stdint_h = no; then
 
-    test $ac_cv_type_long_long_int = yes \
-      && ac_type='long long' \
-      || ac_type='long'
-
 cat >>confdefs.h <<_ACEOF
-#define intmax_t $ac_type
+#define intmax_t long long
 _ACEOF
 
   else
@@ -17429,8 +17507,28 @@ done
 
 
 
+                        # Check whether --enable-cross-guesses was given.
+if test "${enable_cross_guesses+set}" = set; then :
+  enableval=$enable_cross_guesses; if test "x$enableval" != xconservative && test "x$enableval" != xrisky; then
+       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: invalid argument supplied to --enable-cross-guesses" >&5
+$as_echo "$as_me: WARNING: invalid argument supplied to --enable-cross-guesses" >&2;}
+       enableval=conservative
+     fi
+     gl_cross_guesses="$enableval"
+else
+  gl_cross_guesses=conservative
+fi
+
+  if test $gl_cross_guesses = risky; then
+    gl_cross_guess_normal="guessing yes"
+    gl_cross_guess_inverted="guessing no"
+  else
+    gl_cross_guess_normal="guessing no"
+    gl_cross_guess_inverted="guessing yes"
+  fi
           LIBC_FATAL_STDERR_=1
   export LIBC_FATAL_STDERR_
+
 
 # The Ultrix 4.2 mips builtin alloca declared by alloca.h only works
 # for constant arguments.  Useless!
@@ -18156,6 +18254,7 @@ fi
 
 
 
+
   gl_source_base='.'
 LTALLOCA=`echo "$ALLOCA" | sed -e 's/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'`
 
@@ -18321,6 +18420,7 @@ done
 
   gltests_libdeps=
   gltests_ltlibdeps=
+
 
 
 
@@ -20488,7 +20588,9 @@ $as_echo X/"$am_mf" |
     { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
 as_fn_error $? "Something went wrong bootstrapping makefile fragments
-    for automatic dependency tracking.  Try re-running configure with the
+    for automatic dependency tracking.  If GNU make was not used, consider
+    re-running the configure script with MAKE=\"gmake\" (or whatever is
+    necessary).  You can also try re-running configure with the
     '--disable-dependency-tracking' option to at least be able to build
     the package (albeit without support for automatic dependency tracking).
 See \`config.log' for more details" "$LINENO" 5; }

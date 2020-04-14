@@ -151,12 +151,6 @@ extern int __gettextdebug;
     NUMBER = 262
   };
 #endif
-/* Tokens.  */
-#define EQUOP2 258
-#define CMPOP2 259
-#define ADDOP2 260
-#define MULOP2 261
-#define NUMBER 262
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -169,7 +163,7 @@ union YYSTYPE
   enum expression_operator op;
   struct expression *exp;
 
-#line 173 "plural.c" /* yacc.c:353  */
+#line 167 "plural.c" /* yacc.c:353  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -261,7 +255,7 @@ new_exp_3 (enum expression_operator op, struct expression *bexp,
 }
 
 
-#line 265 "plural.c" /* yacc.c:355  */
+#line 259 "plural.c" /* yacc.c:355  */
 
 #ifdef short
 # undef short
@@ -1349,7 +1343,7 @@ yyreduce:
 	      YYABORT;
 	    arg->res = (yyvsp[0].exp);
 	  }
-#line 1353 "plural.c" /* yacc.c:1645  */
+#line 1347 "plural.c" /* yacc.c:1645  */
     break;
 
   case 3:
@@ -1357,7 +1351,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_3 (qmop, (yyvsp[-4].exp), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1361 "plural.c" /* yacc.c:1645  */
+#line 1355 "plural.c" /* yacc.c:1645  */
     break;
 
   case 4:
@@ -1365,7 +1359,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 (lor, (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1369 "plural.c" /* yacc.c:1645  */
+#line 1363 "plural.c" /* yacc.c:1645  */
     break;
 
   case 5:
@@ -1373,7 +1367,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 (land, (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1377 "plural.c" /* yacc.c:1645  */
+#line 1371 "plural.c" /* yacc.c:1645  */
     break;
 
   case 6:
@@ -1381,7 +1375,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1385 "plural.c" /* yacc.c:1645  */
+#line 1379 "plural.c" /* yacc.c:1645  */
     break;
 
   case 7:
@@ -1389,7 +1383,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1393 "plural.c" /* yacc.c:1645  */
+#line 1387 "plural.c" /* yacc.c:1645  */
     break;
 
   case 8:
@@ -1397,7 +1391,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1401 "plural.c" /* yacc.c:1645  */
+#line 1395 "plural.c" /* yacc.c:1645  */
     break;
 
   case 9:
@@ -1405,7 +1399,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1409 "plural.c" /* yacc.c:1645  */
+#line 1403 "plural.c" /* yacc.c:1645  */
     break;
 
   case 10:
@@ -1413,7 +1407,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_1 (lnot, (yyvsp[0].exp));
 	  }
-#line 1417 "plural.c" /* yacc.c:1645  */
+#line 1411 "plural.c" /* yacc.c:1645  */
     break;
 
   case 11:
@@ -1421,7 +1415,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_0 (var);
 	  }
-#line 1425 "plural.c" /* yacc.c:1645  */
+#line 1419 "plural.c" /* yacc.c:1645  */
     break;
 
   case 12:
@@ -1430,7 +1424,7 @@ yyreduce:
 	    if (((yyval.exp) = new_exp_0 (num)) != NULL)
 	      (yyval.exp)->val.num = (yyvsp[0].num);
 	  }
-#line 1434 "plural.c" /* yacc.c:1645  */
+#line 1428 "plural.c" /* yacc.c:1645  */
     break;
 
   case 13:
@@ -1438,11 +1432,11 @@ yyreduce:
     {
 	    (yyval.exp) = (yyvsp[-1].exp);
 	  }
-#line 1442 "plural.c" /* yacc.c:1645  */
+#line 1436 "plural.c" /* yacc.c:1645  */
     break;
 
 
-#line 1446 "plural.c" /* yacc.c:1645  */
+#line 1440 "plural.c" /* yacc.c:1645  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
