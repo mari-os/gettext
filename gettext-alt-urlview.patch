@@ -6648,7 +6648,7 @@
  </html>
 --- gettext/gettext-tools/src/Makefile.am
 +++ gettext/gettext-tools/src/Makefile.am
-@@ -538,7 +538,6 @@ EXTRA_DIST += cldr-plural.c cldr-plural.h
+@@ -561,7 +561,6 @@ EXTRA_DIST += cldr-plural.c cldr-plural.h
  install-exec-local:
  	$(MKDIR_P) $(DESTDIR)$(pkglibdir)
  	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) hostname$(EXEEXT) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)
@@ -6656,7 +6656,7 @@
  	$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) cldr-plurals$(EXEEXT) $(DESTDIR)$(pkglibdir)/cldr-plurals$(EXEEXT)
  	$(INSTALL_SCRIPT) user-email $(DESTDIR)$(pkglibdir)/user-email
  	$(INSTALL_SCRIPT) $(srcdir)/project-id $(DESTDIR)$(pkglibdir)/project-id
-@@ -548,7 +547,6 @@ installdirs-local:
+@@ -571,7 +570,6 @@ installdirs-local:
  
  uninstall-local:
  	$(RM) $(DESTDIR)$(pkglibdir)/hostname$(EXEEXT)

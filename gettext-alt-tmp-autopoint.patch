@@ -50,7 +50,7 @@
      { (exit 1); exit 1; }
    }
  }
-@@ -457,21 +455,14 @@ fi
+@@ -466,21 +462,14 @@ fi
  # Set up a temporary checkout directory.
  # Set variables
  # - work_dir        directory containing the temporary checkout
@@ -74,7 +74,7 @@
        func_fatal_error "infrastructure files for version $ver not found; this is autopoint from GNU $package $version"
      fi
      mv "$work_dir/gettext-$ver" "$work_dir/archive"
-@@ -580,10 +571,8 @@ if test -z "$force"; then
+@@ -589,10 +578,8 @@ if test -z "$force"; then
      fi
    done
    if test -n "$mismatch"; then
@@ -85,7 +85,7 @@
  fi
  
  # func_mkdir_for to
-@@ -596,7 +585,8 @@ func_mkdir_for ()
+@@ -605,7 +592,8 @@ func_mkdir_for ()
      func_mkdir_for "$base"
      # Recompute base. It was clobbered by the recursive call.
      base=`echo "$1" | sed -e 's,/[^/]*$,,'`
@@ -95,7 +95,7 @@
    fi
  }
  
-@@ -665,5 +655,4 @@ for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/arch
+@@ -674,5 +662,4 @@ for file in `find "$work_dir/archive" -type f -print | sed -e "s,^$work_dir/arch
  done
  
  # That's it.
