@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 %define libintl libintl3
@@ -366,6 +366,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Tue Apr 14 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt1
+- 0.20.1 -> 0.20.2.
+
 * Fri Jan 03 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.1-alt1
 - 0.19.8.1 -> 0.20.1 (closes: #37078).
 
