@@ -44,10 +44,13 @@ AC_DEFUN([gl_EARLY],
   # Code from module absolute-header:
   # Code from module alloca:
   # Code from module alloca-opt:
+  # Code from module attribute:
+  # Code from module c99:
   # Code from module errno:
   # Code from module extern-inline:
   # Code from module include_next:
   # Code from module size_max:
+  # Code from module std-gnu11:
   # Code from module verify:
   # Code from module xsize:
 ])
@@ -213,6 +216,7 @@ AC_DEFUN([gltests_LIBSOURCES], [
 AC_DEFUN([gl_FILE_LIST], [
   lib/alloca.c
   lib/alloca.in.h
+  lib/attribute.h
   lib/errno.in.h
   lib/size_max.h
   lib/verify.h
@@ -226,6 +230,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/gnulib-common.m4
   m4/include_next.m4
   m4/size_max.m4
+  m4/std-gnu11.m4
   m4/xsize.m4
   m4/zzgnulib.m4
 ])

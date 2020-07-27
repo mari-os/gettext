@@ -39,8 +39,9 @@
 #  --macro-prefix=gl \
 #  ansi-c++-opt \
 #  atexit \
-#  basename \
+#  basename-lgpl \
 #  binary-io \
+#  bison \
 #  closeout \
 #  csharpcomp-script \
 #  error \
@@ -51,6 +52,7 @@
 #  java \
 #  javacomp-script \
 #  memmove \
+#  noreturn \
 #  progname \
 #  propername \
 #  relocatable-prog \
@@ -69,8 +71,9 @@ gl_LOCAL_DIR([../gnulib-local])
 gl_MODULES([
   ansi-c++-opt
   atexit
-  basename
+  basename-lgpl
   binary-io
+  bison
   closeout
   csharpcomp-script
   error
@@ -81,6 +84,7 @@ gl_MODULES([
   java
   javacomp-script
   memmove
+  noreturn
   progname
   propername
   relocatable-prog

@@ -1,4 +1,4 @@
-# intl.m4 serial 39 (gettext-0.20.2)
+# intl.m4 serial 44 (gettext-0.21)
 dnl Copyright (C) 1995-2014, 2016-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -227,7 +227,6 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   AC_REQUIRE([AC_FUNC_MMAP])dnl
   AC_REQUIRE([gt_INTDIV0])dnl
   AC_REQUIRE([gl_AC_TYPE_UINTMAX_T])dnl
-  AC_REQUIRE([gt_INTTYPES_PRI])dnl
   AC_REQUIRE([gl_LOCK])dnl
 
   AC_LINK_IFELSE(
@@ -237,10 +236,9 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
     [AC_DEFINE([HAVE_BUILTIN_EXPECT], [1],
        [Define to 1 if the compiler understands __builtin_expect.])])
 
-  AC_CHECK_HEADERS([argz.h inttypes.h limits.h unistd.h sys/param.h])
+  AC_CHECK_HEADERS([inttypes.h limits.h unistd.h sys/param.h])
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
-    stpcpy strcasecmp strdup strtoul tsearch argz_count argz_stringify \
-    argz_next __fsetlocking])
+    stpcpy strcasecmp strdup strtoul tsearch __fsetlocking])
 
   dnl Use the *_unlocked functions only if they are declared.
   dnl (because some of them were defined without being declared in Solaris
@@ -252,33 +250,14 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
 
   dnl intl/plural.c is generated from intl/plural.y. It requires bison,
   dnl because plural.y uses bison specific features. It requires at least
-  dnl bison-2.7 for %define api.pure.
+  dnl bison-3.0 for %precedence.
   dnl bison is only needed for the maintainer (who touches plural.y). But in
   dnl order to avoid separate Makefiles or --enable-maintainer-mode, we put
   dnl the rule in general Makefile. Now, some people carelessly touch the
   dnl files or have a broken "make" program, hence the plural.c rule will
   dnl sometimes fire. To avoid an error, defines BISON to ":" if it is not
   dnl present or too old.
-  AC_CHECK_PROGS([INTLBISON], [bison])
-  if test -z "$INTLBISON"; then
-    ac_verc_fail=yes
-  else
-    dnl Found it, now check the version.
-    AC_MSG_CHECKING([version of bison])
-changequote(<<,>>)dnl
-    ac_prog_version=`$INTLBISON --version 2>&1 | sed -n 's/^.*GNU Bison.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
-    case $ac_prog_version in
-      '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
-      1.* | 2.[0-6] | 2.[0-6].*)
-changequote([,])dnl
-         ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
-      *) ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
-    esac
-    AC_MSG_RESULT([$ac_prog_version])
-  fi
-  if test $ac_verc_fail = yes; then
-    INTLBISON=:
-  fi
+  gl_PROG_BISON([INTLBISON], [3.0])
 ])
 
 dnl Copies _GL_UNUSED and _GL_ATTRIBUTE_PURE definitions from

@@ -76,7 +76,6 @@ distcheck-hook:
 	cmp -s $(srcdir)/gettext-runtime/m4/gettext.m4 $(srcdir)/gettext-tools/gnulib-m4/gettext.m4
 	cmp -s $(srcdir)/gettext-runtime/m4/iconv.m4 $(srcdir)/gettext-tools/gnulib-m4/iconv.m4
 	cmp -s $(srcdir)/gettext-runtime/m4/intlmacosx.m4 $(srcdir)/gettext-tools/gnulib-m4/intlmacosx.m4
-	cmp -s $(srcdir)/gettext-runtime/m4/inttypes-pri.m4 $(srcdir)/gettext-tools/gnulib-m4/inttypes-pri.m4
 	cmp -s $(srcdir)/gettext-runtime/m4/inttypes_h.m4 $(srcdir)/gettext-tools/gnulib-m4/inttypes_h.m4
 	cmp -s $(srcdir)/gettext-runtime/m4/nls.m4 $(srcdir)/gettext-tools/gnulib-m4/nls.m4
 	cmp -s $(srcdir)/gettext-runtime/m4/po.m4 $(srcdir)/gettext-tools/gnulib-m4/po.m4
@@ -86,6 +85,7 @@ distcheck-hook:
 	cmp -s $(srcdir)/gettext-runtime/m4/xsize.m4 $(srcdir)/gettext-tools/gnulib-m4/xsize.m4
 	cmp -s $(srcdir)/gettext-runtime/libasprintf/gnulib-m4/intmax_t.m4 $(srcdir)/gettext-tools/gnulib-m4/intmax_t.m4
 	test "`sed 1,16d $(srcdir)/gettext-runtime/intl/arg-nonnull.h | md5sum`" = "`sed 1,16d $(srcdir)/gettext-tools/gnulib-lib/arg-nonnull.h | md5sum`"
+	test "`sed 1,16d $(srcdir)/gettext-runtime/intl/attribute.h | md5sum`" = "`sed 1,16d $(srcdir)/gettext-tools/gnulib-lib/attribute.h | md5sum`"
 	test "`sed 1,15d $(srcdir)/gettext-runtime/intl/filename.h | md5sum`" = "`sed 1,15d $(srcdir)/gettext-tools/gnulib-lib/filename.h | md5sum`"
 	test "`sed 1,16d $(srcdir)/gettext-runtime/intl/flexmember.h | md5sum`" = "`sed 1,19d $(srcdir)/gettext-tools/gnulib-lib/flexmember.h | md5sum`"
 	test "`sed 1,16d $(srcdir)/gettext-runtime/intl/localcharset.h | md5sum`" = "`sed 1,16d $(srcdir)/gettext-tools/gnulib-lib/localcharset.h | md5sum`"

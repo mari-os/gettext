@@ -10,9 +10,10 @@
 # Božidar Putanec <bozidarp@yahoo.com>, 2018, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: hello-csharp-forms-0.20-rc1\n"
+"Project-Id-Version: hello-csharp-forms-0.20.2\n"
 "Report-Msgid-Bugs-To: bug-gettext@gnu.org\n"
-"PO-Revision-Date: 2019-04-15 13:55-0700\n"
+"POT-Creation-Date: 2020-07-27 01:19+0200\n"
+"PO-Revision-Date: 2020-04-17 08:19-0700\n"
 "Last-Translator: Božidar Putanec <bozidarp@yahoo.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"

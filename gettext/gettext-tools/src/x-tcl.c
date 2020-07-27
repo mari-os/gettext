@@ -1,5 +1,5 @@
 /* xgettext Tcl backend.
-   Copyright (C) 2002-2003, 2005-2009, 2013, 2018-2019 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009, 2013, 2018-2020 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
@@ -42,7 +42,7 @@
 #include "xg-message.h"
 #include "error.h"
 #include "xalloc.h"
-#include "hash.h"
+#include "mem-hash-map.h"
 #include "c-ctype.h"
 #include "po-charset.h"
 #include "unistr.h"
@@ -889,7 +889,7 @@ read_command (int looking_for, flag_context_ty outer_context)
                 pos.file_name = logical_file_name;
                 pos.line_number = inner.line_number_at_start;
                 remember_a_message (mlp, NULL, string_of_word (&inner), false,
-                                    inner_context, &pos,
+                                    false, inner_context, &pos,
                                     NULL, savable_comment, false);
               }
           }
@@ -985,6 +985,9 @@ extract_tcl (FILE *f,
   real_file_name = real_filename;
   logical_file_name = xstrdup (logical_filename);
   line_number = 1;
+
+  phase1_pushback_length = 0;
+  phase2_pushback_length = 0;
 
   /* Initially, no brace is open.  */
   brace_depth = 1000000;

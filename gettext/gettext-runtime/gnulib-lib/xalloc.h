@@ -1,5 +1,5 @@
 /* malloc with out of memory checking.
-   Copyright (C) 2001-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006, 2019-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,9 @@
 #define _XALLOC_H
 
 #include <stddef.h>
+
+#include "noreturn.h"
+#include "xalloc-oversized.h"
 
 
 #ifdef __cplusplus
@@ -56,15 +59,27 @@ template <typename T>
 extern "C" {
 #endif
 
+/* If P is null, allocate a block of at least *PN bytes; otherwise,
+   reallocate P so that it contains more than *PN bytes.  *PN must be
+   nonzero unless P is null.  Set *PN to the new block's size, and
+   return the pointer to the new block.  *PN is never set to zero, and
+   the returned pointer is never null.  */
+extern void *x2realloc (void *ptr, size_t *pn);
+#ifdef __cplusplus
+}
+template <typename T>
+  inline T * x2realloc (T * ptr, size_t *pn)
+  {
+    return (T *) x2realloc ((void *) ptr, pn);
+  }
+extern "C" {
+#endif
+
 /* This function is always triggered when memory is exhausted.  It is
    in charge of honoring the three previous items.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
-extern void xalloc_die (void)
-#if (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 5)) && !__STRICT_ANSI__
-     __attribute__ ((__noreturn__))
-#endif
-     ;
+_GL_NORETURN_FUNC extern void xalloc_die (void);
 
 /* In the following macros, T must be an elementary or structure/union or
    typedef'ed type, or a pointer to such a type.  To apply one of the
@@ -132,22 +147,6 @@ extern "C" {
 
 /* Return a newly allocated copy of STRING.  */
 extern char *xstrdup (const char *string);
-
-
-/* Return 1 if an array of N objects, each of size S, cannot exist due
-   to size arithmetic overflow.  S must be positive and N must be
-   nonnegative.  This is a macro, not an inline function, so that it
-   works correctly even when SIZE_MAX < N.
-
-   By gnulib convention, SIZE_MAX represents overflow in size
-   calculations, so the conservative dividend to use here is
-   SIZE_MAX - 1, since SIZE_MAX might represent an overflowed value.
-   However, malloc (SIZE_MAX) fails on all known hosts where
-   sizeof (ptrdiff_t) <= sizeof (size_t), so do not bother to test for
-   exactly-SIZE_MAX allocations on such hosts; this avoids a test and
-   branch when S is known to be 1.  */
-# define xalloc_oversized(n, s) \
-    ((size_t) (sizeof (ptrdiff_t) <= sizeof (size_t) ? -1 : -2) / (s) < (n))
 
 
 #ifdef __cplusplus

@@ -34,7 +34,7 @@ File: libtextstyle.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU libtextstyle
 ****************
 
-   This manual documents the GNU libtextstyle library, version 0.20.2.
+   This manual documents the GNU libtextstyle library, version 0.21.
 
 * Menu:
 
@@ -177,12 +177,14 @@ scroll around in the styled output.  For example:
 * Menu:
 
 * The TERM variable::
+* The NO_COLOR variable::
+* The NO_TERM_HYPERLINKS variable::
 * Emacs::
 * The --color option::
 * The --style option::
 
 
-File: libtextstyle.info,  Node: The TERM variable,  Next: Emacs,  Up: The user's view
+File: libtextstyle.info,  Node: The TERM variable,  Next: The NO_COLOR variable,  Up: The user's view
 
 2.1 The environment variable 'TERM'
 ===================================
@@ -273,9 +275,37 @@ default 'TERM=vt100'.
    On Windows consoles, no 'TERM' setting is needed.
 
 
-File: libtextstyle.info,  Node: Emacs,  Next: The --color option,  Prev: The TERM variable,  Up: The user's view
+File: libtextstyle.info,  Node: The NO_COLOR variable,  Next: The NO_TERM_HYPERLINKS variable,  Prev: The TERM variable,  Up: The user's view
 
-2.2 Emacs as a terminal emulator
+2.2 The environment variable 'NO_COLOR'
+=======================================
+
+   The environment variable 'NO_COLOR' can be used to suppress styling
+in the textual output.  When this environment variable is set (to any
+value), 'libtextstyle'-enabled programs will not emit colors and other
+text styling.
+
+   This environment variable can be overridden by passing the
+command-line option '--color=always' (see *note The --color option::).
+
+
+File: libtextstyle.info,  Node: The NO_TERM_HYPERLINKS variable,  Next: Emacs,  Prev: The NO_COLOR variable,  Up: The user's view
+
+2.3 The environment variable 'NO_TERM_HYPERLINKS'
+=================================================
+
+   The environment variable 'NO_TERM_HYPERLINKS' can be used to suppress
+hyperlinks in the textual output.  When this environment variable is set
+(to any value), 'libtextstyle'-enabled programs will not emit
+hyperlinks.  This may be useful for terminal emulators which produce
+garbage output when they receive the escape sequence for a hyperlink.
+Currently (as of 2019), this affects some versions of 'konsole',
+'emacs', 'lxterminal', 'guake', 'yakuake', 'rxvt'.
+
+
+File: libtextstyle.info,  Node: Emacs,  Next: The --color option,  Prev: The NO_TERM_HYPERLINKS variable,  Up: The user's view
+
+2.4 Emacs as a terminal emulator
 ================================
 
    Emacs has several terminal emulators: 'M-x shell' and 'M-x term'.
@@ -285,7 +315,7 @@ the styling gets lost.
 
 File: libtextstyle.info,  Node: The --color option,  Next: The --style option,  Prev: Emacs,  Up: The user's view
 
-2.3 The '--color' option
+2.5 The '--color' option
 ========================
 
    The '--color=WHEN' option specifies under which conditions styled
@@ -338,7 +368,7 @@ don't need to save output produced with the '--color' option in a file.
 
 File: libtextstyle.info,  Node: The --style option,  Prev: The --color option,  Up: The user's view
 
-2.4 The '--style' option
+2.6 The '--style' option
 ========================
 
    The '--style=STYLE_FILE' option specifies the style file to use when
@@ -362,7 +392,7 @@ section.
 
 File: libtextstyle.info,  Node: Style rules,  Next: Debugging style files,  Up: The --style option
 
-2.4.1 Creating your own style files
+2.6.1 Creating your own style files
 -----------------------------------
 
    The same style file can be used for styling a certain type of output,
@@ -432,7 +462,7 @@ properties.  Other properties will be silently ignored.
 
 File: libtextstyle.info,  Node: Debugging style files,  Prev: Style rules,  Up: The --style option
 
-2.4.2 Debugging style files
+2.6.2 Debugging style files
 ---------------------------
 
    If you want to understand why the style rules in a style file produce
@@ -525,6 +555,43 @@ deallocates it.
 The CSS class in effect when an output operation is performed
 determines, through the style file, the text attributes associated with
 that piece of text.
+
+* Menu:
+
+* Hyperlinks::
+
+
+File: libtextstyle.info,  Node: Hyperlinks,  Up: Basic use
+
+3.1.1 Hyperlinks
+----------------
+
+   Text output may contain hyperlinks.  These hyperlinks are encoded
+through an escape sequence, specified at Hyperlinks in terminal
+emulators
+(https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda).
+Currently (as of 2019), they are displayed only in 'gnome-terminal'
+version 3.26 or above.  More terminal emulators will support hyperlinks
+in the future.  Terminal emulators which don't support hyperlinks ignore
+it, except for a few terminal emulators, for which users may need to
+disable the hyperlinks (see *note The NO_TERM_HYPERLINKS variable::) if
+the heuristic built into 'libtextstyle' does not already disable them.
+
+   To emit a hyperlink, use code like this:
+
+       styled_ostream_t stream = ...
+       ...
+       /* Start a hyperlink.  */
+       styled_ostream_set_hyperlink (stream, url, NULL);
+       ...
+       /* Emit the anchor text.  This can be styled text.  */
+       ostream_write_str (stream, "Click here!");
+       ...
+       /* End the current hyperlink.  */
+       styled_ostream_set_hyperlink (stream, NULL, NULL);
+
+   The anchor text can be styled.  But the hyperlinks themselves cannot
+be styled; they behave as implemented by the terminal emulator.
 
 
 File: libtextstyle.info,  Node: Include files,  Next: Link options,  Prev: Basic use,  Up: The programmer's view
@@ -688,6 +755,15 @@ File: libtextstyle.info,  Node: The ostream class,  Next: The styled_ostream cla
           const char *STRING)
      Writes a string's contents to a stream.
 
+ -- Function: ptrdiff_t ostream_printf (ostream_t STREAM,
+          const char *FORMAT, ...)
+ -- Function: ptrdiff_t ostream_vprintf (ostream_t STREAM,
+          const char *FORMAT, va_list args)
+     Writes formatted output to a stream.
+
+     These functions return the size of formatted output, or a negative
+     value in case of an error.
+
  -- Function: void ostream_flush (ostream_t STREAM,
           ostream_flush_scope_t SCOPE)
      Brings buffered data to its destination.
@@ -716,6 +792,38 @@ subclass of 'ostream_t' that adds the following methods:
      'styled_ostream_begin_use_class' / 'styled_ostream_end_use_class'
      calls must match properly.
 
+ -- Function: const char * styled_ostream_get_hyperlink_ref
+          (styled_ostream_t STREAM)
+     Returns the referred URL of the currently set hyperlink, or 'NULL'
+     if no hyperlink attribute is currently set.
+
+     Note: The returned string is only valid up to the next invocation
+     of 'styled_ostream_set_hyperlink'.
+
+ -- Function: const char * styled_ostream_get_hyperlink_id
+          (styled_ostream_t STREAM)
+     Returns the id of the currently set hyperlink, or 'NULL' if no
+     hyperlink attribute is currently set.
+
+     Note: The returned string is only valid up to the next invocation
+     of 'styled_ostream_set_hyperlink'.
+
+ -- Function: void styled_ostream_set_hyperlink
+          (styled_ostream_t STREAM, const char *REF, const char *ID)
+     Sets or removes a hyperlink attribute.
+
+     To set a hyperlink attribute, pass a non-'NULL' REF.  REF is an
+     URL; it should be at most 2083 bytes long.  Non-ASCII characters
+     should be URI-escaped (using the %nn syntax).  ID is an optional
+     identifier.  On terminal output, multiple hyperlinks with the same
+     ID will be highlighted together.  If specified, ID should be at
+     most 250 bytes long.
+
+     To remove a hyperlink attribute, pass 'NULL' for REF and ID.
+
+     Hyperlinks don't nest.  That is, a hyperlink attribute is enabled
+     only up to the next invocation of 'styled_ostream_set_hyperlink'.
+
  -- Function: void styled_ostream_flush_to_current_style
           (styled_ostream_t STREAM)
      This function acts like 'ostream_flush (STREAM,
@@ -724,7 +832,8 @@ subclass of 'ostream_t' that adds the following methods:
 
      After calling this function, you can output strings without
      newlines(!)  to the underlying stream, and they will be rendered
-     like strings passed to 'ostream_write_mem' or 'ostream_write_str'.
+     like strings passed to 'ostream_write_mem', 'ostream_write_str', or
+     'ostream_printf'.
 
 
 File: libtextstyle.info,  Node: ostream subclasses without styling,  Next: styled_ostream subclasses,  Prev: The styled_ostream class,  Up: The output stream hierarchy
@@ -843,6 +952,38 @@ connected to a terminal emulator or console.  Its type is
           term_underline_t UNDERLINE)
      Gets/sets the text underline decoration.
 
+ -- Function: const char * term_ostream_get_hyperlink_ref
+          (term_ostream_t STREAM)
+     Returns the referred URL of the currently set hyperlink, or 'NULL'
+     if no hyperlink attribute is currently set.
+
+     Note: The returned string is only valid up to the next invocation
+     of 'term_ostream_set_hyperlink'.
+
+ -- Function: const char * term_ostream_get_hyperlink_id
+          (term_ostream_t STREAM)
+     Returns the id of the currently set hyperlink, or 'NULL' if no
+     hyperlink attribute is currently set.
+
+     Note: The returned string is only valid up to the next invocation
+     of 'term_ostream_set_hyperlink'.
+
+ -- Function: void term_ostream_set_hyperlink (term_ostream_t STREAM,
+          const char *REF, const char *ID)
+     Sets or removes a hyperlink attribute.
+
+     To set a hyperlink attribute, pass a non-'NULL' REF.  REF is an
+     URL; it should be at most 2083 bytes long.  Non-ASCII characters
+     should be URI-escaped (using the %nn syntax).  ID is an optional
+     identifier.  Multiple hyperlinks with the same ID will be
+     highlighted together.  If specified, ID should be at most 250 bytes
+     long.
+
+     To remove a hyperlink attribute, pass 'NULL' for REF and ID.
+
+     Hyperlinks don't nest.  That is, a hyperlink attribute is enabled
+     only up to the next invocation of 'styled_ostream_set_hyperlink'.
+
  -- Function: void term_ostream_flush_to_current_style
           (term_ostream_t STREAM)
      This function acts like 'ostream_flush (STREAM,
@@ -852,8 +993,8 @@ connected to a terminal emulator or console.  Its type is
 
      After calling this function, you can output strings without
      newlines(!)  to the underlying file descriptor, and they will be
-     rendered like strings passed to 'ostream_write_mem' or
-     'ostream_write_str'.
+     rendered like strings passed to 'ostream_write_mem',
+     'ostream_write_str', or 'ostream_printf'.
 
 
 File: libtextstyle.info,  Node: The html_ostream class,  Next: The memory_ostream class,  Prev: The term_ostream class,  Up: ostream subclasses without styling
@@ -892,6 +1033,27 @@ syntax.  Its type is 'html_ostream_t'.  It is a subclass of 'ostream_t'.
      The 'html_ostream_begin_span' / 'html_ostream_end_span' calls must
      match properly.
 
+ -- Function: const char * html_ostream_get_hyperlink_ref
+          (html_ostream_t STREAM)
+     Returns the referred URL of the currently set hyperlink, or 'NULL'
+     if no hyperlink attribute is currently set.
+
+     Note: The returned string is only valid up to the next invocation
+     of 'html_ostream_set_hyperlink_ref'.
+
+ -- Function: void html_ostream_set_hyperlink_ref
+          (html_ostream_t STREAM, const char *REF)
+     Sets or removes a hyperlink attribute.
+
+     To set a hyperlink attribute, pass a non-'NULL' REF.  REF is an
+     URL; it should be at most 2083 bytes long.  Non-ASCII characters
+     should be URI-escaped (using the %nn syntax).
+
+     To remove a hyperlink attribute, pass 'NULL' for REF.
+
+     Hyperlinks don't nest.  That is, a hyperlink attribute is enabled
+     only up to the next invocation of 'html_ostream_set_hyperlink_ref'.
+
  -- Function: void html_ostream_flush_to_current_style
           (html_ostream_t STREAM)
      This function acts like 'ostream_flush (STREAM,
@@ -900,7 +1062,8 @@ syntax.  Its type is 'html_ostream_t'.  It is a subclass of 'ostream_t'.
 
      After calling this function, you can output strings without
      newlines(!)  to the underlying stream, and they will be rendered
-     like strings passed to 'ostream_write_mem' or 'ostream_write_str'.
+     like strings passed to 'ostream_write_mem', 'ostream_write_str', or
+     'ostream_printf'.
 
 
 File: libtextstyle.info,  Node: The memory_ostream class,  Next: The iconv_ostream class,  Prev: The html_ostream class,  Up: ostream subclasses without styling
@@ -2328,71 +2491,94 @@ Function Index
  [index ]
 * Menu:
 
-* fd_ostream_create:                     The fd_ostream class. (line 12)
+* fd_ostream_create:                     The fd_ostream class.
+                                                              (line  12)
 * file_ostream_create:                   The file_ostream class.
-                                                               (line 12)
-* handle_color_option:                   Command-line options. (line 27)
-* handle_style_option:                   Command-line options. (line 32)
+                                                              (line  12)
+* handle_color_option:                   Command-line options.
+                                                              (line  27)
+* handle_style_option:                   Command-line options.
+                                                              (line  32)
 * html_ostream_begin_span:               The html_ostream class.
-                                                               (line 24)
+                                                              (line  24)
 * html_ostream_create:                   The html_ostream class.
-                                                               (line 11)
+                                                              (line  11)
 * html_ostream_end_span:                 The html_ostream class.
-                                                               (line 31)
+                                                              (line  31)
 * html_ostream_flush_to_current_style:   The html_ostream class.
-                                                               (line 39)
+                                                              (line  61)
+* html_ostream_get_hyperlink_ref:        The html_ostream class.
+                                                              (line  39)
+* html_ostream_set_hyperlink_ref:        The html_ostream class.
+                                                              (line  48)
 * html_styled_ostream_create:            The html_styled_ostream class.
-                                                               (line 12)
+                                                              (line  12)
 * iconv_ostream_create:                  The iconv_ostream class.
-                                                               (line 12)
+                                                              (line  12)
 * memory_ostream_contents:               The memory_ostream class.
-                                                               (line 17)
+                                                              (line  17)
 * memory_ostream_create:                 The memory_ostream class.
-                                                               (line 11)
+                                                              (line  11)
 * noop_styled_ostream_create:            The noop_styled_ostream class.
-                                                               (line 13)
-* ostream_flush:                         The ostream class.    (line 18)
-* ostream_free:                          The ostream class.    (line 23)
-* ostream_write_mem:                     The ostream class.    (line 10)
-* ostream_write_str:                     The ostream class.    (line 14)
-* print_color_test:                      Command-line options. (line 36)
+                                                              (line  13)
+* ostream_flush:                         The ostream class.   (line  27)
+* ostream_free:                          The ostream class.   (line  32)
+* ostream_printf:                        The ostream class.   (line  18)
+* ostream_vprintf:                       The ostream class.   (line  20)
+* ostream_write_mem:                     The ostream class.   (line  10)
+* ostream_write_str:                     The ostream class.   (line  14)
+* print_color_test:                      Command-line options.
+                                                              (line  36)
 * styled_ostream_begin_use_class:        The styled_ostream class.
-                                                               (line  9)
+                                                              (line   9)
 * styled_ostream_create:                 The term_styled_ostream class.
-                                                               (line 34)
+                                                              (line  34)
 * styled_ostream_end_use_class:          The styled_ostream class.
-                                                               (line 15)
+                                                              (line  15)
 * styled_ostream_flush_to_current_style: The styled_ostream class.
-                                                               (line 21)
-* style_file_prepare:                    Command-line options. (line 40)
+                                                              (line  55)
+* styled_ostream_get_hyperlink_id:       The styled_ostream class.
+                                                              (line  30)
+* styled_ostream_get_hyperlink_ref:      The styled_ostream class.
+                                                              (line  21)
+* styled_ostream_set_hyperlink:          The styled_ostream class.
+                                                              (line  39)
+* style_file_prepare:                    Command-line options.
+                                                              (line  40)
 * term_ostream_create:                   The term_ostream class.
-                                                               (line 12)
+                                                              (line  12)
 * term_ostream_flush_to_current_style:   The term_ostream class.
-                                                               (line 69)
+                                                              (line 104)
 * term_ostream_get_bgcolor:              The term_ostream class.
-                                                               (line 40)
+                                                              (line  40)
 * term_ostream_get_color:                The term_ostream class.
-                                                               (line 33)
+                                                              (line  33)
+* term_ostream_get_hyperlink_id:         The term_ostream class.
+                                                              (line  78)
+* term_ostream_get_hyperlink_ref:        The term_ostream class.
+                                                              (line  69)
 * term_ostream_get_posture:              The term_ostream class.
-                                                               (line 54)
+                                                              (line  54)
 * term_ostream_get_underline:            The term_ostream class.
-                                                               (line 61)
+                                                              (line  61)
 * term_ostream_get_weight:               The term_ostream class.
-                                                               (line 47)
+                                                              (line  47)
 * term_ostream_rgb_to_color:             The term_ostream class.
-                                                               (line 28)
+                                                              (line  28)
 * term_ostream_set_bgcolor:              The term_ostream class.
-                                                               (line 42)
+                                                              (line  42)
 * term_ostream_set_color:                The term_ostream class.
-                                                               (line 35)
+                                                              (line  35)
+* term_ostream_set_hyperlink:            The term_ostream class.
+                                                              (line  87)
 * term_ostream_set_posture:              The term_ostream class.
-                                                               (line 56)
+                                                              (line  56)
 * term_ostream_set_underline:            The term_ostream class.
-                                                               (line 64)
+                                                              (line  64)
 * term_ostream_set_weight:               The term_ostream class.
-                                                               (line 49)
+                                                              (line  49)
 * term_styled_ostream_create:            The term_styled_ostream class.
-                                                               (line 13)
+                                                              (line  13)
 
 
 File: libtextstyle.info,  Node: Variable Index,  Next: Index,  Prev: Function Index,  Up: Top
@@ -2405,6 +2591,10 @@ Variable Index
 
 * color_mode:                            Command-line options. (line 15)
 * color_test_mode:                       Command-line options. (line 12)
+* NO_COLOR, environment variable:        The NO_COLOR variable.
+                                                               (line  6)
+* NO_TERM_HYPERLINKS, environment variable: The NO_TERM_HYPERLINKS variable.
+                                                               (line  6)
 * style_file_name:                       Command-line options. (line 18)
 * TERM, environment variable:            The TERM variable.    (line  6)
 
@@ -2434,44 +2624,47 @@ General Index
 
 Tag Table:
 Node: Top1338
-Node: Introduction1749
-Node: Style definitions2423
-Node: Built-in versus separate styling5067
-Node: The user's view6253
-Node: The TERM variable7175
-Node: Terminal emulators8257
-Node: Consoles10464
-Node: Emacs10835
-Node: The --color option11183
-Node: The --style option13116
-Node: Style rules13935
-Node: Debugging style files16766
-Node: The programmer's view17776
-Node: Basic use19012
-Node: Include files20459
-Node: Link options20697
-Node: Command-line options22506
-Node: The output stream hierarchy25225
-Node: The ostream class26721
-Node: The styled_ostream class27490
-Node: ostream subclasses without styling28918
-Node: The file_ostream class29562
-Node: The fd_ostream class30161
-Node: The term_ostream class30885
-Node: The html_ostream class33712
-Node: The memory_ostream class35656
-Node: The iconv_ostream class36634
-Node: styled_ostream subclasses37401
-Node: The term_styled_ostream class37816
-Node: The html_styled_ostream class39505
-Node: The noop_styled_ostream class40357
-Node: Debugging the styling code41361
-Node: What to document41962
-Node: Licenses42990
-Node: GNU GPL44583
-Node: GNU FDL82113
-Node: Function Index107219
-Node: Variable Index111932
-Node: Index112374
+Node: Introduction1747
+Node: Style definitions2421
+Node: Built-in versus separate styling5065
+Node: The user's view6251
+Node: The TERM variable7235
+Node: Terminal emulators8333
+Node: Consoles10540
+Node: The NO_COLOR variable10911
+Node: The NO_TERM_HYPERLINKS variable11498
+Node: Emacs12196
+Node: The --color option12558
+Node: The --style option14491
+Node: Style rules15310
+Node: Debugging style files18141
+Node: The programmer's view19151
+Node: Basic use20387
+Node: Hyperlinks21859
+Node: Include files23149
+Node: Link options23387
+Node: Command-line options25196
+Node: The output stream hierarchy27915
+Node: The ostream class29411
+Node: The styled_ostream class30524
+Node: ostream subclasses without styling33374
+Node: The file_ostream class34018
+Node: The fd_ostream class34617
+Node: The term_ostream class35341
+Node: The html_ostream class39549
+Node: The memory_ostream class42387
+Node: The iconv_ostream class43365
+Node: styled_ostream subclasses44132
+Node: The term_styled_ostream class44547
+Node: The html_styled_ostream class46236
+Node: The noop_styled_ostream class47088
+Node: Debugging the styling code48092
+Node: What to document48693
+Node: Licenses49721
+Node: GNU GPL51314
+Node: GNU FDL88844
+Node: Function Index113950
+Node: Variable Index120234
+Node: Index120963
 
 End Tag Table

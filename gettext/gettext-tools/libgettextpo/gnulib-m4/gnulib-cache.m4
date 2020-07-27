@@ -39,13 +39,14 @@
 #  --libtool \
 #  --macro-prefix=gtpo \
 #  --avoid=progname \
-#  basename \
+#  basename-lgpl \
 #  c-ctype \
 #  c-strcase \
 #  c-strstr \
 #  close \
 #  error \
 #  error-progname \
+#  fdopen \
 #  filename \
 #  fopen \
 #  fstrcmp \
@@ -53,11 +54,11 @@
 #  gcd \
 #  getline \
 #  gettext-h \
-#  hash \
 #  iconv \
 #  libtextstyle-dummy \
 #  libunistring-optional \
 #  markup \
+#  mem-hash-map \
 #  minmax \
 #  open \
 #  realloc-posix \
@@ -89,13 +90,14 @@
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../gnulib-local])
 gl_MODULES([
-  basename
+  basename-lgpl
   c-ctype
   c-strcase
   c-strstr
   close
   error
   error-progname
+  fdopen
   filename
   fopen
   fstrcmp
@@ -103,11 +105,11 @@ gl_MODULES([
   gcd
   getline
   gettext-h
-  hash
   iconv
   libtextstyle-dummy
   libunistring-optional
   markup
+  mem-hash-map
   minmax
   open
   realloc-posix

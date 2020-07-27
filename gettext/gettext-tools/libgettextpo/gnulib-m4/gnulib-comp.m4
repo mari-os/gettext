@@ -46,17 +46,18 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module absolute-header:
   # Code from module alignof:
   # Code from module alloca-opt:
-  # Code from module basename:
+  # Code from module attribute:
+  # Code from module basename-lgpl:
   # Code from module builtin-expect:
   # Code from module c-ctype:
   # Code from module c-strcase:
   # Code from module c-strcaseeq:
   # Code from module c-strstr:
+  # Code from module c99:
   # Code from module cloexec:
   # Code from module close:
   # Code from module concat-filename:
   # Code from module diffseq:
-  # Code from module dirname-lgpl:
   # Code from module double-slash-root:
   # Code from module dup2:
   # Code from module errno:
@@ -68,6 +69,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module fcntl:
   # Code from module fcntl-h:
   # Code from module fd-hook:
+  # Code from module fdopen:
   # Code from module filename:
   # Code from module float:
   # Code from module fopen:
@@ -83,7 +85,6 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module gettext-h:
   # Code from module gperf:
   # Code from module hard-locale:
-  # Code from module hash:
   # Code from module havelib:
   # Code from module iconv:
   # Code from module iconv-h:
@@ -108,11 +109,13 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module mbrtowc:
   # Code from module mbsinit:
   # Code from module mbswidth:
+  # Code from module mem-hash-map:
   # Code from module memchr:
   # Code from module minmax:
   # Code from module msvc-inval:
   # Code from module msvc-nothrow:
   # Code from module multiarch:
+  # Code from module noreturn:
   # Code from module obstack:
   # Code from module open:
   # Code from module pathmax:
@@ -133,6 +136,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module ssize_t:
   # Code from module stat:
   # Code from module stat-time:
+  # Code from module std-gnu11:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  gl_PROG_CC_C99 arranges for this.
@@ -232,10 +236,9 @@ AC_DEFUN([gtpo_INIT],
     AC_LIBOBJ([close])
   fi
   gl_UNISTD_MODULE_INDICATOR([close])
-  gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
   gl_FUNC_DUP2
-  if test $HAVE_DUP2 = 0 || test $REPLACE_DUP2 = 1; then
+  if test $REPLACE_DUP2 = 1; then
     AC_LIBOBJ([dup2])
     gl_PREREQ_DUP2
   fi
@@ -256,6 +259,12 @@ AC_DEFUN([gtpo_INIT],
   fi
   gl_FCNTL_MODULE_INDICATOR([fcntl])
   gl_FCNTL_H
+  gl_FUNC_FDOPEN
+  if test $REPLACE_FDOPEN = 1; then
+    AC_LIBOBJ([fdopen])
+    gl_PREREQ_FDOPEN
+  fi
+  gl_STDIO_MODULE_INDICATOR([fdopen])
   gl_FLOAT_H
   if test $REPLACE_FLOAT_LDBL = 1; then
     AC_LIBOBJ([float])
@@ -362,7 +371,7 @@ AC_DEFUN([gtpo_INIT],
   gl_WCHAR_MODULE_INDICATOR([mbsinit])
   gl_MBSWIDTH
   gl_FUNC_MEMCHR
-  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  if test $REPLACE_MEMCHR = 1; then
     AC_LIBOBJ([memchr])
     gl_PREREQ_MEMCHR
   fi
@@ -588,6 +597,7 @@ AC_DEFUN([gtpo_INIT],
       AC_LIBOBJ([windows-tls])
       ;;
   esac
+  AC_REQUIRE([AC_C_INLINE])
   gl_XSIZE
   gl_XVASPRINTF
   m4_ifdef([AM_XGETTEXT_OPTION],
@@ -736,9 +746,9 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/arg-nonnull.h
   lib/asnprintf.c
   lib/asprintf.c
+  lib/attribute.h
   lib/basename-lgpl.c
-  lib/basename.c
-  lib/basename.h
+  lib/basename-lgpl.h
   lib/c++defs.h
   lib/c-ctype.c
   lib/c-ctype.h
@@ -754,8 +764,6 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/concat-filename.c
   lib/concat-filename.h
   lib/diffseq.h
-  lib/dirname-lgpl.c
-  lib/dirname.h
   lib/dup2.c
   lib/errno.in.h
   lib/error-progname.c
@@ -768,6 +776,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/fcntl.in.h
   lib/fd-hook.c
   lib/fd-hook.h
+  lib/fdopen.c
   lib/filename.h
   lib/float+.h
   lib/float.c
@@ -802,8 +811,6 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/glthread/tls.h
   lib/hard-locale.c
   lib/hard-locale.h
-  lib/hash.c
-  lib/hash.h
   lib/iconv.c
   lib/iconv.in.h
   lib/iconv_close.c
@@ -838,6 +845,8 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/mbswidth.h
   lib/mbtowc-lock.c
   lib/mbtowc-lock.h
+  lib/mem-hash-map.c
+  lib/mem-hash-map.h
   lib/memchr.c
   lib/memchr.valgrind
   lib/minmax.h
@@ -845,6 +854,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/msvc-inval.h
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
+  lib/noreturn.h
   lib/obstack.c
   lib/obstack.h
   lib/open.c
@@ -894,7 +904,6 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/striconveha.c
   lib/striconveha.h
   lib/string.in.h
-  lib/stripslash.c
   lib/strstr.c
   lib/sys_stat.in.h
   lib/sys_types.in.h
@@ -984,7 +993,6 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/builtin-expect.m4
   m4/close.m4
   m4/codeset.m4
-  m4/dirname.m4
   m4/double-slash-root.m4
   m4/dup2.m4
   m4/eealloc.m4
@@ -996,6 +1004,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/fcntl-o.m4
   m4/fcntl.m4
   m4/fcntl_h.m4
+  m4/fdopen.m4
   m4/float_h.m4
   m4/fopen.m4
   m4/fstat.m4
@@ -1062,6 +1071,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/ssize_t.m4
   m4/stat-time.m4
   m4/stat.m4
+  m4/std-gnu11.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4

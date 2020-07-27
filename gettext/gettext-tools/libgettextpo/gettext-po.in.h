@@ -28,7 +28,7 @@ extern "C" {
 /* =========================== Meta Information ============================ */
 
 /* Version number: (major<<16) + (minor<<8) + subminor */
-#define LIBGETTEXTPO_VERSION 0x001402
+#define LIBGETTEXTPO_VERSION 0x001500
 extern int libgettextpo_version;
 
 /* ================================= Types ================================= */
@@ -131,13 +131,13 @@ typedef const struct po_xerror_handler *po_xerror_handler_t;
 extern po_file_t po_file_create (void);
 
 /* Read a PO file into memory.
-   Return its contents.  Upon failure, return NULL and set errno.  */
+   Return its contents.  Upon failure, call function from handler.  */
 #define po_file_read po_file_read_v3
 extern po_file_t po_file_read (const char *filename,
                                po_xerror_handler_t handler);
 
 /* Write an in-memory PO file to a file.
-   Upon failure, return NULL and set errno.  */
+   Upon failure, call function from handler.  */
 #define po_file_write po_file_write_v2
 extern po_file_t po_file_write (po_file_t file, const char *filename,
                                 po_xerror_handler_t handler);

@@ -48,13 +48,14 @@
 #  --libtool \
 #  --macro-prefix=gtpo \
 #  --avoid=progname \
-#  basename \
+#  basename-lgpl \
 #  c-ctype \
 #  c-strcase \
 #  c-strstr \
 #  close \
 #  error \
 #  error-progname \
+#  fdopen \
 #  filename \
 #  fopen \
 #  fstrcmp \
@@ -62,11 +63,11 @@
 #  gcd \
 #  getline \
 #  gettext-h \
-#  hash \
 #  iconv \
 #  libtextstyle-dummy \
 #  libunistring-optional \
 #  markup \
+#  mem-hash-map \
 #  minmax \
 #  open \
 #  realloc-posix \
@@ -203,13 +204,13 @@ subdir = libgettextpo
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/libgettextpo/gnulib-m4/gnulib-comp.m4 \
-	$(top_srcdir)/libgrep/gnulib-m4/__inline.m4 \
 	$(top_srcdir)/libgrep/gnulib-m4/gnulib-comp.m4 \
 	$(top_srcdir)/libgrep/gnulib-m4/localeconv.m4 \
 	$(top_srcdir)/libgrep/gnulib-m4/mbrlen.m4 \
 	$(top_srcdir)/libgrep/gnulib-m4/nl_langinfo.m4 \
 	$(top_srcdir)/libgrep/gnulib-m4/regex.m4 \
 	$(top_srcdir)/gnulib-m4/00gnulib.m4 \
+	$(top_srcdir)/gnulib-m4/__inline.m4 \
 	$(top_srcdir)/gnulib-m4/absolute-header.m4 \
 	$(top_srcdir)/gnulib-m4/access.m4 \
 	$(top_srcdir)/gnulib-m4/acl.m4 \
@@ -220,6 +221,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/atexit.m4 \
 	$(top_srcdir)/gnulib-m4/backupfile.m4 \
 	$(top_srcdir)/gnulib-m4/bison-i18n.m4 \
+	$(top_srcdir)/gnulib-m4/bison.m4 \
 	$(top_srcdir)/gnulib-m4/btowc.m4 \
 	$(top_srcdir)/gnulib-m4/builtin-expect.m4 \
 	$(top_srcdir)/gnulib-m4/byteswap.m4 \
@@ -239,7 +241,6 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/ctype.m4 \
 	$(top_srcdir)/gnulib-m4/dirent_h.m4 \
 	$(top_srcdir)/gnulib-m4/dirfd.m4 \
-	$(top_srcdir)/gnulib-m4/dirname.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
 	$(top_srcdir)/gnulib-m4/dup.m4 $(top_srcdir)/gnulib-m4/dup2.m4 \
 	$(top_srcdir)/gnulib-m4/eaccess.m4 \
@@ -248,6 +249,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/errno_h.m4 \
 	$(top_srcdir)/gnulib-m4/error.m4 \
 	$(top_srcdir)/gnulib-m4/execute.m4 \
+	$(top_srcdir)/gnulib-m4/explicit_bzero.m4 \
 	$(top_srcdir)/gnulib-m4/exponentd.m4 \
 	$(top_srcdir)/gnulib-m4/exponentf.m4 \
 	$(top_srcdir)/gnulib-m4/exponentl.m4 \
@@ -258,6 +260,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
 	$(top_srcdir)/gnulib-m4/fdopen.m4 \
+	$(top_srcdir)/gnulib-m4/filenamecat.m4 \
 	$(top_srcdir)/gnulib-m4/findprog.m4 \
 	$(top_srcdir)/gnulib-m4/float_h.m4 \
 	$(top_srcdir)/gnulib-m4/fnmatch.m4 \
@@ -276,6 +279,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/getopt.m4 \
 	$(top_srcdir)/gnulib-m4/getpagesize.m4 \
 	$(top_srcdir)/gnulib-m4/getprogname.m4 \
+	$(top_srcdir)/gnulib-m4/getrandom.m4 \
 	$(top_srcdir)/gnulib-m4/gettime.m4 \
 	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
@@ -288,6 +292,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/inline.m4 \
 	$(top_srcdir)/gnulib-m4/intl-thread-locale.m4 \
 	$(top_srcdir)/gnulib-m4/intmax_t.m4 \
+	$(top_srcdir)/gnulib-m4/inttostr.m4 \
 	$(top_srcdir)/gnulib-m4/inttypes.m4 \
 	$(top_srcdir)/gnulib-m4/ioctl.m4 \
 	$(top_srcdir)/gnulib-m4/isblank.m4 \
@@ -321,7 +326,6 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/locale-zh.m4 \
 	$(top_srcdir)/gnulib-m4/locale_h.m4 \
 	$(top_srcdir)/gnulib-m4/localename.m4 \
-	$(top_srcdir)/gnulib-m4/localtime-buffer.m4 \
 	$(top_srcdir)/gnulib-m4/localtime.m4 \
 	$(top_srcdir)/gnulib-m4/lock.m4 \
 	$(top_srcdir)/gnulib-m4/log10.m4 \
@@ -342,6 +346,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/mbtowc.m4 \
 	$(top_srcdir)/gnulib-m4/memchr.m4 \
 	$(top_srcdir)/gnulib-m4/memmove.m4 \
+	$(top_srcdir)/gnulib-m4/mempcpy.m4 \
 	$(top_srcdir)/gnulib-m4/memset.m4 \
 	$(top_srcdir)/gnulib-m4/minmax.m4 \
 	$(top_srcdir)/gnulib-m4/mkdir.m4 \
@@ -370,6 +375,7 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/posix_spawn.m4 \
 	$(top_srcdir)/gnulib-m4/pow.m4 \
 	$(top_srcdir)/gnulib-m4/printf.m4 \
+	$(top_srcdir)/gnulib-m4/priv-set.m4 \
 	$(top_srcdir)/gnulib-m4/pthread-thread.m4 \
 	$(top_srcdir)/gnulib-m4/pthread_h.m4 \
 	$(top_srcdir)/gnulib-m4/pthread_rwlock_rdlock.m4 \
@@ -434,8 +440,10 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/strstr.m4 \
 	$(top_srcdir)/gnulib-m4/strtol.m4 \
 	$(top_srcdir)/gnulib-m4/strtoul.m4 \
+	$(top_srcdir)/gnulib-m4/supersede.m4 \
 	$(top_srcdir)/gnulib-m4/symlink.m4 \
 	$(top_srcdir)/gnulib-m4/sys_ioctl_h.m4 \
+	$(top_srcdir)/gnulib-m4/sys_random_h.m4 \
 	$(top_srcdir)/gnulib-m4/sys_select_h.m4 \
 	$(top_srcdir)/gnulib-m4/sys_socket_h.m4 \
 	$(top_srcdir)/gnulib-m4/sys_stat_h.m4 \
@@ -451,9 +459,10 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/tls.m4 \
 	$(top_srcdir)/gnulib-m4/tmpdir.m4 \
 	$(top_srcdir)/gnulib-m4/ungetc.m4 \
-	$(top_srcdir)/gnulib-m4/unionwait.m4 \
 	$(top_srcdir)/gnulib-m4/unistd-safer.m4 \
 	$(top_srcdir)/gnulib-m4/unistd_h.m4 \
+	$(top_srcdir)/gnulib-m4/unlink.m4 \
+	$(top_srcdir)/gnulib-m4/unlinkdir.m4 \
 	$(top_srcdir)/gnulib-m4/unlocked-io.m4 \
 	$(top_srcdir)/gnulib-m4/usleep.m4 \
 	$(top_srcdir)/gnulib-m4/utime.m4 \
@@ -474,6 +483,8 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/gnulib-m4/wctype_h.m4 \
 	$(top_srcdir)/gnulib-m4/wcwidth.m4 \
 	$(top_srcdir)/gnulib-m4/wint_t.m4 \
+	$(top_srcdir)/gnulib-m4/wmemchr.m4 \
+	$(top_srcdir)/gnulib-m4/wmempcpy.m4 \
 	$(top_srcdir)/gnulib-m4/write.m4 \
 	$(top_srcdir)/gnulib-m4/xvasprintf.m4 \
 	$(top_srcdir)/gnulib-m4/yield.m4 \
@@ -495,7 +506,6 @@ am__aclocal_m4_deps = $(top_srcdir)/libgettextpo/gnulib-m4/fsync.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/intl.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/intlmacosx.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/intmax.m4 \
-	$(top_srcdir)/../gettext-runtime/m4/inttypes-pri.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/inttypes_h.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/nls.m4 \
 	$(top_srcdir)/../gettext-runtime/m4/po.m4 \
@@ -555,20 +565,21 @@ am__libgettextpo_la_SOURCES_DIST = gettext-po.c ../src/str-list.c \
 	../src/write-po.c ../src/open-catalog.c ../src/po-charset.c \
 	../src/po-lex.c ../src/po-gram-gen.c ../src/read-po.c \
 	../src/read-catalog-abstract.c ../src/read-catalog.c \
-	../src/plural-table.c ../src/format-c.c ../src/format-sh.c \
-	../src/format-python.c ../src/format-python-brace.c \
+	../src/plural-table.c ../src/format-c.c ../src/format-python.c \
+	../src/format-python-brace.c ../src/format-java.c \
+	../src/format-java-printf.c ../src/format-csharp.c \
+	../src/format-javascript.c ../src/format-scheme.c \
 	../src/format-lisp.c ../src/format-elisp.c \
-	../src/format-librep.c ../src/format-scheme.c \
-	../src/format-java.c ../src/format-javascript.c \
-	../src/format-csharp.c ../src/format-awk.c \
-	../src/format-pascal.c ../src/format-ycp.c ../src/format-tcl.c \
-	../src/format-perl.c ../src/format-perl-brace.c \
-	../src/format-php.c ../src/format-gcc-internal.c \
-	../src/format-gfc-internal.c ../src/format-qt.c \
+	../src/format-librep.c ../src/format-ruby.c ../src/format-sh.c \
+	../src/format-awk.c ../src/format-lua.c ../src/format-pascal.c \
+	../src/format-smalltalk.c ../src/format-qt.c \
 	../src/format-qt-plural.c ../src/format-kde.c \
 	../src/format-kde-kuit.c ../src/format-boost.c \
-	../src/format-lua.c ../src/format.c ../src/plural-exp.c \
-	../src/plural-eval.c ../src/msgl-check.c ../src/sentence.c \
+	../src/format-tcl.c ../src/format-perl.c \
+	../src/format-perl-brace.c ../src/format-php.c \
+	../src/format-gcc-internal.c ../src/format-gfc-internal.c \
+	../src/format.c ../src/plural-exp.c ../src/plural-eval.c \
+	../src/msgl-check.c ../src/sentence.c \
 	../woe32dll/gettextpo-exports.c
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = ../src/str-list.lo ../src/dir-list.lo \
@@ -577,20 +588,21 @@ am__objects_1 = ../src/str-list.lo ../src/dir-list.lo \
 	../src/open-catalog.lo ../src/po-charset.lo ../src/po-lex.lo \
 	../src/po-gram-gen.lo ../src/read-po.lo \
 	../src/read-catalog-abstract.lo ../src/read-catalog.lo \
-	../src/plural-table.lo ../src/format-c.lo ../src/format-sh.lo \
+	../src/plural-table.lo ../src/format-c.lo \
 	../src/format-python.lo ../src/format-python-brace.lo \
-	../src/format-lisp.lo ../src/format-elisp.lo \
-	../src/format-librep.lo ../src/format-scheme.lo \
-	../src/format-java.lo ../src/format-javascript.lo \
-	../src/format-csharp.lo ../src/format-awk.lo \
-	../src/format-pascal.lo ../src/format-ycp.lo \
+	../src/format-java.lo ../src/format-java-printf.lo \
+	../src/format-csharp.lo ../src/format-javascript.lo \
+	../src/format-scheme.lo ../src/format-lisp.lo \
+	../src/format-elisp.lo ../src/format-librep.lo \
+	../src/format-ruby.lo ../src/format-sh.lo ../src/format-awk.lo \
+	../src/format-lua.lo ../src/format-pascal.lo \
+	../src/format-smalltalk.lo ../src/format-qt.lo \
+	../src/format-qt-plural.lo ../src/format-kde.lo \
+	../src/format-kde-kuit.lo ../src/format-boost.lo \
 	../src/format-tcl.lo ../src/format-perl.lo \
 	../src/format-perl-brace.lo ../src/format-php.lo \
 	../src/format-gcc-internal.lo ../src/format-gfc-internal.lo \
-	../src/format-qt.lo ../src/format-qt-plural.lo \
-	../src/format-kde.lo ../src/format-kde-kuit.lo \
-	../src/format-boost.lo ../src/format-lua.lo ../src/format.lo \
-	../src/plural-exp.lo ../src/plural-eval.lo \
+	../src/format.lo ../src/plural-exp.lo ../src/plural-eval.lo \
 	../src/msgl-check.lo ../src/sentence.lo
 @WOE32DLL_TRUE@am__objects_2 = ../woe32dll/gettextpo-exports.lo
 am_libgettextpo_la_OBJECTS = gettext-po.lo $(am__objects_1) \
@@ -604,26 +616,25 @@ libgettextpo_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(libgettextpo_la_LDFLAGS) $(LDFLAGS) \
 	-o $@
-am__libgnu_la_SOURCES_DIST = basename.h basename.c c-ctype.h c-ctype.c \
+am__libgnu_la_SOURCES_DIST = basename-lgpl.c c-ctype.h c-ctype.c \
 	c-strcase.h c-strcasecmp.c c-strncasecmp.c c-strstr.h \
 	c-strstr.c cloexec.c concat-filename.c diffseq.h \
-	dirname-lgpl.c basename-lgpl.c stripslash.c error-progname.h \
-	error-progname.c exitfail.c fd-hook.c fstrcmp.h fstrcmp.c \
-	fwriteerror.h fwriteerror.c gcd.h gcd.c getprogname.h \
-	getprogname.c gettext.h hard-locale.c hash.h hash.c \
+	error-progname.h error-progname.c exitfail.c fd-hook.c \
+	fstrcmp.h fstrcmp.c fwriteerror.h fwriteerror.c gcd.h gcd.c \
+	getprogname.h getprogname.c gettext.h hard-locale.c \
 	gl_linked_list.h gl_linked_list.c gl_anylinked_list1.h \
 	gl_anylinked_list2.h gl_list.h gl_list.c localcharset.c \
 	glthread/lock.h glthread/lock.c malloca.c markup.h markup.c \
-	mbswidth.h mbswidth.c minmax.h setlocale_null.c size_max.h \
-	stat-time.c striconv.h striconv.c striconveh.h striconveh.c \
-	striconveha.h striconveha.c glthread/threadlib.c \
-	glthread/tls.h glthread/tls.c uniconv/u8-conv-from-enc.c \
-	unictype/ctype_alpha.c unictype/ctype_space.c \
-	unilbrk/lbrktables.c unilbrk/u8-possible-linebreaks.c \
-	unilbrk/u8-width-linebreaks.c unilbrk/ulc-common.c \
-	unilbrk/ulc-width-linebreaks.c unistd.c unistr/u16-mbtouc.c \
-	unistr/u16-mbtouc-aux.c unistr/u8-check.c unistr/u8-mblen.c \
-	unistr/u8-mbtouc.c unistr/u8-mbtouc-aux.c \
+	mbswidth.h mbswidth.c mem-hash-map.h mem-hash-map.c minmax.h \
+	setlocale_null.c size_max.h stat-time.c striconv.h striconv.c \
+	striconveh.h striconveh.c striconveha.h striconveha.c \
+	glthread/threadlib.c glthread/tls.h glthread/tls.c \
+	uniconv/u8-conv-from-enc.c unictype/ctype_alpha.c \
+	unictype/ctype_space.c unilbrk/lbrktables.c \
+	unilbrk/u8-possible-linebreaks.c unilbrk/u8-width-linebreaks.c \
+	unilbrk/ulc-common.c unilbrk/ulc-width-linebreaks.c unistd.c \
+	unistr/u16-mbtouc.c unistr/u16-mbtouc-aux.c unistr/u8-check.c \
+	unistr/u8-mblen.c unistr/u8-mbtouc.c unistr/u8-mbtouc-aux.c \
 	unistr/u8-mbtouc-unsafe.c unistr/u8-mbtouc-unsafe-aux.c \
 	unistr/u8-mbtoucr.c unistr/u8-next.c unistr/u8-prev.c \
 	unistr/u8-strmbtouc.c unistr/u8-uctomb.c \
@@ -657,24 +668,23 @@ am__libgnu_la_SOURCES_DIST = basename.h basename.c c-ctype.h c-ctype.c \
 @LIBUNISTRING_COMPILE_UNISTR_U8_UCTOMB_TRUE@	unistr/u8-uctomb-aux.lo
 @LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH_TRUE@am__objects_19 =  \
 @LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH_TRUE@	uniwidth/width.lo
-am_libgnu_la_OBJECTS = basename.lo c-ctype.lo c-strcasecmp.lo \
+am_libgnu_la_OBJECTS = basename-lgpl.lo c-ctype.lo c-strcasecmp.lo \
 	c-strncasecmp.lo c-strstr.lo cloexec.lo concat-filename.lo \
-	dirname-lgpl.lo basename-lgpl.lo stripslash.lo \
 	error-progname.lo exitfail.lo fd-hook.lo fstrcmp.lo \
-	fwriteerror.lo gcd.lo getprogname.lo hard-locale.lo hash.lo \
+	fwriteerror.lo gcd.lo getprogname.lo hard-locale.lo \
 	gl_linked_list.lo gl_list.lo localcharset.lo glthread/lock.lo \
-	malloca.lo markup.lo mbswidth.lo setlocale_null.lo \
-	stat-time.lo striconv.lo striconveh.lo striconveha.lo \
-	glthread/threadlib.lo glthread/tls.lo $(am__objects_3) \
-	$(am__objects_4) $(am__objects_5) unilbrk/lbrktables.lo \
-	$(am__objects_6) $(am__objects_7) unilbrk/ulc-common.lo \
-	$(am__objects_8) unistd.lo $(am__objects_9) $(am__objects_10) \
-	$(am__objects_11) $(am__objects_12) $(am__objects_13) \
-	$(am__objects_14) $(am__objects_15) $(am__objects_16) \
-	$(am__objects_17) $(am__objects_18) $(am__objects_19) \
-	wctype-h.lo xmalloc.lo xstrdup.lo xconcat-filename.lo \
-	xerror.lo gl_xlist.lo xmalloca.lo xsize.lo xstriconv.lo \
-	xvasprintf.lo xasprintf.lo
+	malloca.lo markup.lo mbswidth.lo mem-hash-map.lo \
+	setlocale_null.lo stat-time.lo striconv.lo striconveh.lo \
+	striconveha.lo glthread/threadlib.lo glthread/tls.lo \
+	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
+	unilbrk/lbrktables.lo $(am__objects_6) $(am__objects_7) \
+	unilbrk/ulc-common.lo $(am__objects_8) unistd.lo \
+	$(am__objects_9) $(am__objects_10) $(am__objects_11) \
+	$(am__objects_12) $(am__objects_13) $(am__objects_14) \
+	$(am__objects_15) $(am__objects_16) $(am__objects_17) \
+	$(am__objects_18) $(am__objects_19) wctype-h.lo xmalloc.lo \
+	xstrdup.lo xconcat-filename.lo xerror.lo gl_xlist.lo \
+	xmalloca.lo xsize.lo xstriconv.lo xvasprintf.lo xasprintf.lo
 libgnu_la_OBJECTS = $(am_libgnu_la_OBJECTS)
 libgnu_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -934,6 +944,7 @@ GNULIB_GETCWD = @GNULIB_GETCWD@
 GNULIB_GETDELIM = @GNULIB_GETDELIM@
 GNULIB_GETDOMAINNAME = @GNULIB_GETDOMAINNAME@
 GNULIB_GETDTABLESIZE = @GNULIB_GETDTABLESIZE@
+GNULIB_GETENTROPY = @GNULIB_GETENTROPY@
 GNULIB_GETGROUPS = @GNULIB_GETGROUPS@
 GNULIB_GETHOSTNAME = @GNULIB_GETHOSTNAME@
 GNULIB_GETLINE = @GNULIB_GETLINE@
@@ -944,10 +955,12 @@ GNULIB_GETOPT_POSIX = @GNULIB_GETOPT_POSIX@
 GNULIB_GETPAGESIZE = @GNULIB_GETPAGESIZE@
 GNULIB_GETPASS = @GNULIB_GETPASS@
 GNULIB_GETPEERNAME = @GNULIB_GETPEERNAME@
+GNULIB_GETRANDOM = @GNULIB_GETRANDOM@
 GNULIB_GETSOCKNAME = @GNULIB_GETSOCKNAME@
 GNULIB_GETSOCKOPT = @GNULIB_GETSOCKOPT@
 GNULIB_GETSUBOPT = @GNULIB_GETSUBOPT@
 GNULIB_GETTIMEOFDAY = @GNULIB_GETTIMEOFDAY@
+GNULIB_GETUMASK = @GNULIB_GETUMASK@
 GNULIB_GETUSERSHELL = @GNULIB_GETUSERSHELL@
 GNULIB_GL_UNISTD_H_GETOPT = @GNULIB_GL_UNISTD_H_GETOPT@
 GNULIB_GRANTPT = @GNULIB_GRANTPT@
@@ -1257,6 +1270,7 @@ GNULIB_WMEMCHR = @GNULIB_WMEMCHR@
 GNULIB_WMEMCMP = @GNULIB_WMEMCMP@
 GNULIB_WMEMCPY = @GNULIB_WMEMCPY@
 GNULIB_WMEMMOVE = @GNULIB_WMEMMOVE@
+GNULIB_WMEMPCPY = @GNULIB_WMEMPCPY@
 GNULIB_WMEMSET = @GNULIB_WMEMSET@
 GNULIB_WRITE = @GNULIB_WRITE@
 GNULIB__EXIT = @GNULIB__EXIT@
@@ -1264,6 +1278,7 @@ GREP = @GREP@
 HAVE_ACCEPT4 = @HAVE_ACCEPT4@
 HAVE_ACOSF = @HAVE_ACOSF@
 HAVE_ACOSL = @HAVE_ACOSL@
+HAVE_ALLOCA_H = @HAVE_ALLOCA_H@
 HAVE_ALPHASORT = @HAVE_ALPHASORT@
 HAVE_ARPA_INET_H = @HAVE_ARPA_INET_H@
 HAVE_ASINF = @HAVE_ASINF@
@@ -1373,7 +1388,6 @@ HAVE_DECL_WCTOB = @HAVE_DECL_WCTOB@
 HAVE_DECL_WCWIDTH = @HAVE_DECL_WCWIDTH@
 HAVE_DIRENT_H = @HAVE_DIRENT_H@
 HAVE_DPRINTF = @HAVE_DPRINTF@
-HAVE_DUP2 = @HAVE_DUP2@
 HAVE_DUP3 = @HAVE_DUP3@
 HAVE_DUPLOCALE = @HAVE_DUPLOCALE@
 HAVE_EUIDACCESS = @HAVE_EUIDACCESS@
@@ -1412,14 +1426,17 @@ HAVE_FUTIMENS = @HAVE_FUTIMENS@
 HAVE_GCJ_C = @HAVE_GCJ_C@
 HAVE_GCJ_IN_PATH = @HAVE_GCJ_IN_PATH@
 HAVE_GETDTABLESIZE = @HAVE_GETDTABLESIZE@
+HAVE_GETENTROPY = @HAVE_GETENTROPY@
 HAVE_GETGROUPS = @HAVE_GETGROUPS@
 HAVE_GETHOSTNAME = @HAVE_GETHOSTNAME@
 HAVE_GETLOGIN = @HAVE_GETLOGIN@
 HAVE_GETOPT_H = @HAVE_GETOPT_H@
 HAVE_GETPAGESIZE = @HAVE_GETPAGESIZE@
 HAVE_GETPASS = @HAVE_GETPASS@
+HAVE_GETRANDOM = @HAVE_GETRANDOM@
 HAVE_GETSUBOPT = @HAVE_GETSUBOPT@
 HAVE_GETTIMEOFDAY = @HAVE_GETTIMEOFDAY@
+HAVE_GETUMASK = @HAVE_GETUMASK@
 HAVE_GIJ = @HAVE_GIJ@
 HAVE_GIJ_IN_PATH = @HAVE_GIJ_IN_PATH@
 HAVE_GLOBAL_SYMBOL_PIPE = @HAVE_GLOBAL_SYMBOL_PIPE@
@@ -1484,7 +1501,6 @@ HAVE_MBSRTOWCS = @HAVE_MBSRTOWCS@
 HAVE_MBTOWC = @HAVE_MBTOWC@
 HAVE_MCS = @HAVE_MCS@
 HAVE_MCS_IN_PATH = @HAVE_MCS_IN_PATH@
-HAVE_MEMCHR = @HAVE_MEMCHR@
 HAVE_MEMPCPY = @HAVE_MEMPCPY@
 HAVE_MKDIRAT = @HAVE_MKDIRAT@
 HAVE_MKDTEMP = @HAVE_MKDTEMP@
@@ -1655,6 +1671,7 @@ HAVE_SYS_INTTYPES_H = @HAVE_SYS_INTTYPES_H@
 HAVE_SYS_IOCTL_H = @HAVE_SYS_IOCTL_H@
 HAVE_SYS_LOADAVG_H = @HAVE_SYS_LOADAVG_H@
 HAVE_SYS_PARAM_H = @HAVE_SYS_PARAM_H@
+HAVE_SYS_RANDOM_H = @HAVE_SYS_RANDOM_H@
 HAVE_SYS_SELECT_H = @HAVE_SYS_SELECT_H@
 HAVE_SYS_SOCKET_H = @HAVE_SYS_SOCKET_H@
 HAVE_SYS_TIME_H = @HAVE_SYS_TIME_H@
@@ -1715,6 +1732,7 @@ HAVE_WMEMCHR = @HAVE_WMEMCHR@
 HAVE_WMEMCMP = @HAVE_WMEMCMP@
 HAVE_WMEMCPY = @HAVE_WMEMCPY@
 HAVE_WMEMMOVE = @HAVE_WMEMMOVE@
+HAVE_WMEMPCPY = @HAVE_WMEMPCPY@
 HAVE_WMEMSET = @HAVE_WMEMSET@
 HAVE_WPRINTF = @HAVE_WPRINTF@
 HAVE_WS2TCPIP_H = @HAVE_WS2TCPIP_H@
@@ -1777,6 +1795,7 @@ LIBXML = @LIBXML@
 LIBXML_H = @LIBXML_H@
 LIB_ACL = @LIB_ACL@
 LIB_CLOCK_GETTIME = @LIB_CLOCK_GETTIME@
+LIB_GETRANDOM = @LIB_GETRANDOM@
 LIB_HARD_LOCALE = @LIB_HARD_LOCALE@
 LIB_HAS_ACL = @LIB_HAS_ACL@
 LIB_MBRTOWC = @LIB_MBRTOWC@
@@ -1848,6 +1867,7 @@ NEXT_AS_FIRST_DIRECTIVE_STDIO_H = @NEXT_AS_FIRST_DIRECTIVE_STDIO_H@
 NEXT_AS_FIRST_DIRECTIVE_STDLIB_H = @NEXT_AS_FIRST_DIRECTIVE_STDLIB_H@
 NEXT_AS_FIRST_DIRECTIVE_STRING_H = @NEXT_AS_FIRST_DIRECTIVE_STRING_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_IOCTL_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_IOCTL_H@
+NEXT_AS_FIRST_DIRECTIVE_SYS_RANDOM_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_RANDOM_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_SELECT_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_SELECT_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_SOCKET_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_SOCKET_H@
 NEXT_AS_FIRST_DIRECTIVE_SYS_STAT_H = @NEXT_AS_FIRST_DIRECTIVE_SYS_STAT_H@
@@ -1886,6 +1906,7 @@ NEXT_STDIO_H = @NEXT_STDIO_H@
 NEXT_STDLIB_H = @NEXT_STDLIB_H@
 NEXT_STRING_H = @NEXT_STRING_H@
 NEXT_SYS_IOCTL_H = @NEXT_SYS_IOCTL_H@
+NEXT_SYS_RANDOM_H = @NEXT_SYS_RANDOM_H@
 NEXT_SYS_SELECT_H = @NEXT_SYS_SELECT_H@
 NEXT_SYS_SOCKET_H = @NEXT_SYS_SOCKET_H@
 NEXT_SYS_STAT_H = @NEXT_SYS_STAT_H@
@@ -1921,7 +1942,6 @@ POW_LIBM = @POW_LIBM@
 PRAGMA_COLUMNS = @PRAGMA_COLUMNS@
 PRAGMA_SYSTEM_HEADER = @PRAGMA_SYSTEM_HEADER@
 PRIPTR_PREFIX = @PRIPTR_PREFIX@
-PRI_MACROS_BROKEN = @PRI_MACROS_BROKEN@
 PTHREAD_H_DEFINES_STRUCT_TIMESPEC = @PTHREAD_H_DEFINES_STRUCT_TIMESPEC@
 PTRDIFF_T_SUFFIX = @PTRDIFF_T_SUFFIX@
 RANLIB = @RANLIB@
@@ -2011,6 +2031,7 @@ REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETPASS = @REPLACE_GETPASS@
+REPLACE_GETRANDOM = @REPLACE_GETRANDOM@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
 REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_HUGE_VAL = @REPLACE_HUGE_VAL@
@@ -2264,10 +2285,12 @@ TESTJAVA = @TESTJAVA@
 TESTLIBASPRINTF = @TESTLIBASPRINTF@
 TEXI2PDF = @TEXI2PDF@
 TIME_H_DEFINES_STRUCT_TIMESPEC = @TIME_H_DEFINES_STRUCT_TIMESPEC@
+TOOLS_BISON = @TOOLS_BISON@
 UINT32_MAX_LT_UINTMAX_MAX = @UINT32_MAX_LT_UINTMAX_MAX@
 UINT64_MAX_EQ_ULONG_MAX = @UINT64_MAX_EQ_ULONG_MAX@
 UNDEFINE_STRTOK_R = @UNDEFINE_STRTOK_R@
 UNISTD_H_DEFINES_STRUCT_TIMESPEC = @UNISTD_H_DEFINES_STRUCT_TIMESPEC@
+UNISTD_H_HAVE_SYS_RANDOM_H = @UNISTD_H_HAVE_SYS_RANDOM_H@
 UNISTD_H_HAVE_WINSOCK2_H = @UNISTD_H_HAVE_WINSOCK2_H@
 UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS = @UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@
 USE_ACL = @USE_ACL@
@@ -2370,11 +2393,12 @@ AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies subdir-objects
 
 # Allow users to use "gnulib-tool --update".
 EXTRA_DIST = libgettextpo.rc gettext-po.in.h gnulib-m4/gnulib-cache.m4 \
-	alignof.h alloca.in.h c-strcaseeq.h cloexec.h close.c \
-	concat-filename.h dirname.h dup2.c errno.in.h error.c error.h \
-	exitfail.h fcntl.c fcntl.in.h fd-hook.h filename.h float.c \
-	float.in.h itold.c fopen.c fstat.c stat-w32.c stat-w32.h \
-	fsync.c getdelim.c getdtablesize.c getline.c hard-locale.h \
+	alignof.h alloca.in.h attribute.h basename-lgpl.h \
+	c-strcaseeq.h cloexec.h close.c concat-filename.h dup2.c \
+	errno.in.h error.c error.h exitfail.h fcntl.c fcntl.in.h \
+	fd-hook.h fdopen.c filename.h float.c float.in.h itold.c \
+	fopen.c fstat.c stat-w32.c stat-w32.h fsync.c getdelim.c \
+	getdtablesize.c getline.c hard-locale.h \
 	$(top_srcdir)/../build-aux/config.rpath iconv.in.h \
 	iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h \
 	iconv_open-osf.h iconv_open-solaris.h iconv_open-zos.h iconv.c \
@@ -2387,8 +2411,8 @@ EXTRA_DIST = libgettextpo.rc gettext-po.in.h gnulib-m4/gnulib-cache.m4 \
 	mbrtowc-impl-utf8.h mbrtowc-impl.h mbrtowc.c mbtowc-lock.c \
 	mbtowc-lock.h windows-initguard.h mbsinit.c memchr.c \
 	memchr.valgrind msvc-inval.c msvc-inval.h msvc-nothrow.c \
-	msvc-nothrow.h obstack.c obstack.h open.c pathmax.h raise.c \
-	rawmemchr.c rawmemchr.valgrind realloc.c relocatable.c \
+	msvc-nothrow.h noreturn.h obstack.c obstack.h open.c pathmax.h \
+	raise.c rawmemchr.c rawmemchr.valgrind realloc.c relocatable.c \
 	relocatable.h relocatable.valgrind setlocale-lock.c \
 	setlocale_null.h windows-initguard.h signal.in.h stdio-write.c \
 	sigprocmask.c _Noreturn.h arg-nonnull.h c++defs.h \
@@ -2478,31 +2502,33 @@ libgettextpo_la_AUXSOURCES = \
   ../src/read-catalog.c \
   ../src/plural-table.c \
   ../src/format-c.c \
-  ../src/format-sh.c \
   ../src/format-python.c \
   ../src/format-python-brace.c \
+  ../src/format-java.c \
+  ../src/format-java-printf.c \
+  ../src/format-csharp.c \
+  ../src/format-javascript.c \
+  ../src/format-scheme.c \
   ../src/format-lisp.c \
   ../src/format-elisp.c \
   ../src/format-librep.c \
-  ../src/format-scheme.c \
-  ../src/format-java.c \
-  ../src/format-javascript.c \
-  ../src/format-csharp.c \
+  ../src/format-ruby.c \
+  ../src/format-sh.c \
   ../src/format-awk.c \
+  ../src/format-lua.c \
   ../src/format-pascal.c \
-  ../src/format-ycp.c \
+  ../src/format-smalltalk.c \
+  ../src/format-qt.c \
+  ../src/format-qt-plural.c \
+  ../src/format-kde.c \
+  ../src/format-kde-kuit.c \
+  ../src/format-boost.c \
   ../src/format-tcl.c \
   ../src/format-perl.c \
   ../src/format-perl-brace.c \
   ../src/format-php.c \
   ../src/format-gcc-internal.c \
   ../src/format-gfc-internal.c \
-  ../src/format-qt.c \
-  ../src/format-qt-plural.c \
-  ../src/format-kde.c \
-  ../src/format-kde-kuit.c \
-  ../src/format-boost.c \
-  ../src/format-lua.c \
   ../src/format.c \
   ../src/plural-exp.c \
   ../src/plural-eval.c \
@@ -2513,7 +2539,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT = 5
-LTV_REVISION = 6
+LTV_REVISION = 7
 LTV_AGE = 5
 
 # How to build libgettextpo.la.
@@ -2526,17 +2552,16 @@ libgettextpo_la_LDFLAGS = -version-info \
 	$(am__append_3) $(am__append_4)
 @WOE32_FALSE@WOE32_LIBADD = 
 @WOE32_TRUE@WOE32_LIBADD = libgettextpo.res.lo
-libgnu_la_SOURCES = basename.h basename.c c-ctype.h c-ctype.c \
-	c-strcase.h c-strcasecmp.c c-strncasecmp.c c-strstr.h \
-	c-strstr.c cloexec.c concat-filename.c diffseq.h \
-	dirname-lgpl.c basename-lgpl.c stripslash.c error-progname.h \
-	error-progname.c exitfail.c fd-hook.c fstrcmp.h fstrcmp.c \
-	fwriteerror.h fwriteerror.c gcd.h gcd.c getprogname.h \
-	getprogname.c gettext.h hard-locale.c hash.h hash.c \
-	gl_linked_list.h gl_linked_list.c gl_anylinked_list1.h \
-	gl_anylinked_list2.h gl_list.h gl_list.c localcharset.c \
-	glthread/lock.h glthread/lock.c malloca.c markup.h markup.c \
-	mbswidth.h mbswidth.c minmax.h setlocale_null.c size_max.h \
+libgnu_la_SOURCES = basename-lgpl.c c-ctype.h c-ctype.c c-strcase.h \
+	c-strcasecmp.c c-strncasecmp.c c-strstr.h c-strstr.c cloexec.c \
+	concat-filename.c diffseq.h error-progname.h error-progname.c \
+	exitfail.c fd-hook.c fstrcmp.h fstrcmp.c fwriteerror.h \
+	fwriteerror.c gcd.h gcd.c getprogname.h getprogname.c \
+	gettext.h hard-locale.c gl_linked_list.h gl_linked_list.c \
+	gl_anylinked_list1.h gl_anylinked_list2.h gl_list.h gl_list.c \
+	localcharset.c glthread/lock.h glthread/lock.c malloca.c \
+	markup.h markup.c mbswidth.h mbswidth.c mem-hash-map.h \
+	mem-hash-map.c minmax.h setlocale_null.c size_max.h \
 	stat-time.c striconv.h striconv.c striconveh.h striconveh.c \
 	striconveha.h striconveha.c glthread/threadlib.c \
 	glthread/tls.h glthread/tls.c $(am__append_7) $(am__append_8) \
@@ -2551,8 +2576,8 @@ libgnu_la_SOURCES = basename.h basename.c c-ctype.h c-ctype.c \
 	xstriconv.c xvasprintf.h xvasprintf.c xasprintf.c
 libgnu_la_LIBADD = $(gtpo_LTLIBOBJS)
 libgnu_la_DEPENDENCIES = $(gtpo_LTLIBOBJS)
-EXTRA_libgnu_la_SOURCES = close.c dup2.c error.c fcntl.c float.c \
-	itold.c fopen.c fstat.c stat-w32.c fsync.c getdelim.c \
+EXTRA_libgnu_la_SOURCES = close.c dup2.c error.c fcntl.c fdopen.c \
+	float.c itold.c fopen.c fstat.c stat-w32.c fsync.c getdelim.c \
 	getdtablesize.c getline.c iconv.c iconv_close.c iconv_open.c \
 	malloc.c lc-charset-dispatch.c mbrtowc.c mbtowc-lock.c \
 	mbsinit.c memchr.c msvc-inval.c msvc-nothrow.c obstack.c \
@@ -2703,31 +2728,33 @@ clean-noinstLTLIBRARIES:
 ../src/read-catalog.lo: ../src/$(am__dirstamp)
 ../src/plural-table.lo: ../src/$(am__dirstamp)
 ../src/format-c.lo: ../src/$(am__dirstamp)
-../src/format-sh.lo: ../src/$(am__dirstamp)
 ../src/format-python.lo: ../src/$(am__dirstamp)
 ../src/format-python-brace.lo: ../src/$(am__dirstamp)
+../src/format-java.lo: ../src/$(am__dirstamp)
+../src/format-java-printf.lo: ../src/$(am__dirstamp)
+../src/format-csharp.lo: ../src/$(am__dirstamp)
+../src/format-javascript.lo: ../src/$(am__dirstamp)
+../src/format-scheme.lo: ../src/$(am__dirstamp)
 ../src/format-lisp.lo: ../src/$(am__dirstamp)
 ../src/format-elisp.lo: ../src/$(am__dirstamp)
 ../src/format-librep.lo: ../src/$(am__dirstamp)
-../src/format-scheme.lo: ../src/$(am__dirstamp)
-../src/format-java.lo: ../src/$(am__dirstamp)
-../src/format-javascript.lo: ../src/$(am__dirstamp)
-../src/format-csharp.lo: ../src/$(am__dirstamp)
+../src/format-ruby.lo: ../src/$(am__dirstamp)
+../src/format-sh.lo: ../src/$(am__dirstamp)
 ../src/format-awk.lo: ../src/$(am__dirstamp)
+../src/format-lua.lo: ../src/$(am__dirstamp)
 ../src/format-pascal.lo: ../src/$(am__dirstamp)
-../src/format-ycp.lo: ../src/$(am__dirstamp)
+../src/format-smalltalk.lo: ../src/$(am__dirstamp)
+../src/format-qt.lo: ../src/$(am__dirstamp)
+../src/format-qt-plural.lo: ../src/$(am__dirstamp)
+../src/format-kde.lo: ../src/$(am__dirstamp)
+../src/format-kde-kuit.lo: ../src/$(am__dirstamp)
+../src/format-boost.lo: ../src/$(am__dirstamp)
 ../src/format-tcl.lo: ../src/$(am__dirstamp)
 ../src/format-perl.lo: ../src/$(am__dirstamp)
 ../src/format-perl-brace.lo: ../src/$(am__dirstamp)
 ../src/format-php.lo: ../src/$(am__dirstamp)
 ../src/format-gcc-internal.lo: ../src/$(am__dirstamp)
 ../src/format-gfc-internal.lo: ../src/$(am__dirstamp)
-../src/format-qt.lo: ../src/$(am__dirstamp)
-../src/format-qt-plural.lo: ../src/$(am__dirstamp)
-../src/format-kde.lo: ../src/$(am__dirstamp)
-../src/format-kde-kuit.lo: ../src/$(am__dirstamp)
-../src/format-boost.lo: ../src/$(am__dirstamp)
-../src/format-lua.lo: ../src/$(am__dirstamp)
 ../src/format.lo: ../src/$(am__dirstamp)
 ../src/plural-exp.lo: ../src/$(am__dirstamp)
 ../src/plural-eval.lo: ../src/$(am__dirstamp)
@@ -3264,7 +3291,6 @@ inttypes.h: inttypes.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_INTTYPES_H''@|$(NEXT_INTTYPES_H)|g' \
-	      -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
 	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
 	      -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
 	      -e 's/@''GNULIB_IMAXABS''@/$(GNULIB_IMAXABS)/g' \
@@ -3745,7 +3771,6 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FFSL''@|$(HAVE_FFSL)|g' \
 	      -e 's|@''HAVE_FFSLL''@|$(HAVE_FFSLL)|g' \
 	      -e 's|@''HAVE_MBSLEN''@|$(HAVE_MBSLEN)|g' \
-	      -e 's|@''HAVE_MEMCHR''@|$(HAVE_MEMCHR)|g' \
 	      -e 's|@''HAVE_DECL_MEMMEM''@|$(HAVE_DECL_MEMMEM)|g' \
 	      -e 's|@''HAVE_MEMPCPY''@|$(HAVE_MEMPCPY)|g' \
 	      -e 's|@''HAVE_DECL_MEMRCHR''@|$(HAVE_DECL_MEMRCHR)|g' \
@@ -3802,6 +3827,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's/@''GNULIB_FSTAT''@/$(GNULIB_FSTAT)/g' \
 	      -e 's/@''GNULIB_FSTATAT''@/$(GNULIB_FSTATAT)/g' \
 	      -e 's/@''GNULIB_FUTIMENS''@/$(GNULIB_FUTIMENS)/g' \
+	      -e 's/@''GNULIB_GETUMASK''@/$(GNULIB_GETUMASK)/g' \
 	      -e 's/@''GNULIB_LCHMOD''@/$(GNULIB_LCHMOD)/g' \
 	      -e 's/@''GNULIB_LSTAT''@/$(GNULIB_LSTAT)/g' \
 	      -e 's/@''GNULIB_MKDIRAT''@/$(GNULIB_MKDIRAT)/g' \
@@ -3815,6 +3841,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's|@''HAVE_FCHMODAT''@|$(HAVE_FCHMODAT)|g' \
 	      -e 's|@''HAVE_FSTATAT''@|$(HAVE_FSTATAT)|g' \
 	      -e 's|@''HAVE_FUTIMENS''@|$(HAVE_FUTIMENS)|g' \
+	      -e 's|@''HAVE_GETUMASK''@|$(HAVE_GETUMASK)|g' \
 	      -e 's|@''HAVE_LCHMOD''@|$(HAVE_LCHMOD)|g' \
 	      -e 's|@''HAVE_LSTAT''@|$(HAVE_LSTAT)|g' \
 	      -e 's|@''HAVE_MKDIRAT''@|$(HAVE_MKDIRAT)|g' \
@@ -3955,6 +3982,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_GETCWD''@/$(GNULIB_GETCWD)/g' \
 	      -e 's/@''GNULIB_GETDOMAINNAME''@/$(GNULIB_GETDOMAINNAME)/g' \
 	      -e 's/@''GNULIB_GETDTABLESIZE''@/$(GNULIB_GETDTABLESIZE)/g' \
+	      -e 's/@''GNULIB_GETENTROPY''@/$(GNULIB_GETENTROPY)/g' \
 	      -e 's/@''GNULIB_GETGROUPS''@/$(GNULIB_GETGROUPS)/g' \
 	      -e 's/@''GNULIB_GETHOSTNAME''@/$(GNULIB_GETHOSTNAME)/g' \
 	      -e 's/@''GNULIB_GETLOGIN''@/$(GNULIB_GETLOGIN)/g' \
@@ -3993,7 +4021,6 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      < $(srcdir)/unistd.in.h | \
 	  sed -e 's|@''HAVE_CHOWN''@|$(HAVE_CHOWN)|g' \
 	      -e 's|@''HAVE_COPY_FILE_RANGE''@|$(HAVE_COPY_FILE_RANGE)|g' \
-	      -e 's|@''HAVE_DUP2''@|$(HAVE_DUP2)|g' \
 	      -e 's|@''HAVE_DUP3''@|$(HAVE_DUP3)|g' \
 	      -e 's|@''HAVE_EUIDACCESS''@|$(HAVE_EUIDACCESS)|g' \
 	      -e 's|@''HAVE_FACCESSAT''@|$(HAVE_FACCESSAT)|g' \
@@ -4003,6 +4030,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FSYNC''@|$(HAVE_FSYNC)|g' \
 	      -e 's|@''HAVE_FTRUNCATE''@|$(HAVE_FTRUNCATE)|g' \
 	      -e 's|@''HAVE_GETDTABLESIZE''@|$(HAVE_GETDTABLESIZE)|g' \
+	      -e 's|@''HAVE_GETENTROPY''@|$(HAVE_GETENTROPY)|g' \
 	      -e 's|@''HAVE_GETGROUPS''@|$(HAVE_GETGROUPS)|g' \
 	      -e 's|@''HAVE_GETHOSTNAME''@|$(HAVE_GETHOSTNAME)|g' \
 	      -e 's|@''HAVE_GETPAGESIZE''@|$(HAVE_GETPAGESIZE)|g' \
@@ -4072,6 +4100,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_UNLINKAT''@|$(REPLACE_UNLINKAT)|g' \
 	      -e 's|@''REPLACE_USLEEP''@|$(REPLACE_USLEEP)|g' \
 	      -e 's|@''REPLACE_WRITE''@|$(REPLACE_WRITE)|g' \
+	      -e 's|@''UNISTD_H_HAVE_SYS_RANDOM_H''@|$(UNISTD_H_HAVE_SYS_RANDOM_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H''@|$(UNISTD_H_HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
@@ -4130,6 +4159,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_WMEMCMP''@/$(GNULIB_WMEMCMP)/g' \
 	      -e 's/@''GNULIB_WMEMCPY''@/$(GNULIB_WMEMCPY)/g' \
 	      -e 's/@''GNULIB_WMEMMOVE''@/$(GNULIB_WMEMMOVE)/g' \
+	      -e 's/@''GNULIB_WMEMPCPY''@/$(GNULIB_WMEMPCPY)/g' \
 	      -e 's/@''GNULIB_WMEMSET''@/$(GNULIB_WMEMSET)/g' \
 	      -e 's/@''GNULIB_WCSLEN''@/$(GNULIB_WCSLEN)/g' \
 	      -e 's/@''GNULIB_WCSNLEN''@/$(GNULIB_WCSNLEN)/g' \
@@ -4170,6 +4200,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''HAVE_WMEMCMP''@|$(HAVE_WMEMCMP)|g' \
 	      -e 's|@''HAVE_WMEMCPY''@|$(HAVE_WMEMCPY)|g' \
 	      -e 's|@''HAVE_WMEMMOVE''@|$(HAVE_WMEMMOVE)|g' \
+	      -e 's|@''HAVE_WMEMPCPY''@|$(HAVE_WMEMPCPY)|g' \
 	      -e 's|@''HAVE_WMEMSET''@|$(HAVE_WMEMSET)|g' \
 	      -e 's|@''HAVE_WCSLEN''@|$(HAVE_WCSLEN)|g' \
 	      -e 's|@''HAVE_WCSNLEN''@|$(HAVE_WCSNLEN)|g' \

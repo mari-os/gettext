@@ -33,7 +33,6 @@
 #  --no-conditional-dependencies \
 #  --libtool \
 #  --macro-prefix=lts \
-#  --avoid=hash-tests \
 #  fd-ostream \
 #  file-ostream \
 #  filename \
@@ -43,12 +42,14 @@
 #  isatty \
 #  largefile \
 #  memory-ostream \
+#  memory-ostream-tests \
 #  noop-styled-ostream \
 #  ostream \
 #  styled-ostream \
 #  term-ostream \
 #  term-ostream-tests \
 #  term-styled-ostream \
+#  vasprintf-posix \
 #  xalloc \
 #  xconcat-filename
 
@@ -64,9 +65,12 @@ EXTRA_libtextstyle_la_SOURCES =
 libtextstyle_la_LDFLAGS = $(AM_LDFLAGS)
 libtextstyle_la_LDFLAGS += -no-undefined
 libtextstyle_la_LDFLAGS += $(FABS_LIBM)
+libtextstyle_la_LDFLAGS += $(GETHOSTNAME_LIB)
 libtextstyle_la_LDFLAGS += $(ISNAND_LIBM)
 libtextstyle_la_LDFLAGS += $(ISNANF_LIBM)
 libtextstyle_la_LDFLAGS += $(ISNANL_LIBM)
+libtextstyle_la_LDFLAGS += $(LIBSOCKET)
+libtextstyle_la_LDFLAGS += $(LIBTHREAD)
 libtextstyle_la_LDFLAGS += $(LOG10_LIBM)
 libtextstyle_la_LDFLAGS += $(LTLIBICONV)
 libtextstyle_la_LDFLAGS += $(LTLIBINTL)
@@ -117,6 +121,21 @@ libtextstyle_la_SOURCES += gl_array_list.h gl_array_list.c
 
 ## end   gnulib module array-list
 
+## begin gnulib module attribute
+
+
+EXTRA_DIST += attribute.h
+
+## end   gnulib module attribute
+
+## begin gnulib module basename-lgpl
+
+libtextstyle_la_SOURCES += basename-lgpl.c
+
+EXTRA_DIST += basename-lgpl.h
+
+## end   gnulib module basename-lgpl
+
 ## begin gnulib module binary-io
 
 libtextstyle_la_SOURCES += binary-io.h binary-io.c
@@ -135,6 +154,14 @@ libtextstyle_la_SOURCES += c-strcase.h c-strcasecmp.c c-strncasecmp.c
 
 ## end   gnulib module c-strcase
 
+## begin gnulib module cloexec
+
+libtextstyle_la_SOURCES += cloexec.c
+
+EXTRA_DIST += cloexec.h
+
+## end   gnulib module cloexec
+
 ## begin gnulib module close
 
 
@@ -152,13 +179,14 @@ EXTRA_DIST += concat-filename.h
 
 ## end   gnulib module concat-filename
 
-## begin gnulib module dirname-lgpl
+## begin gnulib module dup2
 
-libtextstyle_la_SOURCES += dirname-lgpl.c basename-lgpl.c stripslash.c
 
-EXTRA_DIST += dirname.h
+EXTRA_DIST += dup2.c
 
-## end   gnulib module dirname-lgpl
+EXTRA_libtextstyle_la_SOURCES += dup2.c
+
+## end   gnulib module dup2
 
 ## begin gnulib module errno
 
@@ -216,6 +244,15 @@ EXTRA_DIST += exitfail.h
 libtextstyle_la_SOURCES += fatal-signal.h fatal-signal.c
 
 ## end   gnulib module fatal-signal
+
+## begin gnulib module fcntl
+
+
+EXTRA_DIST += fcntl.c
+
+EXTRA_libtextstyle_la_SOURCES += fcntl.c
+
+## end   gnulib module fcntl
 
 ## begin gnulib module fcntl-h
 
@@ -407,6 +444,36 @@ libtextstyle_la_SOURCES += full-write.h full-write.c
 
 ## end   gnulib module full-write
 
+## begin gnulib module get_ppid_of
+
+libtextstyle_la_SOURCES += get_ppid_of.h get_ppid_of.c
+
+## end   gnulib module get_ppid_of
+
+## begin gnulib module get_progname_of
+
+libtextstyle_la_SOURCES += get_progname_of.h get_progname_of.c
+
+## end   gnulib module get_progname_of
+
+## begin gnulib module getdtablesize
+
+
+EXTRA_DIST += getdtablesize.c
+
+EXTRA_libtextstyle_la_SOURCES += getdtablesize.c
+
+## end   gnulib module getdtablesize
+
+## begin gnulib module gethostname
+
+
+EXTRA_DIST += gethostname.c w32sock.h
+
+EXTRA_libtextstyle_la_SOURCES += gethostname.c
+
+## end   gnulib module gethostname
+
 ## begin gnulib module getprogname
 
 libtextstyle_la_SOURCES += getprogname.h getprogname.c
@@ -419,11 +486,14 @@ libtextstyle_la_SOURCES += gettext.h
 
 ## end   gnulib module gettext-h
 
-## begin gnulib module hash
+## begin gnulib module gettimeofday
 
-libtextstyle_la_SOURCES += hash.h hash.c
 
-## end   gnulib module hash
+EXTRA_DIST += gettimeofday.c
+
+EXTRA_libtextstyle_la_SOURCES += gettimeofday.c
+
+## end   gnulib module gettimeofday
 
 ## begin gnulib module havelib
 
@@ -540,7 +610,6 @@ inttypes.h: inttypes.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_INTTYPES_H''@|$(NEXT_INTTYPES_H)|g' \
-	      -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
 	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
 	      -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
 	      -e 's/@''GNULIB_IMAXABS''@/$(GNULIB_IMAXABS)/g' \
@@ -1289,6 +1358,12 @@ libtextstyle_la_SOURCES += gl_list.h gl_list.c
 
 ## end   gnulib module list
 
+## begin gnulib module lock
+
+libtextstyle_la_SOURCES += glthread/lock.h glthread/lock.c
+
+## end   gnulib module lock
+
 ## begin gnulib module log10
 
 
@@ -1615,6 +1690,12 @@ EXTRA_DIST += math.in.h
 
 ## end   gnulib module math
 
+## begin gnulib module mem-hash-map
+
+libtextstyle_la_SOURCES += mem-hash-map.h mem-hash-map.c
+
+## end   gnulib module mem-hash-map
+
 ## begin gnulib module memchr
 
 
@@ -1716,6 +1797,13 @@ EXTRA_libtextstyle_la_SOURCES += noop-styled-ostream.oo.c
 
 ## end   gnulib module noop-styled-ostream
 
+## begin gnulib module noreturn
+
+
+EXTRA_DIST += noreturn.h
+
+## end   gnulib module noreturn
+
 ## begin gnulib module obstack
 
 
@@ -1724,6 +1812,15 @@ EXTRA_DIST += obstack.c obstack.h
 EXTRA_libtextstyle_la_SOURCES += obstack.c
 
 ## end   gnulib module obstack
+
+## begin gnulib module open
+
+
+EXTRA_DIST += open.c
+
+EXTRA_libtextstyle_la_SOURCES += open.c
+
+## end   gnulib module open
 
 ## begin gnulib module ostream
 
@@ -1967,6 +2064,14 @@ EXTRA_libtextstyle_la_SOURCES += snprintf.c
 
 ## end   gnulib module snprintf
 
+## begin gnulib module sockets
+
+libtextstyle_la_SOURCES += sockets.h sockets.c
+
+EXTRA_DIST += w32sock.h
+
+## end   gnulib module sockets
+
 ## begin gnulib module stat
 
 
@@ -1983,6 +2088,29 @@ libtextstyle_la_SOURCES += stat-time.c
 EXTRA_DIST += stat-time.h
 
 ## end   gnulib module stat-time
+
+## begin gnulib module stdalign
+
+BUILT_SOURCES += $(STDALIGN_H)
+
+# We need the following in order to create <stdalign.h> when the system
+# doesn't have one that works.
+if GL_GENERATE_STDALIGN_H
+stdalign.h: stdalign.in.h $(top_builddir)/config.status
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/stdalign.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+else
+stdalign.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += stdalign.h stdalign.h-t
+
+EXTRA_DIST += stdalign.in.h
+
+## end   gnulib module stdalign
 
 ## begin gnulib module stdarg
 
@@ -2447,7 +2575,6 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FFSL''@|$(HAVE_FFSL)|g' \
 	      -e 's|@''HAVE_FFSLL''@|$(HAVE_FFSLL)|g' \
 	      -e 's|@''HAVE_MBSLEN''@|$(HAVE_MBSLEN)|g' \
-	      -e 's|@''HAVE_MEMCHR''@|$(HAVE_MEMCHR)|g' \
 	      -e 's|@''HAVE_DECL_MEMMEM''@|$(HAVE_DECL_MEMMEM)|g' \
 	      -e 's|@''HAVE_MEMPCPY''@|$(HAVE_MEMPCPY)|g' \
 	      -e 's|@''HAVE_DECL_MEMRCHR''@|$(HAVE_DECL_MEMRCHR)|g' \
@@ -2521,6 +2648,58 @@ EXTRA_libtextstyle_la_SOURCES += styled-ostream.oo.c
 
 ## end   gnulib module styled-ostream
 
+## begin gnulib module sys_socket
+
+BUILT_SOURCES += sys/socket.h
+libtextstyle_la_SOURCES += sys_socket.c
+
+# We need the following in order to create <sys/socket.h> when the system
+# doesn't have one that works with the given compiler.
+sys/socket.h: sys_socket.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL_LTS|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_SOCKET_H''@|$(NEXT_SYS_SOCKET_H)|g' \
+	      -e 's|@''HAVE_SYS_SOCKET_H''@|$(HAVE_SYS_SOCKET_H)|g' \
+	      -e 's/@''GNULIB_CLOSE''@/$(GNULIB_CLOSE)/g' \
+	      -e 's/@''GNULIB_SOCKET''@/$(GNULIB_SOCKET)/g' \
+	      -e 's/@''GNULIB_CONNECT''@/$(GNULIB_CONNECT)/g' \
+	      -e 's/@''GNULIB_ACCEPT''@/$(GNULIB_ACCEPT)/g' \
+	      -e 's/@''GNULIB_BIND''@/$(GNULIB_BIND)/g' \
+	      -e 's/@''GNULIB_GETPEERNAME''@/$(GNULIB_GETPEERNAME)/g' \
+	      -e 's/@''GNULIB_GETSOCKNAME''@/$(GNULIB_GETSOCKNAME)/g' \
+	      -e 's/@''GNULIB_GETSOCKOPT''@/$(GNULIB_GETSOCKOPT)/g' \
+	      -e 's/@''GNULIB_LISTEN''@/$(GNULIB_LISTEN)/g' \
+	      -e 's/@''GNULIB_RECV''@/$(GNULIB_RECV)/g' \
+	      -e 's/@''GNULIB_SEND''@/$(GNULIB_SEND)/g' \
+	      -e 's/@''GNULIB_RECVFROM''@/$(GNULIB_RECVFROM)/g' \
+	      -e 's/@''GNULIB_SENDTO''@/$(GNULIB_SENDTO)/g' \
+	      -e 's/@''GNULIB_SETSOCKOPT''@/$(GNULIB_SETSOCKOPT)/g' \
+	      -e 's/@''GNULIB_SHUTDOWN''@/$(GNULIB_SHUTDOWN)/g' \
+	      -e 's/@''GNULIB_ACCEPT4''@/$(GNULIB_ACCEPT4)/g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
+	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \
+	      -e 's|@''HAVE_STRUCT_SOCKADDR_STORAGE''@|$(HAVE_STRUCT_SOCKADDR_STORAGE)|g' \
+	      -e 's|@''HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY''@|$(HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY)|g' \
+	      -e 's|@''HAVE_SA_FAMILY_T''@|$(HAVE_SA_FAMILY_T)|g' \
+	      -e 's|@''HAVE_ACCEPT4''@|$(HAVE_ACCEPT4)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/sys_socket.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
+MOSTLYCLEANDIRS += sys
+
+EXTRA_DIST += sys_socket.in.h
+
+## end   gnulib module sys_socket
+
 ## begin gnulib module sys_stat
 
 BUILT_SOURCES += sys/stat.h
@@ -2542,6 +2721,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's/@''GNULIB_FSTAT''@/$(GNULIB_FSTAT)/g' \
 	      -e 's/@''GNULIB_FSTATAT''@/$(GNULIB_FSTATAT)/g' \
 	      -e 's/@''GNULIB_FUTIMENS''@/$(GNULIB_FUTIMENS)/g' \
+	      -e 's/@''GNULIB_GETUMASK''@/$(GNULIB_GETUMASK)/g' \
 	      -e 's/@''GNULIB_LCHMOD''@/$(GNULIB_LCHMOD)/g' \
 	      -e 's/@''GNULIB_LSTAT''@/$(GNULIB_LSTAT)/g' \
 	      -e 's/@''GNULIB_MKDIRAT''@/$(GNULIB_MKDIRAT)/g' \
@@ -2555,6 +2735,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's|@''HAVE_FCHMODAT''@|$(HAVE_FCHMODAT)|g' \
 	      -e 's|@''HAVE_FSTATAT''@|$(HAVE_FSTATAT)|g' \
 	      -e 's|@''HAVE_FUTIMENS''@|$(HAVE_FUTIMENS)|g' \
+	      -e 's|@''HAVE_GETUMASK''@|$(HAVE_GETUMASK)|g' \
 	      -e 's|@''HAVE_LCHMOD''@|$(HAVE_LCHMOD)|g' \
 	      -e 's|@''HAVE_LSTAT''@|$(HAVE_LSTAT)|g' \
 	      -e 's|@''HAVE_MKDIRAT''@|$(HAVE_MKDIRAT)|g' \
@@ -2586,6 +2767,40 @@ EXTRA_DIST += sys_stat.in.h
 
 ## end   gnulib module sys_stat
 
+## begin gnulib module sys_time
+
+BUILT_SOURCES += sys/time.h
+
+# We need the following in order to create <sys/time.h> when the system
+# doesn't have one that works with the given compiler.
+sys/time.h: sys_time.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL_LTS|g' \
+	      -e 's/@''HAVE_SYS_TIME_H''@/$(HAVE_SYS_TIME_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_TIME_H''@|$(NEXT_SYS_TIME_H)|g' \
+	      -e 's/@''GNULIB_GETTIMEOFDAY''@/$(GNULIB_GETTIMEOFDAY)/g' \
+	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
+	      -e 's/@''HAVE_GETTIMEOFDAY''@/$(HAVE_GETTIMEOFDAY)/g' \
+	      -e 's/@''HAVE_STRUCT_TIMEVAL''@/$(HAVE_STRUCT_TIMEVAL)/g' \
+	      -e 's/@''REPLACE_GETTIMEOFDAY''@/$(REPLACE_GETTIMEOFDAY)/g' \
+	      -e 's/@''REPLACE_STRUCT_TIMEVAL''@/$(REPLACE_STRUCT_TIMEVAL)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/sys_time.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/time.h sys/time.h-t
+
+EXTRA_DIST += sys_time.in.h
+
+## end   gnulib module sys_time
+
 ## begin gnulib module sys_types
 
 BUILT_SOURCES += sys/types.h
@@ -2611,6 +2826,32 @@ MOSTLYCLEANFILES += sys/types.h sys/types.h-t
 EXTRA_DIST += sys_types.in.h
 
 ## end   gnulib module sys_types
+
+## begin gnulib module sys_uio
+
+BUILT_SOURCES += sys/uio.h
+
+# We need the following in order to create <sys/uio.h> when the system
+# doesn't have one that works with the given compiler.
+sys/uio.h: sys_uio.in.h $(top_builddir)/config.status
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL_LTS|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_UIO_H''@|$(NEXT_SYS_UIO_H)|g' \
+	      -e 's|@''HAVE_SYS_UIO_H''@|$(HAVE_SYS_UIO_H)|g' \
+	      < $(srcdir)/sys_uio.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += sys/uio.h sys/uio.h-t
+MOSTLYCLEANDIRS += sys
+
+EXTRA_DIST += sys_uio.in.h
+
+## end   gnulib module sys_uio
 
 ## begin gnulib module term-ostream
 
@@ -2696,6 +2937,12 @@ EXTRA_libtextstyle_la_SOURCES += tparm.c tputs.c
 EXTRA_DIST += terminfo.h
 
 ## end   gnulib module terminfo-h
+
+## begin gnulib module threadlib
+
+libtextstyle_la_SOURCES += glthread/threadlib.c
+
+## end   gnulib module threadlib
 
 ## begin gnulib module time
 
@@ -2788,6 +3035,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_GETCWD''@/$(GNULIB_GETCWD)/g' \
 	      -e 's/@''GNULIB_GETDOMAINNAME''@/$(GNULIB_GETDOMAINNAME)/g' \
 	      -e 's/@''GNULIB_GETDTABLESIZE''@/$(GNULIB_GETDTABLESIZE)/g' \
+	      -e 's/@''GNULIB_GETENTROPY''@/$(GNULIB_GETENTROPY)/g' \
 	      -e 's/@''GNULIB_GETGROUPS''@/$(GNULIB_GETGROUPS)/g' \
 	      -e 's/@''GNULIB_GETHOSTNAME''@/$(GNULIB_GETHOSTNAME)/g' \
 	      -e 's/@''GNULIB_GETLOGIN''@/$(GNULIB_GETLOGIN)/g' \
@@ -2826,7 +3074,6 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      < $(srcdir)/unistd.in.h | \
 	  sed -e 's|@''HAVE_CHOWN''@|$(HAVE_CHOWN)|g' \
 	      -e 's|@''HAVE_COPY_FILE_RANGE''@|$(HAVE_COPY_FILE_RANGE)|g' \
-	      -e 's|@''HAVE_DUP2''@|$(HAVE_DUP2)|g' \
 	      -e 's|@''HAVE_DUP3''@|$(HAVE_DUP3)|g' \
 	      -e 's|@''HAVE_EUIDACCESS''@|$(HAVE_EUIDACCESS)|g' \
 	      -e 's|@''HAVE_FACCESSAT''@|$(HAVE_FACCESSAT)|g' \
@@ -2836,6 +3083,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FSYNC''@|$(HAVE_FSYNC)|g' \
 	      -e 's|@''HAVE_FTRUNCATE''@|$(HAVE_FTRUNCATE)|g' \
 	      -e 's|@''HAVE_GETDTABLESIZE''@|$(HAVE_GETDTABLESIZE)|g' \
+	      -e 's|@''HAVE_GETENTROPY''@|$(HAVE_GETENTROPY)|g' \
 	      -e 's|@''HAVE_GETGROUPS''@|$(HAVE_GETGROUPS)|g' \
 	      -e 's|@''HAVE_GETHOSTNAME''@|$(HAVE_GETHOSTNAME)|g' \
 	      -e 's|@''HAVE_GETPAGESIZE''@|$(HAVE_GETPAGESIZE)|g' \
@@ -2905,6 +3153,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_UNLINKAT''@|$(REPLACE_UNLINKAT)|g' \
 	      -e 's|@''REPLACE_USLEEP''@|$(REPLACE_USLEEP)|g' \
 	      -e 's|@''REPLACE_WRITE''@|$(REPLACE_WRITE)|g' \
+	      -e 's|@''UNISTD_H_HAVE_SYS_RANDOM_H''@|$(UNISTD_H_HAVE_SYS_RANDOM_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H''@|$(UNISTD_H_HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
@@ -3025,6 +3274,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_WMEMCMP''@/$(GNULIB_WMEMCMP)/g' \
 	      -e 's/@''GNULIB_WMEMCPY''@/$(GNULIB_WMEMCPY)/g' \
 	      -e 's/@''GNULIB_WMEMMOVE''@/$(GNULIB_WMEMMOVE)/g' \
+	      -e 's/@''GNULIB_WMEMPCPY''@/$(GNULIB_WMEMPCPY)/g' \
 	      -e 's/@''GNULIB_WMEMSET''@/$(GNULIB_WMEMSET)/g' \
 	      -e 's/@''GNULIB_WCSLEN''@/$(GNULIB_WCSLEN)/g' \
 	      -e 's/@''GNULIB_WCSNLEN''@/$(GNULIB_WCSNLEN)/g' \
@@ -3065,6 +3315,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''HAVE_WMEMCMP''@|$(HAVE_WMEMCMP)|g' \
 	      -e 's|@''HAVE_WMEMCPY''@|$(HAVE_WMEMCPY)|g' \
 	      -e 's|@''HAVE_WMEMMOVE''@|$(HAVE_WMEMMOVE)|g' \
+	      -e 's|@''HAVE_WMEMPCPY''@|$(HAVE_WMEMPCPY)|g' \
 	      -e 's|@''HAVE_WMEMSET''@|$(HAVE_WMEMSET)|g' \
 	      -e 's|@''HAVE_WCSLEN''@|$(HAVE_WCSLEN)|g' \
 	      -e 's|@''HAVE_WCSNLEN''@|$(HAVE_WCSNLEN)|g' \
@@ -3119,6 +3370,42 @@ EXTRA_DIST += wchar.in.h
 
 ## end   gnulib module wchar
 
+## begin gnulib module windows-mutex
+
+
+EXTRA_DIST += windows-initguard.h windows-mutex.c windows-mutex.h
+
+EXTRA_libtextstyle_la_SOURCES += windows-mutex.c
+
+## end   gnulib module windows-mutex
+
+## begin gnulib module windows-once
+
+
+EXTRA_DIST += windows-once.c windows-once.h
+
+EXTRA_libtextstyle_la_SOURCES += windows-once.c
+
+## end   gnulib module windows-once
+
+## begin gnulib module windows-recmutex
+
+
+EXTRA_DIST += windows-initguard.h windows-recmutex.c windows-recmutex.h
+
+EXTRA_libtextstyle_la_SOURCES += windows-recmutex.c
+
+## end   gnulib module windows-recmutex
+
+## begin gnulib module windows-rwlock
+
+
+EXTRA_DIST += windows-initguard.h windows-rwlock.c windows-rwlock.h
+
+EXTRA_libtextstyle_la_SOURCES += windows-rwlock.c
+
+## end   gnulib module windows-rwlock
+
 ## begin gnulib module write
 
 
@@ -3148,6 +3435,12 @@ libtextstyle_la_SOURCES += xconcat-filename.c
 EXTRA_DIST += concat-filename.h
 
 ## end   gnulib module xconcat-filename
+
+## begin gnulib module xgethostname
+
+libtextstyle_la_SOURCES += xgethostname.h xgethostname.c
+
+## end   gnulib module xgethostname
 
 ## begin gnulib module xlist
 

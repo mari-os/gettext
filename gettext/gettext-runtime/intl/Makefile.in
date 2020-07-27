@@ -114,19 +114,24 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/ansi-c++.m4 \
 	$(top_srcdir)/gnulib-m4/asm-underscore.m4 \
 	$(top_srcdir)/gnulib-m4/atexit.m4 \
+	$(top_srcdir)/gnulib-m4/bison.m4 \
 	$(top_srcdir)/gnulib-m4/canonicalize.m4 \
+	$(top_srcdir)/gnulib-m4/close.m4 \
 	$(top_srcdir)/gnulib-m4/codeset.m4 \
 	$(top_srcdir)/gnulib-m4/csharp.m4 \
 	$(top_srcdir)/gnulib-m4/csharpcomp.m4 \
-	$(top_srcdir)/gnulib-m4/dirname.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
+	$(top_srcdir)/gnulib-m4/dup2.m4 \
 	$(top_srcdir)/gnulib-m4/eealloc.m4 \
 	$(top_srcdir)/gnulib-m4/environ.m4 \
 	$(top_srcdir)/gnulib-m4/errno_h.m4 \
 	$(top_srcdir)/gnulib-m4/error.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
 	$(top_srcdir)/gnulib-m4/extern-inline.m4 \
+	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
+	$(top_srcdir)/gnulib-m4/fstat.m4 \
+	$(top_srcdir)/gnulib-m4/getdtablesize.m4 \
 	$(top_srcdir)/gnulib-m4/getopt.m4 \
 	$(top_srcdir)/gnulib-m4/getprogname.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
@@ -159,7 +164,6 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/localename.m4 \
 	$(top_srcdir)/gnulib-m4/lock.m4 \
 	$(top_srcdir)/gnulib-m4/lstat.m4 \
-	$(top_srcdir)/gnulib-m4/malloc.m4 \
 	$(top_srcdir)/gnulib-m4/malloca.m4 \
 	$(top_srcdir)/gnulib-m4/mbchar.m4 \
 	$(top_srcdir)/gnulib-m4/mbiter.m4 \
@@ -170,11 +174,15 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/memchr.m4 \
 	$(top_srcdir)/gnulib-m4/memmove.m4 \
 	$(top_srcdir)/gnulib-m4/mmap-anon.m4 \
+	$(top_srcdir)/gnulib-m4/mode_t.m4 \
 	$(top_srcdir)/gnulib-m4/msvc-inval.m4 \
 	$(top_srcdir)/gnulib-m4/msvc-nothrow.m4 \
 	$(top_srcdir)/gnulib-m4/multiarch.m4 \
 	$(top_srcdir)/gnulib-m4/nocrash.m4 \
 	$(top_srcdir)/gnulib-m4/off_t.m4 \
+	$(top_srcdir)/gnulib-m4/open-cloexec.m4 \
+	$(top_srcdir)/gnulib-m4/open-slash.m4 \
+	$(top_srcdir)/gnulib-m4/open.m4 \
 	$(top_srcdir)/gnulib-m4/pathmax.m4 \
 	$(top_srcdir)/gnulib-m4/pthread_rwlock_rdlock.m4 \
 	$(top_srcdir)/gnulib-m4/raise.m4 \
@@ -190,6 +198,7 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/ssize_t.m4 \
 	$(top_srcdir)/gnulib-m4/stat-time.m4 \
 	$(top_srcdir)/gnulib-m4/stat.m4 \
+	$(top_srcdir)/gnulib-m4/std-gnu11.m4 \
 	$(top_srcdir)/gnulib-m4/stdbool.m4 \
 	$(top_srcdir)/gnulib-m4/stddef_h.m4 \
 	$(top_srcdir)/gnulib-m4/stdint.m4 \
@@ -224,13 +233,12 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/m4/glibc2.m4 $(top_srcdir)/m4/glibc21.m4 \
 	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intdiv0.m4 \
 	$(top_srcdir)/m4/intl.m4 $(top_srcdir)/m4/intlmacosx.m4 \
-	$(top_srcdir)/m4/intmax.m4 $(top_srcdir)/m4/inttypes-pri.m4 \
-	$(top_srcdir)/m4/inttypes_h.m4 $(top_srcdir)/m4/nls.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/printf-posix.m4 \
-	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/size_max.m4 \
-	$(top_srcdir)/m4/stdint_h.m4 $(top_srcdir)/m4/uintmax_t.m4 \
-	$(top_srcdir)/m4/visibility.m4 $(top_srcdir)/m4/xsize.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/intmax.m4 $(top_srcdir)/m4/inttypes_h.m4 \
+	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/printf-posix.m4 $(top_srcdir)/m4/progtest.m4 \
+	$(top_srcdir)/m4/size_max.m4 $(top_srcdir)/m4/stdint_h.m4 \
+	$(top_srcdir)/m4/uintmax_t.m4 $(top_srcdir)/m4/visibility.m4 \
+	$(top_srcdir)/m4/xsize.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -511,6 +519,7 @@ GNULIB_GETCWD = @GNULIB_GETCWD@
 GNULIB_GETDELIM = @GNULIB_GETDELIM@
 GNULIB_GETDOMAINNAME = @GNULIB_GETDOMAINNAME@
 GNULIB_GETDTABLESIZE = @GNULIB_GETDTABLESIZE@
+GNULIB_GETENTROPY = @GNULIB_GETENTROPY@
 GNULIB_GETGROUPS = @GNULIB_GETGROUPS@
 GNULIB_GETHOSTNAME = @GNULIB_GETHOSTNAME@
 GNULIB_GETLINE = @GNULIB_GETLINE@
@@ -522,6 +531,7 @@ GNULIB_GETPAGESIZE = @GNULIB_GETPAGESIZE@
 GNULIB_GETPASS = @GNULIB_GETPASS@
 GNULIB_GETSUBOPT = @GNULIB_GETSUBOPT@
 GNULIB_GETTIMEOFDAY = @GNULIB_GETTIMEOFDAY@
+GNULIB_GETUMASK = @GNULIB_GETUMASK@
 GNULIB_GETUSERSHELL = @GNULIB_GETUSERSHELL@
 GNULIB_GL_UNISTD_H_GETOPT = @GNULIB_GL_UNISTD_H_GETOPT@
 GNULIB_GRANTPT = @GNULIB_GRANTPT@
@@ -725,10 +735,12 @@ GNULIB_WMEMCHR = @GNULIB_WMEMCHR@
 GNULIB_WMEMCMP = @GNULIB_WMEMCMP@
 GNULIB_WMEMCPY = @GNULIB_WMEMCPY@
 GNULIB_WMEMMOVE = @GNULIB_WMEMMOVE@
+GNULIB_WMEMPCPY = @GNULIB_WMEMPCPY@
 GNULIB_WMEMSET = @GNULIB_WMEMSET@
 GNULIB_WRITE = @GNULIB_WRITE@
 GNULIB__EXIT = @GNULIB__EXIT@
 GREP = @GREP@
+HAVE_ALLOCA_H = @HAVE_ALLOCA_H@
 HAVE_ASPRINTF = @HAVE_ASPRINTF@
 HAVE_ATOLL = @HAVE_ATOLL@
 HAVE_BTOWC = @HAVE_BTOWC@
@@ -779,7 +791,6 @@ HAVE_DECL_VSNPRINTF = @HAVE_DECL_VSNPRINTF@
 HAVE_DECL_WCTOB = @HAVE_DECL_WCTOB@
 HAVE_DECL_WCWIDTH = @HAVE_DECL_WCWIDTH@
 HAVE_DPRINTF = @HAVE_DPRINTF@
-HAVE_DUP2 = @HAVE_DUP2@
 HAVE_DUP3 = @HAVE_DUP3@
 HAVE_DUPLOCALE = @HAVE_DUPLOCALE@
 HAVE_EUIDACCESS = @HAVE_EUIDACCESS@
@@ -803,6 +814,7 @@ HAVE_FUTIMENS = @HAVE_FUTIMENS@
 HAVE_GCJ_C = @HAVE_GCJ_C@
 HAVE_GCJ_IN_PATH = @HAVE_GCJ_IN_PATH@
 HAVE_GETDTABLESIZE = @HAVE_GETDTABLESIZE@
+HAVE_GETENTROPY = @HAVE_GETENTROPY@
 HAVE_GETGROUPS = @HAVE_GETGROUPS@
 HAVE_GETHOSTNAME = @HAVE_GETHOSTNAME@
 HAVE_GETLOGIN = @HAVE_GETLOGIN@
@@ -810,6 +822,7 @@ HAVE_GETOPT_H = @HAVE_GETOPT_H@
 HAVE_GETPAGESIZE = @HAVE_GETPAGESIZE@
 HAVE_GETPASS = @HAVE_GETPASS@
 HAVE_GETSUBOPT = @HAVE_GETSUBOPT@
+HAVE_GETUMASK = @HAVE_GETUMASK@
 HAVE_GRANTPT = @HAVE_GRANTPT@
 HAVE_GROUP_MEMBER = @HAVE_GROUP_MEMBER@
 HAVE_IMAXDIV_T = @HAVE_IMAXDIV_T@
@@ -843,7 +856,6 @@ HAVE_MBSRTOWCS = @HAVE_MBSRTOWCS@
 HAVE_MBTOWC = @HAVE_MBTOWC@
 HAVE_MCS = @HAVE_MCS@
 HAVE_MCS_IN_PATH = @HAVE_MCS_IN_PATH@
-HAVE_MEMCHR = @HAVE_MEMCHR@
 HAVE_MEMPCPY = @HAVE_MEMPCPY@
 HAVE_MKDIRAT = @HAVE_MKDIRAT@
 HAVE_MKDTEMP = @HAVE_MKDTEMP@
@@ -972,6 +984,7 @@ HAVE_WMEMCHR = @HAVE_WMEMCHR@
 HAVE_WMEMCMP = @HAVE_WMEMCMP@
 HAVE_WMEMCPY = @HAVE_WMEMCPY@
 HAVE_WMEMMOVE = @HAVE_WMEMMOVE@
+HAVE_WMEMPCPY = @HAVE_WMEMPCPY@
 HAVE_WMEMSET = @HAVE_WMEMSET@
 HAVE_WPRINTF = @HAVE_WPRINTF@
 HAVE_XLOCALE_H = @HAVE_XLOCALE_H@
@@ -1098,7 +1111,6 @@ POSUB = @POSUB@
 PRAGMA_COLUMNS = @PRAGMA_COLUMNS@
 PRAGMA_SYSTEM_HEADER = @PRAGMA_SYSTEM_HEADER@
 PRIPTR_PREFIX = @PRIPTR_PREFIX@
-PRI_MACROS_BROKEN = @PRI_MACROS_BROKEN@
 PTHREAD_H_DEFINES_STRUCT_TIMESPEC = @PTHREAD_H_DEFINES_STRUCT_TIMESPEC@
 PTRDIFF_T_SUFFIX = @PTRDIFF_T_SUFFIX@
 RANLIB = @RANLIB@
@@ -1284,6 +1296,7 @@ UINT32_MAX_LT_UINTMAX_MAX = @UINT32_MAX_LT_UINTMAX_MAX@
 UINT64_MAX_EQ_ULONG_MAX = @UINT64_MAX_EQ_ULONG_MAX@
 UNDEFINE_STRTOK_R = @UNDEFINE_STRTOK_R@
 UNISTD_H_DEFINES_STRUCT_TIMESPEC = @UNISTD_H_DEFINES_STRUCT_TIMESPEC@
+UNISTD_H_HAVE_SYS_RANDOM_H = @UNISTD_H_HAVE_SYS_RANDOM_H@
 UNISTD_H_HAVE_WINSOCK2_H = @UNISTD_H_HAVE_WINSOCK2_H@
 UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS = @UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@
 USE_INCLUDED_LIBINTL = @USE_INCLUDED_LIBINTL@
@@ -1301,8 +1314,6 @@ WOE32DLL = @WOE32DLL@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
-YACC = @INTLBISON@ -d
-YFLAGS = @YFLAGS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -1378,14 +1389,14 @@ AUTOMAKE_OPTIONS = 1.10 gnu no-dependencies
 EXTRA_DIST = gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h \
 	eval-plural.h localcharset.h lock.h windows-mutex.h \
 	windows-rwlock.h windows-recmutex.h windows-once.h \
-	windows-initguard.h relocatable.h arg-nonnull.h filename.h \
-	flexmember.h localename-table.in.h setlocale_null.h tsearch.h \
-	tsearch.c verify.h xsize.h printf-args.h printf-args.c \
-	printf-parse.h wprintf-parse.h printf-parse.c vasnprintf.h \
-	vasnwprintf.h vasnprintf.c intl-exports.c os2compat.h \
-	os2compat.c libgnuintl.in.h export.h plural.c libintl.rc \
-	locale.alias ref-add.sin ref-del.sin INSTALL.windows \
-	COPYING.LIB libintl.glibc
+	windows-initguard.h relocatable.h arg-nonnull.h attribute.h \
+	filename.h flexmember.h localename-table.in.h setlocale_null.h \
+	tsearch.h tsearch.c verify.h xsize.h printf-args.h \
+	printf-args.c printf-parse.h wprintf-parse.h printf-parse.c \
+	vasnprintf.h vasnwprintf.h vasnprintf.c intl-exports.c \
+	os2compat.h os2compat.c libgnuintl.in.h export.h plural.c \
+	libintl.rc locale.alias ref-add.sin ref-del.sin \
+	INSTALL.windows COPYING.LIB libintl.glibc
 BUILT_SOURCES = 
 # Don't put plural.c into BUILT_SOURCES. Since plural.c is in the source
 # directory, 'make' does not find it without a VPATH variable.
@@ -1420,12 +1431,114 @@ AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" \
 	-Dset_relocation_prefix=libintl_set_relocation_prefix \
 	-Drelocate=libintl_relocate -Drelocate2=libintl_relocate2 \
 	-DDEPENDS_ON_LIBICONV=1
+BISON = @INTLBISON@
+YACC = $(BISON) -d
 BISONFLAGS = --name-prefix=__gettext
 
 # Tell the ELF linker which symbols to export.
 AM_CFLAGS = @CFLAG_VISIBILITY@
 # Tell the mingw or Cygwin linker which symbols to export.
 @WOE32DLL_TRUE@AM_LDFLAGS = -Wl,--export-all-symbols
+
+# Overview of the code
+# --------------------
+#
+# The following files implement public API, declared in libgnuintl.in.h:
+#   version.c:          libintl_version
+#   gettext.c:          libintl_gettext
+#   dgettext.c:         libintl_dgettext
+#   dcgettext.c:        libintl_dcgettext
+#   ngettext.c:         libintl_ngettext
+#   dngettext.c:        libintl_dngettext
+#   dcngettext.c:       libintl_dcngettext
+#   textdomain.c:       libintl_textdomain
+#   bindtextdom.c:      libintl_bindtextdomain
+#                       libintl_bind_textdomain_codeset
+#   printf.c:           libintl_fprintf
+#                       libintl_vfprintf
+#                       libintl_printf
+#                       libintl_vprintf
+#                       libintl_sprintf
+#                       libintl_vsprintf
+#                       libintl_snprintf
+#                       libintl_vsnprintf
+#                       libintl_asprintf
+#                       libintl_vasprintf
+#                       libintl_fwprintf
+#                       libintl_vfwprintf
+#                       libintl_wprintf
+#                       libintl_vwprintf
+#                       libintl_swprintf
+#                       libintl_vswprintf
+#   localename.c:       libintl_newlocale
+#                       libintl_duplocale
+#                       libintl_freelocale
+#   setlocale.c:        libintl_newlocale
+#                       libintl_setlocale
+#   relocatable.c:      libintl_set_relocation_prefix
+#
+# The following files implement private API.
+#   gettextP.h:     dcigettext.c:       libintl_dcigettext
+#                                       _nl_find_msg
+#                                       libintl_nl_default_dirname
+#                                       libintl_nl_domain_bindings
+#                                       libintl_nl_default_default_domain
+#                                       libintl_nl_current_default_domain
+#                   localename.c:       _nl_locale_name_canonicalize
+#                                       _nl_locale_name_from_win32_LANGID
+#                                       _nl_locale_name_from_win32_LCID
+#                                       _nl_locale_name_thread_unsafe
+#                                       _nl_locale_name_thread
+#                                       _nl_locale_name_posix
+#                                       _nl_locale_name_environ
+#                                       _nl_locale_name_default
+#                                       _nl_locale_name
+#                   langprefs.c:        _nl_language_preferences_default
+#                   finddomain.c:       _nl_find_domain
+#                   loadmsgcat.c:       _nl_load_domain
+#                                       _nl_msg_cat_cntr
+#   loadinfo.h:     l10nflist.c:        _nl_make_l10nflist
+#                                       _nl_normalize_codeset
+#                   localealias.c:      _nl_expand_alias
+#                   explodename.c:      _nl_explode_name
+#   plural-exp.h:   plural.y:           libintl_gettext_free_exp
+#                                       libintl_gettextparse
+#                   plural-exp.c:       libintl_gettext_germanic_plural
+#                                       libintl_gettext_extract_plural
+#                   eval-plural.h:      plural_eval
+#
+# Other files:
+#   gmo.h:          Describes the GNU MO file format.
+#   hash-string.h:  hash-string.c:      libintl_hash_string
+#
+# Some other files are borrowed from gnulib, some with small modifications.
+#
+# Overview of invocation hierarchy
+# --------------------------------
+#
+# The main general translation lookup function is libintl_dcigettext.
+# libintl_dcigettext
+#   \-> guess_category_value
+#         \-> _nl_locale_name_thread_unsafe
+#         \-> _nl_locale_name_posix
+#         \-> _nl_locale_name_default
+#         \-> _nl_language_preferences_default
+#   \-> _nl_find_domain
+#         \-> _nl_make_l10nflist
+#         \-> _nl_load_domain
+#         \-> _nl_expand_alias
+#         \-> _nl_explode_name
+#               \-> _nl_normalize_codeset
+#   \-> _nl_find_msg
+#         \-> _nl_load_domain
+#         \-> get_output_charset
+#   \-> plural_lookup
+#         \-> plural_eval
+#
+# _nl_load_domain loads a MO file into memory.
+# _nl_load_domain
+#   \-> _nl_find_msg (for the header entry only)
+#   \-> libintl_gettext_extract_plural
 LIBINTLSOURCES = bindtextdom.c dcgettext.c dgettext.c gettext.c \
 	finddomain.c hash-string.c loadmsgcat.c localealias.c \
 	textdomain.c l10nflist.c explodename.c dcigettext.c \
@@ -1462,9 +1575,9 @@ libgnuintl_la_DEPENDENCIES = $(WOE32_LIBADD)
 # Libtool's library version information for libintl.
 # Before making a gettext release, you must change this according to the
 # libtool documentation, section "Library interface versions".
-LTV_CURRENT = 9
-LTV_REVISION = 7
-LTV_AGE = 1
+LTV_CURRENT = 10
+LTV_REVISION = 0
+LTV_AGE = 2
 
 # How to build libintl.la and libgnuintl.la.
 # Limit the exported symbols: Don't export glwthread* (from gnulib modules).
@@ -1709,9 +1822,9 @@ maintainer-clean-generic:
 	-rm -f plural.c
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+@PRELOADABLE_LIBINTL_FALSE@@USE_INCLUDED_LIBINTL_FALSE@install-exec-local:
 @PACKAGE_IS_GETTEXT_TOOLS_FALSE@@USE_INCLUDED_LIBINTL_FALSE@install-data-local:
 @PACKAGE_IS_GETTEXT_TOOLS_FALSE@@PRELOADABLE_LIBINTL_FALSE@@USE_INCLUDED_LIBINTL_FALSE@uninstall-local:
-@PRELOADABLE_LIBINTL_FALSE@@USE_INCLUDED_LIBINTL_FALSE@install-exec-local:
 clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-local \
@@ -1841,7 +1954,7 @@ libintl.h: $(srcdir)/libgnuintl.in.h
 localename-table.h: $(srcdir)/localename-table.in.h $(srcdir)/export.h
 	sed -e 's/extern \([^"]\)/extern LIBINTL_DLL_EXPORTED \1/' \
 	    -e 's/extern,/extern LIBINTL_DLL_EXPORTED,/' \
-	    -e "/#if HAVE_USELOCALE/r $(srcdir)/export.h" \
+	    -e "/#if HAVE_WORKING_USELOCALE/r $(srcdir)/export.h" \
 	  < $(srcdir)/localename-table.in.h \
 	| sed -e 's,@''HAVE_VISIBILITY''@,@HAVE_VISIBILITY@,g' \
 	  > localename-table.h
@@ -1862,9 +1975,11 @@ localename-table.h: $(srcdir)/localename-table.in.h $(srcdir)/export.h
 
 $(srcdir)/plural.c: $(srcdir)/plural.y
 	$(AM_V_YACC)$(YACC) $(BISONFLAGS) --output plural.c $(srcdir)/plural.y \
-	&& sed -e 's|".*/plural.y"|"plural.y"|' < plural.c > plural.c-tmp \
-	&& rm -f plural.c plural.h \
-	&& mv plural.c-tmp $(srcdir)/plural.c
+	&& test ':' = '$(BISON)' || { \
+	  sed -e 's|".*/plural.y"|"plural.y"|' < plural.c > plural.c-tmp \
+	  && rm -f plural.c plural.h \
+	  && mv plural.c-tmp $(srcdir)/plural.c; \
+	}
 
 # Rules for compiling a .c file, that work even without a VPATH variable.
 bindtextdom.lo: $(srcdir)/bindtextdom.c

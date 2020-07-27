@@ -44,6 +44,7 @@ AC_DEFUN([grgl_EARLY],
   AC_REQUIRE([AM_PROG_CC_C_O])
   # Code from module btowc:
   # Code from module builtin-expect:
+  # Code from module c99:
   # Code from module intprops:
   # Code from module langinfo:
   # Code from module libc-config:
@@ -55,6 +56,7 @@ AC_DEFUN([grgl_EARLY],
   # Code from module regex:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
+  # Code from module std-gnu11:
   # Code from module threadlib:
   gl_THREADLIB_EARLY
   # Code from module wcrtomb:
@@ -307,6 +309,7 @@ AC_DEFUN([grgl_FILE_LIST], [
   m4/nl_langinfo.m4
   m4/pthread_rwlock_rdlock.m4
   m4/regex.m4
+  m4/std-gnu11.m4
   m4/threadlib.m4
   m4/warn-on-use.m4
   m4/wcrtomb.m4

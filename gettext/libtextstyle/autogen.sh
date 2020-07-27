@@ -88,16 +88,18 @@ if test $skip_gnulib = false; then
     filename
     isatty
     largefile
+    vasprintf-posix
     xalloc
     xconcat-filename
 
+    memory-ostream-tests
     term-ostream-tests
   '
   $GNULIB_TOOL --lib=libtextstyle --source-base=lib --m4-base=gnulib-m4 --tests-base=tests \
     --macro-prefix=lts \
     --makefile-name=Makefile.gnulib --libtool \
     --local-dir=gnulib-local --local-dir=../gnulib-local \
-    --import --avoid=hash-tests $GNULIB_MODULES
+    --import $GNULIB_MODULES
   $GNULIB_TOOL --copy-file build-aux/config.guess; chmod a+x build-aux/config.guess
   $GNULIB_TOOL --copy-file build-aux/config.sub;   chmod a+x build-aux/config.sub
   $GNULIB_TOOL --copy-file build-aux/declared.sh lib/declared.sh; chmod a+x lib/declared.sh

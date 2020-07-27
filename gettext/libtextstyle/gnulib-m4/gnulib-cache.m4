@@ -38,7 +38,6 @@
 #  --no-conditional-dependencies \
 #  --libtool \
 #  --macro-prefix=lts \
-#  --avoid=hash-tests \
 #  fd-ostream \
 #  file-ostream \
 #  filename \
@@ -48,12 +47,14 @@
 #  isatty \
 #  largefile \
 #  memory-ostream \
+#  memory-ostream-tests \
 #  noop-styled-ostream \
 #  ostream \
 #  styled-ostream \
 #  term-ostream \
 #  term-ostream-tests \
 #  term-styled-ostream \
+#  vasprintf-posix \
 #  xalloc \
 #  xconcat-filename
 
@@ -69,16 +70,18 @@ gl_MODULES([
   isatty
   largefile
   memory-ostream
+  memory-ostream-tests
   noop-styled-ostream
   ostream
   styled-ostream
   term-ostream
   term-ostream-tests
   term-styled-ostream
+  vasprintf-posix
   xalloc
   xconcat-filename
 ])
-gl_AVOID([ hash-tests])
+gl_AVOID([])
 gl_SOURCE_BASE([lib])
 gl_M4_BASE([gnulib-m4])
 gl_PO_BASE([])

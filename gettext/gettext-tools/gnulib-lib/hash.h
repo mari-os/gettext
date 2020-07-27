@@ -1,4 +1,7 @@
-/* Copyright (C) 1995, 2000-2003, 2005-2006 Free Software Foundation, Inc.
+/* hash - hashing table processing.
+   Copyright (C) 1998-1999, 2001, 2003, 2009-2020 Free Software Foundation,
+   Inc.
+   Written by Jim Meyering <meyering@ascend.com>, 1998.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,78 +16,76 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _HASH_H
-#define _HASH_H
+/* A generic hash table package.  */
 
-#include "obstack.h"
+/* Make sure USE_OBSTACK is defined to 1 if you want the allocator to use
+   obstacks instead of malloc, and recompile 'hash.c' with same setting.  */
 
-#ifdef __cplusplus
-extern "C" {
+#ifndef HASH_H_
+# define HASH_H_
+
+# include <stdio.h>
+# include <stdbool.h>
+
+typedef size_t (*Hash_hasher) (const void *, size_t);
+typedef bool (*Hash_comparator) (const void *, const void *);
+typedef void (*Hash_data_freer) (void *);
+typedef bool (*Hash_processor) (void *, void *);
+
+struct hash_tuning
+  {
+    /* This structure is mainly used for 'hash_initialize', see the block
+       documentation of 'hash_reset_tuning' for more complete comments.  */
+
+    float shrink_threshold;     /* ratio of used buckets to trigger a shrink */
+    float shrink_factor;        /* ratio of new smaller size to original size */
+    float growth_threshold;     /* ratio of used buckets to trigger a growth */
+    float growth_factor;        /* ratio of new bigger size to original size */
+    bool is_n_buckets;          /* if CANDIDATE really means table size */
+  };
+
+typedef struct hash_tuning Hash_tuning;
+
+struct hash_table;
+
+typedef struct hash_table Hash_table;
+
+/* Information and lookup.  */
+size_t hash_get_n_buckets (const Hash_table *) _GL_ATTRIBUTE_PURE;
+size_t hash_get_n_buckets_used (const Hash_table *) _GL_ATTRIBUTE_PURE;
+size_t hash_get_n_entries (const Hash_table *) _GL_ATTRIBUTE_PURE;
+size_t hash_get_max_bucket_length (const Hash_table *) _GL_ATTRIBUTE_PURE;
+bool hash_table_ok (const Hash_table *) _GL_ATTRIBUTE_PURE;
+void hash_print_statistics (const Hash_table *, FILE *);
+void *hash_lookup (const Hash_table *, const void *);
+
+/* Walking.  */
+void *hash_get_first (const Hash_table *) _GL_ATTRIBUTE_PURE;
+void *hash_get_next (const Hash_table *, const void *);
+size_t hash_get_entries (const Hash_table *, void **, size_t);
+size_t hash_do_for_each (const Hash_table *, Hash_processor, void *);
+
+/* Allocation and clean-up.  */
+#if 0
+size_t hash_string (const char *, size_t) _GL_ATTRIBUTE_PURE;
 #endif
+void hash_reset_tuning (Hash_tuning *);
+Hash_table *hash_initialize (size_t, const Hash_tuning *,
+                             Hash_hasher, Hash_comparator,
+                             Hash_data_freer) _GL_ATTRIBUTE_NODISCARD;
+Hash_table *hash_xinitialize (size_t, const Hash_tuning *,
+                              Hash_hasher, Hash_comparator,
+                              Hash_data_freer) _GL_ATTRIBUTE_NODISCARD;
+void hash_clear (Hash_table *);
+void hash_free (Hash_table *);
 
-struct hash_entry;
+/* Insertion and deletion.  */
+bool hash_rehash (Hash_table *, size_t) _GL_ATTRIBUTE_NODISCARD;
+void *hash_insert (Hash_table *, const void *) _GL_ATTRIBUTE_NODISCARD;
+void *hash_xinsert (Hash_table *, const void *);
 
-typedef struct hash_table
-{
-  unsigned long int size;   /* Number of allocated entries.  */
-  unsigned long int filled; /* Number of used entries.  */
-  struct hash_entry *first; /* Pointer to head of list of entries.  */
-  struct hash_entry *table; /* Pointer to array of entries.  */
-  struct obstack mem_pool;  /* Memory pool holding the keys.  */
-}
-hash_table;
+int hash_insert_if_absent (Hash_table *table, const void *entry,
+                           const void **matched_ent);
+void *hash_delete (Hash_table *, const void *);
 
-/* Initialize a hash table.  INIT_SIZE > 1 is the initial number of available
-   entries.
-   Return 0 upon successful completion, -1 upon memory allocation error.  */
-extern int hash_init (hash_table *htab, unsigned long int init_size);
-
-/* Delete a hash table's contents.
-   Return 0 always.  */
-extern int hash_destroy (hash_table *htab);
-
-/* Look up the value of a key in the given table.
-   If found, return 0 and set *RESULT to it.  Otherwise return -1.  */
-extern int hash_find_entry (hash_table *htab,
-                            const void *key, size_t keylen,
-                            void **result);
-
-/* Try to insert the pair (KEY[0..KEYLEN-1], DATA) in the hash table.
-   Return non-NULL (more precisely, the address of the KEY inside the table's
-   memory pool) if successful, or NULL if there is already an entry with the
-   given key.  */
-extern const void * hash_insert_entry (hash_table *htab,
-                                       const void *key, size_t keylen,
-                                       void *data);
-
-/* Insert the pair (KEY[0..KEYLEN-1], DATA) in the hash table.
-   Return 0.  */
-extern int hash_set_value (hash_table *htab,
-                           const void *key, size_t keylen,
-                           void *data);
-
-/* Steps *PTR forward to the next used entry in the given hash table.  *PTR
-   should be initially set to NULL.  Store information about the next entry
-   in *KEY, *KEYLEN, *DATA.
-   Return 0 normally, -1 when the whole hash table has been traversed.  */
-extern int hash_iterate (hash_table *htab, void **ptr,
-                         const void **key, size_t *keylen,
-                         void **data);
-
-/* Steps *PTR forward to the next used entry in the given hash table.  *PTR
-   should be initially set to NULL.  Store information about the next entry
-   in *KEY, *KEYLEN, *DATAP.  *DATAP is set to point to the storage of the
-   value; modifying **DATAP will modify the value of the entry.
-   Return 0 normally, -1 when the whole hash table has been traversed.  */
-extern int hash_iterate_modify (hash_table *htab, void **ptr,
-                                const void **key, size_t *keylen,
-                                void ***datap);
-
-/* Given SEED > 1, return the smallest odd prime number >= SEED.  */
-extern unsigned long int next_prime (unsigned long int seed);
-
-#ifdef __cplusplus
-}
 #endif
-
-#endif /* not _HASH_H */

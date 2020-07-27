@@ -54,12 +54,13 @@
 /* Get BINDIR.  */
 #include "configmake.h"
 
+#include "noreturn.h"
 #include "closeout.h"
 #include "error.h"
 #include "error-progname.h"
 #include "progname.h"
 #include "relocatable.h"
-#include "basename.h"
+#include "basename-lgpl.h"
 #include "c-strstr.h"
 #include "c-strcase.h"
 #include "message.h"
@@ -136,11 +137,7 @@ static const struct option long_options[] =
 };
 
 /* Forward declaration of local functions.  */
-static void usage (int status)
-#if defined __GNUC__ && ((__GNUC__ == 2 && __GNUC_MINOR__ >= 5) || __GNUC__ > 2)
-     __attribute__ ((noreturn))
-#endif
-;
+_GL_NORETURN_FUNC static void usage (int status);
 static const char *find_pot (void);
 static const char *catalogname_for_locale (const char *locale);
 static const char *language_of_locale (const char *locale);
@@ -266,7 +263,8 @@ main (int argc, char **argv)
   /* Version information is requested.  */
   if (do_version)
     {
-      printf ("%s (GNU %s) %s\n", basename (program_name), PACKAGE, VERSION);
+      printf ("%s (GNU %s) %s\n", last_component (program_name),
+              PACKAGE, VERSION);
       /* xgettext: no-wrap */
       printf (_("Copyright (C) %s Free Software Foundation, Inc.\n\
 License GPLv3+: GNU GPL version 3 or later <%s>\n\
@@ -577,6 +575,7 @@ catalogname_for_locale (const char *locale)
     "bem_ZM",   /* Bemba        Zambia */
     "bg_BG",    /* Bulgarian    Bulgaria */
     "bho_IN",   /* Bhojpuri     India */
+    "bi_VU",    /* Bislama      Vanuatu */
     "bik_PH",   /* Bikol        Philippines */
     "bin_NG",   /* Bini         Nigeria */
     "bm_ML",    /* Bambara      Mali */
@@ -655,6 +654,7 @@ catalogname_for_locale (const char *locale)
     "kok_IN",   /* Konkani      India */
     "kr_NG",    /* Kanuri       Nigeria */
     "kru_IN",   /* Kurukh       India */
+    "ky_KG",    /* Kyrgyz       Kyrgyzstan */
     "lg_UG",    /* Ganda        Uganda */
     "li_BE",    /* Limburgish   Belgium */
     "lo_LA",    /* Laotian      Laos */
@@ -669,10 +669,11 @@ catalogname_for_locale (const char *locale)
     "mak_ID",   /* Makasar      Indonesia */
     "man_ML",   /* Mandingo     Mali */
     "men_SL",   /* Mende        Sierra Leone */
+    "mfe_MU",   /* Mauritian Creole     Mauritius */
     "mg_MG",    /* Malagasy     Madagascar */
     "mi_NZ",    /* Maori        New Zealand */
     "min_ID",   /* Minangkabau  Indonesia */
-    "mk_MK",    /* Macedonian   Macedonia */
+    "mk_MK",    /* Macedonian   North Macedonia */
     "ml_IN",    /* Malayalam    India */
     "mn_MN",    /* Mongolian    Mongolia */
     "mni_IN",   /* Manipuri     India */
@@ -693,6 +694,7 @@ catalogname_for_locale (const char *locale)
     "no_NO",    /* Norwegian    Norway */
     "nr_ZA",    /* South Ndebele        South Africa */
     "nso_ZA",   /* Northern Sotho       South Africa */
+    "ny_MW",    /* Chichewa     Malawi */
     "nym_TZ",   /* Nyamwezi     Tanzania */
     "nyn_UG",   /* Nyankole     Uganda */
     "oc_FR",    /* Occitan      France */
@@ -711,6 +713,7 @@ catalogname_for_locale (const char *locale)
     "rn_BI",    /* Kirundi      Burundi */
     "ro_RO",    /* Romanian     Romania */
     "ru_RU",    /* Russian      Russia */
+    "rw_RW",    /* Kinyarwanda  Rwanda */
     "sa_IN",    /* Sanskrit     India */
     "sah_RU",   /* Yakut        Russia */
     "sas_ID",   /* Sasak        Indonesia */
@@ -741,6 +744,7 @@ catalogname_for_locale (const char *locale)
     "tk_TM",    /* Turkmen      Turkmenistan */
     "tl_PH",    /* Tagalog      Philippines */
     "to_TO",    /* Tonga        Tonga */
+    "tpi_PG",   /* Tok Pisin    Papua New Guinea */
     "tr_TR",    /* Turkish      Turkey */
     "tum_MW",   /* Tumbuka      Malawi */
     "ug_CN",    /* Uighur       China */

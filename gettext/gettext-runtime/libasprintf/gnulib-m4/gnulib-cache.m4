@@ -40,6 +40,7 @@
 #  --libtool \
 #  --macro-prefix=gl \
 #  alloca \
+#  attribute \
 #  errno \
 #  verify \
 #  xsize
@@ -48,6 +49,7 @@
 gl_LOCAL_DIR([../../gnulib-local])
 gl_MODULES([
   alloca
+  attribute
   errno
   verify
   xsize

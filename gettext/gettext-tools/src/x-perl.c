@@ -1,5 +1,5 @@
 /* xgettext Perl backend.
-   Copyright (C) 2002-2010, 2013, 2016, 2018-2019 Free Software Foundation, Inc.
+   Copyright (C) 2002-2010, 2013, 2016, 2018-2020 Free Software Foundation, Inc.
 
    This file was written by Guido Flohr <guido@imperia.net>, 2002-2010.
 
@@ -218,15 +218,14 @@ static FILE *fp;
 
 /* The current line buffer.  */
 static char *linebuf;
+/* The size of the input buffer.  */
+static size_t linebuf_size;
 
 /* The size of the current line.  */
 static int linesize;
 
 /* The position in the current line.  */
 static int linepos;
-
-/* The size of the input buffer.  */
-static size_t linebuf_size;
 
 /* Number of lines eaten for here documents.  */
 static int eaten_here;
@@ -1590,8 +1589,8 @@ extract_variable (message_list_ty *mlp, token_ty *tp, int first)
                         pos.file_name = logical_file_name;
 
                         remember_a_message (mlp, NULL, xstrdup (t1->string),
-                                            true, context, &pos, NULL,
-                                            savable_comment, true);
+                                            true, false, context, &pos,
+                                            NULL, savable_comment, true);
                         free_token (t2);
                         free_token (t1);
                       }
@@ -2018,8 +2017,8 @@ interpolate_keywords (message_list_ty *mlp, const char *string, int lineno)
               buffer[bufpos] = '\0';
               token.string = xstrdup (buffer);
               extract_quotelike_pass3 (&token, EXIT_FAILURE);
-              remember_a_message (mlp, NULL, token.string, true, context, &pos,
-                                  NULL, savable_comment, true);
+              remember_a_message (mlp, NULL, token.string, true, false, context,
+                                  &pos, NULL, savable_comment, true);
               /* FALLTHROUGH */
             default:
               context = null_context;
@@ -3304,8 +3303,8 @@ extract_balanced (message_list_ty *mlp,
 
               pos.file_name = logical_file_name;
               pos.line_number = tp->line_number;
-              remember_a_message (mlp, NULL, string, true, inner_context, &pos,
-                                  NULL, tp->comment, true);
+              remember_a_message (mlp, NULL, string, true, false, inner_context,
+                                  &pos, NULL, tp->comment, true);
             }
           else if (!skip_until_comma)
             {
@@ -3553,23 +3552,24 @@ extract_perl (FILE *f, const char *real_filename, const char *logical_filename,
   logical_file_name = xstrdup (logical_filename);
   line_number = 0;
 
-  last_comment_line = -1;
-  last_non_comment_line = -1;
-
-  flag_context_list_table = flag_table;
-
-  init_keywords ();
-
-  token_stack.items = NULL;
-  token_stack.nitems = 0;
-  token_stack.nitems_max = 0;
   linesize = 0;
   linepos = 0;
   eaten_here = 0;
   end_of_file = false;
 
+  last_comment_line = -1;
+  last_non_comment_line = -1;
+
+  flag_context_list_table = flag_table;
+
   /* Safe assumption.  */
   last_token_type = token_type_semicolon;
+
+  token_stack.items = NULL;
+  token_stack.nitems = 0;
+  token_stack.nitems_max = 0;
+
+  init_keywords ();
 
   /* Eat tokens until eof is seen.  When extract_balanced returns
      due to an unbalanced closing brace, just restart it.  */

@@ -49,25 +49,34 @@ AC_DEFUN([gl_EARLY],
   # Code from module ansi-c++-opt:
   # Code from module areadlink:
   # Code from module atexit:
-  # Code from module basename:
+  # Code from module attribute:
+  # Code from module basename-lgpl:
   # Code from module binary-io:
+  # Code from module bison:
   # Code from module c-ctype:
   # Code from module c-strcase:
+  # Code from module c99:
   # Code from module canonicalize-lgpl:
   # Code from module careadlinkat:
+  # Code from module cloexec:
+  # Code from module close:
   # Code from module closeout:
   # Code from module csharpcomp-script:
-  # Code from module dirname-lgpl:
   # Code from module double-slash-root:
+  # Code from module dup2:
   # Code from module environ:
   # Code from module errno:
   # Code from module error:
   # Code from module extensions:
   # Code from module extern-inline:
+  # Code from module fcntl:
   # Code from module fcntl-h:
+  # Code from module fd-hook:
   # Code from module filename:
   # Code from module flexmember:
+  # Code from module fstat:
   # Code from module fwriteerror:
+  # Code from module getdtablesize:
   # Code from module getopt-gnu:
   # Code from module getopt-posix:
   # Code from module getprogname:
@@ -97,7 +106,6 @@ AC_DEFUN([gl_EARLY],
   # Code from module localename:
   # Code from module lock:
   # Code from module lstat:
-  # Code from module malloc-posix:
   # Code from module malloca:
   # Code from module mbchar:
   # Code from module mbiter:
@@ -112,6 +120,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module msvc-nothrow:
   # Code from module multiarch:
   # Code from module nocrash:
+  # Code from module noreturn:
+  # Code from module open:
   # Code from module pathmax:
   # Code from module progname:
   # Code from module propername:
@@ -133,6 +143,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module ssize_t:
   # Code from module stat:
   # Code from module stat-time:
+  # Code from module std-gnu11:
   # Code from module stdbool:
   # Code from module stddef:
   # Code from module stdint:
@@ -197,6 +208,7 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([atexit])
     gl_PREREQ_ATEXIT
   fi
+  # See the comments in bison.m4.
   gl_CANONICALIZE_LGPL
   if test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1; then
     AC_LIBOBJ([canonicalize-lgpl])
@@ -206,10 +218,21 @@ AC_DEFUN([gl_INIT],
   gl_STDLIB_MODULE_INDICATOR([realpath])
   AC_REQUIRE([AC_C_RESTRICT])
   AC_CHECK_FUNCS_ONCE([readlinkat])
+  gl_MODULE_INDICATOR_FOR_TESTS([cloexec])
+  gl_FUNC_CLOSE
+  if test $REPLACE_CLOSE = 1; then
+    AC_LIBOBJ([close])
+  fi
+  gl_UNISTD_MODULE_INDICATOR([close])
   AC_REQUIRE([gt_CSHARPCOMP])
   AC_CONFIG_FILES([csharpcomp.sh:../build-aux/csharpcomp.sh.in])
-  gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
+  gl_FUNC_DUP2
+  if test $REPLACE_DUP2 = 1; then
+    AC_LIBOBJ([dup2])
+    gl_PREREQ_DUP2
+  fi
+  gl_UNISTD_MODULE_INDICATOR([dup2])
   gl_ENVIRON
   gl_UNISTD_MODULE_INDICATOR([environ])
   gl_HEADER_ERRNO_H
@@ -222,9 +245,31 @@ AC_DEFUN([gl_INIT],
     [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
      AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
   AC_REQUIRE([gl_EXTERN_INLINE])
+  gl_FUNC_FCNTL
+  if test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1; then
+    AC_LIBOBJ([fcntl])
+  fi
+  gl_FCNTL_MODULE_INDICATOR([fcntl])
   gl_FCNTL_H
   AC_C_FLEXIBLE_ARRAY_MEMBER
+  gl_FUNC_FSTAT
+  if test $REPLACE_FSTAT = 1; then
+    AC_LIBOBJ([fstat])
+    case "$host_os" in
+      mingw*)
+        AC_LIBOBJ([stat-w32])
+        ;;
+    esac
+    gl_PREREQ_FSTAT
+  fi
+  gl_SYS_STAT_MODULE_INDICATOR([fstat])
   gl_MODULE_INDICATOR([fwriteerror])
+  gl_FUNC_GETDTABLESIZE
+  if test $HAVE_GETDTABLESIZE = 0 || test $REPLACE_GETDTABLESIZE = 1; then
+    AC_LIBOBJ([getdtablesize])
+    gl_PREREQ_GETDTABLESIZE
+  fi
+  gl_UNISTD_MODULE_INDICATOR([getdtablesize])
   gl_FUNC_GETOPT_GNU
   dnl Because of the way gl_FUNC_GETOPT_GNU is implemented (the gl_getopt_required
   dnl mechanism), there is no need to do any AC_LIBOBJ or AC_SUBST here; they are
@@ -306,11 +351,6 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_LSTAT
   fi
   gl_SYS_STAT_MODULE_INDICATOR([lstat])
-  gl_FUNC_MALLOC_POSIX
-  if test $REPLACE_MALLOC = 1; then
-    AC_LIBOBJ([malloc])
-  fi
-  gl_STDLIB_MODULE_INDICATOR([malloc-posix])
   gl_MALLOCA
   gl_MBCHAR
   gl_MBITER
@@ -336,7 +376,7 @@ AC_DEFUN([gl_INIT],
   gl_STRING_MODULE_INDICATOR([mbsstr])
   gl_MBITER
   gl_FUNC_MEMCHR
-  if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
+  if test $REPLACE_MEMCHR = 1; then
     AC_LIBOBJ([memchr])
     gl_PREREQ_MEMCHR
   fi
@@ -356,6 +396,12 @@ AC_DEFUN([gl_INIT],
   fi
   gl_MODULE_INDICATOR([msvc-nothrow])
   gl_MULTIARCH
+  gl_FUNC_OPEN
+  if test $REPLACE_OPEN = 1; then
+    AC_LIBOBJ([open])
+    gl_PREREQ_OPEN
+  fi
+  gl_FCNTL_MODULE_INDICATOR([open])
   gl_PATHMAX
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
@@ -511,6 +557,7 @@ AC_DEFUN([gl_INIT],
       AC_LIBOBJ([windows-rwlock])
       ;;
   esac
+  AC_REQUIRE([AC_C_INLINE])
   # End of code from modules
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
@@ -667,9 +714,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/areadlink.h
   lib/arg-nonnull.h
   lib/atexit.c
+  lib/attribute.h
   lib/basename-lgpl.c
-  lib/basename.c
-  lib/basename.h
+  lib/basename-lgpl.h
   lib/binary-io.c
   lib/binary-io.h
   lib/c++defs.h
@@ -681,18 +728,25 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/canonicalize-lgpl.c
   lib/careadlinkat.c
   lib/careadlinkat.h
+  lib/cloexec.c
+  lib/cloexec.h
+  lib/close.c
   lib/closeout.c
   lib/closeout.h
-  lib/dirname-lgpl.c
-  lib/dirname.h
+  lib/dup2.c
   lib/errno.in.h
   lib/error.c
   lib/error.h
+  lib/fcntl.c
   lib/fcntl.in.h
+  lib/fd-hook.c
+  lib/fd-hook.h
   lib/filename.h
   lib/flexmember.h
+  lib/fstat.c
   lib/fwriteerror.c
   lib/fwriteerror.h
+  lib/getdtablesize.c
   lib/getopt-cdefs.in.h
   lib/getopt-core.h
   lib/getopt-ext.h
@@ -737,7 +791,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/localename.c
   lib/localename.h
   lib/lstat.c
-  lib/malloc.c
   lib/malloca.c
   lib/malloca.h
   lib/mbchar.c
@@ -761,6 +814,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/msvc-inval.h
   lib/msvc-nothrow.c
   lib/msvc-nothrow.h
+  lib/noreturn.h
+  lib/open.c
   lib/pathmax.h
   lib/progname.c
   lib/progname.h
@@ -798,7 +853,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/striconv.c
   lib/striconv.h
   lib/string.in.h
-  lib/stripslash.c
   lib/strnlen.c
   lib/strnlen1.c
   lib/strnlen1.h
@@ -850,12 +904,14 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ansi-c++.m4
   m4/asm-underscore.m4
   m4/atexit.m4
+  m4/bison.m4
   m4/canonicalize.m4
+  m4/close.m4
   m4/codeset.m4
   m4/csharp.m4
   m4/csharpcomp.m4
-  m4/dirname.m4
   m4/double-slash-root.m4
+  m4/dup2.m4
   m4/eealloc.m4
   m4/environ.m4
   m4/errno_h.m4
@@ -863,8 +919,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/extensions.m4
   m4/extern-inline.m4
   m4/fcntl-o.m4
+  m4/fcntl.m4
   m4/fcntl_h.m4
   m4/flexmember.m4
+  m4/fstat.m4
+  m4/getdtablesize.m4
   m4/getopt.m4
   m4/getprogname.m4
   m4/gnulib-common.m4
@@ -898,7 +957,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/localename.m4
   m4/lock.m4
   m4/lstat.m4
-  m4/malloc.m4
   m4/malloca.m4
   m4/mbchar.m4
   m4/mbiter.m4
@@ -909,11 +967,15 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/memchr.m4
   m4/memmove.m4
   m4/mmap-anon.m4
+  m4/mode_t.m4
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
   m4/nocrash.m4
   m4/off_t.m4
+  m4/open-cloexec.m4
+  m4/open-slash.m4
+  m4/open.m4
   m4/pathmax.m4
   m4/pthread_rwlock_rdlock.m4
   m4/raise.m4
@@ -929,6 +991,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ssize_t.m4
   m4/stat-time.m4
   m4/stat.m4
+  m4/std-gnu11.m4
   m4/stdbool.m4
   m4/stddef_h.m4
   m4/stdint.m4

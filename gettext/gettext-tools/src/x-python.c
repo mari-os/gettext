@@ -1,5 +1,5 @@
 /* xgettext Python backend.
-   Copyright (C) 2002-2003, 2005-2011, 2013-2014, 2018-2019 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2011, 2013-2014, 2018-2020 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
@@ -43,7 +43,7 @@
 #include "error.h"
 #include "error-progname.h"
 #include "progname.h"
-#include "basename.h"
+#include "basename-lgpl.h"
 #include "xerror.h"
 #include "xvasprintf.h"
 #include "xalloc.h"
@@ -623,13 +623,13 @@ set_current_file_source_encoding (const char *canon_encoding)
         error_at_line (EXIT_FAILURE, 0, logical_file_name, line_number - 1,
                        _("Cannot convert from \"%s\" to \"%s\". %s relies on iconv(), and iconv() does not support this conversion."),
                        xgettext_current_file_source_encoding, po_charset_utf8,
-                       basename (program_name));
+                       last_component (program_name));
       xgettext_current_file_source_iconv = cd;
 #else
       error_at_line (EXIT_FAILURE, 0, logical_file_name, line_number - 1,
                      _("Cannot convert from \"%s\" to \"%s\". %s relies on iconv(). This version was built without iconv()."),
                      xgettext_current_file_source_encoding, po_charset_utf8,
-                     basename (program_name));
+                     last_component (program_name));
 #endif
     }
 
@@ -695,7 +695,7 @@ try_to_extract_coding (const char *comment)
 
 /* Tracking whether the current line is a continuation line or contains a
    non-blank character.  */
-static bool continuation_or_nonblank_line = false;
+static bool continuation_or_nonblank_line;
 
 
 /* Phase 3: Outside strings, replace backslash-newline with nothing and a
@@ -1648,8 +1648,9 @@ extract_balanced (message_list_ty *mlp,
               {
                 char *string = mixed_string_contents (token.mixed_string);
                 mixed_string_free (token.mixed_string);
-                remember_a_message (mlp, NULL, string, true, inner_context,
-                                    &pos, NULL, token.comment, true);
+                remember_a_message (mlp, NULL, string, true, false,
+                                    inner_context, &pos,
+                                    NULL, token.comment, true);
               }
             else
               arglist_parser_remember (argparser, arg, token.mixed_string,
@@ -1692,7 +1693,11 @@ extract_python (FILE *f,
   logical_file_name = xstrdup (logical_filename);
   line_number = 1;
 
+  phase1_pushback_length = 0;
+
   lexical_context = lc_outside;
+
+  phase2_pushback_length = 0;
 
   last_comment_line = -1;
   last_non_comment_line = -1;
@@ -1714,6 +1719,8 @@ extract_python (FILE *f,
   continuation_or_nonblank_line = false;
 
   open_pbb = 0;
+
+  phase5_pushback_length = 0;
 
   flag_context_list_table = flag_table;
 

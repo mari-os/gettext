@@ -34,9 +34,6 @@
 #  --no-conditional-dependencies \
 #  --libtool \
 #  --macro-prefix=gl \
-#  --avoid=array-list-tests \
-#  --avoid=linkedhash-list-tests \
-#  --avoid=hash-tests \
 #  --avoid=fdutimensat-tests \
 #  --avoid=futimens-tests \
 #  --avoid=utime-tests \
@@ -51,8 +48,9 @@
 #  ansi-c++-opt \
 #  atexit \
 #  backupfile \
-#  basename \
+#  basename-lgpl \
 #  binary-io \
+#  bison \
 #  bison-i18n \
 #  byteswap \
 #  c-ctype \
@@ -85,7 +83,6 @@
 #  gettext \
 #  gettext-h \
 #  gettext-tools-misc \
-#  hash \
 #  iconv \
 #  include_next \
 #  java \
@@ -103,12 +100,14 @@
 #  malloc-posix \
 #  mbrtowc \
 #  mbsinit \
+#  mem-hash-map \
 #  memchr \
 #  memmove \
 #  memset \
 #  minmax \
 #  mkdir \
 #  multiarch \
+#  noreturn \
 #  obstack \
 #  open \
 #  opendir \
@@ -145,11 +144,13 @@
 #  strpbrk \
 #  strtol \
 #  strtoul \
+#  supersede \
 #  sys_select \
 #  sys_stat \
 #  sys_time \
 #  trim \
 #  unictype/ctype-space \
+#  unictype/syntax-java-whitespace \
 #  unilbrk/ulc-width-linebreaks \
 #  uniname/uniname \
 #  unistd \
@@ -199,6 +200,7 @@ libgettextlib_la_LDFLAGS += $(ISNANL_LIBM)
 libgettextlib_la_LDFLAGS += $(LIBTHREAD)
 libgettextlib_la_LDFLAGS += $(LIB_ACL)
 libgettextlib_la_LDFLAGS += $(LIB_CLOCK_GETTIME)
+libgettextlib_la_LDFLAGS += $(LIB_GETRANDOM)
 libgettextlib_la_LDFLAGS += $(LIB_HARD_LOCALE)
 libgettextlib_la_LDFLAGS += $(LIB_MBRTOWC)
 libgettextlib_la_LDFLAGS += $(LIB_SETLOCALE)
@@ -227,12 +229,6 @@ EXTRA_DIST += access.c
 EXTRA_libgettextlib_la_SOURCES += access.c
 
 ## end   gnulib module access
-
-## begin gnulib module acl
-
-libgettextlib_la_SOURCES += copy-acl.c set-acl.c
-
-## end   gnulib module acl
 
 ## begin gnulib module acl-permissions
 
@@ -290,6 +286,14 @@ EXTRA_DIST += areadlink.h
 
 ## end   gnulib module areadlink
 
+## begin gnulib module areadlink-with-size
+
+libgettextlib_la_SOURCES += areadlink-with-size.c
+
+EXTRA_DIST += areadlink.h
+
+## end   gnulib module areadlink-with-size
+
 ## begin gnulib module argmatch
 
 libgettextlib_la_SOURCES += argmatch.c
@@ -297,6 +301,14 @@ libgettextlib_la_SOURCES += argmatch.c
 EXTRA_DIST += argmatch.h
 
 ## end   gnulib module argmatch
+
+## begin gnulib module asyncsafe-spin
+
+libgettextlib_la_SOURCES += asyncsafe-spin.c
+
+EXTRA_DIST += asyncsafe-spin.h
+
+## end   gnulib module asyncsafe-spin
 
 ## begin gnulib module atexit
 
@@ -307,23 +319,53 @@ EXTRA_libgettextlib_la_SOURCES += atexit.c
 
 ## end   gnulib module atexit
 
+## begin gnulib module attribute
+
+
+EXTRA_DIST += attribute.h
+
+## end   gnulib module attribute
+
 ## begin gnulib module backupfile
 
 libgettextlib_la_SOURCES += backupfile.h backupfile.c addext.c
 
 ## end   gnulib module backupfile
 
-## begin gnulib module basename
+## begin gnulib module basename-lgpl
 
-libgettextlib_la_SOURCES += basename.h basename.c
+libgettextlib_la_SOURCES += basename-lgpl.c
 
-## end   gnulib module basename
+EXTRA_DIST += basename-lgpl.h
+
+## end   gnulib module basename-lgpl
 
 ## begin gnulib module binary-io
 
 libgettextlib_la_SOURCES += binary-io.h binary-io.c
 
 ## end   gnulib module binary-io
+
+## begin gnulib module bison
+
+# See the comments in bison.m4.
+
+## end   gnulib module bison
+
+## begin gnulib module bitrotate
+
+libgettextlib_la_SOURCES += bitrotate.h bitrotate.c
+
+## end   gnulib module bitrotate
+
+## begin gnulib module btowc
+
+
+EXTRA_DIST += btowc.c
+
+EXTRA_libgettextlib_la_SOURCES += btowc.c
+
+## end   gnulib module btowc
 
 ## begin gnulib module byteswap
 
@@ -380,6 +422,14 @@ EXTRA_DIST += str-two-way.h
 libgettextlib_la_SOURCES += c-strstr.h c-strstr.c
 
 ## end   gnulib module c-strstr
+
+## begin gnulib module canonicalize
+
+libgettextlib_la_SOURCES += canonicalize.c
+
+EXTRA_DIST += canonicalize.h
+
+## end   gnulib module canonicalize
 
 ## begin gnulib module canonicalize-lgpl
 
@@ -544,6 +594,33 @@ EXTRA_DIST += $(top_srcdir)/../build-aux/csharpexec.sh.in
 
 ## end   gnulib module csharpexec-script
 
+## begin gnulib module ctype
+
+BUILT_SOURCES += ctype.h
+
+# We need the following in order to create <ctype.h> when the system
+# doesn't have one that works with the given compiler.
+ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_CTYPE_H''@|$(NEXT_CTYPE_H)|g' \
+	      -e 's/@''GNULIB_ISBLANK''@/$(GNULIB_ISBLANK)/g' \
+	      -e 's/@''HAVE_ISBLANK''@/$(HAVE_ISBLANK)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/ctype.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += ctype.h ctype.h-t
+
+EXTRA_DIST += ctype.in.h
+
+## end   gnulib module ctype
+
 ## begin gnulib module diffseq
 
 libgettextlib_la_SOURCES += diffseq.h
@@ -609,7 +686,7 @@ EXTRA_libgettextlib_la_SOURCES += dirfd.c
 
 ## begin gnulib module dirname-lgpl
 
-libgettextlib_la_SOURCES += dirname-lgpl.c basename-lgpl.c stripslash.c
+libgettextlib_la_SOURCES += dirname-lgpl.c stripslash.c
 
 EXTRA_DIST += dirname.h
 
@@ -687,6 +764,15 @@ EXTRA_DIST += exitfail.h
 
 ## end   gnulib module exitfail
 
+## begin gnulib module explicit_bzero
+
+
+EXTRA_DIST += explicit_bzero.c
+
+EXTRA_libgettextlib_la_SOURCES += explicit_bzero.c
+
+## end   gnulib module explicit_bzero
+
 ## begin gnulib module fatal-signal
 
 libgettextlib_la_SOURCES += fatal-signal.h fatal-signal.c
@@ -752,6 +838,23 @@ EXTRA_DIST += fd-hook.h
 libgettextlib_la_SOURCES += fd-safer-flag.c dup-safer-flag.c
 
 ## end   gnulib module fd-safer-flag
+
+## begin gnulib module fdopen
+
+
+EXTRA_DIST += fdopen.c
+
+EXTRA_libgettextlib_la_SOURCES += fdopen.c
+
+## end   gnulib module fdopen
+
+## begin gnulib module file-set
+
+libgettextlib_la_SOURCES += file-set.c
+
+EXTRA_DIST += file-set.h
+
+## end   gnulib module file-set
 
 ## begin gnulib module filename
 
@@ -976,6 +1079,15 @@ libgettextlib_la_SOURCES += getprogname.h getprogname.c
 
 ## end   gnulib module getprogname
 
+## begin gnulib module getrandom
+
+
+EXTRA_DIST += getrandom.c
+
+EXTRA_libgettextlib_la_SOURCES += getrandom.c
+
+## end   gnulib module getrandom
+
 ## begin gnulib module gettext
 
 # If your project uses "gettextize --intl" to put a source-code
@@ -1067,9 +1179,25 @@ EXTRA_DIST += hard-locale.h
 
 ## begin gnulib module hash
 
-libgettextlib_la_SOURCES += hash.h hash.c
+libgettextlib_la_SOURCES += hash.c
+
+EXTRA_DIST += hash.h
 
 ## end   gnulib module hash
+
+## begin gnulib module hash-pjw
+
+libgettextlib_la_SOURCES += hash-pjw.h hash-pjw.c
+
+## end   gnulib module hash-pjw
+
+## begin gnulib module hash-triple-simple
+
+libgettextlib_la_SOURCES += hash-triple-simple.c
+
+EXTRA_DIST += hash-triple.h
+
+## end   gnulib module hash-triple-simple
 
 ## begin gnulib module havelib
 
@@ -1173,7 +1301,6 @@ inttypes.h: inttypes.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_INTTYPES_H''@|$(NEXT_INTTYPES_H)|g' \
-	      -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
 	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
 	      -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
 	      -e 's/@''GNULIB_IMAXABS''@/$(GNULIB_IMAXABS)/g' \
@@ -1202,6 +1329,15 @@ MOSTLYCLEANFILES += inttypes.h inttypes.h-t
 EXTRA_DIST += inttypes.in.h
 
 ## end   gnulib module inttypes-incomplete
+
+## begin gnulib module isblank
+
+
+EXTRA_DIST += isblank.c
+
+EXTRA_libgettextlib_la_SOURCES += isblank.c
+
+## end   gnulib module isblank
 
 ## begin gnulib module isinf
 
@@ -1362,6 +1498,13 @@ MOSTLYCLEANFILES += langinfo.h langinfo.h-t
 EXTRA_DIST += langinfo.in.h
 
 ## end   gnulib module langinfo
+
+## begin gnulib module libc-config
+
+
+EXTRA_DIST += cdefs.h libc-config.h
+
+## end   gnulib module libc-config
 
 ## begin gnulib module libunistring-optional
 
@@ -1849,6 +1992,12 @@ EXTRA_DIST += limits.in.h
 
 ## end   gnulib module limits-h
 
+## begin gnulib module linked-list
+
+libgettextlib_la_SOURCES += gl_linked_list.h gl_linked_list.c gl_anylinked_list1.h gl_anylinked_list2.h
+
+## end   gnulib module linked-list
+
 ## begin gnulib module linkedhash-list
 
 libgettextlib_la_SOURCES += gl_linkedhash_list.h gl_linkedhash_list.c gl_anyhash1.h gl_anyhash2.h gl_anyhash_primes.h gl_anylinked_list1.h gl_anylinked_list2.h
@@ -1926,15 +2075,6 @@ EXTRA_DIST += localtime.c
 EXTRA_libgettextlib_la_SOURCES += localtime.c
 
 ## end   gnulib module localtime
-
-## begin gnulib module localtime-buffer
-
-
-EXTRA_DIST += localtime-buffer.c localtime-buffer.h
-
-EXTRA_libgettextlib_la_SOURCES += localtime-buffer.c
-
-## end   gnulib module localtime-buffer
 
 ## begin gnulib module lock
 
@@ -2347,11 +2487,26 @@ libgettextlib_la_SOURCES += mbswidth.h mbswidth.c
 
 ## end   gnulib module mbswidth
 
+## begin gnulib module mbtowc
+
+
+EXTRA_DIST += mbtowc-impl.h mbtowc.c
+
+EXTRA_libgettextlib_la_SOURCES += mbtowc.c
+
+## end   gnulib module mbtowc
+
 ## begin gnulib module mbuiter
 
 libgettextlib_la_SOURCES += mbuiter.h mbuiter.c
 
 ## end   gnulib module mbuiter
+
+## begin gnulib module mem-hash-map
+
+libgettextlib_la_SOURCES += mem-hash-map.h mem-hash-map.c
+
+## end   gnulib module mem-hash-map
 
 ## begin gnulib module memchr
 
@@ -2370,6 +2525,15 @@ EXTRA_DIST += memmove.c
 EXTRA_libgettextlib_la_SOURCES += memmove.c
 
 ## end   gnulib module memmove
+
+## begin gnulib module mempcpy
+
+
+EXTRA_DIST += mempcpy.c
+
+EXTRA_libgettextlib_la_SOURCES += mempcpy.c
+
+## end   gnulib module mempcpy
 
 ## begin gnulib module memset
 
@@ -2421,6 +2585,13 @@ EXTRA_DIST += msvc-nothrow.c msvc-nothrow.h
 EXTRA_libgettextlib_la_SOURCES += msvc-nothrow.c
 
 ## end   gnulib module msvc-nothrow
+
+## begin gnulib module noreturn
+
+
+EXTRA_DIST += noreturn.h
+
+## end   gnulib module noreturn
 
 ## begin gnulib module obstack
 
@@ -2619,12 +2790,6 @@ libgettextlib_la_SOURCES += qcopy-acl.c
 
 ## end   gnulib module qcopy-acl
 
-## begin gnulib module qset-acl
-
-libgettextlib_la_SOURCES += qset-acl.c
-
-## end   gnulib module qset-acl
-
 ## begin gnulib module quote
 
 
@@ -2771,6 +2936,13 @@ EXTRA_DIST += safe-read.c safe-write.h sys-limits.h
 EXTRA_libgettextlib_la_SOURCES += safe-read.c
 
 ## end   gnulib module safe-write
+
+## begin gnulib module same-inode
+
+
+EXTRA_DIST += same-inode.h
+
+## end   gnulib module same-inode
 
 ## begin gnulib module sched
 
@@ -3607,7 +3779,6 @@ string.h: string.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FFSL''@|$(HAVE_FFSL)|g' \
 	      -e 's|@''HAVE_FFSLL''@|$(HAVE_FFSLL)|g' \
 	      -e 's|@''HAVE_MBSLEN''@|$(HAVE_MBSLEN)|g' \
-	      -e 's|@''HAVE_MEMCHR''@|$(HAVE_MEMCHR)|g' \
 	      -e 's|@''HAVE_DECL_MEMMEM''@|$(HAVE_DECL_MEMMEM)|g' \
 	      -e 's|@''HAVE_MEMPCPY''@|$(HAVE_MEMPCPY)|g' \
 	      -e 's|@''HAVE_DECL_MEMRCHR''@|$(HAVE_DECL_MEMRCHR)|g' \
@@ -3703,6 +3874,46 @@ EXTRA_libgettextlib_la_SOURCES += strtol.c strtoul.c
 
 ## end   gnulib module strtoul
 
+## begin gnulib module supersede
+
+libgettextlib_la_SOURCES += supersede.c
+
+EXTRA_DIST += supersede.h
+
+## end   gnulib module supersede
+
+## begin gnulib module sys_random
+
+BUILT_SOURCES += sys/random.h
+
+# We need the following in order to create <sys/random.h> when the system
+# doesn't have one.
+sys/random.h: sys_random.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_SYS_RANDOM_H''@|$(NEXT_SYS_RANDOM_H)|g' \
+	      -e 's|@''HAVE_SYS_RANDOM_H''@|$(HAVE_SYS_RANDOM_H)|g' \
+	      -e 's/@''GNULIB_GETRANDOM''@/$(GNULIB_GETRANDOM)/g' \
+	      -e 's/@''HAVE_GETRANDOM''@/$(HAVE_GETRANDOM)/g' \
+	      -e 's/@''REPLACE_GETRANDOM''@/$(REPLACE_GETRANDOM)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/sys_random.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += sys/random.h sys/random.h-t
+MOSTLYCLEANDIRS += sys
+
+EXTRA_DIST += sys_random.in.h
+
+## end   gnulib module sys_random
+
 ## begin gnulib module sys_select
 
 BUILT_SOURCES += sys/select.h
@@ -3758,6 +3969,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's/@''GNULIB_FSTAT''@/$(GNULIB_FSTAT)/g' \
 	      -e 's/@''GNULIB_FSTATAT''@/$(GNULIB_FSTATAT)/g' \
 	      -e 's/@''GNULIB_FUTIMENS''@/$(GNULIB_FUTIMENS)/g' \
+	      -e 's/@''GNULIB_GETUMASK''@/$(GNULIB_GETUMASK)/g' \
 	      -e 's/@''GNULIB_LCHMOD''@/$(GNULIB_LCHMOD)/g' \
 	      -e 's/@''GNULIB_LSTAT''@/$(GNULIB_LSTAT)/g' \
 	      -e 's/@''GNULIB_MKDIRAT''@/$(GNULIB_MKDIRAT)/g' \
@@ -3771,6 +3983,7 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's|@''HAVE_FCHMODAT''@|$(HAVE_FCHMODAT)|g' \
 	      -e 's|@''HAVE_FSTATAT''@|$(HAVE_FSTATAT)|g' \
 	      -e 's|@''HAVE_FUTIMENS''@|$(HAVE_FUTIMENS)|g' \
+	      -e 's|@''HAVE_GETUMASK''@|$(HAVE_GETUMASK)|g' \
 	      -e 's|@''HAVE_LCHMOD''@|$(HAVE_LCHMOD)|g' \
 	      -e 's|@''HAVE_LSTAT''@|$(HAVE_LSTAT)|g' \
 	      -e 's|@''HAVE_MKDIRAT''@|$(HAVE_MKDIRAT)|g' \
@@ -4037,6 +4250,14 @@ EXTRA_DIST += unictype/bitmap.h unictype/ctype_space.h
 
 ## end   gnulib module unictype/ctype-space
 
+## begin gnulib module unictype/syntax-java-whitespace
+
+if LIBUNISTRING_COMPILE_UNICTYPE_SYNTAX_JAVA_WHITESPACE
+libgettextlib_la_SOURCES += unictype/sy_java_whitespace.c
+endif
+
+## end   gnulib module unictype/syntax-java-whitespace
+
 ## begin gnulib module unilbrk/base
 
 BUILT_SOURCES += $(LIBUNISTRING_UNILBRK_H)
@@ -4157,6 +4378,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_GETCWD''@/$(GNULIB_GETCWD)/g' \
 	      -e 's/@''GNULIB_GETDOMAINNAME''@/$(GNULIB_GETDOMAINNAME)/g' \
 	      -e 's/@''GNULIB_GETDTABLESIZE''@/$(GNULIB_GETDTABLESIZE)/g' \
+	      -e 's/@''GNULIB_GETENTROPY''@/$(GNULIB_GETENTROPY)/g' \
 	      -e 's/@''GNULIB_GETGROUPS''@/$(GNULIB_GETGROUPS)/g' \
 	      -e 's/@''GNULIB_GETHOSTNAME''@/$(GNULIB_GETHOSTNAME)/g' \
 	      -e 's/@''GNULIB_GETLOGIN''@/$(GNULIB_GETLOGIN)/g' \
@@ -4195,7 +4417,6 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      < $(srcdir)/unistd.in.h | \
 	  sed -e 's|@''HAVE_CHOWN''@|$(HAVE_CHOWN)|g' \
 	      -e 's|@''HAVE_COPY_FILE_RANGE''@|$(HAVE_COPY_FILE_RANGE)|g' \
-	      -e 's|@''HAVE_DUP2''@|$(HAVE_DUP2)|g' \
 	      -e 's|@''HAVE_DUP3''@|$(HAVE_DUP3)|g' \
 	      -e 's|@''HAVE_EUIDACCESS''@|$(HAVE_EUIDACCESS)|g' \
 	      -e 's|@''HAVE_FACCESSAT''@|$(HAVE_FACCESSAT)|g' \
@@ -4205,6 +4426,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FSYNC''@|$(HAVE_FSYNC)|g' \
 	      -e 's|@''HAVE_FTRUNCATE''@|$(HAVE_FTRUNCATE)|g' \
 	      -e 's|@''HAVE_GETDTABLESIZE''@|$(HAVE_GETDTABLESIZE)|g' \
+	      -e 's|@''HAVE_GETENTROPY''@|$(HAVE_GETENTROPY)|g' \
 	      -e 's|@''HAVE_GETGROUPS''@|$(HAVE_GETGROUPS)|g' \
 	      -e 's|@''HAVE_GETHOSTNAME''@|$(HAVE_GETHOSTNAME)|g' \
 	      -e 's|@''HAVE_GETPAGESIZE''@|$(HAVE_GETPAGESIZE)|g' \
@@ -4274,6 +4496,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_UNLINKAT''@|$(REPLACE_UNLINKAT)|g' \
 	      -e 's|@''REPLACE_USLEEP''@|$(REPLACE_USLEEP)|g' \
 	      -e 's|@''REPLACE_WRITE''@|$(REPLACE_WRITE)|g' \
+	      -e 's|@''UNISTD_H_HAVE_SYS_RANDOM_H''@|$(UNISTD_H_HAVE_SYS_RANDOM_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H''@|$(UNISTD_H_HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
@@ -4416,6 +4639,15 @@ endif
 EXTRA_DIST += uniwidth/cjk.h
 
 ## end   gnulib module uniwidth/width
+
+## begin gnulib module unlink
+
+
+EXTRA_DIST += unlink.c
+
+EXTRA_libgettextlib_la_SOURCES += unlink.c
+
+## end   gnulib module unlink
 
 ## begin gnulib module unlocked-io
 
@@ -4567,6 +4799,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_WMEMCMP''@/$(GNULIB_WMEMCMP)/g' \
 	      -e 's/@''GNULIB_WMEMCPY''@/$(GNULIB_WMEMCPY)/g' \
 	      -e 's/@''GNULIB_WMEMMOVE''@/$(GNULIB_WMEMMOVE)/g' \
+	      -e 's/@''GNULIB_WMEMPCPY''@/$(GNULIB_WMEMPCPY)/g' \
 	      -e 's/@''GNULIB_WMEMSET''@/$(GNULIB_WMEMSET)/g' \
 	      -e 's/@''GNULIB_WCSLEN''@/$(GNULIB_WCSLEN)/g' \
 	      -e 's/@''GNULIB_WCSNLEN''@/$(GNULIB_WCSNLEN)/g' \
@@ -4607,6 +4840,7 @@ wchar.h: wchar.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''HAVE_WMEMCMP''@|$(HAVE_WMEMCMP)|g' \
 	      -e 's|@''HAVE_WMEMCPY''@|$(HAVE_WMEMCPY)|g' \
 	      -e 's|@''HAVE_WMEMMOVE''@|$(HAVE_WMEMMOVE)|g' \
+	      -e 's|@''HAVE_WMEMPCPY''@|$(HAVE_WMEMPCPY)|g' \
 	      -e 's|@''HAVE_WMEMSET''@|$(HAVE_WMEMSET)|g' \
 	      -e 's|@''HAVE_WCSLEN''@|$(HAVE_WCSLEN)|g' \
 	      -e 's|@''HAVE_WCSNLEN''@|$(HAVE_WCSNLEN)|g' \
@@ -4752,6 +4986,15 @@ EXTRA_libgettextlib_la_SOURCES += windows-rwlock.c
 
 ## end   gnulib module windows-rwlock
 
+## begin gnulib module windows-spin
+
+
+EXTRA_DIST += windows-spin.c windows-spin.h
+
+EXTRA_libgettextlib_la_SOURCES += windows-spin.c
+
+## end   gnulib module windows-spin
+
 ## begin gnulib module windows-tls
 
 
@@ -4760,6 +5003,24 @@ EXTRA_DIST += windows-tls.c windows-tls.h
 EXTRA_libgettextlib_la_SOURCES += windows-tls.c
 
 ## end   gnulib module windows-tls
+
+## begin gnulib module wmemchr
+
+
+EXTRA_DIST += wmemchr-impl.h wmemchr.c
+
+EXTRA_libgettextlib_la_SOURCES += wmemchr.c
+
+## end   gnulib module wmemchr
+
+## begin gnulib module wmempcpy
+
+
+EXTRA_DIST += wmempcpy.c
+
+EXTRA_libgettextlib_la_SOURCES += wmempcpy.c
+
+## end   gnulib module wmempcpy
 
 ## begin gnulib module write
 
@@ -4796,6 +5057,12 @@ EXTRA_DIST += concat-filename.h
 libgettextlib_la_SOURCES += xerror.h xerror.c
 
 ## end   gnulib module xerror
+
+## begin gnulib module xgetcwd
+
+libgettextlib_la_SOURCES += xgetcwd.h xgetcwd.c
+
+## end   gnulib module xgetcwd
 
 ## begin gnulib module xlist
 

@@ -629,7 +629,6 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_header_list=
 ac_subst_vars='gltests_LTLIBOBJS
 gltests_LIBOBJS
 gl_LTLIBOBJS
@@ -657,6 +656,7 @@ PRAGMA_COLUMNS
 PRAGMA_SYSTEM_HEADER
 INCLUDE_NEXT_AS_FIRST_DIRECTIVE
 INCLUDE_NEXT
+HAVE_ALLOCA_H
 GL_GENERATE_ALLOCA_H_FALSE
 GL_GENERATE_ALLOCA_H_TRUE
 ALLOCA_H
@@ -2599,8 +2599,6 @@ $as_echo "$as_me: creating cache $cache_file" >&6;}
   >$cache_file
 fi
 
-as_fn_append ac_header_list " stdlib.h"
-as_fn_append ac_header_list " string.h"
 # Check that the precious variables saved in the cache have kept the same
 # value.
 ac_cache_corrupted=false
@@ -3577,6 +3575,100 @@ esac
 fi
 
 fi
+if test -z "$CC"; then
+  if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}clang", so it can be a program name with args.
+set dummy ${ac_tool_prefix}clang; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_CC+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$CC"; then
+  ac_cv_prog_CC="$CC" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_CC="${ac_tool_prefix}clang"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+CC=$ac_cv_prog_CC
+if test -n "$CC"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CC" >&5
+$as_echo "$CC" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_prog_CC"; then
+  ac_ct_CC=$CC
+  # Extract the first word of "clang", so it can be a program name with args.
+set dummy clang; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_ac_ct_CC+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$ac_ct_CC"; then
+  ac_cv_prog_ac_ct_CC="$ac_ct_CC" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_ac_ct_CC="clang"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+ac_ct_CC=$ac_cv_prog_ac_ct_CC
+if test -n "$ac_ct_CC"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_ct_CC" >&5
+$as_echo "$ac_ct_CC" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_ct_CC" = x; then
+    CC=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    CC=$ac_ct_CC
+  fi
+else
+  CC="$ac_cv_prog_CC"
+fi
+
+fi
 
 
 test -z "$CC" && { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
@@ -3588,7 +3680,7 @@ See \`config.log' for more details" "$LINENO" 5; }
 $as_echo "$as_me:${as_lineno-$LINENO}: checking for C compiler version" >&5
 set X $ac_compile
 ac_compiler=$2
-for ac_option in --version -v -V -qversion; do
+for ac_option in --version -v -V -qversion -version; do
   { { ac_try="$ac_compiler $ac_option >&5"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -3974,8 +4066,420 @@ else
     CFLAGS=
   fi
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CC option to accept ISO C89" >&5
-$as_echo_n "checking for $CC option to accept ISO C89... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CC option to enable C11 features" >&5
+$as_echo_n "checking for $CC option to enable C11 features... " >&6; }
+if ${ac_cv_prog_cc_c11+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_prog_cc_c11=no
+ac_save_CC=$CC
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <wchar.h>
+#include <stdio.h>
+
+// Check varargs macros.  These examples are taken from C99 6.10.3.5.
+#define debug(...) fprintf (stderr, __VA_ARGS__)
+#define showlist(...) puts (#__VA_ARGS__)
+#define report(test,...) ((test) ? puts (#test) : printf (__VA_ARGS__))
+static void
+test_varargs_macros (void)
+{
+  int x = 1234;
+  int y = 5678;
+  debug ("Flag");
+  debug ("X = %d\n", x);
+  showlist (The first, second, and third items.);
+  report (x>y, "x is %d but y is %d", x, y);
+}
+
+// Check long long types.
+#define BIG64 18446744073709551615ull
+#define BIG32 4294967295ul
+#define BIG_OK (BIG64 / BIG32 == 4294967297ull && BIG64 % BIG32 == 0)
+#if !BIG_OK
+  your preprocessor is broken;
+#endif
+#if BIG_OK
+#else
+  your preprocessor is broken;
+#endif
+static long long int bignum = -9223372036854775807LL;
+static unsigned long long int ubignum = BIG64;
+
+struct incomplete_array
+{
+  int datasize;
+  double data[];
+};
+
+struct named_init {
+  int number;
+  const wchar_t *name;
+  double average;
+};
+
+typedef const char *ccp;
+
+static inline int
+test_restrict (ccp restrict text)
+{
+  // See if C++-style comments work.
+  // Iterate through items via the restricted pointer.
+  // Also check for declarations in for loops.
+  for (unsigned int i = 0; *(text+i) != '\0'; ++i)
+    continue;
+  return 0;
+}
+
+// Check varargs and va_copy.
+static bool
+test_varargs (const char *format, ...)
+{
+  va_list args;
+  va_start (args, format);
+  va_list args_copy;
+  va_copy (args_copy, args);
+
+  const char *str = "";
+  int number = 0;
+  float fnumber = 0;
+
+  while (*format)
+    {
+      switch (*format++)
+	{
+	case 's': // string
+	  str = va_arg (args_copy, const char *);
+	  break;
+	case 'd': // int
+	  number = va_arg (args_copy, int);
+	  break;
+	case 'f': // float
+	  fnumber = va_arg (args_copy, double);
+	  break;
+	default:
+	  break;
+	}
+    }
+  va_end (args_copy);
+  va_end (args);
+
+  return *str && number && fnumber;
+}
+// Check _Alignas.
+char _Alignas (double) aligned_as_double;
+char _Alignas (0) no_special_alignment;
+extern char aligned_as_int;
+char _Alignas (0) _Alignas (int) aligned_as_int;
+
+// Check _Alignof.
+enum
+{
+  int_alignment = _Alignof (int),
+  int_array_alignment = _Alignof (int[100]),
+  char_alignment = _Alignof (char)
+};
+_Static_assert (0 < -_Alignof (int), "_Alignof is signed");
+
+// Check _Noreturn.
+int _Noreturn does_not_return (void) { for (;;) continue; }
+
+// Check _Static_assert.
+struct test_static_assert
+{
+  int x;
+  _Static_assert (sizeof (int) <= sizeof (long int),
+                  "_Static_assert does not work in struct");
+  long int y;
+};
+
+// Check UTF-8 literals.
+#define u8 syntax error!
+char const utf8_literal[] = u8"happens to be ASCII" "another string";
+
+// Check duplicate typedefs.
+typedef long *long_ptr;
+typedef long int *long_ptr;
+typedef long_ptr long_ptr;
+
+// Anonymous structures and unions -- taken from C11 6.7.2.1 Example 1.
+struct anonymous
+{
+  union {
+    struct { int i; int j; };
+    struct { int k; long int l; } w;
+  };
+  int m;
+} v1;
+
+int
+main ()
+{
+
+  // Check bool.
+  _Bool success = false;
+
+  // Check restrict.
+  if (test_restrict ("String literal") == 0)
+    success = true;
+  char *restrict newvar = "Another string";
+
+  // Check varargs.
+  success &= test_varargs ("s, d' f .", "string", 65, 34.234);
+  test_varargs_macros ();
+
+  // Check flexible array members.
+  struct incomplete_array *ia =
+    malloc (sizeof (struct incomplete_array) + (sizeof (double) * 10));
+  ia->datasize = 10;
+  for (int i = 0; i < ia->datasize; ++i)
+    ia->data[i] = i * 1.234;
+
+  // Check named initializers.
+  struct named_init ni = {
+    .number = 34,
+    .name = L"Test wide string",
+    .average = 543.34343,
+  };
+
+  ni.number = 58;
+
+  int dynamic_array[ni.number];
+  dynamic_array[ni.number - 1] = 543;
+
+  // work around unused variable warnings
+  return (!success || bignum == 0LL || ubignum == 0uLL || newvar[0] == 'x'
+	  || dynamic_array[ni.number - 1] != 543);
+
+  v1.i = 2;
+  v1.w.k = 5;
+  _Static_assert ((offsetof (struct anonymous, i)
+		   == offsetof (struct anonymous, w.k)),
+		  "Anonymous union alignment botch");
+
+  ;
+  return 0;
+}
+_ACEOF
+for ac_arg in '' -std=gnu11
+do
+  CC="$ac_save_CC $ac_arg"
+  if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_prog_cc_c11=$ac_arg
+fi
+rm -f core conftest.err conftest.$ac_objext
+  test "x$ac_cv_prog_cc_c11" != "xno" && break
+done
+rm -f conftest.$ac_ext
+CC=$ac_save_CC
+
+fi
+# AC_CACHE_VAL
+ac_prog_cc_stdc_options=
+case "x$ac_cv_prog_cc_c11" in
+  x)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none needed" >&5
+$as_echo "none needed" >&6; } ;;
+  xno)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported" >&5
+$as_echo "unsupported" >&6; } ;;
+  *)
+    ac_prog_cc_stdc_options=" $ac_cv_prog_cc_c11"
+    CC=$CC$ac_prog_cc_stdc_options
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cc_c11" >&5
+$as_echo "$ac_cv_prog_cc_c11" >&6; } ;;
+esac
+if test "x$ac_cv_prog_cc_c11" != xno; then :
+  ac_prog_cc_stdc=c11
+		 ac_cv_prog_cc_stdc=$ac_cv_prog_cc_c11
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CC option to enable C99 features" >&5
+$as_echo_n "checking for $CC option to enable C99 features... " >&6; }
+if ${ac_cv_prog_cc_c99+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_prog_cc_c99=no
+ac_save_CC=$CC
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <wchar.h>
+#include <stdio.h>
+
+// Check varargs macros.  These examples are taken from C99 6.10.3.5.
+#define debug(...) fprintf (stderr, __VA_ARGS__)
+#define showlist(...) puts (#__VA_ARGS__)
+#define report(test,...) ((test) ? puts (#test) : printf (__VA_ARGS__))
+static void
+test_varargs_macros (void)
+{
+  int x = 1234;
+  int y = 5678;
+  debug ("Flag");
+  debug ("X = %d\n", x);
+  showlist (The first, second, and third items.);
+  report (x>y, "x is %d but y is %d", x, y);
+}
+
+// Check long long types.
+#define BIG64 18446744073709551615ull
+#define BIG32 4294967295ul
+#define BIG_OK (BIG64 / BIG32 == 4294967297ull && BIG64 % BIG32 == 0)
+#if !BIG_OK
+  your preprocessor is broken;
+#endif
+#if BIG_OK
+#else
+  your preprocessor is broken;
+#endif
+static long long int bignum = -9223372036854775807LL;
+static unsigned long long int ubignum = BIG64;
+
+struct incomplete_array
+{
+  int datasize;
+  double data[];
+};
+
+struct named_init {
+  int number;
+  const wchar_t *name;
+  double average;
+};
+
+typedef const char *ccp;
+
+static inline int
+test_restrict (ccp restrict text)
+{
+  // See if C++-style comments work.
+  // Iterate through items via the restricted pointer.
+  // Also check for declarations in for loops.
+  for (unsigned int i = 0; *(text+i) != '\0'; ++i)
+    continue;
+  return 0;
+}
+
+// Check varargs and va_copy.
+static bool
+test_varargs (const char *format, ...)
+{
+  va_list args;
+  va_start (args, format);
+  va_list args_copy;
+  va_copy (args_copy, args);
+
+  const char *str = "";
+  int number = 0;
+  float fnumber = 0;
+
+  while (*format)
+    {
+      switch (*format++)
+	{
+	case 's': // string
+	  str = va_arg (args_copy, const char *);
+	  break;
+	case 'd': // int
+	  number = va_arg (args_copy, int);
+	  break;
+	case 'f': // float
+	  fnumber = va_arg (args_copy, double);
+	  break;
+	default:
+	  break;
+	}
+    }
+  va_end (args_copy);
+  va_end (args);
+
+  return *str && number && fnumber;
+}
+int
+main ()
+{
+
+  // Check bool.
+  _Bool success = false;
+
+  // Check restrict.
+  if (test_restrict ("String literal") == 0)
+    success = true;
+  char *restrict newvar = "Another string";
+
+  // Check varargs.
+  success &= test_varargs ("s, d' f .", "string", 65, 34.234);
+  test_varargs_macros ();
+
+  // Check flexible array members.
+  struct incomplete_array *ia =
+    malloc (sizeof (struct incomplete_array) + (sizeof (double) * 10));
+  ia->datasize = 10;
+  for (int i = 0; i < ia->datasize; ++i)
+    ia->data[i] = i * 1.234;
+
+  // Check named initializers.
+  struct named_init ni = {
+    .number = 34,
+    .name = L"Test wide string",
+    .average = 543.34343,
+  };
+
+  ni.number = 58;
+
+  int dynamic_array[ni.number];
+  dynamic_array[ni.number - 1] = 543;
+
+  // work around unused variable warnings
+  return (!success || bignum == 0LL || ubignum == 0uLL || newvar[0] == 'x'
+	  || dynamic_array[ni.number - 1] != 543);
+
+  ;
+  return 0;
+}
+_ACEOF
+for ac_arg in '' -std=gnu99 -std=c99 -c99 -AC99 -D_STDC_C99= -qlanglvl=extc1x -qlanglvl=extc99
+do
+  CC="$ac_save_CC $ac_arg"
+  if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_prog_cc_c99=$ac_arg
+fi
+rm -f core conftest.err conftest.$ac_objext
+  test "x$ac_cv_prog_cc_c99" != "xno" && break
+done
+rm -f conftest.$ac_ext
+CC=$ac_save_CC
+
+fi
+# AC_CACHE_VAL
+ac_prog_cc_stdc_options=
+case "x$ac_cv_prog_cc_c99" in
+  x)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none needed" >&5
+$as_echo "none needed" >&6; } ;;
+  xno)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported" >&5
+$as_echo "unsupported" >&6; } ;;
+  *)
+    ac_prog_cc_stdc_options=" $ac_cv_prog_cc_c99"
+    CC=$CC$ac_prog_cc_stdc_options
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cc_c99" >&5
+$as_echo "$ac_cv_prog_cc_c99" >&6; } ;;
+esac
+if test "x$ac_cv_prog_cc_c99" != xno; then :
+  ac_prog_cc_stdc=c99
+		    ac_cv_prog_cc_stdc=$ac_cv_prog_cc_c99
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CC option to enable C89 features" >&5
+$as_echo_n "checking for $CC option to enable C89 features... " >&6; }
 if ${ac_cv_prog_cc_c89+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -4048,6 +4552,7 @@ CC=$ac_save_CC
 
 fi
 # AC_CACHE_VAL
+ac_prog_cc_stdc_options=
 case "x$ac_cv_prog_cc_c89" in
   x)
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: none needed" >&5
@@ -4056,78 +4561,28 @@ $as_echo "none needed" >&6; } ;;
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported" >&5
 $as_echo "unsupported" >&6; } ;;
   *)
-    CC="$CC $ac_cv_prog_cc_c89"
+    ac_prog_cc_stdc_options=" $ac_cv_prog_cc_c89"
+    CC=$CC$ac_prog_cc_stdc_options
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cc_c89" >&5
 $as_echo "$ac_cv_prog_cc_c89" >&6; } ;;
 esac
 if test "x$ac_cv_prog_cc_c89" != xno; then :
-
-fi
-
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC understands -c and -o together" >&5
-$as_echo_n "checking whether $CC understands -c and -o together... " >&6; }
-if ${am_cv_prog_cc_c_o+:} false; then :
-  $as_echo_n "(cached) " >&6
+  ac_prog_cc_stdc=c89
+		       ac_cv_prog_cc_stdc=$ac_cv_prog_cc_c89
 else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-  # Make sure it works both with $CC and with simple cc.
-  # Following AC_PROG_CC_C_O, we do the test twice because some
-  # compilers refuse to overwrite an existing .o file with -o,
-  # though they will create one.
-  am_cv_prog_cc_c_o=yes
-  for am_i in 1 2; do
-    if { echo "$as_me:$LINENO: $CC -c conftest.$ac_ext -o conftest2.$ac_objext" >&5
-   ($CC -c conftest.$ac_ext -o conftest2.$ac_objext) >&5 2>&5
-   ac_status=$?
-   echo "$as_me:$LINENO: \$? = $ac_status" >&5
-   (exit $ac_status); } \
-         && test -f conftest2.$ac_objext; then
-      : OK
-    else
-      am_cv_prog_cc_c_o=no
-      break
-    fi
-  done
-  rm -f core conftest*
-  unset am_i
+  ac_prog_cc_stdc=no
+		       ac_cv_prog_cc_stdc=no
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_prog_cc_c_o" >&5
-$as_echo "$am_cv_prog_cc_c_o" >&6; }
-if test "$am_cv_prog_cc_c_o" != yes; then
-   # Losing compiler, so override with the script.
-   # FIXME: It is wrong to rewrite CC.
-   # But if we don't then we get into trouble of one sort or another.
-   # A longer-term fix would be to have automake use am__CC in this case,
-   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
-   CC="$am_aux_dir/compile $CC"
+
 fi
+
+fi
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
 
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the compiler is clang" >&5
@@ -4404,7 +4859,7 @@ if test -z "$CXX"; then
     CXX=$CCC
   else
     if test -n "$ac_tool_prefix"; then
-  for ac_prog in g++ c++ gpp aCC CC cxx cc++ cl.exe FCC KCC RCC xlC_r xlC
+  for ac_prog in g++ c++ gpp aCC CC cxx cc++ cl.exe FCC KCC RCC xlC_r xlC clang++
   do
     # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
 set dummy $ac_tool_prefix$ac_prog; ac_word=$2
@@ -4448,7 +4903,7 @@ fi
 fi
 if test -z "$CXX"; then
   ac_ct_CXX=$CXX
-  for ac_prog in g++ c++ gpp aCC CC cxx cc++ cl.exe FCC KCC RCC xlC_r xlC
+  for ac_prog in g++ c++ gpp aCC CC cxx cc++ cl.exe FCC KCC RCC xlC_r xlC clang++
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -4645,6 +5100,421 @@ else
     CXXFLAGS=
   fi
 fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CXX option to enable C++11 features" >&5
+$as_echo_n "checking for $CXX option to enable C++11 features... " >&6; }
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+if ${ac_cv_prog_cxx_cxx11+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_prog_cxx_cxx11=no
+ac_save_CXX=$CXX
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <deque>
+#include <functional>
+#include <memory>
+#include <tuple>
+#include <array>
+#include <regex>
+#include <iostream>
+
+namespace cxx11test
+{
+  typedef std::shared_ptr<std::string> sptr;
+  typedef std::weak_ptr<std::string> wptr;
+
+  typedef std::tuple<std::string,int,double> tp;
+  typedef std::array<int, 20> int_array;
+
+  constexpr int get_val() { return 20; }
+
+  struct testinit
+  {
+    int i;
+    double d;
+  };
+
+  class delegate  {
+  public:
+    delegate(int n) : n(n) {}
+    delegate(): delegate(2354) {}
+
+    virtual int getval() { return this->n; };
+  protected:
+    int n;
+  };
+
+  class overridden : public delegate {
+  public:
+    overridden(int n): delegate(n) {}
+    virtual int getval() override final { return this->n * 2; }
+  };
+
+  class nocopy {
+  public:
+    nocopy(int i): i(i) {}
+    nocopy() = default;
+    nocopy(const nocopy&) = delete;
+    nocopy & operator=(const nocopy&) = delete;
+  private:
+    int i;
+  };
+}
+
+
+#include <algorithm>
+#include <cstdlib>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <list>
+#include <map>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+
+namespace test {
+  typedef std::vector<std::string> string_vec;
+  typedef std::pair<int,bool> map_value;
+  typedef std::map<std::string,map_value> map_type;
+  typedef std::set<int> set_type;
+
+  template<typename T>
+  class printer {
+  public:
+    printer(std::ostringstream& os): os(os) {}
+    void operator() (T elem) { os << elem << std::endl; }
+  private:
+    std::ostringstream& os;
+  };
+}
+
+int
+main ()
+{
+
+{
+  // Test auto and decltype
+  std::deque<int> d;
+  d.push_front(43);
+  d.push_front(484);
+  d.push_front(3);
+  d.push_front(844);
+  int total = 0;
+  for (auto i = d.begin(); i != d.end(); ++i) { total += *i; }
+
+  auto a1 = 6538;
+  auto a2 = 48573953.4;
+  auto a3 = "String literal";
+
+  decltype(a2) a4 = 34895.034;
+}
+{
+  // Test constexpr
+  short sa[cxx11test::get_val()] = { 0 };
+}
+{
+  // Test initializer lists
+  cxx11test::testinit il = { 4323, 435234.23544 };
+}
+{
+  // Test range-based for and lambda
+  cxx11test::int_array array = {9, 7, 13, 15, 4, 18, 12, 10, 5, 3, 14, 19, 17, 8, 6, 20, 16, 2, 11, 1};
+  for (int &x : array) { x += 23; }
+  std::for_each(array.begin(), array.end(), [](int v1){ std::cout << v1; });
+}
+{
+  using cxx11test::sptr;
+  using cxx11test::wptr;
+
+  sptr sp(new std::string("ASCII string"));
+  wptr wp(sp);
+  sptr sp2(wp);
+}
+{
+  cxx11test::tp tuple("test", 54, 45.53434);
+  double d = std::get<2>(tuple);
+  std::string s;
+  int i;
+  std::tie(s,i,d) = tuple;
+}
+{
+  static std::regex filename_regex("^_?([a-z0-9_.]+-)+[a-z0-9]+$");
+  std::string testmatch("Test if this string matches");
+  bool match = std::regex_search(testmatch, filename_regex);
+}
+{
+  cxx11test::int_array array = {9, 7, 13, 15, 4, 18, 12, 10, 5, 3, 14, 19, 17, 8, 6, 20, 16, 2, 11, 1};
+  cxx11test::int_array::size_type size = array.size();
+}
+{
+  // Test constructor delegation
+  cxx11test::delegate d1;
+  cxx11test::delegate d2();
+  cxx11test::delegate d3(45);
+}
+{
+  // Test override and final
+  cxx11test::overridden o1(55464);
+}
+{
+  // Test nullptr
+  char *c = nullptr;
+}
+{
+  // Test template brackets
+  std::vector<std::pair<int,char*>> v1;
+}
+{
+  // Unicode literals
+  char const *utf8 = u8"UTF-8 string \u2500";
+  char16_t const *utf16 = u"UTF-8 string \u2500";
+  char32_t const *utf32 = U"UTF-32 string \u2500";
+}
+
+
+
+try {
+  // Basic string.
+  std::string teststr("ASCII text");
+  teststr += " string";
+
+  // Simple vector.
+  test::string_vec testvec;
+  testvec.push_back(teststr);
+  testvec.push_back("foo");
+  testvec.push_back("bar");
+  if (testvec.size() != 3) {
+    throw std::runtime_error("vector size is not 1");
+  }
+
+  // Dump vector into stringstream and obtain string.
+  std::ostringstream os;
+  for (test::string_vec::const_iterator i = testvec.begin();
+       i != testvec.end(); ++i) {
+    if (i + 1 != testvec.end()) {
+      os << teststr << '\n';
+    }
+  }
+  // Check algorithms work.
+  std::for_each(testvec.begin(), testvec.end(), test::printer<std::string>(os));
+  std::string os_out = os.str();
+
+  // Test pair and map.
+  test::map_type testmap;
+  testmap.insert(std::make_pair(std::string("key"),
+                                std::make_pair(53,false)));
+
+  // Test set.
+  int values[] = {9, 7, 13, 15, 4, 18, 12, 10, 5, 3, 14, 19, 17, 8, 6, 20, 16, 2, 11, 1};
+  test::set_type testset(values, values + sizeof(values)/sizeof(values[0]));
+  std::list<int> testlist(testset.begin(), testset.end());
+  std::copy(testset.begin(), testset.end(), std::back_inserter(testlist));
+} catch (const std::exception& e) {
+  std::cerr << "Caught exception: " << e.what() << std::endl;
+
+  // Test fstream
+  std::ofstream of("test.txt");
+  of << "Test ASCII text\n" << std::flush;
+  of << "N= " << std::hex << std::setw(8) << std::left << 534 << std::endl;
+  of.close();
+}
+std::exit(0);
+
+  ;
+  return 0;
+}
+_ACEOF
+for ac_arg in '' -std=gnu++11 -std=c++11 -std=gnu++0x -std=c++0x -qlanglvl=extended0x -AA
+do
+  CXX="$ac_save_CXX $ac_arg"
+  if ac_fn_cxx_try_compile "$LINENO"; then :
+  ac_cv_prog_cxx_cxx11=$ac_arg
+fi
+rm -f core conftest.err conftest.$ac_objext
+  test "x$ac_cv_prog_cxx_cxx11" != "xno" && break
+done
+rm -f conftest.$ac_ext
+CXX=$ac_save_CXX
+
+fi
+# AC_CACHE_VAL
+ac_prog_cxx_stdcxx_options=
+case "x$ac_cv_prog_cxx_cxx11" in
+  x)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none needed" >&5
+$as_echo "none needed" >&6; } ;;
+  xno)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported" >&5
+$as_echo "unsupported" >&6; } ;;
+  *)
+    ac_prog_cxx_stdcxx_options=" $ac_cv_prog_cxx_cxx11"
+    CXX=$CXX$ac_prog_cxx_stdcxx_options
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cxx_cxx11" >&5
+$as_echo "$ac_cv_prog_cxx_cxx11" >&6; } ;;
+esac
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+if test "x$ac_cv_prog_cxx_cxx11" != xno; then :
+  ac_prog_cxx_stdcxx=cxx11
+		    ac_cv_prog_cxx_stdcxx=$ac_cv_prog_cxx_cxx11
+		    ac_cv_prog_cxx_cxx98=$ac_cv_prog_cxx_cxx11
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $CXX option to enable C++98 features" >&5
+$as_echo_n "checking for $CXX option to enable C++98 features... " >&6; }
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+if ${ac_cv_prog_cxx_cxx98+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_prog_cxx_cxx98=no
+ac_save_CXX=$CXX
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <algorithm>
+#include <cstdlib>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <list>
+#include <map>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+
+namespace test {
+  typedef std::vector<std::string> string_vec;
+  typedef std::pair<int,bool> map_value;
+  typedef std::map<std::string,map_value> map_type;
+  typedef std::set<int> set_type;
+
+  template<typename T>
+  class printer {
+  public:
+    printer(std::ostringstream& os): os(os) {}
+    void operator() (T elem) { os << elem << std::endl; }
+  private:
+    std::ostringstream& os;
+  };
+}
+
+int
+main ()
+{
+
+
+try {
+  // Basic string.
+  std::string teststr("ASCII text");
+  teststr += " string";
+
+  // Simple vector.
+  test::string_vec testvec;
+  testvec.push_back(teststr);
+  testvec.push_back("foo");
+  testvec.push_back("bar");
+  if (testvec.size() != 3) {
+    throw std::runtime_error("vector size is not 1");
+  }
+
+  // Dump vector into stringstream and obtain string.
+  std::ostringstream os;
+  for (test::string_vec::const_iterator i = testvec.begin();
+       i != testvec.end(); ++i) {
+    if (i + 1 != testvec.end()) {
+      os << teststr << '\n';
+    }
+  }
+  // Check algorithms work.
+  std::for_each(testvec.begin(), testvec.end(), test::printer<std::string>(os));
+  std::string os_out = os.str();
+
+  // Test pair and map.
+  test::map_type testmap;
+  testmap.insert(std::make_pair(std::string("key"),
+                                std::make_pair(53,false)));
+
+  // Test set.
+  int values[] = {9, 7, 13, 15, 4, 18, 12, 10, 5, 3, 14, 19, 17, 8, 6, 20, 16, 2, 11, 1};
+  test::set_type testset(values, values + sizeof(values)/sizeof(values[0]));
+  std::list<int> testlist(testset.begin(), testset.end());
+  std::copy(testset.begin(), testset.end(), std::back_inserter(testlist));
+} catch (const std::exception& e) {
+  std::cerr << "Caught exception: " << e.what() << std::endl;
+
+  // Test fstream
+  std::ofstream of("test.txt");
+  of << "Test ASCII text\n" << std::flush;
+  of << "N= " << std::hex << std::setw(8) << std::left << 534 << std::endl;
+  of.close();
+}
+std::exit(0);
+
+  ;
+  return 0;
+}
+_ACEOF
+for ac_arg in '' -std=gnu++98 -std=c++98 -qlanglvl=extended -AA
+do
+  CXX="$ac_save_CXX $ac_arg"
+  if ac_fn_cxx_try_compile "$LINENO"; then :
+  ac_cv_prog_cxx_cxx98=$ac_arg
+fi
+rm -f core conftest.err conftest.$ac_objext
+  test "x$ac_cv_prog_cxx_cxx98" != "xno" && break
+done
+rm -f conftest.$ac_ext
+CXX=$ac_save_CXX
+
+fi
+# AC_CACHE_VAL
+ac_prog_cxx_stdcxx_options=
+case "x$ac_cv_prog_cxx_cxx98" in
+  x)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none needed" >&5
+$as_echo "none needed" >&6; } ;;
+  xno)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: unsupported" >&5
+$as_echo "unsupported" >&6; } ;;
+  *)
+    ac_prog_cxx_stdcxx_options=" $ac_cv_prog_cxx_cxx98"
+    CXX=$CXX$ac_prog_cxx_stdcxx_options
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_prog_cxx_cxx98" >&5
+$as_echo "$ac_cv_prog_cxx_cxx98" >&6; } ;;
+esac
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+if test "x$ac_cv_prog_cxx_cxx98" != xno; then :
+  ac_prog_cxx_stdcxx=cxx98
+		        ac_cv_prog_cxx_stdcxx=$ac_cv_prog_cxx_cxx98
+else
+  ac_prog_cxx_stdcxx=no
+		        ac_cv_prog_cxx_stdcxx=no
+fi
+
+fi
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -5373,10 +6243,13 @@ fi
   # Code from module absolute-header:
   # Code from module alloca:
   # Code from module alloca-opt:
+  # Code from module attribute:
+  # Code from module c99:
   # Code from module errno:
   # Code from module extern-inline:
   # Code from module include_next:
   # Code from module size_max:
+  # Code from module std-gnu11:
   # Code from module verify:
   # Code from module xsize:
 
@@ -17228,7 +18101,7 @@ else
 # include <time.h>
 #endif
 #include <wchar.h>
-              int verify[sizeof (wint_t) < sizeof (int) ? -1 : 1];
+            int verify[sizeof (wint_t) < sizeof (int) ? -1 : 1];
 
 int
 main ()
@@ -17408,7 +18281,7 @@ if ${gl_cv_size_max+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-    gl_cv_size_max=
+    gl_cv_size_max=no
     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -17427,7 +18300,7 @@ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
 fi
 rm -f conftest*
 
-    if test -z "$gl_cv_size_max"; then
+    if test $gl_cv_size_max != yes; then
                         if ac_fn_c_compute_int "$LINENO" "sizeof (size_t) * CHAR_BIT - 1" "size_t_bits_minus_1"        "#include <stddef.h>
 #include <limits.h>"; then :
 
@@ -17497,6 +18370,8 @@ _ACEOF
 fi
 
 done
+
+
 
 
 
@@ -17632,47 +18507,6 @@ ALLOCA=\${LIBOBJDIR}alloca.$ac_objext
 $as_echo "#define C_ALLOCA 1" >>confdefs.h
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether \`alloca.c' needs Cray hooks" >&5
-$as_echo_n "checking whether \`alloca.c' needs Cray hooks... " >&6; }
-if ${ac_cv_os_cray+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#if defined CRAY && ! defined CRAY2
-webecray
-#else
-wenotbecray
-#endif
-
-_ACEOF
-if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-  $EGREP "webecray" >/dev/null 2>&1; then :
-  ac_cv_os_cray=yes
-else
-  ac_cv_os_cray=no
-fi
-rm -f conftest*
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_os_cray" >&5
-$as_echo "$ac_cv_os_cray" >&6; }
-if test $ac_cv_os_cray = yes; then
-  for ac_func in _getb67 GETB67 getb67; do
-    as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
-ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
-if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
-
-cat >>confdefs.h <<_ACEOF
-#define CRAY_STACKSEG_END $ac_func
-_ACEOF
-
-    break
-fi
-
-  done
-fi
-
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking stack direction for C alloca" >&5
 $as_echo_n "checking stack direction for C alloca... " >&6; }
 if ${ac_cv_c_stack_direction+:} false; then :
@@ -17719,27 +18553,6 @@ _ACEOF
 
 
 fi
-
-
-
-
-  for ac_header in $ac_header_list
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default
-"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-
-
-
 
 
 
@@ -18260,34 +19073,49 @@ LTALLOCA=`echo "$ALLOCA" | sed -e 's/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'`
 
 
 
-
-
-
   if test $ac_cv_func_alloca_works = no; then
-
-
-  :
-
+    :
   fi
 
   # Define an additional variable used in the Makefile substitution.
+  if test $ac_cv_working_alloca_h = yes; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for alloca as a compiler built-in" >&5
+$as_echo_n "checking for alloca as a compiler built-in... " >&6; }
+if ${gl_cv_rpl_alloca+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
 
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-#if defined __GNUC__ || defined _MSC_VER || !HAVE_ALLOCA_H
-  Need own alloca
+#if defined __GNUC__ || defined _AIX || defined _MSC_VER
+        Need own alloca
 #endif
 
 _ACEOF
 if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
   $EGREP "Need own alloca" >/dev/null 2>&1; then :
-  ALLOCA_H=alloca.h
+  gl_cv_rpl_alloca=yes
 else
-  ALLOCA_H=
+  gl_cv_rpl_alloca=no
 fi
 rm -f conftest*
 
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $gl_cv_rpl_alloca" >&5
+$as_echo "$gl_cv_rpl_alloca" >&6; }
+    if test $gl_cv_rpl_alloca = yes; then
+
+$as_echo "#define HAVE_ALLOCA 1" >>confdefs.h
+
+      ALLOCA_H=alloca.h
+    else
+                  ALLOCA_H=
+    fi
+  else
+    ALLOCA_H=alloca.h
+  fi
 
    if test -n "$ALLOCA_H"; then
   GL_GENERATE_ALLOCA_H_TRUE=
@@ -18296,6 +19124,13 @@ else
   GL_GENERATE_ALLOCA_H_TRUE='#'
   GL_GENERATE_ALLOCA_H_FALSE=
 fi
+
+
+  if test $ac_cv_working_alloca_h = yes; then
+    HAVE_ALLOCA_H=1
+  else
+    HAVE_ALLOCA_H=0
+  fi
 
 
 
@@ -18319,7 +19154,7 @@ if ${gl_cv_size_max+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-    gl_cv_size_max=
+    gl_cv_size_max=no
     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -18338,7 +19173,7 @@ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
 fi
 rm -f conftest*
 
-    if test -z "$gl_cv_size_max"; then
+    if test $gl_cv_size_max != yes; then
                         if ac_fn_c_compute_int "$LINENO" "sizeof (size_t) * CHAR_BIT - 1" "size_t_bits_minus_1"        "#include <stddef.h>
 #include <limits.h>"; then :
 

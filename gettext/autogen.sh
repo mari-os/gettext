@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2003-2019 Free Software Foundation, Inc.
+# Copyright (C) 2003-2020 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ if ! $skip_gnulib; then
   # In gettext-runtime:
   GNULIB_MODULES_RUNTIME_FOR_SRC='
     atexit
-    basename
+    basename-lgpl
     binary-io
     closeout
     error
@@ -78,6 +78,7 @@ if ! $skip_gnulib; then
     gettext-h
     havelib
     memmove
+    noreturn
     progname
     propername
     relocatable-prog
@@ -94,15 +95,18 @@ if ! $skip_gnulib; then
   GNULIB_MODULES_RUNTIME_OTHER='
     gettext-runtime-misc
     ansi-c++-opt
+    bison
     csharpcomp-script
     java
     javacomp-script
   '
   $GNULIB_TOOL --dir=gettext-runtime --lib=libgrt --source-base=gnulib-lib --m4-base=gnulib-m4 --no-libtool --local-dir=gnulib-local --local-symlink \
     --import $GNULIB_MODULES_RUNTIME_FOR_SRC $GNULIB_MODULES_RUNTIME_OTHER || exit $?
+  $GNULIB_TOOL --copy-file lib/attribute.h gettext-runtime/intl/attribute.h
   # In gettext-runtime/libasprintf:
   GNULIB_MODULES_LIBASPRINTF='
     alloca
+    attribute
     errno
     verify
     xsize
@@ -119,8 +123,9 @@ if ! $skip_gnulib; then
     alloca-opt
     atexit
     backupfile
-    basename
+    basename-lgpl
     binary-io
+    bison
     bison-i18n
     byteswap
     c-ctype
@@ -149,7 +154,6 @@ if ! $skip_gnulib; then
     getopt-gnu
     gettext
     gettext-h
-    hash
     iconv
     javacomp
     javaexec
@@ -160,11 +164,13 @@ if ! $skip_gnulib; then
     localename
     localtime
     lock
+    mem-hash-map
     memchr
     memmove
     memset
     minmax
     mkdir
+    noreturn
     obstack
     open
     opendir
@@ -193,11 +199,13 @@ if ! $skip_gnulib; then
     strpbrk
     strtol
     strtoul
+    supersede
     sys_select
     sys_stat
     sys_time
     trim
     unictype/ctype-space
+    unictype/syntax-java-whitespace
     unilbrk/ulc-width-linebreaks
     uniname/uniname
     unistd
@@ -271,7 +279,7 @@ if ! $skip_gnulib; then
     uniwidth/width-tests
   '
   $GNULIB_TOOL --dir=gettext-tools --lib=libgettextlib --source-base=gnulib-lib --m4-base=gnulib-m4 --tests-base=gnulib-tests --makefile-name=Makefile.gnulib --libtool --with-tests --local-dir=gnulib-local --local-symlink \
-    --import --avoid=array-list-tests --avoid=linkedhash-list-tests --avoid=hash-tests --avoid=fdutimensat-tests --avoid=futimens-tests --avoid=utime-tests --avoid=utimens-tests --avoid=utimensat-tests \
+    --import --avoid=fdutimensat-tests --avoid=futimens-tests --avoid=utime-tests --avoid=utimens-tests --avoid=utimensat-tests \
     `for m in $GNULIB_MODULES_TOOLS_LIBUNISTRING_TESTS; do echo --avoid=$m; done` $GNULIB_MODULES_TOOLS_FOR_SRC $GNULIB_MODULES_TOOLS_FOR_SRC_COMMON_DEPENDENCIES $GNULIB_MODULES_TOOLS_OTHER || exit $?
   $GNULIB_TOOL --copy-file m4/libtextstyle.m4 gettext-tools/gnulib-m4/libtextstyle.m4 || exit $?
   # In gettext-tools/libgrep:
@@ -284,7 +292,7 @@ if ! $skip_gnulib; then
   # In gettext-tools/libgettextpo:
   # This is a subset of the GNULIB_MODULES_FOR_SRC.
   GNULIB_MODULES_LIBGETTEXTPO='
-    basename
+    basename-lgpl
     close
     c-ctype
     c-strcase
@@ -298,11 +306,11 @@ if ! $skip_gnulib; then
     gcd
     getline
     gettext-h
-    hash
     iconv
     libtextstyle-dummy
     libunistring-optional
     markup
+    mem-hash-map
     minmax
     open
     relocatable-lib
@@ -330,12 +338,18 @@ if ! $skip_gnulib; then
     xstriconv
     xvasprintf
   '
+  # Module 'fdopen' is enabled in gettext-tools/config.status, because
+  # it occurs as dependency of some module ('supersede') in
+  # GNULIB_MODULES_TOOLS_FOR_SRC. Therefore on mingw, libgettextpo/stdio.h
+  # contains '#define fdopen rpl_fdopen'. Therefore we need to include
+  # fdopen.lo in libgettextpo.la.
   # Module 'realloc-posix' is enabled in gettext-tools/config.status, because
   # it occurs as dependency of some module ('read-file') in
   # GNULIB_MODULES_TOOLS_FOR_SRC. Therefore on mingw, libgettextpo/stdlib.h
   # contains '#define realloc rpl_realloc'. Therefore we need to include
   # realloc.lo in libgettextpo.la.
   GNULIB_MODULES_LIBGETTEXTPO_OTHER='
+    fdopen
     realloc-posix
   '
   $GNULIB_TOOL --dir=gettext-tools --source-base=libgettextpo --m4-base=libgettextpo/gnulib-m4 --macro-prefix=gtpo --makefile-name=Makefile.gnulib --libtool --local-dir=gnulib-local --local-symlink \

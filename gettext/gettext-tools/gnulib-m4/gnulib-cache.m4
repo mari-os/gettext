@@ -39,9 +39,6 @@
 #  --no-conditional-dependencies \
 #  --libtool \
 #  --macro-prefix=gl \
-#  --avoid=array-list-tests \
-#  --avoid=linkedhash-list-tests \
-#  --avoid=hash-tests \
 #  --avoid=fdutimensat-tests \
 #  --avoid=futimens-tests \
 #  --avoid=utime-tests \
@@ -56,8 +53,9 @@
 #  ansi-c++-opt \
 #  atexit \
 #  backupfile \
-#  basename \
+#  basename-lgpl \
 #  binary-io \
+#  bison \
 #  bison-i18n \
 #  byteswap \
 #  c-ctype \
@@ -90,7 +88,6 @@
 #  gettext \
 #  gettext-h \
 #  gettext-tools-misc \
-#  hash \
 #  iconv \
 #  include_next \
 #  java \
@@ -108,12 +105,14 @@
 #  malloc-posix \
 #  mbrtowc \
 #  mbsinit \
+#  mem-hash-map \
 #  memchr \
 #  memmove \
 #  memset \
 #  minmax \
 #  mkdir \
 #  multiarch \
+#  noreturn \
 #  obstack \
 #  open \
 #  opendir \
@@ -150,11 +149,13 @@
 #  strpbrk \
 #  strtol \
 #  strtoul \
+#  supersede \
 #  sys_select \
 #  sys_stat \
 #  sys_time \
 #  trim \
 #  unictype/ctype-space \
+#  unictype/syntax-java-whitespace \
 #  unilbrk/ulc-width-linebreaks \
 #  uniname/uniname \
 #  unistd \
@@ -193,8 +194,9 @@ gl_MODULES([
   ansi-c++-opt
   atexit
   backupfile
-  basename
+  basename-lgpl
   binary-io
+  bison
   bison-i18n
   byteswap
   c-ctype
@@ -227,7 +229,6 @@ gl_MODULES([
   gettext
   gettext-h
   gettext-tools-misc
-  hash
   iconv
   include_next
   java
@@ -245,12 +246,14 @@ gl_MODULES([
   malloc-posix
   mbrtowc
   mbsinit
+  mem-hash-map
   memchr
   memmove
   memset
   minmax
   mkdir
   multiarch
+  noreturn
   obstack
   open
   opendir
@@ -287,11 +290,13 @@ gl_MODULES([
   strpbrk
   strtol
   strtoul
+  supersede
   sys_select
   sys_stat
   sys_time
   trim
   unictype/ctype-space
+  unictype/syntax-java-whitespace
   unilbrk/ulc-width-linebreaks
   uniname/uniname
   unistd
@@ -323,7 +328,7 @@ gl_MODULES([
   xstriconveh
   xvasprintf
 ])
-gl_AVOID([ array-list-tests linkedhash-list-tests hash-tests fdutimensat-tests futimens-tests utime-tests utimens-tests utimensat-tests unilbrk/u8-possible-linebreaks-tests unilbrk/ulc-width-linebreaks-tests unistr/u8-mbtouc-tests unistr/u8-mbtouc-unsafe-tests uniwidth/width-tests])
+gl_AVOID([ fdutimensat-tests futimens-tests utime-tests utimens-tests utimensat-tests unilbrk/u8-possible-linebreaks-tests unilbrk/ulc-width-linebreaks-tests unistr/u8-mbtouc-tests unistr/u8-mbtouc-unsafe-tests uniwidth/width-tests])
 gl_SOURCE_BASE([gnulib-lib])
 gl_M4_BASE([gnulib-m4])
 gl_PO_BASE([])
