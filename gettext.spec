@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.20.2
-Release: alt2
+Release: alt3
 
 %define libintl libintl3
 
@@ -369,6 +369,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Mon May 03 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt3
+- Fixed FTBFS by adding rpm-build-python3 to BuildRequires.
+
 * Tue Jul 14 2020 Michael Shigorin <mike@altlinux.org> 0.20.2-alt2
 - Fixed emacs knob given nonzero _unpackaged_files_terminate_build.
 
