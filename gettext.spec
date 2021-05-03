@@ -85,6 +85,7 @@ License: GPLv2+
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-tools = %version-%release
+BuildRequires: rpm-build-python3
 
 %package doc
 Summary: The GNU gettext manual
