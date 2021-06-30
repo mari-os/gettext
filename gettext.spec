@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.20.2
-Release: alt3
+Release: alt4
 
 %define libintl libintl3
 
@@ -374,6 +374,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Wed Jun 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt4
+- Backported tests fixes from gnulib to fix FTBFS.
+
 * Mon May 03 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt3
 - Fixed FTBFS by adding rpm-build-python3 to BuildRequires.
 
