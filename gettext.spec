@@ -15,6 +15,8 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
+Patch0: gnulib-up-perror-strerror_r-remove-unportable-tests.patch
+
 Patch10: gettext-alt-autogen.patch
 Patch11: gettext-alt-gettextize-quiet.patch
 Patch12: gettext-alt-autopoint-archive.patch
@@ -188,6 +190,9 @@ a text styling library.
 
 %prep
 %setup
+cd gettext-tools/gnulib-tests
+%patch0 -p2
+cd - > /dev/null
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
