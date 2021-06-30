@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.20.2
-Release: alt4
+Version: 0.21
+Release: alt1
 
 %define libintl libintl3
 
@@ -374,6 +374,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Thu Jul 01 2021 Dmitry V. Levin <ldv@altlinux.org> 0.21-alt1
+- 0.20.2 -> 0.21 (closes: #31007).
+
 * Wed Jun 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt4
 - Backported tests fixes from gnulib to fix FTBFS.
 
